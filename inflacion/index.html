@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Inflación Argentina | Actualizá precios — Calculadora.live</title>
+<meta name="description" content="Actualizá un precio por inflación en Argentina. Elegí el período o ingresá el porcentaje acumulado y calculá cuánto vale hoy lo que costaba antes.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/inflacion">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F0F2F7;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
+  .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
+  .page{max-width:520px;margin:0 auto;padding:36px 20px 60px}
+  .page-icon{font-size:36px;margin-bottom:10px}
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+  .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:28px}
+  .card{background:var(--surface);border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid var(--border)}
+  .field{margin-bottom:18px}.field:last-child{margin-bottom:0}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
+  .input-wrap{position:relative}
+  .input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:15px;pointer-events:none;font-weight:500}
+  .input-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none}
+  input[type=number]{width:100%;padding:13px 44px 13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  input[type=number].with-prefix{padding-left:30px}
+  input[type=number]:focus{border-color:var(--hi)}
+  select{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;transition:border-color .15s}
+  select:focus{border-color:var(--hi)}
+  .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .seg-btn{padding:10px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;text-align:center}
+  .seg-btn.active{background:var(--hi-soft);border-color:var(--hi);color:var(--hi)}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .result-card{background:#0C1528;border-radius:var(--radius);padding:28px;margin-bottom:16px;border-top:3px solid var(--hi)}
+  .result-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
+  .result-main{font-size:46px;font-weight:700;color:white;letter-spacing:-0.03em;line-height:1;margin-bottom:4px}
+  .result-currency{font-size:22px;font-weight:400;opacity:0.5;margin-right:2px}
+  .result-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px}
+  .result-rows{border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;display:flex;flex-direction:column;gap:10px}
+  .result-row{display:flex;justify-content:space-between;align-items:center}
+  .result-row-lbl{font-size:13px;color:rgba(255,255,255,0.5)}
+  .result-row-val{font-size:14px;font-weight:600;color:rgba(255,255,255,0.85)}
+  .result-row-val.neg{color:#FCA5A5}
+  .result-divider{height:1px;background:rgba(255,255,255,0.08);margin:2px 0}
+  .empty-state{color:rgba(255,255,255,0.3);font-size:15px}
+  .info-box{background:var(--hi-soft);border:1px solid #BFDBFE;border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:var(--ink-light);line-height:1.5}
+  .info-box strong{color:var(--ink)}
+  .ref-table{background:var(--surface);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;border:1px solid var(--border)}
+  .ref-title{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+  .ref-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+  .ref-row:last-child{border-bottom:none}
+  .ref-year{font-weight:600;color:var(--ink)}
+  .ref-pct{font-weight:700;color:#EF4444}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <a class="back-link" href="/">← Volver</a>
+</header>
+<div class="page">
+  <div class="page-icon">📊</div>
+  <h1 class="page-title">Calculadora de Inflación</h1>
+  <p class="page-sub">Actualizá un precio por inflación o calculá cuánto perdió de valor el peso en el tiempo.</p>
+
+  <div class="card">
+    <div class="field">
+      <label>Modo</label>
+      <div class="seg">
+        <button class="seg-btn active" id="btn-periodo" onclick="setModo('periodo')">Por período</button>
+        <button class="seg-btn" id="btn-manual" onclick="setModo('manual')">% manual</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Valor original</label>
+      <div class="input-wrap">
+        <span class="input-prefix">$</span>
+        <input type="number" id="valor" class="with-prefix" placeholder="10.000" min="0" oninput="calcular()">
+      </div>
+    </div>
+
+    <div id="modo-periodo">
+      <div class="two-col">
+        <div class="field">
+          <label>Desde</label>
+          <select id="desde" onchange="calcular()">
+            <option value="2018">Enero 2018</option>
+            <option value="2019">Enero 2019</option>
+            <option value="2020">Enero 2020</option>
+            <option value="2021">Enero 2021</option>
+            <option value="2022">Enero 2022</option>
+            <option value="2023">Enero 2023</option>
+            <option value="2024" selected>Enero 2024</option>
+            <option value="2025">Enero 2025</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Hasta</label>
+          <select id="hasta" onchange="calcular()">
+            <option value="2019">Dic 2019</option>
+            <option value="2020">Dic 2020</option>
+            <option value="2021">Dic 2021</option>
+            <option value="2022">Dic 2022</option>
+            <option value="2023">Dic 2023</option>
+            <option value="2024">Dic 2024</option>
+            <option value="2025" selected>Dic 2025</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div id="modo-manual" class="hidden">
+      <div class="field">
+        <label>Inflación acumulada</label>
+        <div class="input-wrap">
+          <input type="number" id="pct-manual" placeholder="100" min="0" step="0.1" oninput="calcular()">
+          <span class="input-suffix">%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-eyebrow">Valor actualizado</div>
+    <div id="result-main" class="result-main"><span class="empty-state">Ingresá un valor</span></div>
+    <div id="result-sub" class="result-sub"></div>
+    <div id="result-rows" class="result-rows" style="display:none">
+      <div class="result-row">
+        <span class="result-row-lbl">Valor original</span>
+        <span class="result-row-val" id="r-original">—</span>
+      </div>
+      <div class="result-row">
+        <span class="result-row-lbl">Inflación acumulada</span>
+        <span class="result-row-val neg" id="r-pct">—</span>
+      </div>
+      <div class="result-divider"></div>
+      <div class="result-row">
+        <span class="result-row-lbl" style="color:rgba(255,255,255,0.8);font-weight:600">Valor actualizado</span>
+        <span class="result-row-val" id="r-actualizado">—</span>
+      </div>
+      <div class="result-row">
+        <span class="result-row-lbl">Diferencia (lo que perdió)</span>
+        <span class="result-row-val neg" id="r-diferencia">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ref-table">
+    <div class="ref-title">Inflación anual Argentina (IPC)</div>
+    <div class="ref-row"><span class="ref-year">2018</span><span class="ref-pct">47,6%</span></div>
+    <div class="ref-row"><span class="ref-year">2019</span><span class="ref-pct">53,8%</span></div>
+    <div class="ref-row"><span class="ref-year">2020</span><span class="ref-pct">36,1%</span></div>
+    <div class="ref-row"><span class="ref-year">2021</span><span class="ref-pct">50,9%</span></div>
+    <div class="ref-row"><span class="ref-year">2022</span><span class="ref-pct">94,8%</span></div>
+    <div class="ref-row"><span class="ref-year">2023</span><span class="ref-pct">211,4%</span></div>
+    <div class="ref-row"><span class="ref-year">2024</span><span class="ref-pct">117,8%</span></div>
+    <div class="ref-row"><span class="ref-year">2025</span><span class="ref-pct" style="color:var(--ink-light)">~38% (estimado)</span></div>
+  </div>
+
+  <div class="info-box">
+    <strong>Fuente:</strong> INDEC (Instituto Nacional de Estadística y Censos). Los datos de 2025 son estimaciones sujetas a actualización. El cálculo acumulado multiplica los índices de cada año.
+  </div>
+</div>
+<script>
+  // Inflación anual acumulada (diciembre a diciembre)
+  const inflAnual = {
+    2018: 0.476, 2019: 0.538, 2020: 0.361,
+    2021: 0.509, 2022: 0.948, 2023: 2.114,
+    2024: 1.178, 2025: 0.38
+  };
+
+  let modo = 'periodo';
+  function setModo(m){
+    modo=m;
+    document.getElementById('btn-periodo').classList.toggle('active',m==='periodo');
+    document.getElementById('btn-manual').classList.toggle('active',m==='manual');
+    document.getElementById('modo-periodo').classList.toggle('hidden',m!=='periodo');
+    document.getElementById('modo-manual').classList.toggle('hidden',m!=='manual');
+    calcular();
+  }
+
+  function getAcumulado(desde, hasta){
+    // Multiplica los índices año a año
+    let factor = 1;
+    for(let y = desde; y <= hasta; y++){
+      if(inflAnual[y]) factor *= (1 + inflAnual[y]);
+    }
+    return factor - 1;
+  }
+
+  function fmt(n){return '$\u00A0'+Math.round(n).toLocaleString('es-AR')}
+
+  function calcular(){
+    const valor = parseFloat(document.getElementById('valor').value)||0;
+    const mainEl = document.getElementById('result-main');
+    const subEl  = document.getElementById('result-sub');
+    const rowsEl = document.getElementById('result-rows');
+
+    if(!valor){
+      mainEl.innerHTML='<span class="empty-state">Ingresá un valor</span>';
+      subEl.textContent='';rowsEl.style.display='none';return;
+    }
+
+    let pct;
+    let periodoLabel;
+
+    if(modo==='periodo'){
+      const desde = parseInt(document.getElementById('desde').value);
+      const hasta  = parseInt(document.getElementById('hasta').value);
+      if(hasta <= desde){
+        mainEl.innerHTML='<span class="empty-state">El período debe ser válido</span>';
+        subEl.textContent='';rowsEl.style.display='none';return;
+      }
+      pct = getAcumulado(desde, hasta);
+      periodoLabel = `inflación acumulada ${desde}–${hasta}`;
+    } else {
+      pct = (parseFloat(document.getElementById('pct-manual').value)||0)/100;
+      periodoLabel = `con ${(pct*100).toFixed(1)}% de inflación`;
+    }
+
+    const actualizado = valor * (1 + pct);
+    const diferencia  = actualizado - valor;
+
+    mainEl.innerHTML=`<span class="result-currency">$</span>${Math.round(actualizado).toLocaleString('es-AR')}`;
+    subEl.textContent=periodoLabel;
+    rowsEl.style.display='flex';
+    document.getElementById('r-original').textContent=fmt(valor);
+    document.getElementById('r-pct').textContent='+'+(pct*100).toFixed(1)+'%';
+    document.getElementById('r-actualizado').textContent=fmt(actualizado);
+    document.getElementById('r-diferencia').textContent='+ '+fmt(diferencia);
+  }
+</script>
+</body>
+</html>

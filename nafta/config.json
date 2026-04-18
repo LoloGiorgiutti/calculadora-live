@@ -1,0 +1,13 @@
+{
+  "lastUpdate": "Abril 2026",
+  "uberPorKm": 1800,
+  "combustibles": {
+    "AR": [
+      { "tipo": "Regular / Súper",  "precio": 2076 },
+      { "tipo": "Premium",          "precio": 2380 },
+      { "tipo": "Diesel",           "precio": 2274 },
+      { "tipo": "Diesel Premium",   "precio": 2439 },
+      { "tipo": "GNC",              "precio": 850  }
+    ]
+  }
+}

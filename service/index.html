@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Service | ¿Cuándo te toca? — Calculadora.live</title>
+<meta name="description" content="Calculá cuándo te toca el próximo service y cuánto cuesta aproximadamente. Ingresá los kilómetros actuales y del último service.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/service">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F0F2F7;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
+  .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
+  .page{max-width:520px;margin:0 auto;padding:36px 20px 60px}
+  .page-icon{font-size:36px;margin-bottom:10px}
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+  .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:28px}
+  .card{background:var(--surface);border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid var(--border)}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .field{margin-bottom:18px}.field:last-child{margin-bottom:0}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
+  .input-wrap{position:relative}
+  .input-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none}
+  input[type=number]{width:100%;padding:13px 44px 13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  input[type=number]:focus{border-color:var(--hi)}
+  select{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;transition:border-color .15s}
+  select:focus{border-color:var(--hi)}
+  /* Progress bar */
+  .progress-wrap{margin-bottom:16px}
+  .progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-light);margin-bottom:8px}
+  .progress-track{height:12px;border-radius:99px;background:var(--border);overflow:hidden}
+  .progress-fill{height:100%;border-radius:99px;transition:width .5s cubic-bezier(.34,1.56,.64,1),background .3s}
+  /* Result card */
+  .result-card{background:#0C1528;border-radius:var(--radius);padding:28px;margin-bottom:16px;border-top:3px solid var(--hi);transition:border-color .3s}
+  .result-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
+  .result-main{font-size:42px;font-weight:700;color:white;letter-spacing:-0.03em;line-height:1;margin-bottom:4px}
+  .result-unit{font-size:18px;font-weight:400;opacity:0.5;margin-left:4px}
+  .result-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px}
+  .result-rows{border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .stat-box{background:rgba(255,255,255,0.05);border-radius:10px;padding:14px}
+  .stat-val{font-size:18px;font-weight:700;color:white;letter-spacing:-0.02em}
+  .stat-lbl{font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px}
+  .empty-state{color:rgba(255,255,255,0.3);font-size:15px}
+  /* Cost table */
+  .cost-card{background:var(--surface);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;border:1px solid var(--border)}
+  .cost-title{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
+  .cost-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+  .cost-row:last-child{border-bottom:none;padding-bottom:0}
+  .cost-item{color:var(--ink-light)}
+  .cost-price{font-weight:700;color:var(--ink)}
+  .info-box{background:var(--hi-soft);border:1px solid #BFDBFE;border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:var(--ink-light);line-height:1.5}
+  .info-box strong{color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <a class="back-link" href="/">← Volver</a>
+</header>
+<div class="page">
+  <div class="page-icon">🔧</div>
+  <h1 class="page-title">Calculadora de Service</h1>
+  <p class="page-sub">¿Cuándo te toca el próximo service? Ingresá los kilómetros y el intervalo de mantenimiento.</p>
+
+  <div class="card">
+    <div class="two-col">
+      <div class="field">
+        <label>KM del último service</label>
+        <div class="input-wrap">
+          <input type="number" id="km-service" placeholder="40.000" min="0" step="1000" oninput="calcular()">
+          <span class="input-suffix">km</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>KM actuales</label>
+        <div class="input-wrap">
+          <input type="number" id="km-actual" placeholder="47.500" min="0" step="1000" oninput="calcular()">
+          <span class="input-suffix">km</span>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Intervalo de service</label>
+      <select id="intervalo" onchange="calcular()">
+        <option value="5000">Cada 5.000 km</option>
+        <option value="7500" selected>Cada 7.500 km</option>
+        <option value="10000">Cada 10.000 km</option>
+        <option value="15000">Cada 15.000 km</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Categoría del auto</label>
+      <select id="categoria" onchange="calcular()">
+        <option value="economico">Económico (Corsa, Palio, Gol, Agile...)</option>
+        <option value="medio" selected>Intermedio (Cruze, Focus, Vento, 208...)</option>
+        <option value="suv">SUV / Pickup (Duster, Tracker, Hilux...)</option>
+        <option value="premium">Premium (Audi, BMW, Mercedes...)</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="progress-section" style="display:none" class="card">
+    <div class="progress-label">
+      <span id="prog-lbl">Estado del service</span>
+      <span id="prog-pct" style="font-weight:700"></span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-fill"></div>
+    </div>
+  </div>
+
+  <div class="result-card" id="result-card">
+    <div class="result-eyebrow">Kilómetros para el próximo service</div>
+    <div id="result-main" class="result-main"><span class="empty-state">Ingresá los datos</span></div>
+    <div id="result-sub" class="result-sub"></div>
+    <div id="result-rows" class="result-rows" style="display:none">
+      <div class="stat-box">
+        <div class="stat-val" id="r-recorridos">—</div>
+        <div class="stat-lbl">KM desde el service</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="r-proximo">—</div>
+        <div class="stat-lbl">KM del próximo service</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cost-card" id="cost-card" style="display:none">
+    <div class="cost-title" id="cost-title">Costo estimado de service</div>
+    <div id="cost-rows"></div>
+  </div>
+
+  <div class="info-box">
+    <strong>Precios orientativos.</strong> Los costos de repuestos y mano de obra varían según el taller, la ciudad y la disponibilidad de piezas. Consultá siempre con tu mecánico de confianza.
+  </div>
+</div>
+<script>
+  const costos = {
+    economico: { aceite: '$35.000 – $55.000', filtroAceite: '$8.000 – $15.000', filtroAire: '$12.000 – $20.000', bujias: '$20.000 – $40.000', manoObra: '$20.000 – $35.000' },
+    medio:     { aceite: '$55.000 – $90.000', filtroAceite: '$15.000 – $25.000', filtroAire: '$20.000 – $35.000', bujias: '$35.000 – $70.000', manoObra: '$30.000 – $55.000' },
+    suv:       { aceite: '$80.000 – $140.000', filtroAceite: '$20.000 – $35.000', filtroAire: '$25.000 – $45.000', bujias: '$45.000 – $100.000', manoObra: '$40.000 – $70.000' },
+    premium:   { aceite: '$150.000 – $300.000', filtroAceite: '$30.000 – $60.000', filtroAire: '$40.000 – $80.000', bujias: '$80.000 – $200.000', manoObra: '$80.000 – $160.000' },
+  };
+  const catNames = { economico:'Económico', medio:'Intermedio', suv:'SUV / Pickup', premium:'Premium' };
+
+  function calcular(){
+    const kmService = parseFloat(document.getElementById('km-service').value)||0;
+    const kmActual  = parseFloat(document.getElementById('km-actual').value)||0;
+    const intervalo = parseInt(document.getElementById('intervalo').value)||7500;
+    const categoria = document.getElementById('categoria').value;
+    const mainEl    = document.getElementById('result-main');
+    const subEl     = document.getElementById('result-sub');
+    const rowsEl    = document.getElementById('result-rows');
+    const progSec   = document.getElementById('progress-section');
+    const costCard  = document.getElementById('cost-card');
+    const card      = document.getElementById('result-card');
+
+    if(!kmService||!kmActual){
+      mainEl.innerHTML='<span class="empty-state">Ingresá los datos</span>';
+      subEl.textContent='';rowsEl.style.display='none';progSec.style.display='none';costCard.style.display='none';return;
+    }
+
+    const recorridos = kmActual - kmService;
+    const proximoKm  = kmService + intervalo;
+    const restantes  = proximoKm - kmActual;
+    const pct        = Math.min(100, Math.round((recorridos/intervalo)*100));
+
+    // Progress bar
+    progSec.style.display='block';
+    const fill = document.getElementById('prog-fill');
+    const color = pct < 70 ? '#22C55E' : pct < 90 ? '#F59E0B' : '#EF4444';
+    fill.style.width = pct+'%';
+    fill.style.background = color;
+    document.getElementById('prog-pct').textContent = pct+'%';
+    document.getElementById('prog-lbl').textContent = pct >= 100 ? '¡Service vencido!' : `Completado ${pct}% del intervalo`;
+
+    card.style.borderColor = pct >= 100 ? '#EF4444' : pct >= 90 ? '#F59E0B' : 'var(--hi)';
+
+    if(restantes <= 0){
+      const pasados = Math.abs(restantes);
+      mainEl.innerHTML=`<span style="color:#FCA5A5">${pasados.toLocaleString('es-AR')}<span class="result-unit">km vencido</span></span>`;
+      subEl.textContent='¡Ya superaste el intervalo de service!';
+    } else {
+      mainEl.innerHTML=`${restantes.toLocaleString('es-AR')}<span class="result-unit">km</span>`;
+      subEl.textContent=`el próximo service es a los ${proximoKm.toLocaleString('es-AR')} km`;
+    }
+
+    rowsEl.style.display='grid';
+    document.getElementById('r-recorridos').textContent=recorridos.toLocaleString('es-AR')+' km';
+    document.getElementById('r-proximo').textContent=proximoKm.toLocaleString('es-AR')+' km';
+
+    // Costs
+    costCard.style.display='block';
+    document.getElementById('cost-title').textContent=`Costos estimados · ${catNames[categoria]}`;
+    const c = costos[categoria];
+    document.getElementById('cost-rows').innerHTML=`
+      <div class="cost-row"><span class="cost-item">Aceite de motor</span><span class="cost-price">${c.aceite}</span></div>
+      <div class="cost-row"><span class="cost-item">Filtro de aceite</span><span class="cost-price">${c.filtroAceite}</span></div>
+      <div class="cost-row"><span class="cost-item">Filtro de aire</span><span class="cost-price">${c.filtroAire}</span></div>
+      <div class="cost-row"><span class="cost-item">Bujías (c/u)</span><span class="cost-price">${c.bujias}</span></div>
+      <div class="cost-row"><span class="cost-item">Mano de obra</span><span class="cost-price">${c.manoObra}</span></div>
+    `;
+  }
+</script>
+</body>
+</html>

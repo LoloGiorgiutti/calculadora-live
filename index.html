@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora.live — Calculadoras gratuitas para Argentina</title>
+<meta name="description" content="Calculadoras gratuitas y actualizadas para Argentina. Sueldo neto, aguinaldo, nafta, Mercado Pago, interés compuesto, IMC y mucho más.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/">
+<meta property="og:title" content="Calculadora.live — Calculadoras gratuitas para Argentina">
+<meta property="og:description" content="Calculadoras gratuitas y actualizadas para Argentina. Sueldo neto, aguinaldo, nafta, Mercado Pago, interés compuesto y más.">
+<meta property="og:url" content="https://calculadora.live/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F2F7;
+    --surface: #FFFFFF;
+    --ink: #080A12;
+    --ink-light: #60647A;
+    --ink-faint: #B4B8CC;
+    --hi: #1A5FE8;
+    --hi-soft: #EEF3FD;
+    --border: #D4D8E6;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo {
+    font-size: 18px; font-weight: 700; color: var(--ink);
+    text-decoration: none; letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--hi); }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 56px 24px 40px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: 16px;
+    color: var(--ink-light);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* ── GRID ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
+
+  .category { margin-bottom: 40px; }
+  .category-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .category-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .calc-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+    cursor: pointer;
+  }
+  .calc-card:hover {
+    border-color: var(--hi);
+    box-shadow: 0 4px 20px rgba(26,95,232,0.12);
+    transform: translateY(-2px);
+  }
+  .calc-icon {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .calc-info { flex: 1; }
+  .calc-name {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
+  .calc-desc {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.4;
+  }
+  .badge-new {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+    background: var(--hi); color: white;
+    padding: 2px 7px; border-radius: 99px;
+    text-transform: uppercase; margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .hero { padding: 36px 20px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+</header>
+
+<div class="hero">
+  <h1>Calculadoras gratuitas para Argentina</h1>
+  <p>Herramientas simples, rápidas y actualizadas. Sin registro, sin publicidad invasiva.</p>
+</div>
+
+<div class="container">
+
+  <!-- AUTOS -->
+  <div class="category">
+    <div class="category-title">🚗 Autos</div>
+    <div class="grid">
+      <a class="calc-card" href="/nafta">
+        <div class="calc-icon">⛽</div>
+        <div class="calc-info">
+          <div class="calc-name">Calculadora de nafta</div>
+          <div class="calc-desc">¿Cuánto cuesta el viaje en auto? Precio actualizado por tipo de combustible.</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/patente">
+        <div class="calc-icon">📋</div>
+        <div class="calc-info">
+          <div class="calc-name">Calculadora de patente</div>
+          <div class="calc-desc">Calculá cuánto pagás de patente según la provincia y el valor del auto.</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/service">
+        <div class="calc-icon">🔧</div>
+        <div class="calc-info">
+          <div class="calc-name">Calculadora de service</div>
+          <div class="calc-desc">¿Cuándo te toca el service y cuánto cuesta aproximadamente?</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- FINANZAS -->
+  <div class="category">
+    <div class="category-title">💰 Finanzas y economía</div>
+    <div class="grid">
+      <a class="calc-card" href="/sueldo-neto">
+        <div class="calc-icon">💼</div>
+        <div class="calc-info">
+          <div class="calc-name">Calculadora de sueldo neto<span class="badge-new">nuevo</span></div>
+          <div class="calc-desc">¿Cuánto te depositan? Calculá tu sueldo neto con descuentos ANSES y PAMI.</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/aguinaldo">
+        <div class="calc-icon">🎁</div>
+        <div class="calc-info">
+          <div class="calc-name">Calculadora de aguinaldo<span class="badge-new">nuevo</span></div>
+          <div class="calc-desc">Calculá tu SAC del primer o segundo semestre al instante.</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/mercado-pago">
+        <div class="calc-icon">💳</div>
+        <div class="calc-info">
+          <div class="calc-name">Rendimiento Mercado Pago</div>
+          <div class="calc-desc">¿Cuánto ganás dejando plata en Mercado Pago? Calculalo por días.</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/interes-compuesto">
+        <div class="calc-icon">📈</div>
+        <div class="calc-info">
+          <div class="calc-name">Interés compuesto</div>
+          <div class="calc-desc">Proyectá el crecimiento de tus ahorros con interés compuesto.</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/prestamo">
+        <div class="calc-icon">🏦</div>
+        <div class="calc-info">
+          <div class="calc-name">Calculadora de préstamo</div>
+          <div class="calc-desc">Cuota, total a pagar e intereses de cualquier préstamo.</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/inflacion">
+        <div class="calc-icon">📊</div>
+        <div class="calc-info">
+          <div class="calc-name">Calculadora de inflación</div>
+          <div class="calc-desc">¿Cuánto vale hoy lo que costaba antes? Actualizá precios por inflación.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- GIMNASIO -->
+  <div class="category">
+    <div class="category-title">💪 Salud y entrenamiento</div>
+    <div class="grid">
+      <a class="calc-card" href="/imc">
+        <div class="calc-icon">⚖️</div>
+        <div class="calc-info">
+          <div class="calc-name">Calculadora de IMC</div>
+          <div class="calc-desc">Índice de masa corporal con interpretación y peso ideal.</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/bmr">
+        <div class="calc-icon">🔥</div>
+        <div class="calc-info">
+          <div class="calc-name">Calorías diarias (BMR/TDEE)</div>
+          <div class="calc-desc">¿Cuántas calorías necesitás por día según tu actividad?</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/1rm">
+        <div class="calc-icon">🏋️</div>
+        <div class="calc-info">
+          <div class="calc-name">Calculadora de 1RM</div>
+          <div class="calc-desc">Estimá tu repetición máxima en cualquier ejercicio.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- FECHAS -->
+  <div class="category">
+    <div class="category-title">📅 Fechas y tiempo</div>
+    <div class="grid">
+      <a class="calc-card" href="/dias">
+        <div class="calc-icon">🗓️</div>
+        <div class="calc-info">
+          <div class="calc-name">Contador de días</div>
+          <div class="calc-desc">¿Cuántos días hay entre dos fechas? También días hábiles.</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/edad">
+        <div class="calc-icon">🎂</div>
+        <div class="calc-info">
+          <div class="calc-name">Calculadora de edad</div>
+          <div class="calc-desc">Calculá la edad exacta en años, meses y días.</div>
+        </div>
+      </a>
+      <a class="calc-card" href="/dia-semana">
+        <div class="calc-icon">📆</div>
+        <div class="calc-info">
+          <div class="calc-name">¿Qué día fue?</div>
+          <div class="calc-desc">Ingresá una fecha y descubrí qué día de la semana fue o será.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 Calculadora.live · Herramientas gratuitas para Argentina
+</footer>
+
+</body>
+</html>

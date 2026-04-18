@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contador de Días entre Fechas | Argentina — Calculadora.live</title>
+<meta name="description" content="Calculá cuántos días hay entre dos fechas. También días hábiles, semanas y meses. Gratis y al instante.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/dias">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F0F2F7;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
+  .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
+  .page{max-width:520px;margin:0 auto;padding:36px 20px 60px}
+  .page-icon{font-size:36px;margin-bottom:10px}
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+  .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:28px}
+  .card{background:var(--surface);border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid var(--border)}
+  .field{margin-bottom:18px}.field:last-child{margin-bottom:0}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
+  input[type=date]{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:16px;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;cursor:pointer}
+  input[type=date]:focus{border-color:var(--hi)}
+  .result-card{background:#0C1528;border-radius:var(--radius);padding:28px;margin-bottom:16px;border-top:3px solid var(--hi)}
+  .result-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
+  .result-main{font-size:52px;font-weight:700;color:white;letter-spacing:-0.03em;line-height:1;margin-bottom:4px}
+  .result-unit{font-size:20px;font-weight:400;opacity:0.5;margin-left:6px}
+  .result-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px}
+  .result-rows{border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .stat-box{background:rgba(255,255,255,0.05);border-radius:10px;padding:14px}
+  .stat-val{font-size:22px;font-weight:700;color:white;letter-spacing:-0.02em}
+  .stat-lbl{font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px}
+  .empty-state{color:rgba(255,255,255,0.3);font-size:15px}
+  .toggle-row{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+  .toggle-lbl{font-size:14px;font-weight:500;color:var(--ink)}
+  .toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+  .toggle input{opacity:0;width:0;height:0}
+  .toggle-track{position:absolute;inset:0;background:var(--border);border-radius:99px;cursor:pointer;transition:background .2s}
+  .toggle input:checked + .toggle-track{background:var(--hi)}
+  .toggle-track::after{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:white;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+  .toggle input:checked + .toggle-track::after{transform:translateX(20px)}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <a class="back-link" href="/">← Volver</a>
+</header>
+<div class="page">
+  <div class="page-icon">🗓️</div>
+  <h1 class="page-title">Contador de Días</h1>
+  <p class="page-sub">¿Cuántos días hay entre dos fechas? También en semanas y meses.</p>
+
+  <div class="card">
+    <div class="field">
+      <label>Fecha de inicio</label>
+      <input type="date" id="fecha1" oninput="calcular()">
+    </div>
+    <div class="field">
+      <label>Fecha de fin</label>
+      <input type="date" id="fecha2" oninput="calcular()">
+    </div>
+    <div class="field">
+      <div class="toggle-row">
+        <span class="toggle-lbl">Solo días hábiles</span>
+        <label class="toggle">
+          <input type="checkbox" id="habiles" onchange="calcular()">
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-eyebrow">Diferencia</div>
+    <div id="result-main" class="result-main"><span class="empty-state" style="font-size:16px">Seleccioná las fechas</span></div>
+    <div id="result-sub" class="result-sub"></div>
+    <div id="result-rows" class="result-rows" style="display:none">
+      <div class="stat-box">
+        <div class="stat-val" id="r-semanas">—</div>
+        <div class="stat-lbl">Semanas</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="r-meses">—</div>
+        <div class="stat-lbl">Meses aprox.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Inicializar con hoy y en 30 días
+  const hoy = new Date();
+  const en30 = new Date(); en30.setDate(hoy.getDate()+30);
+  document.getElementById('fecha1').value = hoy.toISOString().split('T')[0];
+  document.getElementById('fecha2').value = en30.toISOString().split('T')[0];
+  calcular();
+
+  function calcular(){
+    const f1=new Date(document.getElementById('fecha1').value);
+    const f2=new Date(document.getElementById('fecha2').value);
+    const mainEl=document.getElementById('result-main');
+    const subEl=document.getElementById('result-sub');
+    const rowsEl=document.getElementById('result-rows');
+    if(isNaN(f1)||isNaN(f2)){mainEl.innerHTML='<span class="empty-state" style="font-size:16px">Seleccioná las fechas</span>';subEl.textContent='';rowsEl.style.display='none';return}
+    const soloHabiles=document.getElementById('habiles').checked;
+    const inicio=f1<f2?f1:f2;
+    const fin=f1<f2?f2:f1;
+    const signo=f1<=f2?1:-1;
+    let dias=0;
+    if(soloHabiles){
+      let d=new Date(inicio);
+      while(d<fin){
+        const dow=d.getDay();
+        if(dow!==0&&dow!==6)dias++;
+        d.setDate(d.getDate()+1);
+      }
+    } else {
+      dias=Math.round(Math.abs(fin-inicio)/(1000*60*60*24));
+    }
+    dias*=signo<0?-1:1;
+    const semanas=(Math.abs(dias)/7).toFixed(1);
+    const meses=(Math.abs(dias)/30.44).toFixed(1);
+    const absDias=Math.abs(dias);
+    mainEl.innerHTML=`${absDias}<span class="result-unit">día${absDias!==1?'s':''}</span>`;
+    if(dias<0) subEl.textContent='La fecha de inicio es posterior a la de fin';
+    else if(dias===0) subEl.textContent='Las fechas son iguales';
+    else subEl.textContent=soloHabiles?'días hábiles (lunes a viernes)':'días corridos';
+    rowsEl.style.display='grid';
+    document.getElementById('r-semanas').textContent=semanas;
+    document.getElementById('r-meses').textContent=meses;
+  }
+</script>
+</body>
+</html>

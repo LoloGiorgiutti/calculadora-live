@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Edad Exacta — Calculadora.live</title>
+<meta name="description" content="Calculá tu edad exacta en años, meses y días. También cuántos días viviste y cuándo es tu próximo cumpleaños.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/edad">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F0F2F7;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
+  .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
+  .page{max-width:520px;margin:0 auto;padding:36px 20px 60px}
+  .page-icon{font-size:36px;margin-bottom:10px}
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+  .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:28px}
+  .card{background:var(--surface);border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid var(--border)}
+  .field{margin-bottom:18px}.field:last-child{margin-bottom:0}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
+  input[type=date]{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:16px;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;cursor:pointer}
+  input[type=date]:focus{border-color:var(--hi)}
+  .result-card{background:#0C1528;border-radius:var(--radius);padding:28px;margin-bottom:16px;border-top:3px solid var(--hi)}
+  .result-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
+  .result-main{font-size:52px;font-weight:700;color:white;letter-spacing:-0.03em;line-height:1;margin-bottom:4px}
+  .result-unit{font-size:20px;font-weight:400;opacity:0.5;margin-left:6px}
+  .result-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px}
+  .result-rows{border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .stat-box{background:rgba(255,255,255,0.05);border-radius:10px;padding:14px}
+  .stat-val{font-size:20px;font-weight:700;color:white;letter-spacing:-0.02em}
+  .stat-lbl{font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px}
+  .birthday-box{margin-top:14px;padding:14px;background:rgba(255,255,255,0.05);border-radius:10px;display:flex;align-items:center;gap:10px}
+  .birthday-icon{font-size:22px}
+  .birthday-text{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4}
+  .birthday-text strong{color:white}
+  .empty-state{color:rgba(255,255,255,0.3);font-size:15px}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <a class="back-link" href="/">← Volver</a>
+</header>
+<div class="page">
+  <div class="page-icon">🎂</div>
+  <h1 class="page-title">Calculadora de Edad</h1>
+  <p class="page-sub">Calculá tu edad exacta y cuándo es tu próximo cumpleaños.</p>
+
+  <div class="card">
+    <div class="field">
+      <label>Fecha de nacimiento</label>
+      <input type="date" id="nacimiento" oninput="calcular()">
+    </div>
+    <div class="field">
+      <label>Calcular al</label>
+      <input type="date" id="referencia" oninput="calcular()">
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-eyebrow">Tu edad</div>
+    <div id="result-main" class="result-main"><span class="empty-state" style="font-size:16px">Ingresá tu fecha de nacimiento</span></div>
+    <div id="result-sub" class="result-sub"></div>
+    <div id="result-rows" class="result-rows" style="display:none">
+      <div class="stat-box">
+        <div class="stat-val" id="r-meses">—</div>
+        <div class="stat-lbl">Meses vividos</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="r-dias">—</div>
+        <div class="stat-lbl">Días vividos</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="r-semanas">—</div>
+        <div class="stat-lbl">Semanas vividas</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="r-horas">—</div>
+        <div class="stat-lbl">Horas aprox.</div>
+      </div>
+    </div>
+    <div id="birthday-box" class="birthday-box" style="display:none">
+      <span class="birthday-icon">🎉</span>
+      <div class="birthday-text" id="birthday-text"></div>
+    </div>
+  </div>
+</div>
+<script>
+  const hoy=new Date();
+  document.getElementById('referencia').value=hoy.toISOString().split('T')[0];
+
+  function calcular(){
+    const nac=new Date(document.getElementById('nacimiento').value);
+    const ref=new Date(document.getElementById('referencia').value);
+    const mainEl=document.getElementById('result-main');
+    const subEl=document.getElementById('result-sub');
+    const rowsEl=document.getElementById('result-rows');
+    const bdBox=document.getElementById('birthday-box');
+    if(isNaN(nac)||isNaN(ref)||nac>ref){
+      mainEl.innerHTML='<span class="empty-state" style="font-size:16px">Ingresá tu fecha de nacimiento</span>';
+      subEl.textContent='';rowsEl.style.display='none';bdBox.style.display='none';return;
+    }
+    let anos=ref.getFullYear()-nac.getFullYear();
+    let mesesExtra=ref.getMonth()-nac.getMonth();
+    let diasExtra=ref.getDate()-nac.getDate();
+    if(diasExtra<0){mesesExtra--;const prevMonth=new Date(ref.getFullYear(),ref.getMonth(),0);diasExtra+=prevMonth.getDate()}
+    if(mesesExtra<0){anos--;mesesExtra+=12}
+    const totalDias=Math.floor((ref-nac)/(1000*60*60*24));
+    const totalMeses=anos*12+mesesExtra;
+    const totalSemanas=Math.floor(totalDias/7);
+    const totalHoras=(totalDias*24).toLocaleString('es-AR');
+
+    mainEl.innerHTML=`${anos}<span class="result-unit">año${anos!==1?'s':''}</span>`;
+    subEl.textContent=`${mesesExtra} mes${mesesExtra!==1?'es':''} y ${diasExtra} día${diasExtra!==1?'s':''} más`;
+    rowsEl.style.display='grid';
+    document.getElementById('r-meses').textContent=totalMeses.toLocaleString('es-AR');
+    document.getElementById('r-dias').textContent=totalDias.toLocaleString('es-AR');
+    document.getElementById('r-semanas').textContent=totalSemanas.toLocaleString('es-AR');
+    document.getElementById('r-horas').textContent=totalHoras;
+
+    // Próximo cumpleaños
+    let proxCump=new Date(ref.getFullYear(),nac.getMonth(),nac.getDate());
+    if(proxCump<=ref)proxCump.setFullYear(ref.getFullYear()+1);
+    const diasHastaCump=Math.round((proxCump-ref)/(1000*60*60*24));
+    const opts={day:'numeric',month:'long'};
+    bdBox.style.display='flex';
+    if(diasHastaCump===0){
+      document.getElementById('birthday-text').innerHTML='<strong>¡Hoy es tu cumpleaños!</strong> 🎂';
+    } else {
+      document.getElementById('birthday-text').innerHTML=`Tu próximo cumpleaños es el <strong>${proxCump.toLocaleDateString('es-AR',opts)}</strong> — faltan <strong>${diasHastaCump} días</strong>`;
+    }
+  }
+</script>
+</body>
+</html>

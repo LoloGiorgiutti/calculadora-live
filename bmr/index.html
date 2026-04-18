@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Calorías Diarias (BMR/TDEE) — Calculadora.live</title>
+<meta name="description" content="Calculá cuántas calorías necesitás por día según tu peso, altura, edad y nivel de actividad física. Fórmula Mifflin-St Jeor.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/bmr">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F0F2F7;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
+  .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
+  .page{max-width:520px;margin:0 auto;padding:36px 20px 60px}
+  .page-icon{font-size:36px;margin-bottom:10px}
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+  .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:28px}
+  .card{background:var(--surface);border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid var(--border)}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .field{margin-bottom:18px}.field:last-child{margin-bottom:0}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
+  .input-wrap{position:relative}
+  .input-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none}
+  input[type=number]{width:100%;padding:13px 44px 13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  input[type=number]:focus{border-color:var(--hi)}
+  .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .seg-btn{padding:10px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;text-align:center}
+  .seg-btn.active{background:var(--hi-soft);border-color:var(--hi);color:var(--hi)}
+  select{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;transition:border-color .15s}
+  select:focus{border-color:var(--hi)}
+  .result-card{background:#0C1528;border-radius:var(--radius);padding:28px;margin-bottom:16px;border-top:3px solid var(--hi)}
+  .result-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
+  .result-main{font-size:48px;font-weight:700;color:white;letter-spacing:-0.03em;line-height:1;margin-bottom:4px}
+  .result-unit{font-size:18px;font-weight:400;opacity:0.5;margin-left:4px}
+  .result-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px}
+  .result-rows{border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;display:flex;flex-direction:column;gap:8px}
+  .result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:8px}
+  .result-row.highlight{background:rgba(255,255,255,0.08)}
+  .result-row-lbl{font-size:13px;color:rgba(255,255,255,0.5)}
+  .result-row-val{font-size:14px;font-weight:600;color:rgba(255,255,255,0.85)}
+  .result-divider{height:1px;background:rgba(255,255,255,0.08);margin:4px 0}
+  .empty-state{color:rgba(255,255,255,0.3);font-size:15px}
+  .info-box{background:var(--hi-soft);border:1px solid #BFDBFE;border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:var(--ink-light);line-height:1.5}
+  .info-box strong{color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <a class="back-link" href="/">← Volver</a>
+</header>
+<div class="page">
+  <div class="page-icon">🔥</div>
+  <h1 class="page-title">Calorías Diarias</h1>
+  <p class="page-sub">¿Cuántas calorías necesitás por día? BMR y TDEE con fórmula Mifflin-St Jeor.</p>
+
+  <div class="card">
+    <div class="field">
+      <label>Sexo</label>
+      <div class="seg">
+        <button class="seg-btn active" id="btn-m" onclick="setSexo('m')">♂ Masculino</button>
+        <button class="seg-btn" id="btn-f" onclick="setSexo('f')">♀ Femenino</button>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="field">
+        <label>Peso</label>
+        <div class="input-wrap">
+          <input type="number" id="peso" placeholder="70" min="30" max="300" oninput="calcular()">
+          <span class="input-suffix">kg</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Altura</label>
+        <div class="input-wrap">
+          <input type="number" id="altura" placeholder="170" min="100" max="250" oninput="calcular()">
+          <span class="input-suffix">cm</span>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Edad</label>
+      <div class="input-wrap">
+        <input type="number" id="edad" placeholder="30" min="10" max="100" oninput="calcular()">
+        <span class="input-suffix">años</span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Nivel de actividad</label>
+      <select id="actividad" onchange="calcular()">
+        <option value="1.2">Sedentario (sin ejercicio)</option>
+        <option value="1.375">Ligero (1-3 días/semana)</option>
+        <option value="1.55" selected>Moderado (3-5 días/semana)</option>
+        <option value="1.725">Activo (6-7 días/semana)</option>
+        <option value="1.9">Muy activo (2 veces por día)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-eyebrow">Calorías para mantener tu peso</div>
+    <div id="result-main" class="result-main"><span class="empty-state">Completá los datos</span></div>
+    <div id="result-sub" class="result-sub"></div>
+    <div id="result-rows" class="result-rows" style="display:none">
+      <div class="result-row">
+        <span class="result-row-lbl">BMR (metabolismo basal)</span>
+        <span class="result-row-val" id="r-bmr">—</span>
+      </div>
+      <div class="result-divider"></div>
+      <div class="result-row highlight">
+        <span class="result-row-lbl" style="color:rgba(255,255,255,0.8);font-weight:600">Para bajar de peso</span>
+        <span class="result-row-val" id="r-bajar" style="color:#86EFAC">—</span>
+      </div>
+      <div class="result-row highlight">
+        <span class="result-row-lbl" style="color:rgba(255,255,255,0.8);font-weight:600">Para mantener peso</span>
+        <span class="result-row-val" id="r-mantener" style="color:white">—</span>
+      </div>
+      <div class="result-row highlight">
+        <span class="result-row-lbl" style="color:rgba(255,255,255,0.8);font-weight:600">Para subir de peso</span>
+        <span class="result-row-val" id="r-subir" style="color:#FCA5A5">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>¿Qué es el BMR?</strong><br>
+    El BMR (Basal Metabolic Rate) es la energía que tu cuerpo usa en reposo total. El TDEE (Total Daily Energy Expenditure) multiplica el BMR por tu nivel de actividad para estimar cuántas calorías quemás por día.
+  </div>
+</div>
+<script>
+  let sexo='m';
+  function setSexo(s){sexo=s;document.getElementById('btn-m').classList.toggle('active',s==='m');document.getElementById('btn-f').classList.toggle('active',s==='f');calcular()}
+  function calcular(){
+    const peso=parseFloat(document.getElementById('peso').value)||0;
+    const altura=parseFloat(document.getElementById('altura').value)||0;
+    const edad=parseFloat(document.getElementById('edad').value)||0;
+    const act=parseFloat(document.getElementById('actividad').value)||1.55;
+    const mainEl=document.getElementById('result-main');
+    const subEl=document.getElementById('result-sub');
+    const rowsEl=document.getElementById('result-rows');
+    if(!peso||!altura||!edad){mainEl.innerHTML='<span class="empty-state">Completá los datos</span>';subEl.textContent='';rowsEl.style.display='none';return}
+    const bmr=sexo==='m'?(10*peso+6.25*altura-5*edad+5):(10*peso+6.25*altura-5*edad-161);
+    const tdee=Math.round(bmr*act);
+    mainEl.innerHTML=`${tdee}<span class="result-unit">kcal/día</span>`;
+    subEl.textContent='para mantener tu peso actual';
+    rowsEl.style.display='flex';
+    document.getElementById('r-bmr').textContent=Math.round(bmr)+' kcal';
+    document.getElementById('r-bajar').textContent=(tdee-500)+' kcal/día';
+    document.getElementById('r-mantener').textContent=tdee+' kcal/día';
+    document.getElementById('r-subir').textContent=(tdee+500)+' kcal/día';
+  }
+</script>
+</body>
+</html>

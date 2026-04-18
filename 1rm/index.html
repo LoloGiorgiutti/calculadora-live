@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de 1RM | Repetición Máxima — Calculadora.live</title>
+<meta name="description" content="Calculá tu 1RM (repetición máxima) con la fórmula de Epley. Ingresá el peso y las repeticiones para conocer tu fuerza máxima estimada.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/1rm">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F0F2F7;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
+  .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
+  .page{max-width:520px;margin:0 auto;padding:36px 20px 60px}
+  .page-icon{font-size:36px;margin-bottom:10px}
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+  .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:28px}
+  .card{background:var(--surface);border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid var(--border)}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .field{margin-bottom:18px}.field:last-child{margin-bottom:0}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
+  .input-wrap{position:relative}
+  .input-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none}
+  input[type=number]{width:100%;padding:13px 44px 13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  input[type=number]:focus{border-color:var(--hi)}
+  .result-card{background:#0C1528;border-radius:var(--radius);padding:28px;margin-bottom:16px;border-top:3px solid var(--hi)}
+  .result-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
+  .result-main{font-size:52px;font-weight:700;color:white;letter-spacing:-0.03em;line-height:1;margin-bottom:4px}
+  .result-unit{font-size:20px;font-weight:400;opacity:0.5;margin-left:6px}
+  .result-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px}
+  .result-rows{border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;display:flex;flex-direction:column;gap:6px}
+  .result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:8px}
+  .result-row.highlight{background:rgba(255,255,255,0.08)}
+  .result-row-lbl{font-size:13px;color:rgba(255,255,255,0.5)}
+  .result-row-val{font-size:14px;font-weight:600;color:rgba(255,255,255,0.85)}
+  .result-row-pct{font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);min-width:36px;text-align:right;margin-left:8px}
+  .empty-state{color:rgba(255,255,255,0.3);font-size:15px}
+  .info-box{background:var(--hi-soft);border:1px solid #BFDBFE;border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:var(--ink-light);line-height:1.5}
+  .info-box strong{color:var(--ink)}
+  .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .seg-btn{padding:10px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;text-align:center}
+  .seg-btn.active{background:var(--hi-soft);border-color:var(--hi);color:var(--hi)}
+  .formula-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.04em;padding:3px 8px;border-radius:99px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);margin-bottom:16px}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <a class="back-link" href="/">← Volver</a>
+</header>
+<div class="page">
+  <div class="page-icon">🏋️</div>
+  <h1 class="page-title">Calculadora de 1RM</h1>
+  <p class="page-sub">Estimá tu repetición máxima (1RM) a partir del peso que levantás y las reps que hacés.</p>
+
+  <div class="card">
+    <div class="two-col">
+      <div class="field">
+        <label>Peso levantado</label>
+        <div class="input-wrap">
+          <input type="number" id="peso" placeholder="100" min="1" max="500" oninput="calcular()">
+          <span class="input-suffix">kg</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Repeticiones</label>
+        <div class="input-wrap">
+          <input type="number" id="reps" placeholder="5" min="1" max="30" oninput="calcular()">
+          <span class="input-suffix">reps</span>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Fórmula</label>
+      <div class="seg">
+        <button class="seg-btn active" id="btn-epley" onclick="setFormula('epley')">Epley</button>
+        <button class="seg-btn" id="btn-brzycki" onclick="setFormula('brzycki')">Brzycki</button>
+        <button class="seg-btn" id="btn-lander" onclick="setFormula('lander')">Lander</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-eyebrow">Tu 1RM estimado</div>
+    <div id="result-main" class="result-main"><span class="empty-state">Ingresá peso y reps</span></div>
+    <div id="result-sub" class="result-sub"></div>
+    <div id="result-rows" class="result-rows" style="display:none">
+      <!-- rows injected by JS -->
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>¿Qué es el 1RM?</strong><br>
+    El 1RM (1 Rep Max) es el peso máximo que podés levantar en una sola repetición. Se usa para planificar entrenamientos por porcentaje de intensidad. Las tres fórmulas dan resultados muy similares — Epley es la más usada.
+  </div>
+</div>
+<script>
+  let formula = 'epley';
+  function setFormula(f){
+    formula=f;
+    ['epley','brzycki','lander'].forEach(n=>document.getElementById('btn-'+n).classList.toggle('active',n===f));
+    calcular();
+  }
+
+  const porcentajes = [
+    {pct:100, lbl:'100% — Máximo (1 rep)'},
+    {pct:95,  lbl:'95% — Muy pesado (2 reps)'},
+    {pct:90,  lbl:'90% — Pesado (3-4 reps)'},
+    {pct:85,  lbl:'85% — Fuerza (5 reps)'},
+    {pct:80,  lbl:'80% — Fuerza/hipertrofia (6 reps)'},
+    {pct:75,  lbl:'75% — Hipertrofia (8 reps)'},
+    {pct:70,  lbl:'70% — Hipertrofia (10 reps)'},
+    {pct:65,  lbl:'65% — Volumen (12 reps)'},
+    {pct:60,  lbl:'60% — Volumen (15 reps)'},
+  ];
+
+  function calcular(){
+    const peso = parseFloat(document.getElementById('peso').value)||0;
+    const reps = parseInt(document.getElementById('reps').value)||0;
+    const mainEl = document.getElementById('result-main');
+    const subEl  = document.getElementById('result-sub');
+    const rowsEl = document.getElementById('result-rows');
+
+    if(!peso||!reps){
+      mainEl.innerHTML='<span class="empty-state">Ingresá peso y reps</span>';
+      subEl.textContent='';rowsEl.style.display='none';return;
+    }
+
+    let rm;
+    if(formula==='epley')   rm = reps===1 ? peso : peso*(1+reps/30);
+    else if(formula==='brzycki') rm = reps===1 ? peso : peso*(36/(37-reps));
+    else /* lander */        rm = reps===1 ? peso : (100*peso)/(101.3-2.67123*reps);
+
+    rm = Math.round(rm*10)/10;
+
+    mainEl.innerHTML=`${rm}<span class="result-unit">kg</span>`;
+    subEl.textContent=`con ${peso} kg × ${reps} rep${reps!==1?'s':''} · fórmula ${formula.charAt(0).toUpperCase()+formula.slice(1)}`;
+    rowsEl.style.display='flex';
+
+    rowsEl.innerHTML = porcentajes.map((p,i)=>{
+      const kg = Math.round(rm * p.pct/100 * 10)/10;
+      const isMain = p.pct===100;
+      return `<div class="result-row${isMain?' highlight':''}">
+        <span class="result-row-lbl">${p.lbl}</span>
+        <div style="display:flex;align-items:center;gap:4px">
+          <span class="result-row-val">${kg} kg</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+</script>
+</body>
+</html>

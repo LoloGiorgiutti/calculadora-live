@@ -83,9 +83,15 @@
 
   <!-- Input card -->
   <div class="card">
-    <div class="field">
-      <label>Fecha de nacimiento</label>
-      <input type="date" id="nacimiento" onchange="calcular()">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="field">
+        <label>Fecha de nacimiento</label>
+        <input type="date" id="nacimiento" onchange="calcular()">
+      </div>
+      <div class="field">
+        <label>Hora <span style="font-weight:400;font-size:10px;opacity:.6;text-transform:none;letter-spacing:0">(opcional)</span></label>
+        <input type="time" id="hora-nac" onchange="calcular()" style="width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;cursor:pointer">
+      </div>
     </div>
   </div>
 
@@ -166,7 +172,7 @@
     <div class="stat-card accent-green">
       <div class="stat-emoji">🗺️</div>
       <div class="stat-val" id="s-km">—</div>
-      <div class="stat-lbl">kilómetros caminados (prom. 6 km/día)</div>
+      <div class="stat-lbl">kilómetros caminados (prom. 3.5 km/día)</div>
     </div>
 
   </div><!-- /stats-grid -->
@@ -250,7 +256,7 @@
     document.getElementById('s-pasos').textContent  = fmt(days * 8000);
     document.getElementById('s-comidas').textContent= fmt(days * 3);
     document.getElementById('s-palabras').textContent = fmt(days * 16000);
-    document.getElementById('s-km').textContent     = fmt(days * 6);
+    document.getElementById('s-km').textContent     = fmt(days * 3.5);
   }
 
   // ---- Live tickers — each at its own natural rate ----
@@ -292,7 +298,10 @@
     if (!val) { showEmpty(); return; }
 
     const [y, m, d] = val.split('-').map(Number);
-    const parsed = new Date(y, m - 1, d);
+    const horaVal = document.getElementById('hora-nac').value; // "14:30" or ""
+    let bh = 0, bmin = 0;
+    if (horaVal) { const hp = horaVal.split(':'); bh = +hp[0]; bmin = +hp[1] || 0; }
+    const parsed = new Date(y, m - 1, d, bh, bmin, 0);
     if (isNaN(parsed.getTime()) || parsed > hoy) { showEmpty(); return; }
 
     birthDate = parsed;

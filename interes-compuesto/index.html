@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora de Interés Compuesto | Argentina 2026 — Calculadora.live</title>
-<meta name="description" content="Calculá el crecimiento de tus ahorros con interés compuesto. Capital inicial, tasa, plazo y aportes mensuales opcionales.">
+<meta name="description" content="Proyectá el crecimiento de tus ahorros con interés compuesto. Capital inicial, tasa anual, frecuencia de capitalización y varianza de tasa. Gráfico incluido.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://calculadora.live/interes-compuesto">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -15,27 +15,34 @@
   header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
   .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
   .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
-  .page{max-width:520px;margin:0 auto;padding:36px 20px 60px}
+  .page{max-width:560px;margin:0 auto;padding:36px 20px 60px}
   .page-icon{font-size:36px;margin-bottom:10px}
   .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
   .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:28px}
   .card{background:var(--surface);border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid var(--border)}
   .field{margin-bottom:18px}.field:last-child{margin-bottom:0}
-  label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
+  .field-opt-label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
+  .req-star{color:var(--hi);margin-left:2px}
+  .opt-hint{font-size:10px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink-faint);margin-left:4px}
   .input-wrap{position:relative}
-  .input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:15px;pointer-events:none}
+  .input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:15px;pointer-events:none;font-weight:500}
   .input-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none}
-  input[type=number]{width:100%;padding:13px 14px 13px 30px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  .input-pm{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-faint);font-size:14px;pointer-events:none;font-weight:600}
+  input[type=number]{width:100%;padding:13px 44px 13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;-moz-appearance:textfield}
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   input[type=number]:focus{border-color:var(--hi)}
-  input.no-prefix{padding-left:14px}
-  input.with-suffix{padding-right:44px}
-  .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .seg-btn{padding:10px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;text-align:center}
-  .seg-btn.active{background:var(--hi-soft);border-color:var(--hi);color:var(--hi)}
+  input.has-prefix{padding-left:30px}
+  input.has-pm{padding-left:30px}
+  select{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;transition:border-color .15s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2360647A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+  select:focus{border-color:var(--hi)}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  /* Result */
   .result-card{background:#0C1528;border-radius:var(--radius);padding:28px;margin-bottom:16px;border-top:3px solid var(--hi)}
   .result-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
   .result-main{font-size:42px;font-weight:700;color:white;letter-spacing:-0.03em;line-height:1;margin-bottom:4px}
   .result-main .currency{font-size:24px;font-weight:500;opacity:0.6;margin-right:2px}
+  .result-range{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:4px}
   .result-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px}
   .result-rows{border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;display:flex;flex-direction:column;gap:10px}
   .result-row{display:flex;justify-content:space-between;align-items:center}
@@ -44,14 +51,25 @@
   .result-row-val.pos{color:#86EFAC}
   .result-divider{height:1px;background:rgba(255,255,255,0.08);margin:2px 0}
   .empty-state{color:rgba(255,255,255,0.3);font-size:15px}
-  /* Barra proporcional */
+  /* Bar */
   .bar-wrap{margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1)}
   .bar-track{height:8px;border-radius:99px;background:rgba(255,255,255,0.1);overflow:hidden;margin:8px 0 6px;display:flex}
   .bar-capital{background:rgba(255,255,255,0.3);border-radius:99px 0 0 99px;transition:width .4s}
-  .bar-intereses{background:#86EFAC;border-radius:0 99px 99px 0;transition:width .4s}
+  .bar-int{background:#86EFAC;border-radius:0 99px 99px 0;transition:width .4s}
   .bar-labels{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.4)}
+  /* Chart */
+  .chart-card{background:var(--surface);border-radius:var(--radius);padding:20px 20px 14px;margin-bottom:16px;border:1px solid var(--border)}
+  .chart-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+  .chart-sub{font-size:11px;color:var(--ink-faint);margin-bottom:14px}
+  .chart-wrap{width:100%;overflow:hidden}
+  .chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px}
+  .legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-light)}
+  .legend-dot{width:10px;height:3px;border-radius:2px;flex-shrink:0}
+  /* Info */
   .info-box{background:var(--hi-soft);border:1px solid #BFDBFE;border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:var(--ink-light);line-height:1.5}
   .info-box strong{color:var(--ink)}
+  /* Required note */
+  .req-note{font-size:11px;color:var(--ink-faint);margin-bottom:16px}
 </style>
 </head>
 <body>
@@ -59,55 +77,78 @@
   <a class="logo" href="/">Calculadora<span>.live</span></a>
   <a class="back-link" href="/">← Volver</a>
 </header>
+
 <div class="page">
   <div class="page-icon">📈</div>
   <h1 class="page-title">Interés Compuesto</h1>
   <p class="page-sub">Proyectá el crecimiento de tus ahorros o inversiones a lo largo del tiempo.</p>
 
   <div class="card">
+    <p class="req-note"><span class="req-star">*</span> Campos obligatorios</p>
+
     <div class="field">
-      <label>Capital inicial</label>
+      <label class="field-opt-label">Inversión inicial<span class="req-star">*</span></label>
       <div class="input-wrap">
         <span class="input-prefix">$</span>
-        <input type="number" id="capital" placeholder="0" min="0" step="1000" oninput="calcular()">
+        <input type="number" id="capital" class="has-prefix" placeholder="100000" min="0" oninput="calcular()">
       </div>
     </div>
-    <div class="field">
-      <label>Tasa de interés</label>
-      <div class="input-wrap">
-        <input type="number" id="tasa" class="no-prefix with-suffix" placeholder="0" min="0" step="0.5" oninput="calcular()">
-        <span class="input-suffix">%</span>
+
+    <div class="two-col">
+      <div class="field">
+        <label class="field-opt-label">Cantidad de años<span class="req-star">*</span></label>
+        <div class="input-wrap">
+          <input type="number" id="anios" placeholder="10" min="1" max="50" oninput="calcular()">
+          <span class="input-suffix">años</span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-opt-label">Tasa de interés anual<span class="req-star">*</span></label>
+        <div class="input-wrap">
+          <input type="number" id="tasa" placeholder="60" min="0" step="0.5" oninput="calcular()">
+          <span class="input-suffix">%</span>
+        </div>
       </div>
     </div>
-    <div class="field">
-      <label>Período</label>
-      <div class="seg" style="margin-bottom:10px">
-        <button class="seg-btn active" id="btn-mensual" onclick="setPeriodo('mensual')">% Mensual</button>
-        <button class="seg-btn" id="btn-anual" onclick="setPeriodo('anual')">% Anual</button>
+
+    <div class="two-col">
+      <div class="field">
+        <label class="field-opt-label">Varianza de tasa <span class="opt-hint">opcional</span></label>
+        <div class="input-wrap">
+          <span class="input-pm">±</span>
+          <input type="number" id="varianza" class="has-pm" placeholder="0" min="0" max="50" step="0.5" oninput="calcular()">
+          <span class="input-suffix">%</span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-opt-label">Capitalización</label>
+        <select id="cap-freq" onchange="calcular()">
+          <option value="365">Diaria</option>
+          <option value="12" selected>Mensual</option>
+          <option value="4">Trimestral</option>
+          <option value="2">Semestral</option>
+          <option value="1">Anual</option>
+        </select>
       </div>
     </div>
+
     <div class="field">
-      <label>Plazo (meses)</label>
-      <div class="input-wrap">
-        <input type="number" id="plazo" class="no-prefix" placeholder="12" value="12" min="1" max="600" oninput="calcular()">
-      </div>
-    </div>
-    <div class="field">
-      <label>Aporte mensual <span style="font-weight:400;opacity:0.6">(opcional)</span></label>
+      <label class="field-opt-label">Aporte mensual <span class="opt-hint">opcional</span></label>
       <div class="input-wrap">
         <span class="input-prefix">$</span>
-        <input type="number" id="aporte" placeholder="0" min="0" step="1000" oninput="calcular()">
+        <input type="number" id="aporte" class="has-prefix" placeholder="0" min="0" oninput="calcular()">
       </div>
     </div>
   </div>
 
   <div class="result-card">
-    <div class="result-eyebrow">Capital final proyectado</div>
+    <div class="result-eyebrow">Valor futuro estimado</div>
     <div id="result-main" class="result-main"><span class="empty-state">Completá los datos</span></div>
+    <div id="result-range" class="result-range"></div>
     <div id="result-sub" class="result-sub"></div>
     <div id="result-rows" class="result-rows" style="display:none">
       <div class="result-row">
-        <span class="result-row-lbl">Capital invertido</span>
+        <span class="result-row-lbl">Capital + aportes invertidos</span>
         <span class="result-row-val" id="r-invertido">—</span>
       </div>
       <div class="result-row">
@@ -116,14 +157,18 @@
       </div>
       <div class="result-divider"></div>
       <div class="result-row">
-        <span class="result-row-lbl" style="color:rgba(255,255,255,0.8);font-weight:600">Total final</span>
+        <span class="result-row-lbl" style="color:rgba(255,255,255,0.85);font-weight:600">Total final</span>
         <span class="result-row-val pos" id="r-total">—</span>
       </div>
+      <div id="r-range-row" class="result-row" style="display:none">
+        <span class="result-row-lbl">Rango estimado (±varianza)</span>
+        <span class="result-row-val" id="r-range">—</span>
+      </div>
       <div class="bar-wrap">
-        <div style="font-size:11px;color:rgba(255,255,255,0.4)">Composición del capital final</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4)">Composición del valor futuro</div>
         <div class="bar-track">
           <div class="bar-capital" id="bar-cap"></div>
-          <div class="bar-intereses" id="bar-int"></div>
+          <div class="bar-int" id="bar-int"></div>
         </div>
         <div class="bar-labels">
           <span id="lbl-cap">Capital</span>
@@ -133,47 +178,200 @@
     </div>
   </div>
 
+  <!-- Gráfico -->
+  <div class="chart-card" id="chart-card" style="display:none">
+    <div class="chart-title">Proyección de crecimiento</div>
+    <div class="chart-sub" id="chart-sub"></div>
+    <div class="chart-wrap" id="chart-wrap"></div>
+    <div class="chart-legend" id="chart-legend"></div>
+  </div>
+
   <div class="info-box">
     <strong>¿Qué es el interés compuesto?</strong><br>
-    Los intereses que ganás se suman al capital y también generan intereses. Con el tiempo, el efecto se potencia — por eso Einstein lo llamó "la octava maravilla del mundo".
+    Los intereses que ganás se suman al capital y también generan intereses. La frecuencia de capitalización define cada cuánto se aplica ese efecto: a mayor frecuencia, mayor crecimiento final. Con el tiempo, la brecha entre lo invertido y el valor final crece exponencialmente.
   </div>
 </div>
+
 <script>
-  let periodo = 'mensual';
-  function setPeriodo(p){
-    periodo=p;
-    document.getElementById('btn-mensual').classList.toggle('active',p==='mensual');
-    document.getElementById('btn-anual').classList.toggle('active',p==='anual');
-    calcular();
+function fmt(n){
+  if(Math.abs(n)>=1e9) return '$\u00A0'+(n/1e9).toFixed(2)+' B';
+  if(Math.abs(n)>=1e6) return '$\u00A0'+(n/1e6).toFixed(2)+' M';
+  return '$\u00A0'+Math.round(n).toLocaleString('es-AR');
+}
+
+function calcSerie(capital, annualRate, years, compFreq, monthlyAporte) {
+  // Convert annual rate to effective monthly rate
+  const effMonthly = Math.pow(1 + annualRate / compFreq, compFreq / 12) - 1;
+  const totalMonths = years * 12;
+  let balance = capital;
+  const data = [capital]; // index = year, data[0] = today
+  for (let m = 1; m <= totalMonths; m++) {
+    balance = balance * (1 + effMonthly) + monthlyAporte;
+    if (m % 12 === 0) data.push(balance);
   }
-  function fmt(n){return '$\u00A0'+Math.round(n).toLocaleString('es-AR')}
-  function calcular(){
-    const capital=parseFloat(document.getElementById('capital').value)||0;
-    const tasa=parseFloat(document.getElementById('tasa').value)||0;
-    const plazo=parseInt(document.getElementById('plazo').value)||12;
-    const aporte=parseFloat(document.getElementById('aporte').value)||0;
-    const mainEl=document.getElementById('result-main');
-    const subEl=document.getElementById('result-sub');
-    const rowsEl=document.getElementById('result-rows');
-    if(!capital&&!aporte||!tasa){mainEl.innerHTML='<span class="empty-state">Completá los datos</span>';subEl.textContent='';rowsEl.style.display='none';return}
-    const r=periodo==='mensual'?tasa/100:tasa/100/12;
-    let total=capital;
-    for(let i=0;i<plazo;i++){total=total*(1+r)+aporte}
-    const invertido=capital+aporte*plazo;
-    const intereses=total-invertido;
-    const capPct=Math.round((invertido/total)*100);
-    const intPct=100-capPct;
-    mainEl.innerHTML=`<span class="currency">$</span>${Math.round(total).toLocaleString('es-AR')}`;
-    subEl.textContent=`en ${plazo} meses · tasa ${tasa}% ${periodo}`;
-    rowsEl.style.display='flex';
-    document.getElementById('r-invertido').textContent=fmt(invertido);
-    document.getElementById('r-intereses').textContent='+ '+fmt(intereses);
-    document.getElementById('r-total').textContent=fmt(total);
-    document.getElementById('bar-cap').style.width=capPct+'%';
-    document.getElementById('bar-int').style.width=intPct+'%';
-    document.getElementById('lbl-cap').textContent=`Capital ${capPct}%`;
-    document.getElementById('lbl-int').textContent=`Intereses ${intPct}%`;
+  return data;
+}
+
+function calcular() {
+  const capital  = parseFloat(document.getElementById('capital').value) || 0;
+  const anios    = parseInt(document.getElementById('anios').value) || 0;
+  const tasa     = parseFloat(document.getElementById('tasa').value) || 0;
+  const varianza = parseFloat(document.getElementById('varianza').value) || 0;
+  const capFreq  = parseInt(document.getElementById('cap-freq').value) || 12;
+  const aporte   = parseFloat(document.getElementById('aporte').value) || 0;
+
+  const mainEl  = document.getElementById('result-main');
+  const rangeEl = document.getElementById('result-range');
+  const subEl   = document.getElementById('result-sub');
+  const rowsEl  = document.getElementById('result-rows');
+  const chartCard = document.getElementById('chart-card');
+
+  if (!capital && !aporte || !tasa || !anios) {
+    mainEl.innerHTML = '<span class="empty-state">Completá los datos</span>';
+    rangeEl.textContent = '';
+    subEl.textContent = '';
+    rowsEl.style.display = 'none';
+    chartCard.style.display = 'none';
+    return;
   }
+
+  const r = tasa / 100;
+  const rUp = (tasa + varianza) / 100;
+  const rDn = Math.max(0, tasa - varianza) / 100;
+
+  const serieBase  = calcSerie(capital, r, anios, capFreq, aporte);
+  const serieUp    = varianza > 0 ? calcSerie(capital, rUp, anios, capFreq, aporte) : serieBase;
+  const serieDn    = varianza > 0 ? calcSerie(capital, rDn, anios, capFreq, aporte) : serieBase;
+
+  const total     = serieBase[serieBase.length - 1];
+  const totalUp   = serieUp[serieUp.length - 1];
+  const totalDn   = serieDn[serieDn.length - 1];
+  const invertido = capital + aporte * anios * 12;
+  const intereses = total - invertido;
+
+  const capFreqNames = {365:'diaria', 12:'mensual', 4:'trimestral', 2:'semestral', 1:'anual'};
+  const capName = capFreqNames[capFreq] || 'mensual';
+
+  mainEl.innerHTML = `<span class="currency">$</span>${Math.round(total).toLocaleString('es-AR')}`;
+  subEl.textContent = `en ${anios} año${anios===1?'':'s'} · tasa ${tasa}% anual · capitalización ${capName}`;
+
+  if (varianza > 0) {
+    rangeEl.textContent = `Rango ±${varianza}%: ${fmt(totalDn)} – ${fmt(totalUp)}`;
+    document.getElementById('r-range-row').style.display = 'flex';
+    document.getElementById('r-range').textContent = `${fmt(totalDn)} – ${fmt(totalUp)}`;
+  } else {
+    rangeEl.textContent = '';
+    document.getElementById('r-range-row').style.display = 'none';
+  }
+
+  rowsEl.style.display = 'flex';
+  document.getElementById('r-invertido').textContent = fmt(invertido);
+  document.getElementById('r-intereses').textContent = '+ ' + fmt(intereses);
+  document.getElementById('r-total').textContent = fmt(total);
+
+  const capPct = Math.round((invertido / total) * 100);
+  const intPct = 100 - capPct;
+  document.getElementById('bar-cap').style.width = capPct + '%';
+  document.getElementById('bar-int').style.width = intPct + '%';
+  document.getElementById('lbl-cap').textContent = `Capital ${capPct}%`;
+  document.getElementById('lbl-int').textContent = `Intereses ${intPct}%`;
+
+  // Contributions series (linear)
+  const serieContrib = [];
+  for (let y = 0; y <= anios; y++) serieContrib.push(capital + aporte * y * 12);
+
+  renderChart(serieBase, serieUp, serieDn, serieContrib, varianza > 0, anios);
+  chartCard.style.display = 'block';
+}
+
+function renderChart(base, upper, lower, contrib, hasVarianza, years) {
+  const W = 520, H = 200, PL = 58, PR = 12, PT = 12, PB = 28;
+  const cW = W - PL - PR, cH = H - PT - PB;
+  const n = base.length;
+
+  const allVals = [...base, ...upper, ...lower, ...contrib].filter(v => isFinite(v));
+  const minV = Math.min(...allVals, 0);
+  const maxV = Math.max(...allVals);
+  const range = maxV - minV || 1;
+
+  function xOf(i) { return PL + (i / (n - 1)) * cW; }
+  function yOf(v) { return PT + cH - ((v - minV) / range) * cH; }
+  function pts(arr) { return arr.map((v, i) => xOf(i) + ',' + yOf(v)).join(' '); }
+
+  const basePts    = pts(base);
+  const upperPts   = pts(upper);
+  const lowerPts   = pts(lower);
+  const contribPts = pts(contrib);
+
+  const lastX = xOf(n - 1);
+  const bottomY = PT + cH;
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block" xmlns="http://www.w3.org/2000/svg">`;
+
+  // Defs
+  svg += `<defs>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A5FE8" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#1A5FE8" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#86EFAC" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#86EFAC" stop-opacity="0.01"/>
+    </linearGradient>
+  </defs>`;
+
+  // Grid lines
+  const steps = 4;
+  for (let i = 0; i <= steps; i++) {
+    const v = minV + range * (i / steps);
+    const y = yOf(v);
+    svg += `<line x1="${PL}" y1="${y}" x2="${PL + cW}" y2="${y}" stroke="#F0F2F7" stroke-width="1"/>`;
+    svg += `<text x="${PL - 4}" y="${y + 3.5}" font-size="8" fill="#B4B8CC" text-anchor="end">${fmt(v).replace('$\u00A0','$')}</text>`;
+  }
+
+  if (hasVarianza) {
+    // Variance band: polygon from lower to upper (going forward then back)
+    const lowerReverse = [...lower].reverse().map((v, i) => xOf(n - 1 - i) + ',' + yOf(v)).join(' ');
+    svg += `<polygon points="${upperPts} ${lowerReverse}" fill="rgba(26,95,232,0.08)" stroke="none"/>`;
+    // Upper dashed
+    svg += `<polyline points="${upperPts}" fill="none" stroke="rgba(26,95,232,0.45)" stroke-width="1.3" stroke-dasharray="5,3"/>`;
+    // Lower dashed
+    svg += `<polyline points="${lowerPts}" fill="none" stroke="rgba(26,95,232,0.45)" stroke-width="1.3" stroke-dasharray="5,3"/>`;
+  }
+
+  // Contributions area + line
+  svg += `<polygon points="${xOf(0)},${bottomY} ${contribPts} ${lastX},${bottomY}" fill="url(#gGreen)" stroke="none"/>`;
+  svg += `<polyline points="${contribPts}" fill="none" stroke="#86EFAC" stroke-width="1.5" stroke-dasharray="6,3"/>`;
+
+  // Base area + line
+  svg += `<polygon points="${xOf(0)},${bottomY} ${basePts} ${lastX},${bottomY}" fill="url(#gBlue)" stroke="none"/>`;
+  svg += `<polyline points="${basePts}" fill="none" stroke="#1A5FE8" stroke-width="2" stroke-linejoin="round"/>`;
+
+  // X axis labels
+  for (let i = 0; i < n; i++) {
+    const skip = n <= 11 ? 1 : Math.ceil((n - 1) / 8);
+    if (i % skip === 0 || i === n - 1) {
+      const lbl = i === 0 ? 'hoy' : i + 'a';
+      svg += `<text x="${xOf(i)}" y="${H - 5}" font-size="8.5" fill="#B4B8CC" text-anchor="middle">${lbl}</text>`;
+    }
+  }
+
+  svg += '</svg>';
+  document.getElementById('chart-wrap').innerHTML = svg;
+
+  // Legend
+  let legend = `<div class="legend-item"><div class="legend-dot" style="background:#1A5FE8"></div>Valor futuro</div>`;
+  legend += `<div class="legend-item"><div class="legend-dot" style="background:#86EFAC;"></div>Total invertido</div>`;
+  if (hasVarianza) {
+    legend += `<div class="legend-item"><div class="legend-dot" style="background:rgba(26,95,232,0.4);border-top:1px dashed #1A5FE8;height:1px;"></div>Rango de varianza</div>`;
+  }
+  document.getElementById('chart-legend').innerHTML = legend;
+
+  const sub = hasVarianza
+    ? `Proyección central con banda de varianza ±${document.getElementById('varianza').value}%`
+    : `El área verde muestra lo invertido — la brecha azul es el poder del interés compuesto`;
+  document.getElementById('chart-sub').textContent = sub;
+}
 </script>
 <script src="/nav.js"></script>
 </body>

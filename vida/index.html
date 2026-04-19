@@ -111,12 +111,11 @@
       <div class="stat-lbl">latidos del corazón (70/min promedio)</div>
     </div>
 
-    <!-- 2. Respiraciones — LIVE, red -->
-    <div class="stat-card accent-red">
-      <div class="live-badge"><span class="live-dot"></span>en vivo</div>
-      <div class="stat-emoji">💨</div>
-      <div class="stat-val" id="s-respiraciones">—</div>
-      <div class="stat-lbl">veces que respiraste (16/min)</div>
+    <!-- 2. Días vividos — purple -->
+    <div class="stat-card accent-purple">
+      <div class="stat-emoji">📅</div>
+      <div class="stat-val" id="s-dias">—</div>
+      <div class="stat-lbl">días que viviste</div>
     </div>
 
     <!-- 3. Pestañeos — LIVE, red -->
@@ -163,18 +162,11 @@
       <div class="stat-lbl">palabras aproximadas que dijiste</div>
     </div>
 
-    <!-- 8. Vueltas al sol — green -->
+    <!-- 8. Km caminados — green -->
     <div class="stat-card accent-green">
-      <div class="stat-emoji">🌍</div>
-      <div class="stat-val" id="s-sol">—</div>
-      <div class="stat-lbl">vueltas al sol que completaste</div>
-    </div>
-
-    <!-- 9. Lunas llenas — green -->
-    <div class="stat-card accent-green">
-      <div class="stat-emoji">🌙</div>
-      <div class="stat-val" id="s-lunas">—</div>
-      <div class="stat-lbl">lunas llenas que viste</div>
+      <div class="stat-emoji">🗺️</div>
+      <div class="stat-val" id="s-km">—</div>
+      <div class="stat-lbl">kilómetros caminados (prom. 6 km/día)</div>
     </div>
 
   </div><!-- /stats-grid -->
@@ -193,7 +185,7 @@
   document.getElementById('nacimiento').setAttribute('max', todayStr);
 
   let birthDate = null;
-  let liveInterval = null;
+  let liveIntervals = [];
 
   // ---- Helpers ----
   function fmt(n) {
@@ -250,100 +242,84 @@
     return `${sleepYears.toFixed(2)} años`;
   }
 
-  // ---- Static stats (recalc on change but not every second) ----
+  // ---- Static stats ----
   function updateStatics() {
     const days = ageDays();
-    const years = ageYears();
-
-    // Sleep
-    document.getElementById('s-sueno').innerHTML = sleepStr();
-
-    // Steps
-    document.getElementById('s-pasos').textContent = fmt(days * 8000);
-
-    // Comidas
-    document.getElementById('s-comidas').textContent = fmt(days * 3);
-
-    // Palabras
+    document.getElementById('s-dias').textContent   = fmt(days);
+    document.getElementById('s-sueno').innerHTML    = sleepStr();
+    document.getElementById('s-pasos').textContent  = fmt(days * 8000);
+    document.getElementById('s-comidas').textContent= fmt(days * 3);
     document.getElementById('s-palabras').textContent = fmt(days * 16000);
-
-    // Vueltas al sol
-    document.getElementById('s-sol').textContent = years.toFixed(2);
-
-    // Lunas llenas
-    document.getElementById('s-lunas').textContent = fmt(days / 29.53);
+    document.getElementById('s-km').textContent     = fmt(days * 6);
   }
 
-  // ---- Live stats (every second) ----
-  function updateLive() {
-    const secs = ageSeconds();
+  // ---- Live tickers — each at its own natural rate ----
+  function tickEl(id, getValue) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = fmt(getValue());
+    popEl(el);
+  }
 
-    const latEl = document.getElementById('s-latidos');
-    const respEl = document.getElementById('s-respiraciones');
-    const pestEl = document.getElementById('s-pestaneos');
-    const segsEl = document.getElementById('s-segundos');
+  function stopLive() {
+    liveIntervals.forEach(clearInterval);
+    liveIntervals = [];
+  }
 
-    latEl.textContent  = fmt(secs * (70 / 60));
-    respEl.textContent = fmt(secs * (16 / 60));
-    pestEl.textContent = fmt(secs * (15 / 60));
-    segsEl.textContent = fmt(secs);
+  function startLive() {
+    stopLive();
 
-    // Subtle pop on each update
-    popEl(latEl);
-    popEl(respEl);
-    popEl(pestEl);
-    popEl(segsEl);
+    // Segundos: every 1000 ms — also refreshes summary age
+    liveIntervals.push(setInterval(function() {
+      tickEl('s-segundos', ageSeconds);
+      document.getElementById('summary-age').textContent = exactAgeStr(new Date());
+    }, 1000));
+
+    // Latidos: every 857 ms (~70 bpm = 1 beat per 857 ms)
+    liveIntervals.push(setInterval(function() {
+      tickEl('s-latidos', function() { return ageSeconds() * (70 / 60); });
+    }, 857));
+
+    // Pestañeos: every 4000 ms (~15 blinks/min = 1 blink per 4 s)
+    liveIntervals.push(setInterval(function() {
+      tickEl('s-pestaneos', function() { return ageSeconds() * (15 / 60); });
+    }, 4000));
   }
 
   // ---- Main calculate ----
   function calcular() {
     const val = document.getElementById('nacimiento').value;
+    if (!val) { showEmpty(); return; }
 
-    if (!val) {
-      showEmpty();
-      return;
-    }
-
-    // Parse as local date (avoid UTC shift)
     const [y, m, d] = val.split('-').map(Number);
     const parsed = new Date(y, m - 1, d);
-
-    if (isNaN(parsed.getTime()) || parsed > hoy) {
-      showEmpty();
-      return;
-    }
+    if (isNaN(parsed.getTime()) || parsed > hoy) { showEmpty(); return; }
 
     birthDate = parsed;
 
-    // Show results
-    document.getElementById('empty-card').style.display = 'none';
+    document.getElementById('empty-card').style.display  = 'none';
     document.getElementById('summary-bar').style.display = 'block';
-    document.getElementById('stats-grid').style.display = 'grid';
-    document.getElementById('info-box').style.display = 'block';
+    document.getElementById('stats-grid').style.display  = 'grid';
+    document.getElementById('info-box').style.display    = 'block';
 
-    // Summary
     document.getElementById('summary-age').textContent = exactAgeStr(hoy);
 
-    // First render
+    // Initial render
     updateStatics();
-    updateLive();
+    tickEl('s-segundos',  ageSeconds);
+    tickEl('s-latidos',   function() { return ageSeconds() * (70/60); });
+    tickEl('s-pestaneos', function() { return ageSeconds() * (15/60); });
 
-    // Start live ticker
-    if (liveInterval) clearInterval(liveInterval);
-    liveInterval = setInterval(function() {
-      updateLive();
-      // Update summary age too (in case day rolls over)
-      document.getElementById('summary-age').textContent = exactAgeStr(new Date());
-    }, 1000);
+    startLive();
   }
 
   function showEmpty() {
     birthDate = null;
-    if (liveInterval) { clearInterval(liveInterval); liveInterval = null; }
-    document.getElementById('empty-card').style.display = 'block';
+    stopLive();
+    document.getElementById('empty-card').style.display  = 'block';
     document.getElementById('summary-bar').style.display = 'none';
-    document.getElementById('stats-grid').style.display = 'none';
-    document.getElementById('info-box').style.display = 'none';
+    document.getElementById('stats-grid').style.display  = 'none';
+    document.getElementById('info-box').style.display    = 'none';
   }
 </script>
 <script src="/nav.js"></script>

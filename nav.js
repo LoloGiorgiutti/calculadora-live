@@ -201,6 +201,78 @@
     filterNav(this.value.toLowerCase().trim());
   });
 
+  /* ── FORMATEO CON PUNTOS DE MILES EN INPUTS ($  y km) ────
+     Convierte inputs type=number con prefijo $ o sufijo km
+     a type=text con separador de miles (punto estilo es-AR).
+     El getter .value devuelve siempre los dígitos crudos para
+     que parseFloat/parseInt del código de cada página siga OK. */
+  (function () {
+    var proto = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+
+    function fmtMiles(s) {
+      var n = parseInt(s, 10);
+      return isNaN(n) || s === '' ? s : (n >= 1000 ? n.toLocaleString('es-AR') : s);
+    }
+
+    function patch(inp) {
+      if (inp._numFmtPatched) return;
+      inp._numFmtPatched = true;
+
+      var raw = proto.get.call(inp).replace(/[^0-9]/g, '');
+
+      // Sobreescribir .value: getter devuelve dígitos crudos (parseFloat sigue funcionando)
+      Object.defineProperty(inp, 'value', {
+        get: function () { return raw; },
+        set: function (v) {
+          raw = String(v == null ? '' : v).replace(/[^0-9]/g, '');
+          proto.set.call(this, fmtMiles(raw));
+        },
+        configurable: true
+      });
+
+      inp.type = 'text';
+      inp.setAttribute('inputmode', 'numeric');
+
+      // capture:true → corre ANTES del oninput="calcular()" del HTML
+      inp.addEventListener('input', function () {
+        var cur = this.selectionStart;
+        var displayed = proto.get.call(this);
+        var dotsBefore = (displayed.slice(0, cur).match(/\./g) || []).length;
+
+        raw = displayed.replace(/\./g, '').replace(/[^0-9]/g, '');
+        var formatted = fmtMiles(raw);
+        proto.set.call(this, formatted);
+
+        // Reposicionar cursor compensando puntos nuevos/eliminados
+        var newDotsBefore = (formatted.slice(0, cur).match(/\./g) || []).length;
+        var newCur = Math.max(0, Math.min(cur + newDotsBefore - dotsBefore, formatted.length));
+        try { this.setSelectionRange(newCur, newCur); } catch (e) {}
+      }, true); // capture phase
+
+      // Formatear valor inicial si ya tiene contenido
+      if (raw) proto.set.call(inp, fmtMiles(raw));
+    }
+
+    function applyAll() {
+      document.querySelectorAll('input[type=number]').forEach(function (inp) {
+        var wrap = inp.closest('.input-wrap');
+        if (!wrap) return;
+        var prefix = wrap.querySelector('.input-prefix');
+        var suffix = wrap.querySelector('.input-suffix');
+        var isDinero = prefix && prefix.textContent.trim() === '$';
+        var isKm     = suffix && suffix.textContent.trim().toLowerCase() === 'km';
+        if (!isDinero && !isKm) return;
+        patch(inp);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyAll);
+    } else {
+      setTimeout(applyAll, 0);
+    }
+  })();
+
   /* ── NÚMERO: desactivar scroll y flechas ─────────────────
      Listener en fase de CAPTURA (capture:true) + passive:false
      → se intercepta antes de que el input llegue a procesarlo,

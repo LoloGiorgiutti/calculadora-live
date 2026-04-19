@@ -69,6 +69,21 @@
       </select>
     </div>
     <div class="field">
+      <label>¿Es pick-up o SUV grande?</label>
+      <select id="pickup" onchange="calcular()">
+        <option value="no" selected>No (auto / SUV mediano)</option>
+        <option value="si">Sí (pick-up o SUV grande)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Tipo de motorización</label>
+      <select id="motor" onchange="calcular()">
+        <option value="combustion" selected>Combustión (nafta, diésel, GNC)</option>
+        <option value="hibrido">Híbrido (HEV / PHEV / MHEV)</option>
+        <option value="electrico">100% Eléctrico</option>
+      </select>
+    </div>
+    <div class="field">
       <label>Año de fabricación</label>
       <select id="anio-fab" onchange="calcular()">
         <!-- JS populated -->
@@ -90,7 +105,7 @@
     <div id="result-rows" class="result-rows" style="display:none">
       <div class="stat-box">
         <div class="stat-val" id="r-cuota">—</div>
-        <div class="stat-lbl">Por cuota (trimestral)</div>
+        <div class="stat-lbl">Por cuota (bimestral)</div>
       </div>
       <div class="stat-box">
         <div class="stat-val" id="r-tasa">—</div>
@@ -113,21 +128,21 @@
 
   <div class="info-box">
     <strong>¿Cómo funciona la patente?</strong><br>
-    La patente (Impuesto a los Automotores) es un tributo provincial/municipal. Se paga en 4 cuotas anuales y se calcula sobre el valor fiscal que fija cada provincia para cada modelo y año de vehículo.
+    La patente (Impuesto a los Automotores) es un tributo provincial/municipal. Se paga en 6 cuotas bimestrales y se calcula sobre el valor fiscal que fija cada provincia para cada modelo y año de vehículo.
   </div>
 </div>
 <script>
   // Tasas aproximadas por provincia (% anual sobre valor fiscal)
   const tasas = {
-    bsas:    { tasa: 0.036, nombre: 'Bs. As. Provincia' },
-    caba:    { tasa: 0.030, nombre: 'CABA' },
-    cordoba: { tasa: 0.032, nombre: 'Córdoba' },
-    santafe: { tasa: 0.025, nombre: 'Santa Fe' },
-    mendoza: { tasa: 0.032, nombre: 'Mendoza' },
-    tucuman: { tasa: 0.028, nombre: 'Tucumán' },
-    neuquen: { tasa: 0.022, nombre: 'Neuquén' },
-    salta:   { tasa: 0.030, nombre: 'Salta' },
-    otras:   { tasa: 0.030, nombre: 'Otras' },
+    bsas:    { tasa: 0.0472, nombre: 'Bs. As. Provincia' },
+    caba:    { tasa: 0.0350, nombre: 'CABA' },
+    cordoba: { tasa: 0.0380, nombre: 'Córdoba' },
+    santafe: { tasa: 0.0300, nombre: 'Santa Fe' },
+    mendoza: { tasa: 0.0350, nombre: 'Mendoza' },
+    tucuman: { tasa: 0.0320, nombre: 'Tucumán' },
+    neuquen: { tasa: 0.0280, nombre: 'Neuquén' },
+    salta:   { tasa: 0.0350, nombre: 'Salta' },
+    otras:   { tasa: 0.0360, nombre: 'Otras' },
   };
 
   const CURRENT_YEAR = 2026;
@@ -155,10 +170,15 @@
 
   function fmt(n){return '$\u00A0'+Math.round(n).toLocaleString('es-AR')}
 
+  const motorMultipliers = { combustion: 1.0, hibrido: 0.75, electrico: 0.50 };
+  const motorLabels      = { combustion: 'combustión', hibrido: 'híbrido', electrico: 'eléctrico' };
+
   function calcular(){
     const prov = document.getElementById('provincia').value;
     const anioFab = parseInt(document.getElementById('anio-fab').value)||CURRENT_YEAR;
     const valor = parseFloat(document.getElementById('valor').value)||0;
+    const pickup = document.getElementById('pickup').value;
+    const motor  = document.getElementById('motor').value;
     const mainEl = document.getElementById('result-main');
     const subEl  = document.getElementById('result-sub');
     const rowsEl = document.getElementById('result-rows');
@@ -171,15 +191,23 @@
     const {tasa, nombre} = tasas[prov];
     const antiguedad = CURRENT_YEAR - anioFab;
     const {mult, pct} = getMultiplier(antiguedad);
-    const anual = valor * tasa * mult;
-    const cuota = anual / 4;
+    const motorMult  = motorMultipliers[motor];
+    const pickupMult = pickup === 'si' ? 1.15 : 1.0;
+
+    let base = valor * tasa;
+    base = base * mult;
+    base = base * motorMult;
+    base = base * pickupMult;
+    const anual = base;
+    const cuota = anual / 6;
 
     mainEl.innerHTML=`<span class="result-currency">$</span>${Math.round(anual).toLocaleString('es-AR')}`;
     const descuentoTexto = pct > 0 ? ` · antigüedad: ${antiguedad} año${antiguedad!==1?'s':''} (descuento ${pct}%)` : ` · antigüedad: ${antiguedad} año${antiguedad!==1?'s':''}`;
-    subEl.textContent=`estimado para ${nombre} · ${(tasa*100).toFixed(1)}% anual${descuentoTexto}`;
+    const pickupTexto = pickup === 'si' ? ' · pick-up (+15%)' : '';
+    subEl.textContent=`estimado para ${nombre} · ${(tasa*100).toFixed(2)}% anual${descuentoTexto} · ${motorLabels[motor]}${pickupTexto}`;
     rowsEl.style.display='grid';
     document.getElementById('r-cuota').textContent=fmt(cuota);
-    document.getElementById('r-tasa').textContent=(tasa*100).toFixed(1)+'% anual';
+    document.getElementById('r-tasa').textContent=(tasa*100).toFixed(2)+'% anual';
     document.getElementById('r-antiguedad').textContent=antiguedad+' año'+(antiguedad!==1?'s':'');
     document.getElementById('r-descuento').textContent=pct > 0 ? pct+'%' : 'No aplica';
   }

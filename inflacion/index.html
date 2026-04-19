@@ -104,14 +104,14 @@
           <div class="period-tag">Desde</div>
           <div class="period-selects">
             <select id="desde-mes" onchange="calcular()"></select>
-            <select id="desde-anio" onchange="calcular()"></select>
+            <select id="desde-anio" onchange="onAnioChange('desde')"></select>
           </div>
         </div>
         <div class="period-block">
           <div class="period-tag">Hasta</div>
           <div class="period-selects">
             <select id="hasta-mes" onchange="calcular()"></select>
-            <select id="hasta-anio" onchange="calcular()"></select>
+            <select id="hasta-anio" onchange="onAnioChange('hasta')"></select>
           </div>
           <button class="today-btn" onclick="setHoy()">📅 Mes actual</button>
         </div>
@@ -277,11 +277,16 @@ function countMonths(y1,m1,y2,m2){
 }
 
 /* ─── INICIALIZAR UI ─────────────────────────────────────── */
-function poblarMeses(id){
+function poblarMesesFiltrados(id, maxMes){
   var s=document.getElementById(id);
-  MESES_FULL.forEach(function(n,i){
-    var o=document.createElement('option');o.value=i+1;o.textContent=n;s.appendChild(o);
-  });
+  var curVal=+s.value||1;
+  s.innerHTML='';
+  for(var i=0;i<MESES_FULL.length;i++){
+    if(i+1>maxMes) break;
+    var o=document.createElement('option');o.value=i+1;o.textContent=MESES_FULL[i];s.appendChild(o);
+  }
+  // Restore value if still valid, otherwise clamp to max available
+  s.value=(curVal<=maxMes)?curVal:maxMes;
 }
 function poblarAnios(id,defVal){
   var s=document.getElementById(id);
@@ -290,7 +295,16 @@ function poblarAnios(id,defVal){
   }
   s.value=defVal;
 }
-poblarMeses('desde-mes'); poblarMeses('hasta-mes');
+function onAnioChange(which){
+  var y=+document.getElementById(which+'-anio').value;
+  var maxMes=(y>=MES_ACTUAL.y)?MES_ACTUAL.m:12;
+  poblarMesesFiltrados(which+'-mes', maxMes);
+  calcular();
+}
+
+// Inicializar selectores
+poblarMesesFiltrados('desde-mes', 12);
+poblarMesesFiltrados('hasta-mes', MES_ACTUAL.m);
 poblarAnios('desde-anio',1992); poblarAnios('hasta-anio',MES_ACTUAL.y);
 document.getElementById('desde-mes').value=1;
 // Hasta: mes actual por defecto

@@ -36,6 +36,11 @@
   .weekend-tag.fin{background:rgba(134,239,172,0.15);color:#86EFAC}
   .weekend-tag.habil{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4)}
   .empty-state{color:rgba(255,255,255,0.3);font-size:15px}
+  /* Chip selectors inside stat boxes */
+  .chip-row{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap}
+  .time-chip{padding:3px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:transparent;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;color:rgba(255,255,255,0.35);cursor:pointer;transition:all .15s;letter-spacing:0.02em}
+  .time-chip.active{background:var(--hi);border-color:var(--hi);color:white}
+  .time-chip:hover:not(.active){background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6)}
   /* Day grid */
   .day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1)}
   .day-cell{text-align:center;padding:8px 0;border-radius:8px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.3)}
@@ -75,22 +80,38 @@
         <div class="stat-val" id="r-dia-anio">—</div>
         <div class="stat-lbl">Día del año</div>
       </div>
+      <!-- Tiempo corto: Horas / Días / Semanas -->
       <div class="stat-box">
-        <div class="stat-val" id="r-dias-hoy">—</div>
-        <div class="stat-lbl" id="r-dias-hoy-lbl">Días desde hoy</div>
+        <div class="chip-row">
+          <button class="time-chip" data-group="corto" data-unit="horas" onclick="setUnit('corto','horas',this)">Horas</button>
+          <button class="time-chip active" data-group="corto" data-unit="dias" onclick="setUnit('corto','dias',this)">Días</button>
+          <button class="time-chip" data-group="corto" data-unit="semanas" onclick="setUnit('corto','semanas',this)">Semanas</button>
+        </div>
+        <div class="stat-val" id="r-corto">—</div>
+        <div class="stat-lbl" id="r-corto-lbl">Días desde hoy</div>
       </div>
+      <!-- Tiempo largo: Meses / Años / Décadas -->
       <div class="stat-box">
-        <div class="stat-val" id="r-trimestre">—</div>
-        <div class="stat-lbl">Trimestre</div>
+        <div class="chip-row">
+          <button class="time-chip active" data-group="largo" data-unit="meses" onclick="setUnit('largo','meses',this)">Meses</button>
+          <button class="time-chip" data-group="largo" data-unit="anios" onclick="setUnit('largo','anios',this)">Años</button>
+          <button class="time-chip" data-group="largo" data-unit="decadas" onclick="setUnit('largo','decadas',this)">Décadas</button>
+        </div>
+        <div class="stat-val" id="r-largo">—</div>
+        <div class="stat-lbl" id="r-largo-lbl">Meses desde hoy</div>
       </div>
     </div>
     <div id="day-grid" class="day-grid" style="display:none"></div>
   </div>
 </div>
 <script>
-  const dias    = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const dias      = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
   const diasCorto = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  const meses   = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const meses     = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+  let unitCorto = 'dias';
+  let unitLargo = 'meses';
+  let diffDias  = 0; // global, updated on each calcular()
 
   // Pre-load today
   const hoy = new Date();
@@ -109,6 +130,69 @@
     const start=new Date(d.getFullYear(),0,0);
     const diff=d-start;
     return Math.floor(diff/86400000);
+  }
+
+  function setUnit(group, unit, btn){
+    // Update active chip
+    document.querySelectorAll(`.time-chip[data-group="${group}"]`).forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    if(group==='corto') unitCorto=unit;
+    else unitLargo=unit;
+    renderTimeBoxes();
+  }
+
+  function renderTimeBoxes(){
+    if(document.getElementById('result-rows').style.display==='none') return;
+
+    const cortoEl  = document.getElementById('r-corto');
+    const cortoLbl = document.getElementById('r-corto-lbl');
+    const largoEl  = document.getElementById('r-largo');
+    const largoLbl = document.getElementById('r-largo-lbl');
+
+    const absDias = Math.abs(diffDias);
+    const isPast  = diffDias < 0;
+    const isFuture= diffDias > 0;
+    const isToday = diffDias === 0;
+
+    // --- CORTO ---
+    if(isToday){
+      cortoEl.textContent='Hoy';
+      cortoLbl.textContent='Es hoy';
+    } else {
+      let val, lbl;
+      if(unitCorto==='horas'){
+        val = Math.round(absDias * 24);
+        lbl = isPast ? 'Horas atrás' : 'Horas desde hoy';
+      } else if(unitCorto==='dias'){
+        val = absDias;
+        lbl = isPast ? 'Días atrás' : 'Días desde hoy';
+      } else { // semanas
+        val = Math.round(absDias / 7 * 10) / 10;
+        lbl = isPast ? 'Semanas atrás' : 'Semanas desde hoy';
+      }
+      cortoEl.textContent = (isPast ? 'Hace ' : 'En ') + val.toLocaleString('es-AR');
+      cortoLbl.textContent = lbl;
+    }
+
+    // --- LARGO ---
+    if(isToday){
+      largoEl.textContent='Hoy';
+      largoLbl.textContent='Es hoy';
+    } else {
+      let val, lbl;
+      if(unitLargo==='meses'){
+        val = Math.round(absDias / 30.44 * 10) / 10;
+        lbl = isPast ? 'Meses atrás' : 'Meses desde hoy';
+      } else if(unitLargo==='anios'){
+        val = Math.round(absDias / 365.25 * 10) / 10;
+        lbl = isPast ? 'Años atrás' : 'Años desde hoy';
+      } else { // decadas
+        val = Math.round(absDias / 3652.5 * 100) / 100;
+        lbl = isPast ? 'Décadas atrás' : 'Décadas desde hoy';
+      }
+      largoEl.textContent = (isPast ? 'Hace ' : 'En ') + val.toLocaleString('es-AR');
+      largoLbl.textContent = lbl;
+    }
   }
 
   function calcular(){
@@ -130,9 +214,8 @@
     const esFinDeSemana=(dow===0||dow===6);
     const semana=getWeekNumber(fecha);
     const diaAnio=getDayOfYear(fecha);
-    const trimestre=Math.ceil((fecha.getMonth()+1)/3);
     const hoyMidnight=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate());
-    const diffDias=Math.round((fecha-hoyMidnight)/86400000);
+    diffDias=Math.round((fecha-hoyMidnight)/86400000);
     const tag=esFinDeSemana?'Fin de semana':'Día hábil';
     const tagClass=esFinDeSemana?'fin':'habil';
 
@@ -143,12 +226,8 @@
 
     document.getElementById('r-semana').textContent='N° '+semana;
     document.getElementById('r-dia-anio').textContent='N° '+diaAnio;
-    const diasHoyEl=document.getElementById('r-dias-hoy');
-    const diasHoyLbl=document.getElementById('r-dias-hoy-lbl');
-    if(diffDias===0){diasHoyEl.textContent='Hoy';diasHoyLbl.textContent='Es hoy';}
-    else if(diffDias>0){diasHoyEl.textContent='En '+diffDias;diasHoyLbl.textContent='Días desde hoy';}
-    else{diasHoyEl.textContent='Hace '+Math.abs(diffDias);diasHoyLbl.textContent='Días atrás';}
-    document.getElementById('r-trimestre').textContent='Q'+trimestre;
+
+    renderTimeBoxes();
 
     // Day grid (Mon-Sun layout)
     const gridOrder=[1,2,3,4,5,6,0]; // Lun..Dom

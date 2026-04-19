@@ -20,11 +20,15 @@
       { n: 'Calculadora de IMC',     u: '/imc',              d: 'Índice de masa corporal (OMS)' },
       { n: 'Calorías diarias (BMR)', u: '/bmr',              d: 'Metabolismo basal y TDEE' },
       { n: 'Calculadora de 1RM',     u: '/1rm',              d: 'Repetición máxima por fórmula' },
+      { n: 'Hidratación diaria',     u: '/hidratacion',      d: '¿Cuánta agua necesitás por día?' },
     ]},
     { cat: '📅 Fechas y tiempo', items: [
       { n: 'Contador de días',       u: '/dias',             d: 'Días entre fechas, hábiles o corridos' },
       { n: 'Calculadora de edad',    u: '/edad',             d: 'Edad exacta en años, meses y días' },
       { n: '¿Qué día fue?',          u: '/dia-semana',       d: 'Día de la semana de cualquier fecha' },
+    ]},
+    { cat: '🤯 Tu vida en números', items: [
+      { n: 'Tu vida en números',     u: '/vida',             d: 'Latidos, pestañeos, pasos y más en tiempo real' },
     ]},
   ];
 

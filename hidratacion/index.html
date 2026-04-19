@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Hidratación | ¿Cuánta Agua Necesitás? — Calculadora.live</title>
+<meta name="description" content="Calculá cuánta agua necesitás por día según tu peso, nivel de actividad y el clima. Recomendación personalizada en litros y vasos.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/hidratacion">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F0F2F7;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
+  .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
+  .page{max-width:520px;margin:0 auto;padding:36px 20px 60px}
+  .page-icon{font-size:36px;margin-bottom:10px}
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+  .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:28px}
+  .card{background:var(--surface);border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid var(--border)}
+  .field{margin-bottom:18px}.field:last-child{margin-bottom:0}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
+  .input-wrap{position:relative}
+  .input-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none}
+  input[type=number]{width:100%;padding:13px 44px 13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  input[type=number]:focus{border-color:var(--hi)}
+  select{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2360647A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
+  select:focus{border-color:var(--hi)}
+
+  .result-card{border-radius:var(--radius);padding:28px;margin-bottom:16px;border-top:3px solid var(--hi);background:#0C1528}
+  .result-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
+  .result-main{font-size:56px;font-weight:700;color:white;letter-spacing:-0.03em;line-height:1;margin-bottom:4px}
+  .result-sub{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:24px}
+  .empty-state{font-size:16px;color:rgba(255,255,255,0.3);font-weight:400}
+
+  .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:0}
+  .stat-box{background:rgba(255,255,255,0.05);border-radius:10px;padding:14px 16px}
+  .stat-label{font-size:11px;color:rgba(255,255,255,0.4);font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px}
+  .stat-value{font-size:20px;font-weight:700;color:white;letter-spacing:-0.02em}
+  .stat-unit{font-size:12px;font-weight:400;color:rgba(255,255,255,0.4);margin-left:2px}
+
+  .hydration-bar{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08)}
+  .hydration-bar-label{font-size:11px;color:rgba(255,255,255,0.35);font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px}
+  .drops-row{display:flex;flex-wrap:wrap;gap:4px;line-height:1}
+  .drop{font-size:20px}
+  .drops-note{font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px}
+
+  .info-box{background:#EEF3FD;border-radius:var(--radius);padding:18px 20px;margin-bottom:16px;border:1px solid #C8D8F8;display:flex;gap:12px;align-items:flex-start}
+  .info-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+  .info-text{font-size:13px;color:#1A3B7A;line-height:1.55}
+
+  .tips-card{background:var(--surface);border-radius:var(--radius);padding:24px;border:1px solid var(--border)}
+  .tips-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:14px;letter-spacing:-0.01em}
+  .tips-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .tips-list li{display:flex;gap:10px;font-size:13px;color:var(--ink-light);line-height:1.5}
+  .tip-dot{width:20px;height:20px;border-radius:50%;background:var(--hi-soft);color:var(--hi);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <a class="back-link" href="/">← Volver</a>
+</header>
+<div class="page">
+  <div class="page-icon">💧</div>
+  <h1 class="page-title">Calculadora de Hidratación</h1>
+  <p class="page-sub">Calculá cuánta agua necesitás por día según tu peso, actividad y clima.</p>
+
+  <div class="card">
+    <div class="field">
+      <label>Peso corporal</label>
+      <div class="input-wrap">
+        <input type="number" id="peso" placeholder="70" min="20" max="300" oninput="calcular()">
+        <span class="input-suffix">kg</span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Nivel de actividad</label>
+      <select id="actividad" onchange="calcular()">
+        <option value="1.0">Sedentario (poco o nada de ejercicio)</option>
+        <option value="1.15">Moderado (ejercicio 3-4 veces por semana)</option>
+        <option value="1.3">Activo (ejercicio diario o trabajo físico)</option>
+        <option value="1.5">Muy activo (entrenamiento intenso, deportista)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Clima</label>
+      <select id="clima" onchange="calcular()">
+        <option value="1.0">Templado</option>
+        <option value="1.1">Caluroso o húmedo</option>
+        <option value="1.2">Muy caluroso / verano extremo</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>¿Estás embarazada o lactando?</label>
+      <select id="embarazo" onchange="calcular()">
+        <option value="0">No</option>
+        <option value="0.3">Embarazada</option>
+        <option value="0.7">Lactando</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="result-card" id="result-card">
+    <div class="result-eyebrow">Agua recomendada por día</div>
+    <div class="result-main" id="result-main"><span class="empty-state">Ingresá tu peso</span></div>
+    <div class="result-sub" id="result-sub" style="display:none"></div>
+    <div class="stats-grid" id="stats-grid" style="display:none">
+      <div class="stat-box">
+        <div class="stat-label">Mínimo recomendado</div>
+        <div class="stat-value" id="stat-minimo">—<span class="stat-unit">L</span></div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Vasos de 250 ml</div>
+        <div class="stat-value" id="stat-vasos">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Botellas de 500 ml</div>
+        <div class="stat-value" id="stat-botellas">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">De los alimentos</div>
+        <div class="stat-value">~20<span class="stat-unit">%</span></div>
+      </div>
+    </div>
+    <div class="hydration-bar" id="hydration-bar" style="display:none">
+      <div class="hydration-bar-label">Vasos por día</div>
+      <div class="drops-row" id="drops-row"></div>
+      <div class="drops-note" id="drops-note"></div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-icon">ℹ️</div>
+    <div class="info-text">El <strong>20% de tu hidratación diaria</strong> viene de los alimentos (frutas, verduras, sopas). El resto debe ingerirse como agua u otras bebidas. Tu objetivo de consumo de bebidas sería el <strong>80% del total calculado</strong>.</div>
+  </div>
+
+  <div class="tips-card">
+    <div class="tips-title">Consejos de hidratación</div>
+    <ul class="tips-list">
+      <li><div class="tip-dot">1</div><span>Tomá un vaso de agua al levantarte — hidratarte a primera hora activa el metabolismo y compensa las pérdidas nocturnas.</span></li>
+      <li><div class="tip-dot">2</div><span>No esperes tener sed: la sensación de sed aparece cuando ya estás levemente deshidratado. Bebé de forma regular durante el día.</span></li>
+      <li><div class="tip-dot">3</div><span>En días de calor o ejercicio intenso, aumentá tu consumo entre un 10% y un 20% más de lo habitual.</span></li>
+      <li><div class="tip-dot">4</div><span>Llevar una botella de agua a la vista es uno de los trucos más efectivos para recordar hidratarte a lo largo del día.</span></li>
+      <li><div class="tip-dot">5</div><span>El café y el té cuentan como hidratación, pero limitá su consumo excesivo. Las bebidas azucaradas no son la mejor opción para hidratarse.</span></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  function calcular() {
+    const peso = parseFloat(document.getElementById('peso').value) || 0;
+    const actMultiplier = parseFloat(document.getElementById('actividad').value);
+    const climaMultiplier = parseFloat(document.getElementById('clima').value);
+    const pregnancyAdd = parseFloat(document.getElementById('embarazo').value);
+
+    const mainEl = document.getElementById('result-main');
+    const subEl = document.getElementById('result-sub');
+    const statsEl = document.getElementById('stats-grid');
+    const barEl = document.getElementById('hydration-bar');
+
+    if (!peso) {
+      mainEl.innerHTML = '<span class="empty-state">Ingresá tu peso</span>';
+      subEl.style.display = 'none';
+      statsEl.style.display = 'none';
+      barEl.style.display = 'none';
+      return;
+    }
+
+    const total = (peso * 35 * actMultiplier * climaMultiplier / 1000) + pregnancyAdd;
+    const minimo = (peso * 30 / 1000);
+    const vasos250 = Math.round(total / 0.25);
+    const botellas500 = (total / 0.5).toFixed(1);
+    const vasos240 = Math.round(total / 0.24);
+
+    mainEl.textContent = total.toFixed(1) + ' L';
+    subEl.textContent = 'equivale a ' + vasos240 + ' vasos de 240 ml';
+    subEl.style.display = 'block';
+    statsEl.style.display = 'grid';
+
+    document.getElementById('stat-minimo').innerHTML = minimo.toFixed(1) + '<span class="stat-unit">L</span>';
+    document.getElementById('stat-vasos').textContent = vasos250;
+    document.getElementById('stat-botellas').innerHTML = botellas500 + '<span class="stat-unit">bot.</span>';
+
+    // Hydration bar
+    barEl.style.display = 'block';
+    const dropsRow = document.getElementById('drops-row');
+    const dropsNote = document.getElementById('drops-note');
+    const maxDrops = 16;
+    const showDrops = Math.min(vasos240, maxDrops);
+    let html = '';
+    for (let i = 0; i < showDrops; i++) {
+      html += '<span class="drop">💧</span>';
+    }
+    dropsRow.innerHTML = html;
+    if (vasos240 > maxDrops) {
+      dropsNote.textContent = '+ ' + (vasos240 - maxDrops) + ' vasos más (total ' + vasos240 + ')';
+    } else {
+      dropsNote.textContent = '';
+    }
+  }
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

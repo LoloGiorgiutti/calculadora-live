@@ -51,6 +51,20 @@
   .empty-state{color:rgba(255,255,255,0.3);font-size:15px}
   .info-box{background:var(--hi-soft);border:1px solid #BFDBFE;border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:var(--ink-light);line-height:1.5}
   .info-box strong{color:var(--ink)}
+  .table-toggle{display:flex;align-items:center;gap:8px;width:100%;padding:13px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--ink-light);transition:all .15s;margin-bottom:16px}
+  .table-toggle:hover{border-color:var(--hi);color:var(--hi);background:var(--hi-soft)}
+  .table-toggle .chevron{margin-left:auto;transition:transform .25s}
+  .table-toggle.open .chevron{transform:rotate(180deg)}
+  .amort-card{background:var(--surface);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;border:1px solid var(--border)}
+  .amort-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
+  .amort-table-wrap{overflow-x:auto;max-height:320px;overflow-y:auto;border-radius:var(--radius-sm);border:1px solid var(--border)}
+  .amort-table{width:100%;border-collapse:collapse;font-size:12px}
+  .amort-table th{position:sticky;top:0;background:var(--bg);padding:8px 10px;text-align:right;font-weight:700;font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-light);border-bottom:2px solid var(--border);white-space:nowrap}
+  .amort-table th:first-child{text-align:center}
+  .amort-table td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--border);color:var(--ink)}
+  .amort-table td:first-child{text-align:center;color:var(--ink-light);font-weight:600}
+  .amort-table tr:last-child td{border-bottom:none;font-weight:700;background:var(--hi-soft)}
+  .amort-table .int-col{color:#EF4444}
 </style>
 </head>
 <body>
@@ -128,6 +142,31 @@
     </div>
   </div>
 
+  <button class="table-toggle" id="table-toggle" onclick="toggleTabla()" style="display:none">
+    📋 Ver tabla de amortización mes a mes
+    <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <div class="amort-card" id="amort-card" style="display:none">
+    <div class="amort-title">Tabla de amortización</div>
+    <div class="amort-table-wrap">
+      <table class="amort-table" id="amort-table">
+        <thead>
+          <tr>
+            <th>Mes</th>
+            <th>Cuota</th>
+            <th>Capital</th>
+            <th>Intereses</th>
+            <th>Saldo</th>
+          </tr>
+        </thead>
+        <tbody id="amort-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="info-box">
     <strong>¿Qué es el sistema francés?</strong><br>
     La cuota es siempre la misma. Al principio pagás más intereses y menos capital; con el tiempo la proporción se invierte. Es el sistema más común en Argentina para préstamos personales.
@@ -135,6 +174,9 @@
 </div>
 <script>
   let plazoMeses = 12;
+  let pendingAmortRows = null;
+  let tablaBuilt = false;
+
   function setPlazo(m){
     plazoMeses=m;
     document.querySelectorAll('.plazo-chip').forEach(b=>b.classList.remove('active'));
@@ -142,13 +184,67 @@
     calcular();
   }
   function fmt(n){return '$\u00A0'+Math.round(n).toLocaleString('es-AR')}
+
+  function buildAmortTable(monto, r, n, cuota){
+    let saldo=monto;
+    let rows='';
+    let totalPagado=0, totalCapital=0, totalIntereses=0;
+    for(let i=1;i<=n;i++){
+      const interes=saldo*r;
+      const capital=cuota-interes;
+      saldo-=capital;
+      if(saldo<0.01) saldo=0;
+      totalPagado+=cuota;
+      totalCapital+=capital;
+      totalIntereses+=interes;
+      rows+=`<tr>
+        <td>${i}</td>
+        <td>${fmt(cuota)}</td>
+        <td>${fmt(capital)}</td>
+        <td class="int-col">${fmt(interes)}</td>
+        <td>${fmt(Math.max(0,saldo))}</td>
+      </tr>`;
+    }
+    rows+=`<tr>
+      <td>Total</td>
+      <td>${fmt(totalPagado)}</td>
+      <td>${fmt(totalCapital)}</td>
+      <td class="int-col">${fmt(totalIntereses)}</td>
+      <td>—</td>
+    </tr>`;
+    return rows;
+  }
+
+  function toggleTabla(){
+    const card=document.getElementById('amort-card');
+    const btn=document.getElementById('table-toggle');
+    const open=card.style.display==='none';
+    if(open && pendingAmortRows !== null){
+      document.getElementById('amort-tbody').innerHTML=pendingAmortRows;
+      pendingAmortRows=null;
+    }
+    card.style.display=open?'block':'none';
+    btn.classList.toggle('open',open);
+  }
+
   function calcular(){
     const monto=parseFloat(document.getElementById('monto').value)||0;
     const tna=parseFloat(document.getElementById('tna').value)||0;
     const mainEl=document.getElementById('result-main');
     const subEl=document.getElementById('result-sub');
     const rowsEl=document.getElementById('result-rows');
-    if(!monto||!tna){mainEl.innerHTML='<span class="empty-state">Completá los datos</span>';subEl.textContent='';rowsEl.style.display='none';return}
+    const toggleBtn=document.getElementById('table-toggle');
+    const amortCard=document.getElementById('amort-card');
+    if(!monto||!tna){
+      mainEl.innerHTML='<span class="empty-state">Completá los datos</span>';
+      subEl.textContent='';
+      rowsEl.style.display='none';
+      toggleBtn.style.display='none';
+      amortCard.style.display='none';
+      toggleBtn.classList.remove('open');
+      pendingAmortRows=null;
+      return;
+    }
     const r=tna/100/12;
     const n=plazoMeses;
     const cuota=monto*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
@@ -168,6 +264,16 @@
     document.getElementById('bar-int').style.width=intPct+'%';
     document.getElementById('lbl-cap').textContent=`Capital ${capPct}%`;
     document.getElementById('lbl-int').textContent=`Intereses ${intPct}%`;
+    // Build amort table (lazy inject)
+    const newRows=buildAmortTable(monto,r,n,cuota);
+    if(amortCard.style.display!=='none'){
+      // Table is visible — update immediately
+      document.getElementById('amort-tbody').innerHTML=newRows;
+      pendingAmortRows=null;
+    } else {
+      pendingAmortRows=newRows;
+    }
+    toggleBtn.style.display='flex';
   }
 </script>
 <script src="/nav.js"></script>

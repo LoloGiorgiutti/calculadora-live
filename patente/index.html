@@ -69,6 +69,12 @@
       </select>
     </div>
     <div class="field">
+      <label>Año de fabricación</label>
+      <select id="anio-fab" onchange="calcular()">
+        <!-- JS populated -->
+      </select>
+    </div>
+    <div class="field">
       <label>Valor fiscal / valuación del vehículo</label>
       <div class="input-wrap">
         <span class="input-prefix">$</span>
@@ -89,6 +95,14 @@
       <div class="stat-box">
         <div class="stat-val" id="r-tasa">—</div>
         <div class="stat-lbl">Tasa aplicada</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="r-antiguedad">—</div>
+        <div class="stat-lbl">Antigüedad</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="r-descuento">—</div>
+        <div class="stat-lbl">Desc. por antigüedad</div>
       </div>
     </div>
   </div>
@@ -116,10 +130,34 @@
     otras:   { tasa: 0.030, nombre: 'Otras' },
   };
 
+  const CURRENT_YEAR = 2026;
+
+  // Populate año de fabricación select (2026 down to 1990)
+  (function(){
+    const sel = document.getElementById('anio-fab');
+    for(let y = CURRENT_YEAR; y >= 1990; y--){
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      if(y === 2022) opt.selected = true;
+      sel.appendChild(opt);
+    }
+  })();
+
+  function getMultiplier(antiguedad){
+    if(antiguedad <= 2)  return { mult: 1.00, pct: 0  };
+    if(antiguedad <= 5)  return { mult: 0.90, pct: 10 };
+    if(antiguedad <= 10) return { mult: 0.75, pct: 25 };
+    if(antiguedad <= 15) return { mult: 0.55, pct: 45 };
+    if(antiguedad <= 20) return { mult: 0.35, pct: 65 };
+    return                      { mult: 0.20, pct: 80 };
+  }
+
   function fmt(n){return '$\u00A0'+Math.round(n).toLocaleString('es-AR')}
 
   function calcular(){
     const prov = document.getElementById('provincia').value;
+    const anioFab = parseInt(document.getElementById('anio-fab').value)||CURRENT_YEAR;
     const valor = parseFloat(document.getElementById('valor').value)||0;
     const mainEl = document.getElementById('result-main');
     const subEl  = document.getElementById('result-sub');
@@ -131,14 +169,19 @@
     }
 
     const {tasa, nombre} = tasas[prov];
-    const anual = valor * tasa;
+    const antiguedad = CURRENT_YEAR - anioFab;
+    const {mult, pct} = getMultiplier(antiguedad);
+    const anual = valor * tasa * mult;
     const cuota = anual / 4;
 
     mainEl.innerHTML=`<span class="result-currency">$</span>${Math.round(anual).toLocaleString('es-AR')}`;
-    subEl.textContent=`estimado para ${nombre} · ${(tasa*100).toFixed(1)}% anual`;
+    const descuentoTexto = pct > 0 ? ` · antigüedad: ${antiguedad} año${antiguedad!==1?'s':''} (descuento ${pct}%)` : ` · antigüedad: ${antiguedad} año${antiguedad!==1?'s':''}`;
+    subEl.textContent=`estimado para ${nombre} · ${(tasa*100).toFixed(1)}% anual${descuentoTexto}`;
     rowsEl.style.display='grid';
     document.getElementById('r-cuota').textContent=fmt(cuota);
     document.getElementById('r-tasa').textContent=(tasa*100).toFixed(1)+'% anual';
+    document.getElementById('r-antiguedad').textContent=antiguedad+' año'+(antiguedad!==1?'s':'');
+    document.getElementById('r-descuento').textContent=pct > 0 ? pct+'%' : 'No aplica';
   }
 </script>
 <script src="/nav.js"></script>

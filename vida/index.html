@@ -151,7 +151,7 @@
     <div class="stat-card accent-purple">
       <div class="stat-emoji">🚶</div>
       <div class="stat-val" id="s-pasos">—</div>
-      <div class="stat-lbl">pasos aproximados en tu vida</div>
+      <div class="stat-lbl">pasos aproximados en tu vida (prom. 4.000/día)</div>
     </div>
 
     <!-- 6. Comidas — amber -->
@@ -172,7 +172,7 @@
     <div class="stat-card accent-green">
       <div class="stat-emoji">🗺️</div>
       <div class="stat-val" id="s-km">—</div>
-      <div class="stat-lbl">kilómetros caminados (prom. 3.5 km/día)</div>
+      <div class="stat-lbl">kilómetros caminados (prom. 3,25 km/día)</div>
     </div>
 
   </div><!-- /stats-grid -->
@@ -253,10 +253,10 @@
     const days = ageDays();
     document.getElementById('s-dias').textContent   = fmt(days);
     document.getElementById('s-sueno').innerHTML    = sleepStr();
-    document.getElementById('s-pasos').textContent  = fmt(days * 8000);
+    document.getElementById('s-pasos').textContent  = fmt(days * 4000);
     document.getElementById('s-comidas').textContent= fmt(days * 3);
     document.getElementById('s-palabras').textContent = fmt(days * 16000);
-    document.getElementById('s-km').textContent     = fmt(days * 3.5);
+    document.getElementById('s-km').textContent     = fmt(days * 3.25);
   }
 
   // ---- Live tickers — each at its own natural rate ----

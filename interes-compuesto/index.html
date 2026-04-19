@@ -356,14 +356,46 @@ function renderChart(base, upper, lower, contrib, hasVarianza, years) {
     }
   }
 
+  // Cursor line + dot (will be controlled via JS after render)
+  svg += `<line id="cv-line" x1="0" y1="${PT}" x2="0" y2="${PT+cH}" stroke="#1A5FE8" stroke-width="1" stroke-dasharray="4,2" opacity="0" pointer-events="none"/>`;
+  svg += `<circle id="cv-dot-base" r="4" fill="#1A5FE8" stroke="white" stroke-width="1.5" opacity="0" pointer-events="none"/>`;
+  svg += `<circle id="cv-dot-contrib" r="3.5" fill="#86EFAC" stroke="white" stroke-width="1.5" opacity="0" pointer-events="none"/>`;
+  // Invisible overlay to capture mouse events across the whole chart area
+  svg += `<rect id="cv-overlay" x="${PL}" y="${PT}" width="${cW}" height="${cH}" fill="transparent" style="cursor:crosshair"/>`;
+
   svg += '</svg>';
-  document.getElementById('chart-wrap').innerHTML = svg;
+
+  // Store chart metadata for hover handler
+  window._chartMeta = { base, upper, lower, contrib, hasVarianza, years,
+    minV, maxV, range, W, H, PL, PR, PT, PB, cW, cH };
+
+  const wrap = document.getElementById('chart-wrap');
+  wrap.style.position = 'relative';
+  wrap.innerHTML = svg;
+
+  // Tooltip div
+  let tip = document.getElementById('cv-tip');
+  if (!tip) {
+    tip = document.createElement('div');
+    tip.id = 'cv-tip';
+    tip.style.cssText = [
+      'position:absolute;top:8px;pointer-events:none;z-index:20;',
+      'background:#0C1528;border:1px solid rgba(255,255,255,0.12);border-radius:10px;',
+      'padding:9px 13px;min-width:140px;box-shadow:0 6px 24px rgba(0,0,0,0.25);',
+      'opacity:0;transition:opacity .1s;'
+    ].join('');
+    wrap.appendChild(tip);
+  }
+
+  // Event listeners (replace to avoid duplicates)
+  wrap.onmousemove = chartHover;
+  wrap.onmouseleave = chartLeave;
 
   // Legend
   let legend = `<div class="legend-item"><div class="legend-dot" style="background:#1A5FE8"></div>Valor futuro</div>`;
-  legend += `<div class="legend-item"><div class="legend-dot" style="background:#86EFAC;"></div>Total invertido</div>`;
+  legend += `<div class="legend-item"><div class="legend-dot" style="background:#86EFAC"></div>Total invertido</div>`;
   if (hasVarianza) {
-    legend += `<div class="legend-item"><div class="legend-dot" style="background:rgba(26,95,232,0.4);border-top:1px dashed #1A5FE8;height:1px;"></div>Rango de varianza</div>`;
+    legend += `<div class="legend-item"><div class="legend-dot" style="background:rgba(26,95,232,0.4)"></div>Rango de varianza</div>`;
   }
   document.getElementById('chart-legend').innerHTML = legend;
 
@@ -371,6 +403,81 @@ function renderChart(base, upper, lower, contrib, hasVarianza, years) {
     ? `Proyección central con banda de varianza ±${document.getElementById('varianza').value}%`
     : `El área verde muestra lo invertido — la brecha azul es el poder del interés compuesto`;
   document.getElementById('chart-sub').textContent = sub;
+}
+
+function chartHover(e) {
+  const m = window._chartMeta;
+  if (!m) return;
+  const { base, upper, lower, contrib, hasVarianza, years, minV, range, W, PL, cW, PT, cH } = m;
+  const n = base.length;
+
+  const wrap = document.getElementById('chart-wrap');
+  const svgEl = wrap.querySelector('svg');
+  if (!svgEl) return;
+  const svgRect = svgEl.getBoundingClientRect();
+  const scale = W / svgRect.width;
+  const svgX = (e.clientX - svgRect.left) * scale;
+
+  if (svgX < PL || svgX > PL + cW) { chartLeave(); return; }
+
+  // Map X to year index
+  const pct = (svgX - PL) / cW;
+  const idx = Math.max(0, Math.min(n - 1, Math.round(pct * (n - 1))));
+
+  const val      = base[idx];
+  const valUp    = upper[idx];
+  const valDn    = lower[idx];
+  const valCont  = contrib[idx];
+  const yearLabel = idx === 0 ? 'Hoy' : `Año ${idx}`;
+
+  // Update SVG elements
+  const lineX = PL + (idx / (n - 1)) * cW;
+  function svgY(v) { return PT + cH - ((v - minV) / range) * cH; }
+
+  const cvLine = svgEl.getElementById('cv-line');
+  const cvDot  = svgEl.getElementById('cv-dot-base');
+  const cvDotC = svgEl.getElementById('cv-dot-contrib');
+  if (cvLine) { cvLine.setAttribute('x1', lineX); cvLine.setAttribute('x2', lineX); cvLine.setAttribute('opacity', '0.6'); }
+  if (cvDot)  { cvDot.setAttribute('cx', lineX);  cvDot.setAttribute('cy',  svgY(val));     cvDot.setAttribute('opacity', '1'); }
+  if (cvDotC) { cvDotC.setAttribute('cx', lineX); cvDotC.setAttribute('cy', svgY(valCont)); cvDotC.setAttribute('opacity', '1'); }
+
+  // Tooltip content
+  let html = `<div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px">${yearLabel}</div>`;
+  html += `<div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><div style="width:8px;height:8px;border-radius:50%;background:#1A5FE8;flex-shrink:0"></div><span style="font-size:12px;color:white;font-weight:700">${fmt(val)}</span></div>`;
+  html += `<div style="display:flex;align-items:center;gap:6px${hasVarianza ? ';margin-bottom:3px' : ''}"><div style="width:8px;height:8px;border-radius:50%;background:#86EFAC;flex-shrink:0"></div><span style="font-size:11px;color:rgba(255,255,255,.55)">Invertido: ${fmt(valCont)}</span></div>`;
+  if (hasVarianza && valUp !== val) {
+    html += `<div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:4px;border-top:1px solid rgba(255,255,255,.08);padding-top:4px">Rango: ${fmt(valDn)} – ${fmt(valUp)}</div>`;
+  }
+
+  const tip = document.getElementById('cv-tip');
+  if (!tip) return;
+  tip.innerHTML = html;
+  tip.style.opacity = '1';
+
+  // Position: avoid going off right edge
+  const wrapW = wrap.getBoundingClientRect().width;
+  const mouseXInWrap = e.clientX - wrap.getBoundingClientRect().left;
+  const tipW = 160;
+  if (mouseXInWrap + tipW + 16 > wrapW) {
+    tip.style.right = (wrapW - mouseXInWrap + 10) + 'px';
+    tip.style.left  = 'auto';
+  } else {
+    tip.style.left  = (mouseXInWrap + 10) + 'px';
+    tip.style.right = 'auto';
+  }
+}
+
+function chartLeave() {
+  const tip = document.getElementById('cv-tip');
+  if (tip) tip.style.opacity = '0';
+  const wrap = document.getElementById('chart-wrap');
+  if (!wrap) return;
+  const svgEl = wrap.querySelector('svg');
+  if (!svgEl) return;
+  ['cv-line','cv-dot-base','cv-dot-contrib'].forEach(function(id) {
+    const el = svgEl.getElementById(id);
+    if (el) el.setAttribute('opacity','0');
+  });
 }
 </script>
 <script src="/nav.js"></script>

@@ -201,4 +201,26 @@
     filterNav(this.value.toLowerCase().trim());
   });
 
+  /* ── NÚMERO: desactivar scroll y flechas ─────────────────
+     Evita que el scroll de la página modifique inputs numéricos
+     y que las flechas del teclado cambien el valor.          */
+  function blockNumWheel(e) { e.preventDefault(); }
+
+  document.addEventListener('focusin', function(e) {
+    if (e.target && e.target.type === 'number') {
+      e.target.addEventListener('wheel', blockNumWheel, { passive: false });
+    }
+  });
+  document.addEventListener('focusout', function(e) {
+    if (e.target && e.target.type === 'number') {
+      e.target.removeEventListener('wheel', blockNumWheel);
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.target && e.target.type === 'number' &&
+        (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+      e.preventDefault();
+    }
+  });
+
 })();

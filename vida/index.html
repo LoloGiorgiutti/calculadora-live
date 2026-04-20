@@ -30,6 +30,10 @@
   .link-btn:hover{background:var(--hi);color:#fff;border-color:var(--hi)}
   .link-btn.copied{background:#D1FAE5;border-color:#6EE7B7;color:#065F46}
 
+  /* URL bar indicator */
+  .url-hint{display:none;margin-top:10px;padding:9px 12px;background:#F0FFF4;border:1px solid #A7F3D0;border-radius:8px;font-size:11px;color:#065F46;align-items:center;gap:6px}
+  .url-hint.visible{display:flex}
+
   /* Summary bar */
   .summary-bar{background:#0C1528;border-radius:var(--radius);padding:22px 24px;margin-bottom:8px;border-top:3px solid var(--hi);display:none}
   .summary-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:8px}
@@ -97,9 +101,13 @@
         <input type="time" id="hora-nac" onchange="calcular()">
       </div>
     </div>
+    <div class="url-hint" id="url-hint">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+      <span>El link de esta página ya incluye tus datos — podés copiarlo de la barra de URL</span>
+    </div>
     <button class="link-btn" id="link-btn" style="display:none" onclick="copiarLink()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-      <span id="link-btn-txt">Copiar link con mis datos</span>
+      <span id="link-btn-txt">Copiar link</span>
     </button>
   </div>
 
@@ -291,23 +299,33 @@
     }, 4000));
   }
 
-  // ---- Link persistente ----
-  function copiarLink(){
-    const fecha = document.getElementById('nacimiento').value;
-    const hora  = document.getElementById('hora-nac').value;
-    if(!fecha) return;
+  // ---- URL en tiempo real ----
+  function updateURL(fecha, hora){
     const url = new URL(location.origin + location.pathname);
     url.searchParams.set('f', fecha);
     if(hora) url.searchParams.set('h', hora);
-    navigator.clipboard.writeText(url.toString()).then(function(){
+    history.replaceState(null, '', url.toString());
+    document.getElementById('url-hint').classList.add('visible');
+    document.getElementById('link-btn').style.display = 'flex';
+  }
+
+  function clearURL(){
+    history.replaceState(null, '', location.pathname);
+    document.getElementById('url-hint').classList.remove('visible');
+    document.getElementById('link-btn').style.display = 'none';
+  }
+
+  // ---- Copiar link (ya está en la barra, solo copiamos) ----
+  function copiarLink(){
+    navigator.clipboard.writeText(location.href).then(function(){
       const btn = document.getElementById('link-btn');
       const txt = document.getElementById('link-btn-txt');
       btn.classList.add('copied');
-      txt.textContent = '✓ Link copiado al portapapeles';
+      txt.textContent = '✓ Link copiado';
       setTimeout(function(){
         btn.classList.remove('copied');
-        txt.textContent = 'Copiar link con mis datos';
-      }, 2500);
+        txt.textContent = 'Copiar link';
+      }, 2000);
     });
   }
 
@@ -329,9 +347,10 @@
     document.getElementById('summary-bar').style.display  = 'block';
     document.getElementById('stats-section').style.display= 'block';
     document.getElementById('info-box').style.display     = 'block';
-    document.getElementById('link-btn').style.display     = 'flex';
 
     document.getElementById('summary-age').textContent = exactAgeStr(hoy);
+
+    updateURL(val, horaVal);
 
     updateStatics();
     tickEl('s-segundos',  ageSeconds);
@@ -348,7 +367,7 @@
     document.getElementById('summary-bar').style.display  = 'none';
     document.getElementById('stats-section').style.display= 'none';
     document.getElementById('info-box').style.display     = 'none';
-    document.getElementById('link-btn').style.display     = 'none';
+    clearURL();
   }
 
   // ---- Leer parámetros de URL al cargar ----

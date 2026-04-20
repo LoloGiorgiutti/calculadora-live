@@ -27,6 +27,9 @@
       { n: 'Calculadora de edad',    u: '/edad',             d: 'Edad exacta en años, meses y días' },
       { n: '¿Qué día fue?',          u: '/dia-semana',       d: 'Día de la semana de cualquier fecha' },
     ]},
+    { cat: '🔢 Matemática rápida', items: [
+      { n: 'Calculadora de porcentajes', u: '/porcentaje',   d: 'X% de Y, variaciones, aumentos y descuentos' },
+    ]},
     { cat: '🤯 Tu vida en números', items: [
       { n: 'Tu vida en números',     u: '/vida',             d: 'Latidos, pestañeos, pasos y más en tiempo real' },
     ]},

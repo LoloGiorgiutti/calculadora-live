@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Porcentajes | Calculadora.live</title>
+<meta name="description" content="Calculá porcentajes fácilmente: X% de Y, qué porcentaje es X de Y, variación entre dos números, aumentos y descuentos.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/porcentaje">
+<meta property="og:title" content="Calculadora de Porcentajes | Calculadora.live">
+<meta property="og:description" content="Calculá porcentajes fácilmente: X% de Y, qué porcentaje es X de Y, variación entre dos números, aumentos y descuentos.">
+<meta property="og:url" content="https://calculadora.live/porcentaje">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F0F2F7;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px;--shadow:0 2px 16px rgba(0,0,0,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
+  .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
+  .page{max-width:560px;margin:0 auto;padding:36px 20px 60px}
+  .page-icon{font-size:36px;margin-bottom:10px}
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+  .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:28px}
+
+  /* Mode tabs */
+  .mode-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .mode-tab{padding:8px 14px;border-radius:99px;border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;white-space:nowrap}
+  .mode-tab:hover{border-color:var(--hi);color:var(--hi)}
+  .mode-tab.active{background:var(--hi);border-color:var(--hi);color:#fff}
+
+  /* Card */
+  .card{background:var(--surface);border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:16px}
+  .card-title{font-size:15px;font-weight:700;margin-bottom:4px}
+  .card-desc{font-size:12px;color:var(--ink-light);margin-bottom:20px;line-height:1.5}
+
+  /* Inline formula layout */
+  .formula-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .formula-op{font-size:18px;font-weight:600;color:var(--ink-faint);flex-shrink:0}
+  .formula-eq{font-size:20px;font-weight:700;color:var(--hi);flex-shrink:0}
+
+  /* Inputs */
+  .input-wrap{position:relative;display:inline-flex;align-items:center}
+  .input-wrap input{width:120px;padding:12px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;text-align:center}
+  .input-wrap input:focus{border-color:var(--hi)}
+  .input-wrap input.result-input{background:var(--hi-soft);border-color:#BFDBFE;color:var(--hi);pointer-events:none}
+  .input-wrap .input-suffix{position:absolute;right:10px;font-size:13px;font-weight:700;color:var(--ink-faint);pointer-events:none}
+  .pct-input{padding-right:28px!important}
+  .wide-input{width:160px!important}
+
+  /* Result box */
+  .result-box{background:linear-gradient(135deg,#0C1528 0%,#1a2540 100%);border-radius:var(--radius);padding:24px;text-align:center;border-top:3px solid var(--hi);display:none}
+  .result-box.visible{display:block}
+  .result-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px}
+  .result-val{font-size:42px;font-weight:700;color:#fff;letter-spacing:-0.04em;line-height:1;margin-bottom:8px}
+  .result-val sup{font-size:22px;font-weight:600;vertical-align:super;margin-right:2px}
+  .result-detail{font-size:13px;color:rgba(255,255,255,.5);line-height:1.5}
+
+  /* Quick examples */
+  .examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .example-chip{padding:5px 12px;border-radius:99px;background:var(--hi-soft);border:1px solid #BFDBFE;font-size:12px;font-weight:600;color:var(--hi);cursor:pointer;transition:all .15s}
+  .example-chip:hover{background:var(--hi);color:#fff}
+
+  /* Sign badge */
+  .sign-badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700}
+  .sign-pos{background:#D1FAE5;color:#065F46}
+  .sign-neg{background:#FEE2E2;color:#991B1B}
+  .sign-zero{background:#F3F4F6;color:#6B7280}
+
+  @media(max-width:480px){
+    .formula-row{gap:7px}
+    .input-wrap input{width:100px;font-size:15px}
+    .wide-input{width:130px!important}
+    .result-val{font-size:34px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <a class="back-link" href="/">← Volver</a>
+</header>
+
+<div class="page">
+  <div class="page-icon">%</div>
+  <h1 class="page-title">Calculadora de porcentajes</h1>
+  <p class="page-sub">Cuatro modos para cualquier operación con porcentajes.</p>
+
+  <!-- Mode selector -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="setMode('basico',this)">¿X% de Y?</button>
+    <button class="mode-tab" onclick="setMode('quepct',this)">¿Qué % es X de Y?</button>
+    <button class="mode-tab" onclick="setMode('variacion',this)">Variación %</button>
+    <button class="mode-tab" onclick="setMode('aplicar',this)">Aumentar / descontar</button>
+  </div>
+
+  <!-- ── MODO 1: X% de Y ───────────────────────────────── -->
+  <div id="m-basico" class="card">
+    <div class="card-title">¿Cuánto es X% de Y?</div>
+    <div class="card-desc">El caso más común: encontrá el valor que representa un porcentaje de cualquier número.</div>
+    <div class="formula-row">
+      <div class="input-wrap">
+        <input type="number" id="b-pct" placeholder="15" oninput="calcBasico()" class="pct-input" min="0">
+        <span class="input-suffix">%</span>
+      </div>
+      <span class="formula-op">de</span>
+      <div class="input-wrap">
+        <input type="number" id="b-total" placeholder="200" oninput="calcBasico()" class="wide-input" min="0">
+      </div>
+      <span class="formula-eq">=</span>
+      <div class="input-wrap">
+        <input type="text" id="b-res" readonly class="result-input wide-input" placeholder="—">
+      </div>
+    </div>
+    <div class="examples">
+      <span class="example-chip" onclick="loadBasico(10,1000)">10% de 1.000</span>
+      <span class="example-chip" onclick="loadBasico(21,500)">IVA 21% de 500</span>
+      <span class="example-chip" onclick="loadBasico(50,300)">50% de 300</span>
+      <span class="example-chip" onclick="loadBasico(15,80)">15% de 80</span>
+    </div>
+  </div>
+
+  <!-- ── MODO 2: ¿Qué % es X de Y? ────────────────────── -->
+  <div id="m-quepct" class="card" style="display:none">
+    <div class="card-title">¿Qué porcentaje es X de Y?</div>
+    <div class="card-desc">Encontrá qué porcentaje representa una parte respecto al total.</div>
+    <div class="formula-row">
+      <div class="input-wrap">
+        <input type="number" id="q-parte" placeholder="30" oninput="calcQuePct()" class="wide-input" min="0">
+      </div>
+      <span class="formula-op">es el</span>
+      <div class="input-wrap">
+        <input type="text" id="q-res" readonly class="result-input pct-input" placeholder="—">
+        <span class="input-suffix">%</span>
+      </div>
+      <span class="formula-op">de</span>
+      <div class="input-wrap">
+        <input type="number" id="q-total" placeholder="200" oninput="calcQuePct()" class="wide-input" min="0">
+      </div>
+    </div>
+    <div class="examples">
+      <span class="example-chip" onclick="loadQuePct(30,200)">30 de 200</span>
+      <span class="example-chip" onclick="loadQuePct(15,60)">15 de 60</span>
+      <span class="example-chip" onclick="loadQuePct(1,4)">1 de 4</span>
+      <span class="example-chip" onclick="loadQuePct(750,1000)">750 de 1.000</span>
+    </div>
+  </div>
+
+  <!-- ── MODO 3: Variación ─────────────────────────────── -->
+  <div id="m-variacion" class="card" style="display:none">
+    <div class="card-title">Variación porcentual entre dos números</div>
+    <div class="card-desc">¿En cuánto porcentaje cambió un valor? Útil para precios, sueldos, inflación.</div>
+    <div class="formula-row">
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+        <span style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)">Antes</span>
+        <div class="input-wrap">
+          <input type="number" id="v-antes" placeholder="100" oninput="calcVariacion()" class="wide-input" min="0">
+        </div>
+      </div>
+      <span class="formula-op">→</span>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+        <span style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)">Después</span>
+        <div class="input-wrap">
+          <input type="number" id="v-despues" placeholder="150" oninput="calcVariacion()" class="wide-input" min="0">
+        </div>
+      </div>
+    </div>
+    <div class="examples">
+      <span class="example-chip" onclick="loadVariacion(100,150)">100 → 150</span>
+      <span class="example-chip" onclick="loadVariacion(1000,800)">bajó 1.000 → 800</span>
+      <span class="example-chip" onclick="loadVariacion(50000,85000)">sueldo 50k→85k</span>
+    </div>
+  </div>
+
+  <!-- ── MODO 4: Aplicar % ─────────────────────────────── -->
+  <div id="m-aplicar" class="card" style="display:none">
+    <div class="card-title">Aumentar o descontar un porcentaje</div>
+    <div class="card-desc">Aplicá un porcentaje de aumento o descuento a cualquier número.</div>
+
+    <!-- Tabs aumento/descuento -->
+    <div style="display:flex;gap:8px;margin-bottom:18px">
+      <button id="ap-tab-up" class="mode-tab active" style="flex:1;border-radius:var(--radius-sm)" onclick="setApType('up')">⬆️ Aumentar</button>
+      <button id="ap-tab-down" class="mode-tab" style="flex:1;border-radius:var(--radius-sm)" onclick="setApType('down')">⬇️ Descontar</button>
+    </div>
+
+    <div class="formula-row">
+      <div class="input-wrap">
+        <input type="number" id="ap-base" placeholder="1000" oninput="calcAplicar()" class="wide-input" min="0">
+      </div>
+      <span id="ap-op-label" class="formula-op">+</span>
+      <div class="input-wrap">
+        <input type="number" id="ap-pct" placeholder="21" oninput="calcAplicar()" class="pct-input" min="0">
+        <span class="input-suffix">%</span>
+      </div>
+      <span class="formula-eq">=</span>
+      <div class="input-wrap">
+        <input type="text" id="ap-res" readonly class="result-input wide-input" placeholder="—">
+      </div>
+    </div>
+
+    <div class="examples" id="ap-examples">
+      <span class="example-chip" onclick="loadAplicar(1000,21,'up')">+IVA 21%</span>
+      <span class="example-chip" onclick="loadAplicar(500,10,'up')">+10% de propina</span>
+      <span class="example-chip" onclick="loadAplicar(2000,15,'down')">-15% descuento</span>
+      <span class="example-chip" onclick="loadAplicar(100,50,'down')">-50% oferta</span>
+    </div>
+  </div>
+
+  <!-- Resultado -->
+  <div class="result-box" id="result-box">
+    <div class="result-eyebrow" id="res-eyebrow">Resultado</div>
+    <div class="result-val" id="res-val">—</div>
+    <div class="result-detail" id="res-detail"></div>
+  </div>
+
+</div>
+
+<script>
+  let currentMode = 'basico';
+  let apType = 'up';
+
+  // ---- Formato ----
+  function fmt(n, decimals){
+    if(isNaN(n)) return '—';
+    if(decimals === undefined){
+      // Auto: si es entero, sin decimales; si no, hasta 2
+      if(Math.abs(n - Math.round(n)) < 0.005) decimals = 0;
+      else decimals = 2;
+    }
+    return n.toLocaleString('es-AR', {minimumFractionDigits: decimals, maximumFractionDigits: decimals});
+  }
+
+  function fmtPct(n){
+    if(isNaN(n)) return '—';
+    // Up to 4 decimal places, trim trailing zeros
+    let s = n.toLocaleString('es-AR', {minimumFractionDigits:0, maximumFractionDigits:4});
+    return s + '%';
+  }
+
+  function showResult(eyebrow, valHTML, detail){
+    document.getElementById('res-eyebrow').textContent = eyebrow;
+    document.getElementById('res-val').innerHTML = valHTML;
+    document.getElementById('res-detail').innerHTML = detail;
+    document.getElementById('result-box').classList.add('visible');
+  }
+
+  function hideResult(){
+    document.getElementById('result-box').classList.remove('visible');
+  }
+
+  // ---- Mode switching ----
+  function setMode(mode, btn){
+    currentMode = mode;
+    ['basico','quepct','variacion','aplicar'].forEach(function(m){
+      document.getElementById('m-'+m).style.display = (m===mode)?'block':'none';
+    });
+    document.querySelectorAll('.mode-tab').forEach(function(t){ t.classList.remove('active'); });
+    btn.classList.add('active');
+    hideResult();
+  }
+
+  // ---- MODO 1: X% de Y ----
+  function calcBasico(){
+    const pct   = parseFloat(document.getElementById('b-pct').value);
+    const total = parseFloat(document.getElementById('b-total').value);
+    if(isNaN(pct) || isNaN(total)){ document.getElementById('b-res').value=''; hideResult(); return; }
+    const res = (pct/100) * total;
+    document.getElementById('b-res').value = fmt(res);
+    showResult(
+      pct + '% de ' + fmt(total),
+      '<sup>$</sup>' + fmt(res),
+      'El ' + fmtPct(pct) + ' de ' + fmt(total) + ' es ' + fmt(res)
+    );
+  }
+  function loadBasico(p,t){
+    document.getElementById('b-pct').value=p;
+    document.getElementById('b-total').value=t;
+    calcBasico();
+  }
+
+  // ---- MODO 2: ¿Qué % es X de Y? ----
+  function calcQuePct(){
+    const parte = parseFloat(document.getElementById('q-parte').value);
+    const total = parseFloat(document.getElementById('q-total').value);
+    if(isNaN(parte)||isNaN(total)||total===0){ document.getElementById('q-res').value=''; hideResult(); return; }
+    const pct = (parte/total)*100;
+    document.getElementById('q-res').value = fmt(pct);
+    showResult(
+      '¿Qué % es ' + fmt(parte) + ' de ' + fmt(total) + '?',
+      fmtPct(pct),
+      fmt(parte) + ' es el ' + fmtPct(pct) + ' de ' + fmt(total)
+    );
+  }
+  function loadQuePct(p,t){
+    document.getElementById('q-parte').value=p;
+    document.getElementById('q-total').value=t;
+    calcQuePct();
+  }
+
+  // ---- MODO 3: Variación ----
+  function calcVariacion(){
+    const antes   = parseFloat(document.getElementById('v-antes').value);
+    const despues = parseFloat(document.getElementById('v-despues').value);
+    if(isNaN(antes)||isNaN(despues)||antes===0){ hideResult(); return; }
+    const variacion = ((despues-antes)/Math.abs(antes))*100;
+    const signo = variacion > 0 ? '+' : '';
+    const isPos = variacion > 0, isZero = variacion === 0;
+    const badgeClass = isZero ? 'sign-zero' : isPos ? 'sign-pos' : 'sign-neg';
+    const badgeLabel = isZero ? 'Sin cambio' : isPos ? '▲ Aumentó' : '▼ Bajó';
+    const diff = despues - antes;
+    showResult(
+      'Variación de ' + fmt(antes) + ' a ' + fmt(despues),
+      '<span style="font-size:38px">' + signo + fmtPct(variacion) + '</span>',
+      '<span class="sign-badge ' + badgeClass + '">' + badgeLabel + '</span><br><br>' +
+      'Diferencia absoluta: ' + (diff>=0?'+':'') + fmt(diff) + '<br>' +
+      fmt(antes) + ' → ' + fmt(despues)
+    );
+  }
+  function loadVariacion(a,d){
+    document.getElementById('v-antes').value=a;
+    document.getElementById('v-despues').value=d;
+    calcVariacion();
+  }
+
+  // ---- MODO 4: Aumentar / Descontar ----
+  function setApType(type){
+    apType = type;
+    document.getElementById('ap-tab-up').classList.toggle('active', type==='up');
+    document.getElementById('ap-tab-down').classList.toggle('active', type==='down');
+    document.getElementById('ap-op-label').textContent = type==='up' ? '+' : '−';
+    calcAplicar();
+  }
+  function calcAplicar(){
+    const base = parseFloat(document.getElementById('ap-base').value);
+    const pct  = parseFloat(document.getElementById('ap-pct').value);
+    if(isNaN(base)||isNaN(pct)){ document.getElementById('ap-res').value=''; hideResult(); return; }
+    const factor = apType==='up' ? 1+(pct/100) : 1-(pct/100);
+    const res = base * factor;
+    const diff = res - base;
+    document.getElementById('ap-res').value = fmt(res);
+    const word = apType==='up' ? 'aumentado' : 'descontado';
+    showResult(
+      fmt(base) + (apType==='up'?'+':'−') + fmtPct(pct),
+      '<sup>$</sup>' + fmt(res),
+      fmt(base) + ' ' + word + ' el ' + fmtPct(pct) + ' = ' + fmt(res) +
+      '<br>' + (apType==='up'?'Aumento: +':'Descuento: ') + fmt(Math.abs(diff))
+    );
+  }
+  function loadAplicar(b,p,type){
+    apType = type;
+    document.getElementById('ap-tab-up').classList.toggle('active', type==='up');
+    document.getElementById('ap-tab-down').classList.toggle('active', type==='down');
+    document.getElementById('ap-op-label').textContent = type==='up' ? '+' : '−';
+    document.getElementById('ap-base').value=b;
+    document.getElementById('ap-pct').value=p;
+    calcAplicar();
+  }
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

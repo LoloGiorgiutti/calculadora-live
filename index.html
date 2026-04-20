@@ -164,13 +164,35 @@
   <p>Herramientas simples, rápidas y actualizadas. Sin registro, sin publicidad invasiva.</p>
 </div>
 
-<!-- El grid se genera dinámicamente desde nav.js (CALCS), así queda siempre sincronizado con el menú lateral. -->
 <div class="container" id="home-grid-root"></div>
 
 <footer>
   © 2026 Calculadora.live · Herramientas gratuitas para Argentina
 </footer>
 
+<!-- nav.js expone window.__CALCS; este script inline genera el grid sincrónicamente después -->
 <script src="/nav.js"></script>
+<script>
+(function(){
+  var root = document.getElementById('home-grid-root');
+  if(!root || !window.__CALCS) return;
+  var html = '';
+  window.__CALCS.forEach(function(cat){
+    html += '<div class="category"><div class="category-title">' + cat.cat + '</div><div class="grid">';
+    cat.items.forEach(function(item){
+      var badge = item.badge ? '<span class="badge-new">nuevo</span>' : '';
+      var desc  = item.hd || item.d;
+      html += '<a class="calc-card" href="' + item.u + '">'
+        + '<div class="calc-icon">' + (item.icon || '🔢') + '</div>'
+        + '<div class="calc-info">'
+        + '<div class="calc-name">' + item.n + badge + '</div>'
+        + '<div class="calc-desc">' + desc + '</div>'
+        + '</div></a>';
+    });
+    html += '</div></div>';
+  });
+  root.innerHTML = html;
+})();
+</script>
 </body>
 </html>

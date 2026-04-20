@@ -321,39 +321,12 @@
     }
   })();
 
-  /* ── HOME GRID ───────────────────────────────────────────
-     Si estamos en la home, generamos el grid de calculadoras
-     dinámicamente desde CALCS, así el home siempre está en sync
-     con el menú lateral sin tener que mantener dos listas.      */
-  function buildHomeGrid() {
-    var root = document.getElementById('home-grid-root');
-    if (!root) return;
-    var html = '';
-    CALCS.forEach(function(cat) {
-      html += '<div class="category"><div class="category-title">' + cat.cat + '</div><div class="grid">';
-      cat.items.forEach(function(item) {
-        var badge = item.badge ? '<span class="badge-new">nuevo</span>' : '';
-        var desc  = item.hd || item.d;
-        html += '<a class="calc-card" href="' + item.u + '">'
-          + '<div class="calc-icon">' + (item.icon || '🔢') + '</div>'
-          + '<div class="calc-info">'
-          + '<div class="calc-name">' + item.n + badge + '</div>'
-          + '<div class="calc-desc">' + desc + '</div>'
-          + '</div></a>';
-      });
-      html += '</div></div>';
-    });
-    root.innerHTML = html;
-  }
-
-  var _path = window.location.pathname;
-  if (_path === '/' || _path === '/index.html' || _path === '') {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', buildHomeGrid);
-    } else {
-      buildHomeGrid();
-    }
-  }
+  /* ── EXPONER CALCS ─────────────────────────────────────────
+     index.html tiene un <script> inline (después de este archivo)
+     que genera el grid del home a partir de window.__CALCS.
+     Así el grid siempre está en sync con el menú sin duplicar
+     la lista, y funciona aunque haya caché parcial de nav.js.  */
+  window.__CALCS = CALCS;
 
   /* ── NÚMERO: desactivar scroll y flechas ─────────────────
      Listener en fase de CAPTURA (capture:true) + passive:false

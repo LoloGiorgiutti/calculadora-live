@@ -121,16 +121,34 @@
   <div class="card">
     <div class="card-title">Categorías</div>
     <div class="cats-grid" id="cats-grid"></div>
+    <div id="custom-cats-grid" class="cats-grid" style="margin-top:8px"></div>
+    <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+      <input id="custom-cat-name" type="text" placeholder="Agregar categoría… ej: Superhéroe" maxlength="30"
+        style="flex:1;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);outline:none;background:#fff;transition:border-color .15s"
+        onfocus="this.style.borderColor='var(--hi)'" onblur="this.style.borderColor='var(--border)'"
+        onkeydown="if(event.key==='Enter'){addCustomCat();event.preventDefault()}">
+      <button onclick="addCustomCat()"
+        style="padding:10px 16px;background:var(--hi);border:none;border-radius:var(--radius-sm);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s"
+        onmouseover="this.style.background='#1550CC'" onmouseout="this.style.background='var(--hi)'">+ Agregar</button>
+    </div>
   </div>
 
   <!-- Timer -->
   <div class="card">
     <div class="card-title">Tiempo por ronda</div>
     <div class="timer-opts" id="timer-opts">
-      <button class="timer-opt" data-s="0" onclick="setTimer(0,this)">Sin tiempo</button>
-      <button class="timer-opt active" data-s="60" onclick="setTimer(60,this)">1 min</button>
-      <button class="timer-opt" data-s="90" onclick="setTimer(90,this)">1:30 min</button>
+      <button class="timer-opt" data-s="0"   onclick="setTimer(0,this)">Sin tiempo</button>
+      <button class="timer-opt active" data-s="60"  onclick="setTimer(60,this)">1 min</button>
+      <button class="timer-opt" data-s="90"  onclick="setTimer(90,this)">1:30 min</button>
       <button class="timer-opt" data-s="120" onclick="setTimer(120,this)">2 min</button>
+      <button class="timer-opt" id="btn-custom-timer" onclick="setTimerCustom(this)">✏️ Personalizar</button>
+    </div>
+    <div id="custom-timer-row" style="display:none;margin-top:10px;align-items:center;gap:10px">
+      <input id="custom-timer-secs" type="number" min="1" max="3600" placeholder="60"
+        style="width:80px;padding:8px 10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;color:var(--ink);outline:none;text-align:center;transition:border-color .15s"
+        onfocus="this.style.borderColor='var(--hi)'" onblur="this.style.borderColor='var(--border)'"
+        oninput="timerSecs=Math.max(1,parseInt(this.value)||60)">
+      <span style="font-size:13px;color:var(--ink-light)">segundos por ronda</span>
     </div>
   </div>
 
@@ -148,6 +166,13 @@
     <div class="opt-row">
       <span class="opt-lbl">No repetir letras jugadas</span>
       <label class="toggle"><input type="checkbox" id="opt-norep" checked><div class="toggle-track"></div></label>
+    </div>
+    <div class="opt-row" style="flex-direction:column;align-items:flex-start;gap:8px;padding-top:12px">
+      <span class="opt-lbl">Excluir letras adicionales</span>
+      <input id="custom-exclude" type="text" placeholder="Ej: Q  Z  V" maxlength="20"
+        style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;color:var(--ink);outline:none;letter-spacing:0.15em;text-transform:uppercase;transition:border-color .15s"
+        onfocus="this.style.borderColor='var(--hi)'" onblur="this.style.borderColor='var(--border)'"
+        oninput="this.value=this.value.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ\s]/g,'')">
     </div>
   </div>
 
@@ -219,6 +244,7 @@
   let timerLeft    = 0;
   let timerIv      = null;
   let usedLetters  = [];
+  let customCats   = [];
   const CIRCUMFERENCE = 2 * Math.PI * 88; // r=88
 
   /* ── Alphabet ── */
@@ -226,7 +252,64 @@
     var base = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     if(document.getElementById('opt-enie').checked) base.push('Ñ');
     if(document.getElementById('opt-raras').checked) base = base.filter(l=>!['K','W','X','Y'].includes(l));
+    // Letras extra excluidas manualmente
+    var excluir = document.getElementById('custom-exclude').value
+      .toUpperCase().replace(/\s/g,'').split('').filter(Boolean);
+    if(excluir.length) base = base.filter(l=>!excluir.includes(l));
     return base;
+  }
+
+  /* ── Categorías personalizadas ── */
+  function addCustomCat(){
+    var inp = document.getElementById('custom-cat-name');
+    var name = inp.value.trim();
+    if(!name) return;
+    var cat = { id:'custom_'+Date.now(), name:name, icon:'⭐', checked:true };
+    customCats.push(cat);
+    inp.value = '';
+    renderCustomCats();
+  }
+
+  function renderCustomCats(){
+    var grid = document.getElementById('custom-cats-grid');
+    grid.innerHTML = '';
+    customCats.forEach(function(c){
+      var div = document.createElement('div');
+      div.className = 'cat-toggle' + (c.checked?' checked':'');
+      div.innerHTML = '<div class="cat-check">'+(c.checked?'✓':'')+'</div>'
+        + '<span class="cat-icon">'+c.icon+'</span>'
+        + '<span class="cat-name">'+c.name+'</span>'
+        + '<button onclick="removeCustomCat(\''+c.id+'\')" title="Eliminar" '
+        + 'style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--ink-faint);font-size:14px;padding:0 2px;line-height:1" '
+        + 'onmouseover="this.style.color=\'#EF4444\'" onmouseout="this.style.color=\'var(--ink-faint)\'">✕</button>';
+      div.onclick = function(e){
+        if(e.target.tagName==='BUTTON') return;
+        c.checked = !c.checked;
+        div.classList.toggle('checked', c.checked);
+        div.querySelector('.cat-check').textContent = c.checked ? '✓' : '';
+      };
+      grid.appendChild(div);
+    });
+  }
+
+  function removeCustomCat(id){
+    customCats = customCats.filter(function(c){ return c.id !== id; });
+    renderCustomCats();
+  }
+
+  function getAllActiveCats(){
+    return ALL_CATS.concat(customCats).filter(function(c){ return c.checked; });
+  }
+
+  /* ── Timer personalizado ── */
+  function setTimerCustom(btn){
+    document.querySelectorAll('.timer-opt').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var row = document.getElementById('custom-timer-row');
+    row.style.display = 'flex';
+    var inp = document.getElementById('custom-timer-secs');
+    timerSecs = Math.max(1, parseInt(inp.value)||60);
+    inp.focus();
   }
 
   /* ── Build config UI ── */
@@ -252,11 +335,12 @@
     timerSecs = s;
     document.querySelectorAll('.timer-opt').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
+    document.getElementById('custom-timer-row').style.display = 'none';
   }
 
   /* ── Start game ── */
   function startGame(){
-    var activeCats = ALL_CATS.filter(c=>c.checked);
+    var activeCats = getAllActiveCats();
     if(activeCats.length === 0){ alert('Seleccioná al menos una categoría.'); return; }
     usedLetters = [];
     document.getElementById('history-chips').innerHTML = '';

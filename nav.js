@@ -2,43 +2,52 @@
   'use strict';
 
   /* ── CALCULADORAS ─────────────────────────────────────── */
+  /* ── CALCS ─────────────────────────────────────────────────────────────────
+     Cada ítem tiene:
+       n    = nombre (sidebar y home)
+       u    = URL
+       d    = descripción corta (sidebar)
+       hd   = descripción home (opcional; si no está se usa d)
+       icon = emoji para la tarjeta del home
+       badge= true → muestra "nuevo"
+  ─────────────────────────────────────────────────────────────────────────── */
   var CALCS = [
     { cat: '🚗 Autos', items: [
-      { n: 'Calculadora de nafta',   u: '/nafta',            d: 'Costo del viaje por combustible' },
-      { n: 'Calculadora de patente', u: '/patente',          d: 'Impuesto automotor por provincia' },
-      { n: 'Calculadora de service', u: '/service',          d: '¿Cuándo te toca el próximo service?' },
+      { n: 'Calculadora de nafta',   u: '/nafta',             icon:'⛽', d: 'Costo del viaje por combustible',           hd:'¿Cuánto cuesta el viaje en auto? Precio actualizado por tipo de combustible.' },
+      { n: 'Calculadora de patente', u: '/patente',            icon:'📋', d: 'Impuesto automotor por provincia',           hd:'Calculá cuánto pagás de patente según la provincia y el valor del auto.' },
+      { n: 'Calculadora de service', u: '/service',            icon:'🔧', d: '¿Cuándo te toca el próximo service?',        hd:'¿Cuándo te toca el service y cuánto cuesta aproximadamente?' },
     ]},
     { cat: '💰 Finanzas y economía', items: [
-      { n: 'Sueldo neto',            u: '/sueldo-neto',      d: 'Descuentos ANSES, PAMI y ganancias' },
-      { n: 'Aguinaldo (SAC)',         u: '/aguinaldo',        d: '1° o 2° semestre' },
-      { n: 'Mercado Pago',           u: '/mercado-pago',     d: 'Intereses por días' },
-      { n: 'Interés compuesto',      u: '/interes-compuesto',d: 'Crecimiento de ahorros e inversiones' },
-      { n: 'Préstamo',               u: '/prestamo',         d: 'Cuota mensual e intereses totales' },
-      { n: 'Inflación',              u: '/inflacion',        d: 'Actualizá precios por inflación histórica' },
+      { n: 'Calculadora de sueldo neto', u: '/sueldo-neto',   icon:'💼', badge:true, d: 'Descuentos ANSES, PAMI y ganancias',         hd:'¿Cuánto te depositan? Calculá tu sueldo neto con descuentos ANSES y PAMI.' },
+      { n: 'Calculadora de aguinaldo',   u: '/aguinaldo',     icon:'🎁', badge:true, d: '1° o 2° semestre',                            hd:'Calculá tu SAC del primer o segundo semestre al instante.' },
+      { n: 'Rendimiento Mercado Pago',   u: '/mercado-pago',  icon:'💳', d: 'Intereses por días',                          hd:'¿Cuánto ganás dejando plata en Mercado Pago? Calculalo por días.' },
+      { n: 'Interés compuesto',          u: '/interes-compuesto', icon:'📈', d: 'Crecimiento de ahorros e inversiones',   hd:'Proyectá el crecimiento de tus ahorros con interés compuesto.' },
+      { n: 'Calculadora de préstamo',    u: '/prestamo',      icon:'🏦', d: 'Cuota mensual e intereses totales',           hd:'Cuota, total a pagar e intereses de cualquier préstamo.' },
+      { n: 'Calculadora de inflación',   u: '/inflacion',     icon:'📊', d: 'Actualizá precios por inflación histórica',   hd:'¿Cuánto vale hoy lo que costaba antes? Actualizá precios por inflación.' },
     ]},
     { cat: '💪 Salud y entrenamiento', items: [
-      { n: 'Calculadora de IMC',     u: '/imc',              d: 'Índice de masa corporal (OMS)' },
-      { n: 'Calorías diarias (BMR)', u: '/bmr',              d: 'Metabolismo basal y TDEE' },
-      { n: 'Calculadora de 1RM',     u: '/1rm',              d: 'Repetición máxima por fórmula' },
-      { n: 'Hidratación diaria',     u: '/hidratacion',      d: '¿Cuánta agua necesitás por día?' },
-      { n: 'Proteína diaria',        u: '/proteina',         d: 'Gramos según tu peso, objetivo y actividad' },
+      { n: 'Calculadora de IMC',          u: '/imc',          icon:'⚖️', d: 'Índice de masa corporal (OMS)',               hd:'Índice de masa corporal con interpretación y peso ideal.' },
+      { n: 'Calorías diarias (BMR/TDEE)', u: '/bmr',          icon:'🔥', d: 'Metabolismo basal y TDEE',                    hd:'¿Cuántas calorías necesitás por día según tu actividad?' },
+      { n: 'Calculadora de 1RM',          u: '/1rm',          icon:'🏋️', d: 'Repetición máxima por fórmula',             hd:'Estimá tu repetición máxima en cualquier ejercicio.' },
+      { n: 'Hidratación diaria',          u: '/hidratacion',  icon:'💧', badge:true, d: '¿Cuánta agua necesitás por día?', hd:'¿Cuánta agua necesitás por día según tu peso y actividad?' },
+      { n: 'Proteína diaria',             u: '/proteina',     icon:'🥩', badge:true, d: 'Gramos según tu peso, objetivo y actividad', hd:'¿Cuántos gramos de proteína necesitás según tu objetivo y actividad?' },
     ]},
     { cat: '📅 Fechas y tiempo', items: [
-      { n: 'Contador de días',       u: '/dias',             d: 'Días entre fechas, hábiles o corridos' },
-      { n: 'Calculadora de edad',    u: '/edad',             d: 'Edad exacta en años, meses y días' },
-      { n: '¿Qué día fue?',          u: '/dia-semana',       d: 'Día de la semana de cualquier fecha' },
+      { n: 'Contador de días',    u: '/dias',       icon:'🗓️', d: 'Días entre fechas, hábiles o corridos',    hd:'¿Cuántos días hay entre dos fechas? También días hábiles.' },
+      { n: 'Calculadora de edad', u: '/edad',       icon:'🎂', d: 'Edad exacta en años, meses y días',        hd:'Calculá la edad exacta en años, meses y días.' },
+      { n: '¿Qué día fue?',       u: '/dia-semana', icon:'📆', d: 'Día de la semana de cualquier fecha',      hd:'Ingresá una fecha y descubrí qué día de la semana fue o será.' },
     ]},
     { cat: '🔢 Matemática rápida', items: [
-      { n: 'Calculadora de porcentajes', u: '/porcentaje',   d: 'X% de Y, variaciones, aumentos y descuentos' },
-      { n: 'Regla de tres',              u: '/regla-de-tres',d: 'Proporción directa e inversa al instante' },
-      { n: 'Conversión de unidades',     u: '/conversion',   d: 'Longitud, peso, temperatura, velocidad y más' },
+      { n: 'Calculadora de porcentajes', u: '/porcentaje',    icon:'%',  badge:true, d: 'X% de Y, variaciones, aumentos y descuentos',    hd:'X% de Y, qué % es X de Y, variación entre dos números, aumentos y descuentos.' },
+      { n: 'Regla de tres',              u: '/regla-de-tres', icon:'📐', badge:true, d: 'Proporción directa e inversa al instante',        hd:'Proporción directa e inversa. Ingresá tres valores y el cuarto aparece solo.' },
+      { n: 'Conversión de unidades',     u: '/conversion',    icon:'🔄', badge:true, d: 'Longitud, peso, temperatura, velocidad y más',    hd:'Longitud, peso, temperatura, velocidad, área, volumen, tiempo y digital.' },
     ]},
     { cat: '🎲 Generadores y sorteos', items: [
-      { n: 'Generador aleatorio',    u: '/generador',        d: 'Números, letras o elementos de una lista' },
-      { n: 'Tutti Frutti',           u: '/tutti-frutti',     d: 'Sorteo de letras para el juego clásico argentino' },
+      { n: 'Generador aleatorio', u: '/generador',    icon:'🎰', badge:true, d: 'Números, letras o elementos de una lista',          hd:'Números, letras o elementos de tu propia lista. Con o sin repetición.' },
+      { n: 'Tutti Frutti',        u: '/tutti-frutti', icon:'🍉', badge:true, d: 'Sorteo de letras para el juego clásico argentino',  hd:'Sorteo de letras para el juego clásico argentino. Con timer y categorías.' },
     ]},
     { cat: '🤯 Tu vida en números', items: [
-      { n: 'Tu vida en números',     u: '/vida',             d: 'Latidos, pestañeos, pasos y más en tiempo real' },
+      { n: 'Tu vida en números', u: '/vida', icon:'🤯', badge:true, d: 'Latidos, pestañeos, pasos y más en tiempo real', hd:'Latidos, pestañeos, pasos y más — algunos contadores en tiempo real.' },
     ]},
   ];
 
@@ -311,6 +320,40 @@
       setTimeout(applyAll, 0);
     }
   })();
+
+  /* ── HOME GRID ───────────────────────────────────────────
+     Si estamos en la home, generamos el grid de calculadoras
+     dinámicamente desde CALCS, así el home siempre está en sync
+     con el menú lateral sin tener que mantener dos listas.      */
+  function buildHomeGrid() {
+    var root = document.getElementById('home-grid-root');
+    if (!root) return;
+    var html = '';
+    CALCS.forEach(function(cat) {
+      html += '<div class="category"><div class="category-title">' + cat.cat + '</div><div class="grid">';
+      cat.items.forEach(function(item) {
+        var badge = item.badge ? '<span class="badge-new">nuevo</span>' : '';
+        var desc  = item.hd || item.d;
+        html += '<a class="calc-card" href="' + item.u + '">'
+          + '<div class="calc-icon">' + (item.icon || '🔢') + '</div>'
+          + '<div class="calc-info">'
+          + '<div class="calc-name">' + item.n + badge + '</div>'
+          + '<div class="calc-desc">' + desc + '</div>'
+          + '</div></a>';
+      });
+      html += '</div></div>';
+    });
+    root.innerHTML = html;
+  }
+
+  var _path = window.location.pathname;
+  if (_path === '/' || _path === '/index.html' || _path === '') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', buildHomeGrid);
+    } else {
+      buildHomeGrid();
+    }
+  }
 
   /* ── NÚMERO: desactivar scroll y flechas ─────────────────
      Listener en fase de CAPTURA (capture:true) + passive:false

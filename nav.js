@@ -321,6 +321,76 @@
     }
   })();
 
+  /* ── SCHEMA JSON-LD (SEO) ───────────────────────────────────
+     Inyecta datos estructurados en <head> para cada calculadora.
+     Google los usa para entender la página y generar rich results.
+     Al estar en nav.js, cualquier calculadora nueva que se agregue
+     a CALCS obtiene schema automáticamente sin tocar su HTML.      */
+  (function(){
+    var path = window.location.pathname.replace(/\/$/, '') || '/';
+
+    // ── Home: WebSite schema ──────────────────────────────────
+    if(path === '/'){
+      var ws = {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        'name': 'Calculadora.live',
+        'url': 'https://calculadora.live/',
+        'description': 'Calculadoras gratuitas, simples y actualizadas.'
+      };
+      var s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.textContent = JSON.stringify(ws);
+      document.head.appendChild(s);
+      return;
+    }
+
+    // ── Buscar la calculadora actual en CALCS ─────────────────
+    var found = null, foundCat = '';
+    CALCS.forEach(function(cat){
+      cat.items.forEach(function(item){
+        if(item.u.replace(/\/$/, '') === path) {
+          found = item;
+          foundCat = cat.cat;
+        }
+      });
+    });
+    if(!found) return;
+
+    // ── Mapear categoría a applicationCategory de schema.org ──
+    var appCat = 'UtilitiesApplication';
+    if(foundCat.indexOf('Auto') !== -1)     appCat = 'AutomotiveApplication';
+    if(foundCat.indexOf('Finanz') !== -1)   appCat = 'FinanceApplication';
+    if(foundCat.indexOf('Salud') !== -1)    appCat = 'HealthApplication';
+
+    var schema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      'name': found.n,
+      'url': 'https://calculadora.live' + found.u,
+      'description': found.hd || found.d,
+      'applicationCategory': appCat,
+      'operatingSystem': 'All',
+      'isAccessibleForFree': true,
+      'inLanguage': 'es',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'USD'
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Calculadora.live',
+        'url': 'https://calculadora.live/'
+      }
+    };
+
+    var sc = document.createElement('script');
+    sc.type = 'application/ld+json';
+    sc.textContent = JSON.stringify(schema);
+    document.head.appendChild(sc);
+  })();
+
   /* ── EXPONER CALCS ─────────────────────────────────────────
      index.html tiene un <script> inline (después de este archivo)
      que genera el grid del home a partir de window.__CALCS.

@@ -22,8 +22,13 @@
   .card{background:var(--surface);border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid var(--border)}
   .field{margin-bottom:0}
   label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
-  input[type=date],input[type=time]{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;cursor:pointer}
-  input[type=date]:focus,input[type=time]:focus{border-color:var(--hi)}
+  input[type=date]{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;cursor:pointer}
+  input[type=date]:focus{border-color:var(--hi)}
+  .time-row{display:flex;align-items:center;gap:6px}
+  .time-sel{flex:1;padding:13px 8px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;cursor:pointer;text-align:center;appearance:none;-webkit-appearance:none}
+  .time-sel:focus{border-color:var(--hi)}
+  .time-sel option[value=""]{color:var(--ink-faint)}
+  .time-colon{font-size:18px;font-weight:700;color:var(--ink-faint);flex-shrink:0}
 
   /* Link button */
   .link-btn{display:flex;align-items:center;gap:8px;width:100%;padding:12px 16px;background:var(--hi-soft);border:1.5px solid #BFDBFE;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--hi);cursor:pointer;transition:all .2s;margin-top:14px}
@@ -98,7 +103,15 @@
       </div>
       <div class="field">
         <label>Hora <span style="font-weight:400;font-size:10px;opacity:.6;text-transform:none;letter-spacing:0">(opcional)</span></label>
-        <input type="time" id="hora-nac" onchange="calcular()">
+        <div class="time-row">
+          <select id="hora-h" class="time-sel" onchange="calcular()">
+            <option value="" disabled selected>hh</option>
+          </select>
+          <span class="time-colon">:</span>
+          <select id="hora-m" class="time-sel" onchange="calcular()">
+            <option value="" disabled selected>mm</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="url-hint" id="url-hint">
@@ -200,13 +213,6 @@
           <div class="stat-sub">prom. 3,25 km/día</div>
         </div>
 
-        <div class="stat-card accent-green">
-          <div class="stat-emoji">☕</div>
-          <div class="stat-val" id="s-cafe">—</div>
-          <div class="stat-lbl">tazas de café (si sos promedio)</div>
-          <div class="stat-sub">~2 cafés/día en Argentina</div>
-        </div>
-
       </div>
     </div><!-- /stats-section -->
   </div><!-- /results-wrap -->
@@ -220,6 +226,22 @@
 <script>
   const hoy = new Date();
   document.getElementById('nacimiento').setAttribute('max', hoy.toISOString().split('T')[0]);
+
+  // Poblar selects de hora
+  (function(){
+    const selH = document.getElementById('hora-h');
+    const selM = document.getElementById('hora-m');
+    for(let i=0;i<24;i++){
+      const o=document.createElement('option');
+      o.value=i; o.textContent=String(i).padStart(2,'0');
+      selH.appendChild(o);
+    }
+    for(let i=0;i<60;i++){
+      const o=document.createElement('option');
+      o.value=i; o.textContent=String(i).padStart(2,'0');
+      selM.appendChild(o);
+    }
+  })();
 
   let birthDate = null;
   let liveIntervals = [];
@@ -269,7 +291,6 @@
     document.getElementById('s-palabras').textContent    = fmt(days * 16000);
     document.getElementById('s-libros').textContent      = `≈ ${libros.toLocaleString('es-AR')} libro${libros!==1?'s':''} de 90.000 palabras`;
     document.getElementById('s-km').textContent          = fmt(days * 3.25);
-    document.getElementById('s-cafe').textContent        = fmt(days * 2);
   }
 
   // ---- Live tickers (ritmo propio) ----
@@ -293,10 +314,10 @@
     liveIntervals.push(setInterval(function(){
       tickEl('s-latidos', function(){ return ageSeconds()*(70/60); });
     }, 857));
-    // Pestañeos: cada 4000ms (~15 blinks/min)
+    // Pestañeos: cada 6000ms (~15/min × 16h despierto / 24h)
     liveIntervals.push(setInterval(function(){
-      tickEl('s-pestaneos', function(){ return ageSeconds()*(15/60); });
-    }, 4000));
+      tickEl('s-pestaneos', function(){ return ageSeconds()*(15/60)*(16/24); });
+    }, 6000));
   }
 
   // ---- URL en tiempo real ----
@@ -335,9 +356,12 @@
     if(!val){ showEmpty(); return; }
 
     const [y,m,d] = val.split('-').map(Number);
-    const horaVal = document.getElementById('hora-nac').value;
-    let bh=0, bmin=0;
-    if(horaVal){ const hp=horaVal.split(':'); bh=+hp[0]; bmin=+hp[1]||0; }
+    const selH = document.getElementById('hora-h').value;
+    const selM = document.getElementById('hora-m').value;
+    const bh   = selH !== '' ? parseInt(selH)  : 0;
+    const bmin = selM !== '' ? parseInt(selM)  : 0;
+    const horaVal = selH !== '' ? (String(bh).padStart(2,'0')+':'+String(bmin).padStart(2,'0')) : '';
+
     const parsed = new Date(y, m-1, d, bh, bmin, 0);
     if(isNaN(parsed.getTime()) || parsed > hoy){ showEmpty(); return; }
 
@@ -355,7 +379,7 @@
     updateStatics();
     tickEl('s-segundos',  ageSeconds);
     tickEl('s-latidos',   function(){ return ageSeconds()*(70/60); });
-    tickEl('s-pestaneos', function(){ return ageSeconds()*(15/60); });
+    tickEl('s-pestaneos', function(){ return ageSeconds()*(15/60)*(16/24); });
 
     startLive();
   }
@@ -376,7 +400,12 @@
     const f = p.get('f'), h = p.get('h');
     if(f){
       document.getElementById('nacimiento').value = f;
-      if(h) document.getElementById('hora-nac').value = h;
+      if(h){
+        const parts = h.split(':');
+        const hh = parseInt(parts[0]), mm = parseInt(parts[1]||0);
+        if(!isNaN(hh) && hh>=0 && hh<=23) document.getElementById('hora-h').value = hh;
+        if(!isNaN(mm) && mm>=0 && mm<=59) document.getElementById('hora-m').value = mm;
+      }
       calcular();
     }
   })();

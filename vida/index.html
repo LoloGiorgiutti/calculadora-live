@@ -114,14 +114,6 @@
         </div>
       </div>
     </div>
-    <div class="url-hint" id="url-hint">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-      <span>El link de esta página ya incluye tus datos — podés copiarlo de la barra de URL</span>
-    </div>
-    <button class="link-btn" id="link-btn" style="display:none" onclick="copiarLink()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-      <span id="link-btn-txt">Copiar link</span>
-    </button>
   </div>
 
   <!-- Summary bar -->
@@ -217,8 +209,18 @@
     </div><!-- /stats-section -->
   </div><!-- /results-wrap -->
 
+  <!-- Botón compartir -->
+  <div id="share-row" style="display:none; text-align:right; margin-top:4px; margin-bottom:4px;">
+    <button id="btn-share" onclick="compartirResultado()"
+      style="padding:9px 18px; background:transparent; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; color:var(--ink-light); cursor:pointer; transition:all 0.18s; display:inline-flex; align-items:center; gap:7px;"
+      onmouseover="this.style.borderColor='var(--hi)';this.style.color='var(--hi)'"
+      onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink-light)'">
+      <span>↑</span> Compartir resultados
+    </button>
+  </div>
+
   <div class="info-box" id="info-box" style="display:none">
-    <p>Estimaciones basadas en promedios. Los contadores en vivo se actualizan a su ritmo natural: los latidos cada ~857 ms, los pestañeos cada ~4 s. Si ingresás la hora exacta de nacimiento, los números son más precisos.</p>
+    <p>Estimaciones basadas en promedios. Los contadores en vivo se actualizan a su ritmo natural: los latidos cada ~857 ms, los pestañeos cada ~6 s. Si ingresás la hora exacta de nacimiento, los números son más precisos.</p>
   </div>
 
 </div>
@@ -326,28 +328,38 @@
     url.searchParams.set('f', fecha);
     if(hora) url.searchParams.set('h', hora);
     history.replaceState(null, '', url.toString());
-    document.getElementById('url-hint').classList.add('visible');
-    document.getElementById('link-btn').style.display = 'flex';
   }
 
   function clearURL(){
     history.replaceState(null, '', location.pathname);
-    document.getElementById('url-hint').classList.remove('visible');
-    document.getElementById('link-btn').style.display = 'none';
   }
 
-  // ---- Copiar link (ya está en la barra, solo copiamos) ----
-  function copiarLink(){
-    navigator.clipboard.writeText(location.href).then(function(){
-      const btn = document.getElementById('link-btn');
-      const txt = document.getElementById('link-btn-txt');
-      btn.classList.add('copied');
-      txt.textContent = '✓ Link copiado';
-      setTimeout(function(){
-        btn.classList.remove('copied');
-        txt.textContent = 'Copiar link';
-      }, 2000);
-    });
+  // ---- Compartir resultados ----
+  async function compartirResultado(){
+    if(!birthDate) return;
+    const edad  = exactAgeStr(new Date());
+    const secs  = fmt(ageSeconds());
+    const lats  = fmt(ageSeconds()*(70/60));
+    const pasos = fmt(ageDays()*4000);
+    const url   = location.href;
+    const texto = `🤯 Mi vida en números\n${edad}\n❤️ ${lats} latidos del corazón\n⏱️ ${secs} segundos vividos\n🚶 ${pasos} pasos caminados\n\n${url}`;
+
+    const btn  = document.getElementById('btn-share');
+    const orig = btn.innerHTML;
+
+    if(navigator.share){
+      try { await navigator.share({ title: 'Mi vida en números', text: texto }); return; }
+      catch(e){ if(e.name==='AbortError') return; }
+    }
+    try { await navigator.clipboard.writeText(texto); }
+    catch(e){
+      const ta = document.createElement('textarea');
+      ta.value = texto; ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    }
+    btn.innerHTML = '<span>✓</span> ¡Copiado!';
+    btn.style.borderColor = 'var(--hi)'; btn.style.color = 'var(--hi)';
+    setTimeout(function(){ btn.innerHTML=orig; btn.style.borderColor=''; btn.style.color=''; }, 2200);
   }
 
   // ---- Main ----
@@ -370,6 +382,7 @@
     document.getElementById('empty-card').style.display   = 'none';
     document.getElementById('summary-bar').style.display  = 'block';
     document.getElementById('stats-section').style.display= 'block';
+    document.getElementById('share-row').style.display    = '';
     document.getElementById('info-box').style.display     = 'block';
 
     document.getElementById('summary-age').textContent = exactAgeStr(hoy);
@@ -390,6 +403,7 @@
     document.getElementById('empty-card').style.display   = 'block';
     document.getElementById('summary-bar').style.display  = 'none';
     document.getElementById('stats-section').style.display= 'none';
+    document.getElementById('share-row').style.display    = 'none';
     document.getElementById('info-box').style.display     = 'none';
     clearURL();
   }

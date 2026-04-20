@@ -2251,16 +2251,18 @@ function calcular() {
 
   // Tank indicator
   const tanque = auto.tanque || 50;
-  const pctTanque = Math.min(100, Math.round((volumen / tanque) * 100));
+  const pctTanque = Math.round((volumen / tanque) * 100);
   const tankEl  = document.getElementById('tank-indicator');
   const tankBar = document.getElementById('tank-bar');
   tankEl.style.display = '';
-  tankBar.style.width = pctTanque + '%';
-  tankBar.style.background = pctTanque > 80
-    ? 'linear-gradient(to right,#E01C1C,#FF6B6B)'
-    : pctTanque > 50
-      ? 'linear-gradient(to right,#F59E0B,#FCD34D)'
-      : 'linear-gradient(to right,#1A5FE8,#5B9EFF)';
+  tankBar.style.width = Math.min(100, pctTanque) + '%';
+  tankBar.style.background = pctTanque > 100
+    ? 'linear-gradient(to right,#7C3AED,#C084FC)'
+    : pctTanque > 80
+      ? 'linear-gradient(to right,#E01C1C,#FF6B6B)'
+      : pctTanque > 50
+        ? 'linear-gradient(to right,#F59E0B,#FCD34D)'
+        : 'linear-gradient(to right,#1A5FE8,#5B9EFF)';
   document.getElementById('tank-pct-text').textContent = pctTanque + '%';
   document.getElementById('tank-sub').textContent = `${fmt(volumen,1)} ${unidad} de ${tanque}L de capacidad`;
 

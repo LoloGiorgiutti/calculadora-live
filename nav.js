@@ -21,6 +21,7 @@
       { n: 'Calorías diarias (BMR)', u: '/bmr',              d: 'Metabolismo basal y TDEE' },
       { n: 'Calculadora de 1RM',     u: '/1rm',              d: 'Repetición máxima por fórmula' },
       { n: 'Hidratación diaria',     u: '/hidratacion',      d: '¿Cuánta agua necesitás por día?' },
+      { n: 'Proteína diaria',        u: '/proteina',         d: 'Gramos según tu peso, objetivo y actividad' },
     ]},
     { cat: '📅 Fechas y tiempo', items: [
       { n: 'Contador de días',       u: '/dias',             d: 'Días entre fechas, hábiles o corridos' },

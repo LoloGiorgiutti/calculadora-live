@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversión de Unidades | Calculadora.live</title>
+<meta name="description" content="Convertí unidades al instante: longitud, peso, temperatura, velocidad, área, volumen, tiempo y más. Bidireccional y sin pasos.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/conversion">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F0F2F7;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
+  .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
+  .page{max-width:560px;margin:0 auto;padding:36px 20px 60px}
+  .page-icon{font-size:36px;margin-bottom:10px}
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+  .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:24px}
+
+  /* Category chips */
+  .cat-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:20px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .cat-scroll::-webkit-scrollbar{display:none}
+  .cat-chip{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0}
+  .cat-chip:hover{border-color:var(--hi);color:var(--hi)}
+  .cat-chip.active{background:var(--hi);border-color:var(--hi);color:#fff}
+
+  /* Converter card */
+  .conv-card{background:var(--surface);border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:14px}
+
+  /* Conversion row */
+  .conv-row{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:end}
+  .conv-field{display:flex;flex-direction:column;gap:6px}
+  .conv-field select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2360647A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;transition:border-color .15s}
+  .conv-field select:focus{border-color:var(--hi);outline:none}
+  .conv-field input{width:100%;padding:14px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:22px;font-weight:600;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;text-align:center}
+  .conv-field input:focus{border-color:var(--hi)}
+  .conv-field input.result-inp{background:var(--hi-soft);border-color:#BFDBFE;color:var(--hi)}
+
+  /* Swap button */
+  .swap-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .2s;flex-shrink:0;margin-bottom:2px}
+  .swap-btn:hover{background:var(--hi);border-color:var(--hi);color:#fff;transform:rotate(180deg)}
+
+  /* Result detail */
+  .result-detail{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--ink-light);text-align:center;line-height:1.6;display:none}
+  .result-detail.visible{display:block}
+  .result-detail strong{color:var(--ink)}
+
+  /* Quick conversions */
+  .quick-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px}
+  .quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .quick-item{padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s}
+  .quick-item:hover{border-color:var(--hi);background:var(--hi-soft)}
+  .quick-from{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+  .quick-to{font-size:11px;color:var(--ink-light)}
+
+  @media(max-width:420px){
+    .conv-row{grid-template-columns:1fr auto 1fr;gap:8px}
+    .conv-field input{font-size:18px;padding:12px 8px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <a class="back-link" href="/">← Volver</a>
+</header>
+
+<div class="page">
+  <div class="page-icon">🔄</div>
+  <h1 class="page-title">Conversión de unidades</h1>
+  <p class="page-sub">Escribí en cualquiera de los dos campos y el otro se convierte al instante.</p>
+
+  <!-- Category chips -->
+  <div class="cat-scroll" id="cat-scroll"></div>
+
+  <!-- Converter -->
+  <div class="conv-card">
+    <div class="conv-row">
+      <div class="conv-field">
+        <select id="unit-a" onchange="onUnitChange()"></select>
+        <input type="number" id="val-a" placeholder="0" oninput="convertFrom('a')">
+      </div>
+      <button class="swap-btn" onclick="swapUnits()" title="Intercambiar">⇄</button>
+      <div class="conv-field">
+        <select id="unit-b" onchange="onUnitChange()"></select>
+        <input type="number" id="val-b" placeholder="0" class="result-inp" oninput="convertFrom('b')">
+      </div>
+    </div>
+    <div class="result-detail" id="result-detail"></div>
+  </div>
+
+  <!-- Quick conversions -->
+  <div class="quick-title" id="quick-title">Conversiones frecuentes</div>
+  <div class="quick-grid" id="quick-grid"></div>
+</div>
+
+<script>
+/* ── Datos de conversión ─────────────────────────────────── */
+const CATS = [
+  { id:'long', name:'Longitud', icon:'📏', units:[
+    { id:'m',   name:'Metros',         sym:'m',   f:1 },
+    { id:'km',  name:'Kilómetros',     sym:'km',  f:1000 },
+    { id:'cm',  name:'Centímetros',    sym:'cm',  f:0.01 },
+    { id:'mm',  name:'Milímetros',     sym:'mm',  f:0.001 },
+    { id:'mi',  name:'Millas',         sym:'mi',  f:1609.344 },
+    { id:'ft',  name:'Pies',           sym:'ft',  f:0.3048 },
+    { id:'in',  name:'Pulgadas',       sym:'in',  f:0.0254 },
+    { id:'yd',  name:'Yardas',         sym:'yd',  f:0.9144 },
+    { id:'nm',  name:'Millas náuticas',sym:'nmi', f:1852 },
+  ], quick:[
+    {a:'km',v:1,b:'mi'},{a:'mi',v:1,b:'km'},
+    {a:'cm',v:1,b:'in'},{a:'m',v:1,b:'ft'},
+  ]},
+  { id:'peso', name:'Peso', icon:'⚖️', units:[
+    { id:'kg',  name:'Kilogramos',     sym:'kg',  f:1 },
+    { id:'g',   name:'Gramos',         sym:'g',   f:0.001 },
+    { id:'mg',  name:'Miligramos',     sym:'mg',  f:0.000001 },
+    { id:'t',   name:'Toneladas',      sym:'t',   f:1000 },
+    { id:'lb',  name:'Libras',         sym:'lb',  f:0.453592 },
+    { id:'oz',  name:'Onzas',          sym:'oz',  f:0.0283495 },
+  ], quick:[
+    {a:'kg',v:1,b:'lb'},{a:'lb',v:1,b:'kg'},
+    {a:'kg',v:70,b:'lb'},{a:'g',v:100,b:'oz'},
+  ]},
+  { id:'temp', name:'Temperatura', icon:'🌡️', units:[
+    { id:'c', name:'Celsius',    sym:'°C' },
+    { id:'f', name:'Fahrenheit', sym:'°F' },
+    { id:'k', name:'Kelvin',     sym:'K'  },
+  ], quick:[
+    {a:'c',v:0,b:'f'},{a:'c',v:100,b:'f'},
+    {a:'f',v:32,b:'c'},{a:'f',v:98.6,b:'c'},
+  ]},
+  { id:'vel', name:'Velocidad', icon:'💨', units:[
+    { id:'kmh', name:'Kilómetros/hora', sym:'km/h', f:1 },
+    { id:'mph', name:'Millas/hora',     sym:'mph',  f:1.60934 },
+    { id:'ms',  name:'Metros/seg',      sym:'m/s',  f:3.6 },
+    { id:'kn',  name:'Nudos',           sym:'kn',   f:1.852 },
+  ], quick:[
+    {a:'kmh',v:100,b:'mph'},{a:'mph',v:60,b:'kmh'},
+    {a:'kmh',v:120,b:'ms'},{a:'ms',v:1,b:'kmh'},
+  ]},
+  { id:'area', name:'Área', icon:'🟦', units:[
+    { id:'m2',  name:'Metros²',      sym:'m²',  f:1 },
+    { id:'cm2', name:'Centímetros²', sym:'cm²', f:0.0001 },
+    { id:'km2', name:'Kilómetros²',  sym:'km²', f:1e6 },
+    { id:'ha',  name:'Hectáreas',    sym:'ha',  f:10000 },
+    { id:'ft2', name:'Pies²',        sym:'ft²', f:0.092903 },
+    { id:'ac',  name:'Acres',        sym:'ac',  f:4046.86 },
+  ], quick:[
+    {a:'m2',v:100,b:'ft2'},{a:'ha',v:1,b:'m2'},
+    {a:'km2',v:1,b:'ha'},{a:'ac',v:1,b:'ha'},
+  ]},
+  { id:'vol', name:'Volumen', icon:'🧊', units:[
+    { id:'l',   name:'Litros',       sym:'L',   f:1 },
+    { id:'ml',  name:'Mililitros',   sym:'mL',  f:0.001 },
+    { id:'m3',  name:'Metros³',      sym:'m³',  f:1000 },
+    { id:'gal', name:'Galones (US)', sym:'gal', f:3.78541 },
+    { id:'floz',name:'Fl. oz (US)',  sym:'fl oz',f:0.0295735 },
+    { id:'pt',  name:'Pintas (US)',  sym:'pt',  f:0.473176 },
+    { id:'cup', name:'Tazas (US)',   sym:'cup', f:0.236588 },
+  ], quick:[
+    {a:'l',v:1,b:'gal'},{a:'gal',v:1,b:'l'},
+    {a:'ml',v:250,b:'floz'},{a:'l',v:2,b:'floz'},
+  ]},
+  { id:'tiempo', name:'Tiempo', icon:'⏱️', units:[
+    { id:'s',   name:'Segundos',   sym:'s',   f:1 },
+    { id:'min', name:'Minutos',    sym:'min', f:60 },
+    { id:'h',   name:'Horas',      sym:'h',   f:3600 },
+    { id:'d',   name:'Días',       sym:'d',   f:86400 },
+    { id:'sem', name:'Semanas',    sym:'sem', f:604800 },
+    { id:'mes', name:'Meses',      sym:'mes', f:2629800 },
+    { id:'año', name:'Años',       sym:'año', f:31557600 },
+  ], quick:[
+    {a:'h',v:1,b:'min'},{a:'d',v:1,b:'h'},
+    {a:'sem',v:1,b:'d'},{a:'año',v:1,b:'d'},
+  ]},
+  { id:'digital', name:'Digital', icon:'💾', units:[
+    { id:'b',  name:'Bytes',      sym:'B',  f:1 },
+    { id:'kb', name:'Kilobytes',  sym:'KB', f:1024 },
+    { id:'mb', name:'Megabytes',  sym:'MB', f:1048576 },
+    { id:'gb', name:'Gigabytes',  sym:'GB', f:1073741824 },
+    { id:'tb', name:'Terabytes',  sym:'TB', f:1099511627776 },
+  ], quick:[
+    {a:'gb',v:1,b:'mb'},{a:'tb',v:1,b:'gb'},
+    {a:'mb',v:500,b:'gb'},{a:'gb',v:32,b:'mb'},
+  ]},
+];
+
+/* ── Estado ──────────────────────────────────────────────── */
+let currentCat = CATS[0];
+
+/* ── Temperatura (conversiones especiales) ──────────────── */
+function toBase_temp(val, from){
+  if(from==='c') return val;
+  if(from==='f') return (val-32)*5/9;
+  if(from==='k') return val-273.15;
+}
+function fromBase_temp(val, to){
+  if(to==='c') return val;
+  if(to==='f') return val*9/5+32;
+  if(to==='k') return val+273.15;
+}
+
+/* ── Conversión ──────────────────────────────────────────── */
+function convert(val, fromId, toId){
+  if(isNaN(val)) return NaN;
+  if(currentCat.id === 'temp'){
+    return fromBase_temp(toBase_temp(val, fromId), toId);
+  }
+  var fromU = currentCat.units.find(u=>u.id===fromId);
+  var toU   = currentCat.units.find(u=>u.id===toId);
+  if(!fromU||!toU) return NaN;
+  return (val * fromU.f) / toU.f;
+}
+
+function fmtN(n){
+  if(!isFinite(n)||isNaN(n)) return '';
+  var abs = Math.abs(n);
+  var decimals = abs === 0 ? 0 : abs < 0.001 ? 8 : abs < 1 ? 6 : abs < 10 ? 4 : abs < 1000 ? 2 : 0;
+  return parseFloat(n.toFixed(decimals)).toLocaleString('es-AR', {maximumFractionDigits: decimals});
+}
+
+function getUnit(id){ return currentCat.units.find(u=>u.id===id); }
+
+function convertFrom(side){
+  var srcId  = side==='a' ? 'val-a' : 'val-b';
+  var dstId  = side==='a' ? 'val-b' : 'val-a';
+  var srcUid = side==='a' ? 'unit-a' : 'unit-b';
+  var dstUid = side==='a' ? 'unit-b' : 'unit-a';
+  var dstInp = document.getElementById(dstId);
+
+  var val    = parseFloat(document.getElementById(srcId).value);
+  var fromId = document.getElementById(srcUid).value;
+  var toId   = document.getElementById(dstUid).value;
+
+  if(isNaN(val)){
+    dstInp.value = '';
+    document.getElementById('result-detail').classList.remove('visible');
+    return;
+  }
+
+  var result = convert(val, fromId, toId);
+  dstInp.value = fmtN(result);
+
+  var fromU = getUnit(fromId), toU = getUnit(toId);
+  document.getElementById('result-detail').innerHTML =
+    '<strong>' + fmtN(val) + ' ' + fromU.sym + '</strong> = <strong>' + fmtN(result) + ' ' + toU.sym + '</strong>';
+  document.getElementById('result-detail').classList.add('visible');
+}
+
+function onUnitChange(){
+  var va = parseFloat(document.getElementById('val-a').value);
+  var vb = parseFloat(document.getElementById('val-b').value);
+  if(!isNaN(va)) convertFrom('a');
+  else if(!isNaN(vb)) convertFrom('b');
+}
+
+function swapUnits(){
+  var sa = document.getElementById('unit-a');
+  var sb = document.getElementById('unit-b');
+  var tmp = sa.value; sa.value = sb.value; sb.value = tmp;
+  var va = document.getElementById('val-a');
+  var vb = document.getElementById('val-b');
+  var tv = va.value; va.value = vb.value; vb.value = tv;
+  onUnitChange();
+}
+
+/* ── Construir selects ───────────────────────────────────── */
+function buildSelects(defaultA, defaultB){
+  var sa = document.getElementById('unit-a');
+  var sb = document.getElementById('unit-b');
+  sa.innerHTML = '';
+  sb.innerHTML = '';
+  currentCat.units.forEach(function(u){
+    var oa = document.createElement('option');
+    oa.value = u.id; oa.textContent = u.name + ' (' + u.sym + ')';
+    if(u.id===defaultA) oa.selected = true;
+    sa.appendChild(oa);
+    var ob = oa.cloneNode(true);
+    if(u.id===defaultB) ob.selected = true;
+    sb.appendChild(ob);
+  });
+}
+
+/* ── Quick conversions ───────────────────────────────────── */
+function buildQuick(){
+  var grid = document.getElementById('quick-grid');
+  grid.innerHTML = '';
+  currentCat.quick.forEach(function(q){
+    var fromU = currentCat.units.find(u=>u.id===q.a);
+    var toU   = currentCat.units.find(u=>u.id===q.b);
+    if(!fromU||!toU) return;
+    var result = convert(q.v, q.a, q.b);
+    var div = document.createElement('div');
+    div.className = 'quick-item';
+    div.innerHTML = '<div class="quick-from">' + fmtN(q.v) + ' ' + fromU.sym + ' = ' + fmtN(result) + ' ' + toU.sym + '</div>'
+      + '<div class="quick-to">' + fromU.name + ' → ' + toU.name + '</div>';
+    div.onclick = function(){
+      document.getElementById('unit-a').value = q.a;
+      document.getElementById('unit-b').value = q.b;
+      document.getElementById('val-a').value  = q.v;
+      convertFrom('a');
+    };
+    grid.appendChild(div);
+  });
+}
+
+/* ── Set category ────────────────────────────────────────── */
+function setCat(catId){
+  currentCat = CATS.find(c=>c.id===catId);
+  document.querySelectorAll('.cat-chip').forEach(function(c){
+    c.classList.toggle('active', c.dataset.id===catId);
+  });
+  // Default units: first and second
+  var dA = currentCat.units[0].id;
+  var dB = currentCat.units[1].id;
+  buildSelects(dA, dB);
+  document.getElementById('val-a').value = '';
+  document.getElementById('val-b').value = '';
+  document.getElementById('result-detail').classList.remove('visible');
+  buildQuick();
+}
+
+/* ── Init ────────────────────────────────────────────────── */
+(function(){
+  var scroll = document.getElementById('cat-scroll');
+  CATS.forEach(function(c){
+    var btn = document.createElement('button');
+    btn.className = 'cat-chip' + (c.id===CATS[0].id?' active':'');
+    btn.dataset.id = c.id;
+    btn.innerHTML = c.icon + ' ' + c.name;
+    btn.onclick = function(){ setCat(c.id); };
+    scroll.appendChild(btn);
+  });
+  setCat(CATS[0].id);
+})();
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

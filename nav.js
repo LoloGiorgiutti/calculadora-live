@@ -31,6 +31,11 @@
     { cat: '🔢 Matemática rápida', items: [
       { n: 'Calculadora de porcentajes', u: '/porcentaje',   d: 'X% de Y, variaciones, aumentos y descuentos' },
       { n: 'Regla de tres',              u: '/regla-de-tres',d: 'Proporción directa e inversa al instante' },
+      { n: 'Conversión de unidades',     u: '/conversion',   d: 'Longitud, peso, temperatura, velocidad y más' },
+    ]},
+    { cat: '🎲 Generadores y sorteos', items: [
+      { n: 'Generador aleatorio',    u: '/generador',        d: 'Números, letras o elementos de una lista' },
+      { n: 'Tutti Frutti',           u: '/tutti-frutti',     d: 'Sorteo de letras para el juego clásico argentino' },
     ]},
     { cat: '🤯 Tu vida en números', items: [
       { n: 'Tu vida en números',     u: '/vida',             d: 'Latidos, pestañeos, pasos y más en tiempo real' },

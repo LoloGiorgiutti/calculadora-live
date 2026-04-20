@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador Aleatorio | Calculadora.live</title>
+<meta name="description" content="Generá números aleatorios, letras al azar o elegí elementos de una lista. Ideal para sorteos, juegos y decisiones.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/generador">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F0F2F7;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em}.logo span{color:var(--hi)}
+  .back-link{font-size:13px;color:var(--ink-light);text-decoration:none}.back-link:hover{color:var(--hi)}
+  .page{max-width:520px;margin:0 auto;padding:36px 20px 60px}
+  .page-icon{font-size:36px;margin-bottom:10px}
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+  .page-sub{font-size:14px;color:var(--ink-light);line-height:1.5;margin-bottom:24px}
+
+  /* Mode tabs */
+  .mode-tabs{display:flex;gap:8px;margin-bottom:20px}
+  .mode-tab{flex:1;padding:10px 8px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;text-align:center}
+  .mode-tab:hover{border-color:var(--hi);color:var(--hi)}
+  .mode-tab.active{background:var(--hi);border-color:var(--hi);color:#fff}
+
+  /* Card */
+  .card{background:var(--surface);border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:14px}
+  .field{margin-bottom:16px}.field:last-child{margin-bottom:0}
+  label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
+  input[type=number]{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  input[type=number]:focus{border-color:var(--hi)}
+  .row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  /* Toggle */
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+  .toggle-lbl{font-size:14px;font-weight:500}
+  .toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+  .toggle input{opacity:0;width:0;height:0}
+  .toggle-track{position:absolute;inset:0;background:var(--border);border-radius:11px;cursor:pointer;transition:.2s}
+  .toggle input:checked + .toggle-track{background:var(--hi)}
+  .toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:.2s}
+  .toggle input:checked + .toggle-track::after{left:21px}
+
+  /* Chips selector letras */
+  .letter-opts{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+  .l-chip{padding:5px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--surface);font-size:12px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s}
+  .l-chip:hover,.l-chip.active{background:var(--hi);border-color:var(--hi);color:#fff}
+
+  /* Textarea */
+  textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;resize:vertical;min-height:120px;line-height:1.5}
+  textarea:focus{border-color:var(--hi)}
+  .textarea-hint{font-size:11px;color:var(--ink-faint);margin-top:5px}
+
+  /* Button */
+  .gen-btn{width:100%;padding:15px;background:var(--hi);border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:#fff;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px}
+  .gen-btn:hover{background:#1550CC;transform:translateY(-1px)}
+  .gen-btn:active{transform:translateY(0)}
+
+  /* Results */
+  .results{display:none;margin-top:14px}
+  .results.visible{display:block}
+  .results-inner{background:#0C1528;border-radius:var(--radius);padding:24px;border-top:3px solid var(--hi)}
+  .res-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px}
+  .num-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .num-chip{background:rgba(255,255,255,.08);border-radius:12px;padding:14px 20px;font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.02em;animation:pop-in .25s ease-out both}
+  .letter-big{font-size:80px;font-weight:700;color:#fff;text-align:center;display:block;letter-spacing:-0.04em;animation:pop-in .25s ease-out both}
+  .item-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .item-chip{background:rgba(255,255,255,.1);border-radius:10px;padding:10px 16px;font-size:16px;font-weight:600;color:#fff;animation:pop-in .25s ease-out both}
+
+  @keyframes pop-in{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+
+  /* Error */
+  .error-msg{font-size:13px;color:#EF4444;margin-top:8px;display:none}
+  .error-msg.visible{display:block}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <a class="back-link" href="/">← Volver</a>
+</header>
+
+<div class="page">
+  <div class="page-icon">🎲</div>
+  <h1 class="page-title">Generador aleatorio</h1>
+  <p class="page-sub">Números, letras o elementos de una lista. Todo al azar.</p>
+
+  <!-- Tabs -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="setMode('num',this)">🔢 Números</button>
+    <button class="mode-tab" onclick="setMode('let',this)">🔤 Letras</button>
+    <button class="mode-tab" onclick="setMode('list',this)">📋 Lista</button>
+  </div>
+
+  <!-- ── NÚMEROS ── -->
+  <div id="m-num">
+    <div class="card">
+      <div class="row-2">
+        <div class="field">
+          <label>Mínimo</label>
+          <input type="number" id="num-min" value="1" placeholder="1">
+        </div>
+        <div class="field">
+          <label>Máximo</label>
+          <input type="number" id="num-max" value="100" placeholder="100">
+        </div>
+      </div>
+      <div class="field">
+        <label>Cantidad de números</label>
+        <input type="number" id="num-cant" value="1" min="1" max="50" placeholder="1">
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-lbl">Sin repetir</span>
+        <label class="toggle">
+          <input type="checkbox" id="num-norep">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+      <div class="error-msg" id="num-error"></div>
+      <button class="gen-btn" onclick="genNumeros()">🎲 Generar números</button>
+    </div>
+  </div>
+
+  <!-- ── LETRAS ── -->
+  <div id="m-let" style="display:none">
+    <div class="card">
+      <div class="field">
+        <label>Tipo de letras</label>
+        <div class="letter-opts">
+          <button class="l-chip active" data-tipo="todas" onclick="setLetraTipo('todas',this)">Todas (A–Z + Ñ)</button>
+          <button class="l-chip" data-tipo="consonantes" onclick="setLetraTipo('consonantes',this)">Solo consonantes</button>
+          <button class="l-chip" data-tipo="vocales" onclick="setLetraTipo('vocales',this)">Solo vocales</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Cantidad de letras</label>
+        <input type="number" id="let-cant" value="1" min="1" max="20" placeholder="1">
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-lbl">Sin repetir</span>
+        <label class="toggle">
+          <input type="checkbox" id="let-norep">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-lbl">Excluir letras raras (K, W, X, Y)</span>
+        <label class="toggle">
+          <input type="checkbox" id="let-exrara">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+      <button class="gen-btn" onclick="genLetras()">🎲 Generar letras</button>
+    </div>
+  </div>
+
+  <!-- ── LISTA ── -->
+  <div id="m-list" style="display:none">
+    <div class="card">
+      <div class="field">
+        <label>Tu lista (un elemento por línea)</label>
+        <textarea id="list-items" placeholder="Manzana&#10;Banana&#10;Naranja&#10;Uva&#10;Pera"></textarea>
+        <div class="textarea-hint">Podés pegar cualquier lista: nombres, equipos, opciones, etc.</div>
+      </div>
+      <div class="field">
+        <label>¿Cuántos elegir?</label>
+        <input type="number" id="list-cant" value="1" min="1" placeholder="1">
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-lbl">Sin repetir</span>
+        <label class="toggle">
+          <input type="checkbox" id="list-norep" checked>
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+      <div class="error-msg" id="list-error"></div>
+      <button class="gen-btn" onclick="genLista()">🎲 Elegir al azar</button>
+    </div>
+  </div>
+
+  <!-- Resultados -->
+  <div class="results" id="results">
+    <div class="results-inner">
+      <div class="res-eyebrow" id="res-eyebrow">Resultado</div>
+      <div id="res-content"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let letraTipo = 'todas';
+  const VOCALES = ['A','E','I','O','U'];
+  const CONSONANTES = ['B','C','D','F','G','H','J','K','L','M','N','Ñ','P','Q','R','S','T','V','W','X','Y','Z'];
+  const TODAS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+  const RARAS = ['K','W','X','Y'];
+
+  function setMode(m, btn){
+    ['num','let','list'].forEach(function(id){ document.getElementById('m-'+id).style.display = id===m?'block':'none'; });
+    document.querySelectorAll('.mode-tab').forEach(function(t){ t.classList.remove('active'); });
+    btn.classList.add('active');
+    hideResults();
+  }
+
+  function setLetraTipo(t, btn){
+    letraTipo = t;
+    document.querySelectorAll('.l-chip').forEach(function(c){ c.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+
+  function showResults(eyebrow, html){
+    document.getElementById('res-eyebrow').textContent = eyebrow;
+    document.getElementById('res-content').innerHTML = html;
+    document.getElementById('results').classList.add('visible');
+  }
+
+  function hideResults(){ document.getElementById('results').classList.remove('visible'); }
+
+  function shuffle(arr){ return arr.slice().sort(function(){ return Math.random()-.5; }); }
+
+  function pickRandom(pool, n, norep){
+    if(norep){
+      return shuffle(pool).slice(0, Math.min(n, pool.length));
+    }
+    var res = [];
+    for(var i=0;i<n;i++) res.push(pool[Math.floor(Math.random()*pool.length)]);
+    return res;
+  }
+
+  /* ── Números ── */
+  function genNumeros(){
+    var min  = parseInt(document.getElementById('num-min').value);
+    var max  = parseInt(document.getElementById('num-max').value);
+    var cant = parseInt(document.getElementById('num-cant').value) || 1;
+    var norep = document.getElementById('num-norep').checked;
+    var errEl = document.getElementById('num-error');
+
+    cant = Math.max(1, Math.min(50, cant));
+
+    if(isNaN(min)||isNaN(max)||min>max){
+      errEl.textContent = 'El mínimo debe ser menor al máximo.'; errEl.classList.add('visible'); return;
+    }
+    var rango = max - min + 1;
+    if(norep && cant > rango){
+      errEl.textContent = 'No hay suficientes números únicos en ese rango.'; errEl.classList.add('visible'); return;
+    }
+    errEl.classList.remove('visible');
+
+    var pool = [];
+    for(var i=min;i<=max;i++) pool.push(i);
+    var nums = pickRandom(pool, cant, norep);
+
+    var chips = nums.map(function(n,i){
+      return '<div class="num-chip" style="animation-delay:'+(i*0.05)+'s">'+n.toLocaleString('es-AR')+'</div>';
+    }).join('');
+    showResults(cant + ' número' + (cant!==1?'s':'') + ' aleatorio' + (cant!==1?'s':''), '<div class="num-chips">'+chips+'</div>');
+  }
+
+  /* ── Letras ── */
+  function genLetras(){
+    var cant  = parseInt(document.getElementById('let-cant').value) || 1;
+    var norep = document.getElementById('let-norep').checked;
+    var exRara = document.getElementById('let-exrara').checked;
+
+    cant = Math.max(1, Math.min(20, cant));
+
+    var pool;
+    if(letraTipo === 'vocales') pool = VOCALES.slice();
+    else if(letraTipo === 'consonantes') pool = CONSONANTES.slice();
+    else pool = TODAS.slice();
+    if(exRara) pool = pool.filter(function(l){ return !RARAS.includes(l); });
+
+    var letras = pickRandom(pool, cant, norep);
+    var content;
+    if(letras.length === 1){
+      content = '<span class="letter-big">'+letras[0]+'</span>';
+    } else {
+      content = '<div class="num-chips">' + letras.map(function(l,i){
+        return '<div class="num-chip" style="animation-delay:'+(i*0.07)+'s">'+l+'</div>';
+      }).join('') + '</div>';
+    }
+    showResults(cant + ' letra' + (cant!==1?'s':'') + ' aleatoria' + (cant!==1?'s':''), content);
+  }
+
+  /* ── Lista ── */
+  function genLista(){
+    var raw   = document.getElementById('list-items').value;
+    var cant  = parseInt(document.getElementById('list-cant').value) || 1;
+    var norep = document.getElementById('list-norep').checked;
+    var errEl = document.getElementById('list-error');
+
+    var items = raw.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+    if(items.length === 0){
+      errEl.textContent = 'Ingresá al menos un elemento en la lista.'; errEl.classList.add('visible'); return;
+    }
+    if(norep && cant > items.length){
+      errEl.textContent = 'La lista tiene menos elementos que la cantidad pedida.'; errEl.classList.add('visible'); return;
+    }
+    errEl.classList.remove('visible');
+
+    var chosen = pickRandom(items, cant, norep);
+    var chips = chosen.map(function(it,i){
+      return '<div class="item-chip" style="animation-delay:'+(i*0.06)+'s">'+escHtml(it)+'</div>';
+    }).join('');
+    showResults(cant + ' elemento' + (cant!==1?'s':'') + ' elegido' + (cant!==1?'s':''),
+      '<div class="item-chips">'+chips+'</div>');
+  }
+
+  function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

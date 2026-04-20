@@ -30,6 +30,7 @@
     ]},
     { cat: '🔢 Matemática rápida', items: [
       { n: 'Calculadora de porcentajes', u: '/porcentaje',   d: 'X% de Y, variaciones, aumentos y descuentos' },
+      { n: 'Regla de tres',              u: '/regla-de-tres',d: 'Proporción directa e inversa al instante' },
     ]},
     { cat: '🤯 Tu vida en números', items: [
       { n: 'Tu vida en números',     u: '/vida',             d: 'Latidos, pestañeos, pasos y más en tiempo real' },

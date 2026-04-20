@@ -184,11 +184,11 @@
           <div class="stat-sub">prom. 4.000 pasos/día</div>
         </div>
 
-        <div class="stat-card accent-amber">
-          <div class="stat-emoji">🍽️</div>
-          <div class="stat-val" id="s-comidas">—</div>
-          <div class="stat-lbl">veces que comiste</div>
-          <div class="stat-sub">3 comidas/día promedio</div>
+        <div class="stat-card accent-blue">
+          <div class="stat-emoji">💧</div>
+          <div class="stat-val" id="s-agua">—</div>
+          <div class="stat-lbl">litros de agua que tomaste</div>
+          <div class="stat-sub">prom. 2L/día</div>
         </div>
 
         <div class="stat-card accent-amber">
@@ -203,6 +203,13 @@
           <div class="stat-val" id="s-km">—</div>
           <div class="stat-lbl">kilómetros caminados</div>
           <div class="stat-sub">prom. 3,25 km/día</div>
+        </div>
+
+        <div class="stat-card accent-green">
+          <div class="stat-emoji">💇</div>
+          <div class="stat-val" id="s-pelo">—</div>
+          <div class="stat-lbl">cm de pelo que creciste</div>
+          <div class="stat-sub" id="s-pelo-m"></div>
         </div>
 
       </div>
@@ -285,14 +292,19 @@
     const semas = days / 7;
     const libros= Math.round(days * 16000 / 90000);
 
+    const peloCm = days * (15 / 365);
+    const peloM  = peloCm / 100;
+
     document.getElementById('s-semanas').textContent     = fmt(semas);
     document.getElementById('s-semanas-dias').textContent= fmt(days) + ' días en total';
     document.getElementById('s-sueno').innerHTML         = sleepStr();
     document.getElementById('s-pasos').textContent       = fmt(days * 4000);
-    document.getElementById('s-comidas').textContent     = fmt(days * 3);
+    document.getElementById('s-agua').textContent        = fmt(days * 2);
     document.getElementById('s-palabras').textContent    = fmt(days * 16000);
     document.getElementById('s-libros').textContent      = `≈ ${libros.toLocaleString('es-AR')} libro${libros!==1?'s':''} de 90.000 palabras`;
     document.getElementById('s-km').textContent          = fmt(days * 3.25);
+    document.getElementById('s-pelo').textContent        = fmt(peloCm);
+    document.getElementById('s-pelo-m').textContent      = `≈ ${peloM.toFixed(1).replace('.',',')} metros en total`;
   }
 
   // ---- Live tickers (ritmo propio) ----

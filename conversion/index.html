@@ -216,11 +216,24 @@ function convert(val, fromId, toId){
   return (val * fromU.f) / toU.f;
 }
 
+/* Determina cuántos decimales mostrar según la magnitud */
+function decimalsFor(n){
+  var abs = Math.abs(n);
+  return abs === 0 ? 0 : abs < 0.001 ? 8 : abs < 1 ? 6 : abs < 10 ? 4 : abs < 1000 ? 2 : 0;
+}
+/* Para el texto descriptivo (usa locale es-AR con separadores) */
 function fmtN(n){
   if(!isFinite(n)||isNaN(n)) return '';
-  var abs = Math.abs(n);
-  var decimals = abs === 0 ? 0 : abs < 0.001 ? 8 : abs < 1 ? 6 : abs < 10 ? 4 : abs < 1000 ? 2 : 0;
-  return parseFloat(n.toFixed(decimals)).toLocaleString('es-AR', {maximumFractionDigits: decimals});
+  var d = decimalsFor(n);
+  return parseFloat(n.toFixed(d)).toLocaleString('es-AR', {maximumFractionDigits: d});
+}
+/* Para asignar al input: usa punto como decimal, sin separador de miles.
+   type="number" rechaza strings con punto de miles (ej "224.910"), así
+   que aquí usamos toString() estándar que el browser siempre acepta. */
+function fmtForInput(n){
+  if(!isFinite(n)||isNaN(n)) return '';
+  var d = decimalsFor(n);
+  return parseFloat(n.toFixed(d)).toString();
 }
 
 function getUnit(id){ return currentCat.units.find(u=>u.id===id); }
@@ -243,7 +256,7 @@ function convertFrom(side){
   }
 
   var result = convert(val, fromId, toId);
-  dstInp.value = fmtN(result);
+  dstInp.value = fmtForInput(result); // standard notation (sin locale) para que type="number" lo acepte
 
   var fromU = getUnit(fromId), toU = getUnit(toId);
   document.getElementById('result-detail').innerHTML =

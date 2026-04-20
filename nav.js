@@ -112,6 +112,41 @@
        para input[type="number"], pero ahora aplicado a la clase .nv-num-fmt. */
     'input.nv-num-fmt{transition:border-color .15s;}',
     'input.nv-num-fmt:focus{border-color:#1A5FE8 !important;outline:none;}',
+
+  /* ── RESPONSIVE GLOBAL ────────────────────────────────────────────────────
+     Aplica a todas las páginas del sitio. Cubre los problemas de overflow
+     en móvil sin tener que editar cada HTML individualmente.               */
+
+  /* result-main: "Miércoles" a 52px fijo desborda en iPhone (<390px).
+     clamp garantiza que nunca supere el ancho disponible.                  */
+  '.result-main{font-size:clamp(22px,8vw,52px)}',
+
+  /* Valores numéricos largos (latidos, pasos, etc.): evitar overflow       */
+  '.stat-val{min-width:0;overflow-wrap:break-word}',
+
+  /* Nombres de categorías (tutti-frutti): evitar que salgan de la caja     */
+  '.cat-name{overflow-wrap:break-word;word-break:break-word}',
+
+  /* Tutti-frutti: cats-grid en 1 columna en móvil para que el nombre
+     tenga suficiente espacio sin recortarse                                */
+  '@media(max-width:480px){.cats-grid{grid-template-columns:1fr}}',
+
+  /* Pantallas muy estrechas (<400px): grids de stats en 1 columna          */
+  '@media(max-width:400px){.result-rows,.stats-grid{grid-template-columns:1fr}}',
+
+  /* Edad — ref-row (fecha + "ó en" + años): apilar verticalmente en móvil  */
+  '@media(max-width:480px){',
+  '.ref-row{flex-direction:column;align-items:stretch;gap:10px}',
+  '.ref-sep{display:none}',
+  '.ref-anios-wrap{flex-direction:row;align-items:center}',
+  '.ref-anios-wrap input{width:90px}',
+  '}',
+
+  /* Vida en números — input card (fecha + hora): apilar en móvil.
+     Usa !important porque el HTML tiene display:grid como inline style.    */
+  '@media(max-width:480px){',
+  '.card>[style]{grid-template-columns:1fr !important}',
+  '}',
   ].join('');
 
   var st = document.createElement('style');

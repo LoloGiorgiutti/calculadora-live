@@ -46,7 +46,21 @@
   .empty-state{color:rgba(255,255,255,0.3);font-size:15px}
   .info-box{background:var(--hi-soft);border:1px solid #BFDBFE;border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:var(--ink-light);line-height:1.5}
   .info-box strong{color:var(--ink)}
+  /* ── FAQ ─────────────────────────────────────────────────── */
+  .faq-section{max-width:520px;margin:0 auto;padding:0 20px 40px}
+  .faq-heading{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .faq-heading::after{content:'';flex:1;height:1px;background:var(--border)}
+  .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden}
+  .faq-item summary{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:color .15s}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:'+';font-size:20px;font-weight:300;color:var(--ink-faint);flex-shrink:0;transition:transform .2s;line-height:1}
+  .faq-item[open]>summary{color:var(--hi)}
+  .faq-item[open]>summary::after{transform:rotate(45deg)}
+  .faq-a{padding:0 16px 14px;font-size:13px;color:var(--ink-light);line-height:1.65}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es el metabolismo basal (BMR)?","acceptedAnswer":{"@type":"Answer","text":"El BMR es la cantidad de calorías que tu cuerpo necesita en reposo absoluto para mantener sus funciones vitales: respirar, circular sangre, regular temperatura y mantener los órganos. Representa el 60–75% del gasto energético total."}},{"@type":"Question","name":"¿Qué es el TDEE?","acceptedAnswer":{"@type":"Answer","text":"El TDEE (Total Daily Energy Expenditure) es la cantidad total de calorías que gastás en un día incluyendo actividad física. Se calcula multiplicando el BMR por un factor de actividad: sedentario (×1.2), leve (×1.375), moderado (×1.55), intenso (×1.725)."}},{"@type":"Question","name":"¿Cuántas calorías debo comer para bajar de peso?","acceptedAnswer":{"@type":"Answer","text":"Se recomienda un déficit de 300–500 calorías por debajo del TDEE. Eso genera una pérdida de 0.3–0.5 kg por semana. Déficits mayores a 700 kcal pueden causar pérdida de masa muscular."}},{"@type":"Question","name":"¿Cuántas calorías debo comer para ganar músculo?","acceptedAnswer":{"@type":"Answer","text":"Un superávit moderado de 200–400 calorías sobre el TDEE es suficiente para ganar músculo con mínima acumulación de grasa. Superávits más altos aceleran la ganancia pero también aumentan el porcentaje de grasa."}},{"@type":"Question","name":"¿Qué tan precisa es la calculadora de calorías?","acceptedAnswer":{"@type":"Answer","text":"Usamos la fórmula Mifflin-St Jeor, la más precisa disponible, con un margen de error de ±10–15%. Los valores individuales varían según genética y composición corporal. Usalos como punto de partida y ajustá según tu respuesta real."}}]}
+</script>
 </head>
 <body>
 <header>
@@ -154,6 +168,29 @@
     document.getElementById('r-subir').textContent=(tdee+500)+' kcal/día';
   }
 </script>
+<div class="faq-section">
+  <div class="faq-heading">Preguntas frecuentes</div>
+  <details class="faq-item">
+    <summary>¿Qué es el metabolismo basal (BMR)?</summary>
+    <div class="faq-a">El <strong>BMR (Basal Metabolic Rate)</strong> es la cantidad de calorías que tu cuerpo necesita en reposo absoluto para mantener sus funciones vitales: respirar, circular sangre, regular temperatura y mantener los órganos. Representa entre el 60–75% del gasto energético total.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Qué es el TDEE?</summary>
+    <div class="faq-a">El <strong>TDEE (Total Daily Energy Expenditure)</strong> es la cantidad total de calorías que gastás en un día, incluyendo la actividad física. Se calcula multiplicando el BMR por un factor de actividad: sedentario (×1.2), leve (×1.375), moderada (×1.55), intensa (×1.725) o muy intensa (×1.9).</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Cuántas calorías debo comer para bajar de peso?</summary>
+    <div class="faq-a">Se recomienda un <strong>déficit de 300–500 calorías</strong> por debajo de tu TDEE. Eso genera una pérdida de aproximadamente 0.3–0.5 kg por semana. Déficits mayores a 700 kcal pueden causar pérdida de masa muscular y efecto rebote.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Cuántas calorías debo comer para ganar músculo?</summary>
+    <div class="faq-a">Un <strong>superávit moderado de 200–400 calorías</strong> sobre tu TDEE es suficiente para ganar músculo con mínima acumulación de grasa. Superávits más altos aceleran la ganancia pero también aumentan el porcentaje de grasa corporal.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Qué tan precisa es la calculadora de calorías?</summary>
+    <div class="faq-a">Usamos la <strong>fórmula Mifflin-St Jeor</strong>, la más precisa disponible para estimaciones poblacionales, con un margen de error de ±10–15%. Los valores individuales varían según genética y composición corporal. Usalos como punto de partida y ajustá según tu respuesta real.</div>
+  </details>
+</div>
 <script src="/nav.js"></script>
 </body>
 </html>

@@ -112,7 +112,21 @@
 
   .info-box { background: var(--hi-soft); border: 1px solid #BFDBFE; border-radius: var(--radius-sm); padding: 14px 16px; font-size: 13px; color: var(--ink-light); line-height: 1.5; }
   .info-box strong { color: var(--ink); }
+  /* ── FAQ ─────────────────────────────────────────────────── */
+  .faq-section{max-width:600px;margin:0 auto;padding:0 20px 40px}
+  .faq-heading{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .faq-heading::after{content:'';flex:1;height:1px;background:var(--border)}
+  .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden}
+  .faq-item summary{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:color .15s}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:'+';font-size:20px;font-weight:300;color:var(--ink-faint);flex-shrink:0;transition:transform .2s;line-height:1}
+  .faq-item[open]>summary{color:var(--hi)}
+  .faq-item[open]>summary::after{transform:rotate(45deg)}
+  .faq-a{padding:0 16px 14px;font-size:13px;color:var(--ink-light);line-height:1.65}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Cuánto se descuenta de jubilación del sueldo?","acceptedAnswer":{"@type":"Answer","text":"El empleado aporta el 11% del salario bruto al sistema previsional (ANSES). El empleador también hace aportes patronales adicionales, pero esos no se descuentan del sueldo del empleado."}},{"@type":"Question","name":"¿Cuánto se descuenta de obra social?","acceptedAnswer":{"@type":"Answer","text":"El empleado aporta el 3% del salario bruto. El empleador aporta un 6% adicional. En total el 9% va a la obra social, pero solo el 3% figura como descuento en tu recibo."}},{"@type":"Question","name":"¿Qué es el aporte de PAMI?","acceptedAnswer":{"@type":"Answer","text":"PAMI es la obra social para jubilados. Los empleados activos aportan el 3% del salario bruto como contribución al sistema. Figura como 'Ley 19.032' en el recibo de sueldo."}},{"@type":"Question","name":"¿Cuándo se paga el impuesto a las ganancias?","acceptedAnswer":{"@type":"Answer","text":"Cuando el salario bruto supera el mínimo no imponible establecido por ARCA (ex-AFIP). Este valor se actualiza periódicamente. La calculadora aplica los valores vigentes 2026."}},{"@type":"Question","name":"¿Cuál es la diferencia entre sueldo bruto y neto?","acceptedAnswer":{"@type":"Answer","text":"El sueldo bruto es el salario acordado antes de descuentos. El neto es lo que se acredita en tu cuenta, restados jubilación (11%), obra social (3%), PAMI (3%) y ganancias si aplica. Sin ganancias, el neto ronda el 83% del bruto."}}]}
+</script>
 </head>
 <body>
 
@@ -264,6 +278,29 @@
     document.getElementById('lbl-desc-pct').textContent = `Descuentos ${descPct}%`;
   }
 </script>
+<div class="faq-section">
+  <div class="faq-heading">Preguntas frecuentes</div>
+  <details class="faq-item">
+    <summary>¿Cuánto se descuenta de jubilación del sueldo?</summary>
+    <div class="faq-a">El empleado aporta el <strong>11% del salario bruto</strong> al sistema previsional (ANSES). El empleador también hace aportes patronales adicionales, pero esos no se descuentan del sueldo del empleado.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Cuánto se descuenta de obra social?</summary>
+    <div class="faq-a">El empleado aporta el <strong>3% del salario bruto</strong>. El empleador aporta un 6% adicional. En total, el 9% del sueldo bruto va a la obra social, pero solo el 3% figura como descuento en tu recibo.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Qué es el aporte de PAMI?</summary>
+    <div class="faq-a">PAMI es la obra social para jubilados y pensionados. Los empleados activos aportan el <strong>3% del salario bruto</strong> como contribución al sistema. Figura como "Ley 19.032" en el recibo de sueldo.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Cuándo se paga el impuesto a las ganancias?</summary>
+    <div class="faq-a">Cuando el salario bruto supera el mínimo no imponible establecido por ARCA (ex-AFIP). Este valor se actualiza periódicamente por decreto. La calculadora ya aplica los valores vigentes para 2026 con las escalas de alícuotas progresivas.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Cuál es la diferencia entre sueldo bruto y neto?</summary>
+    <div class="faq-a">El <strong>sueldo bruto</strong> es el salario acordado antes de cualquier descuento. El <strong>sueldo neto</strong> es lo que efectivamente se acredita en tu cuenta, restados jubilación (11%), obra social (3%), PAMI (3%) y ganancias si aplica. Sin ganancias, el neto ronda el <strong>83% del bruto</strong>.</div>
+  </details>
+</div>
 <script src="/nav.js"></script>
 </body>
 </html>

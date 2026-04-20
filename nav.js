@@ -91,6 +91,12 @@
     'text-decoration:none;color:#60647A;font-size:13px;font-weight:500;',
     'border-left:2.5px solid transparent;transition:background .12s;}',
     '.nv-home-link:hover{background:#F0F2F7;color:#1A5FE8;}',
+
+    /* Inputs con formato de miles (type cambiado de number a text por el formateador).
+       Estas reglas replican el :focus y la transición que el CSS de cada página define
+       para input[type="number"], pero ahora aplicado a la clase .nv-num-fmt. */
+    'input.nv-num-fmt{transition:border-color .15s;}',
+    'input.nv-num-fmt:focus{border-color:#1A5FE8 !important;outline:none;}',
   ].join('');
 
   var st = document.createElement('style');
@@ -222,6 +228,21 @@
       if (inp._numFmtPatched) return;
       inp._numFmtPatched = true;
 
+      // Guardar estilos de layout ANTES de cambiar el tipo, para que las páginas que usan
+      // input[type="number"] en su CSS no pierdan padding al cambiar a type=text.
+      // No guardamos border/color/background porque tienen estados hover/focus vía CSS.
+      var cs = window.getComputedStyle(inp);
+      var savedStyles = {
+        paddingLeft:   cs.paddingLeft,
+        paddingRight:  cs.paddingRight,
+        paddingTop:    cs.paddingTop,
+        paddingBottom: cs.paddingBottom,
+        fontSize:      cs.fontSize,
+        fontWeight:    cs.fontWeight,
+        fontFamily:    cs.fontFamily,
+        borderRadius:  cs.borderRadius,
+      };
+
       var raw = proto.get.call(inp).replace(/[^0-9]/g, '');
 
       // Sobreescribir .value: getter devuelve dígitos crudos (parseFloat sigue funcionando)
@@ -236,6 +257,14 @@
 
       inp.type = 'text';
       inp.setAttribute('inputmode', 'numeric');
+      inp.classList.add('nv-num-fmt');  // clase para reglas :focus inyectadas abajo
+
+      // Restaurar estilos de layout para que el cambio de tipo no rompa CSS basado en [type="number"]
+      Object.keys(savedStyles).forEach(function(prop) {
+        if (savedStyles[prop] && savedStyles[prop] !== '') {
+          inp.style[prop] = savedStyles[prop];
+        }
+      });
 
       // capture:true → corre ANTES del oninput="calcular()" del HTML
       inp.addEventListener('input', function () {

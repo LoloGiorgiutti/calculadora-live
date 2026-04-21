@@ -574,9 +574,26 @@
 
   /* ── SCHEMA JSON-LD (SEO) ───────────────────────────────────
      Inyecta datos estructurados en <head> para cada calculadora.
-     Google los usa para entender la página y generar rich results.
-     Al estar en nav.js, cualquier calculadora nueva que se agregue
-     a CALCS obtiene schema automáticamente sin tocar su HTML.      */
+     Detecta si la página ya tiene un schema del mismo tipo para
+     no duplicarlo (páginas como nafta tienen schema propio).     */
+
+  // Utilidad: devuelve true si ya existe un script ld+json con ese @type
+  function pageHasSchema(type) {
+    var scripts = document.querySelectorAll('script[type="application/ld+json"]');
+    for(var i = 0; i < scripts.length; i++) {
+      try {
+        var d = JSON.parse(scripts[i].textContent);
+        if(d['@type'] === type) return true;
+        if(d['@graph']) {
+          for(var j = 0; j < d['@graph'].length; j++) {
+            if(d['@graph'][j]['@type'] === type) return true;
+          }
+        }
+      } catch(e) {}
+    }
+    return false;
+  }
+
   (function(){
     var path = window.location.pathname.replace(/\/$/, '') || '/';
 
@@ -609,6 +626,8 @@
       });
     });
     if(!found) return;
+    // Si la página ya tiene su propio WebApplication, no duplicar
+    if(pageHasSchema('WebApplication')) return;
 
     // ── Mapear categoría a applicationCategory de schema.org ──
     var appCat = 'UtilitiesApplication';
@@ -700,6 +719,7 @@
      codificadas directamente en su HTML).                        */
   (function(){
     if(document.querySelector('.faq-section')) return;
+    if(pageHasSchema('FAQPage')) return; // página ya tiene su propio schema FAQ
     var path = window.location.pathname.replace(/\/$/, '') || '/';
     var faqs = FAQS[path];
     if(!faqs || !faqs.length) return;

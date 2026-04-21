@@ -12,12 +12,12 @@
        badge= true → muestra "nuevo"
   ─────────────────────────────────────────────────────────────────────────── */
   var CALCS = [
-    { cat: '🚗 Autos', items: [
+    { cat: '🚗 Autos', slug: 'autos', label: 'Autos', desc: 'Calculadoras gratuitas para todo lo relacionado con tu auto.', items: [
       { n: 'Calculadora de nafta',   u: '/nafta',             icon:'⛽', d: 'Costo del viaje por combustible',           hd:'¿Cuánto cuesta el viaje en auto? Precio actualizado por tipo de combustible.' },
       { n: 'Calculadora de patente', u: '/patente',            icon:'📋', d: 'Impuesto automotor por provincia',           hd:'Calculá cuánto pagás de patente según la provincia y el valor del auto.' },
       { n: 'Calculadora de service', u: '/service',            icon:'🔧', d: '¿Cuándo te toca el próximo service?',        hd:'¿Cuándo te toca el service y cuánto cuesta aproximadamente?' },
     ]},
-    { cat: '💰 Finanzas y economía', items: [
+    { cat: '💰 Finanzas y economía', slug: 'finanzas', label: 'Finanzas', desc: 'Sueldo neto, préstamos, inflación, inversiones y más.', items: [
       { n: 'Calculadora de sueldo neto', u: '/sueldo-neto',   icon:'💼', badge:true, d: 'Descuentos ANSES, PAMI y ganancias',         hd:'¿Cuánto te depositan? Calculá tu sueldo neto con descuentos ANSES y PAMI.' },
       { n: 'Calculadora de aguinaldo',   u: '/aguinaldo',     icon:'🎁', badge:true, d: '1° o 2° semestre',                            hd:'Calculá tu SAC del primer o segundo semestre al instante.' },
       { n: 'Rendimiento Mercado Pago',   u: '/mercado-pago',  icon:'💳', d: 'Intereses por días',                          hd:'¿Cuánto ganás dejando plata en Mercado Pago? Calculalo por días.' },
@@ -25,28 +25,28 @@
       { n: 'Calculadora de préstamo',    u: '/prestamo',      icon:'🏦', d: 'Cuota mensual e intereses totales',           hd:'Cuota, total a pagar e intereses de cualquier préstamo.' },
       { n: 'Calculadora de inflación',   u: '/inflacion',     icon:'📊', d: 'Actualizá precios por inflación histórica',   hd:'¿Cuánto vale hoy lo que costaba antes? Actualizá precios por inflación.' },
     ]},
-    { cat: '💪 Salud y entrenamiento', items: [
+    { cat: '💪 Salud y entrenamiento', slug: 'salud', label: 'Salud', desc: 'IMC, calorías, proteína, hidratación y más.', items: [
       { n: 'Calculadora de IMC',          u: '/imc',          icon:'⚖️', d: 'Índice de masa corporal (OMS)',               hd:'Índice de masa corporal con interpretación y peso ideal.' },
       { n: 'Calorías diarias (BMR/TDEE)', u: '/bmr',          icon:'🔥', d: 'Metabolismo basal y TDEE',                    hd:'¿Cuántas calorías necesitás por día según tu actividad?' },
       { n: 'Calculadora de 1RM',          u: '/1rm',          icon:'🏋️', d: 'Repetición máxima por fórmula',             hd:'Estimá tu repetición máxima en cualquier ejercicio.' },
       { n: 'Hidratación diaria',          u: '/hidratacion',  icon:'💧', badge:true, d: '¿Cuánta agua necesitás por día?', hd:'¿Cuánta agua necesitás por día según tu peso y actividad?' },
       { n: 'Proteína diaria',             u: '/proteina',     icon:'🥩', badge:true, d: 'Gramos según tu peso, objetivo y actividad', hd:'¿Cuántos gramos de proteína necesitás según tu objetivo y actividad?' },
     ]},
-    { cat: '📅 Fechas y tiempo', items: [
+    { cat: '📅 Fechas y tiempo', slug: 'fechas', label: 'Fechas', desc: 'Edad exacta, días entre fechas, día de la semana y más.', items: [
       { n: 'Contador de días',    u: '/dias',       icon:'🗓️', d: 'Días entre fechas, hábiles o corridos',    hd:'¿Cuántos días hay entre dos fechas? También días hábiles.' },
       { n: 'Calculadora de edad', u: '/edad',       icon:'🎂', d: 'Edad exacta en años, meses y días',        hd:'Calculá la edad exacta en años, meses y días.' },
       { n: '¿Qué día fue?',       u: '/dia-semana', icon:'📆', d: 'Día de la semana de cualquier fecha',      hd:'Ingresá una fecha y descubrí qué día de la semana fue o será.' },
     ]},
-    { cat: '🔢 Matemática rápida', items: [
+    { cat: '🔢 Matemática rápida', slug: 'matematica', label: 'Matemática', desc: 'Porcentajes, regla de tres, conversión de unidades y más.', items: [
       { n: 'Calculadora de porcentajes', u: '/porcentaje',    icon:'%',  badge:true, d: 'X% de Y, variaciones, aumentos y descuentos',    hd:'X% de Y, qué % es X de Y, variación entre dos números, aumentos y descuentos.' },
       { n: 'Regla de tres',              u: '/regla-de-tres', icon:'📐', badge:true, d: 'Proporción directa e inversa al instante',        hd:'Proporción directa e inversa. Ingresá tres valores y el cuarto aparece solo.' },
       { n: 'Conversión de unidades',     u: '/conversion',    icon:'🔄', badge:true, d: 'Longitud, peso, temperatura, velocidad y más',    hd:'Longitud, peso, temperatura, velocidad, área, volumen, tiempo y digital.' },
     ]},
-    { cat: '🎲 Generadores y sorteos', items: [
+    { cat: '🎲 Generadores y sorteos', slug: 'generadores', label: 'Generadores', desc: 'Números aleatorios, Tutti Frutti y sorteos.', items: [
       { n: 'Generador aleatorio', u: '/generador',    icon:'🎰', badge:true, d: 'Números, letras o elementos de una lista',          hd:'Números, letras o elementos de tu propia lista. Con o sin repetición.' },
       { n: 'Tutti Frutti',        u: '/tutti-frutti', icon:'🍉', badge:true, d: 'Sorteo de letras para el juego clásico argentino',  hd:'Sorteo de letras para el juego clásico argentino. Con timer y categorías.' },
     ]},
-    { cat: '🤯 Tu vida en números', items: [
+    { cat: '🤯 Tu vida en números', slug: 'vida-numeros', label: 'Vida en números', desc: 'Curiosidades sobre tu vida expresadas en números en tiempo real.', items: [
       { n: 'Tu vida en números', u: '/vida', icon:'🤯', badge:true, d: 'Latidos, pestañeos, pasos y más en tiempo real', hd:'Latidos, pestañeos, pasos y más — algunos contadores en tiempo real.' },
     ]},
   ];
@@ -275,6 +275,11 @@
     'text-decoration:none;color:#60647A;font-size:13px;font-weight:500;',
     'border-left:2.5px solid transparent;transition:background .12s;}',
     '.nv-home-link:hover{background:#F0F2F7;color:#1A5FE8;}',
+    '.nv-cat-link{display:flex;align-items:center;gap:8px;padding:7px 18px;',
+    'text-decoration:none;color:#080A12;font-size:13px;font-weight:500;',
+    'border-left:2.5px solid transparent;transition:background .12s;}',
+    '.nv-cat-link:hover,.nv-cat-link.nv-cat-active{background:#EEF3FD;border-left-color:#1A5FE8;color:#1A5FE8;}',
+    '.nv-cat-emoji{font-size:15px;line-height:1;flex-shrink:0;}',
 
     /* Inputs con formato de miles (type cambiado de number a text por el formateador).
        Estas reglas replican el :focus y la transición que el CSS de cada página define
@@ -374,6 +379,16 @@
 
   function buildList() {
     var html = '<a class="nv-home-link" href="/">🏠 Todas las calculadoras</a>';
+    html += '<div class="nv-hr"></div>';
+    // ── Links de categorías ──────────────────────────────────
+    html += '<div class="nvc-title">Categorías</div>';
+    CALCS.forEach(function(cat) {
+      var catPath = '/' + cat.slug;
+      var active = (cur === catPath || cur === catPath + '/') ? ' nv-cat-active' : '';
+      html += '<a class="nv-cat-link' + active + '" href="' + catPath + '/">'
+            + '<span class="nv-cat-emoji">' + cat.cat.split(' ')[0] + '</span>'
+            + cat.label + '</a>';
+    });
     html += '<div class="nv-hr"></div>';
     CALCS.forEach(function (cat) {
       html += '<div class="nvc"><div class="nvc-title">' + cat.cat + '</div>';
@@ -582,12 +597,14 @@
     }
 
     // ── Buscar la calculadora actual en CALCS ─────────────────
-    var found = null, foundCat = '';
+    var found = null, foundCat = '', foundCatSlug = '', foundCatLabel = '';
     CALCS.forEach(function(cat){
       cat.items.forEach(function(item){
         if(item.u.replace(/\/$/, '') === path) {
           found = item;
           foundCat = cat.cat;
+          foundCatSlug = cat.slug;
+          foundCatLabel = cat.label;
         }
       });
     });
@@ -627,14 +644,14 @@
     document.head.appendChild(sc);
 
     // ── BreadcrumbList schema ─────────────────────────────────
-    // Aparece en Google como: Calculadora.live › Nombre
-    // Solo 2 niveles porque no existen páginas de categoría reales
+    // Aparece en Google como: Calculadora.live › Categoría › Nombre
     var bc = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       'itemListElement': [
         { '@type': 'ListItem', 'position': 1, 'name': 'Calculadora.live', 'item': 'https://calculadora.live/' },
-        { '@type': 'ListItem', 'position': 2, 'name': found.n, 'item': 'https://calculadora.live' + found.u }
+        { '@type': 'ListItem', 'position': 2, 'name': foundCatLabel, 'item': 'https://calculadora.live/' + foundCatSlug + '/' },
+        { '@type': 'ListItem', 'position': 3, 'name': found.n, 'item': 'https://calculadora.live' + found.u }
       ]
     };
     var bc_sc = document.createElement('script');
@@ -719,6 +736,33 @@
     } else {
       document.body.insertAdjacentHTML('beforeend', html);
     }
+  })();
+
+  /* ── PÁGINAS DE CATEGORÍA ──────────────────────────────────
+     Detecta si estamos en /autos/, /finanzas/, etc. y renderiza
+     el grid de esa categoría en #cat-grid-root.               */
+  (function(){
+    var path = window.location.pathname.replace(/\/$/, '') || '/';
+    var catMatch = null;
+    CALCS.forEach(function(cat){
+      if('/' + cat.slug === path) catMatch = cat;
+    });
+    if(!catMatch) return;
+    var root = document.getElementById('cat-grid-root');
+    if(!root) return;
+    var html = '<div class="grid">';
+    catMatch.items.forEach(function(item){
+      var badge = item.badge ? '<span class="badge-new">nuevo</span>' : '';
+      var desc = item.hd || item.d;
+      html += '<a class="calc-card" href="' + item.u + '">'
+            + '<div class="calc-icon">' + (item.icon || '🔢') + '</div>'
+            + '<div class="calc-info">'
+            + '<div class="calc-name">' + item.n + badge + '</div>'
+            + '<div class="calc-desc">' + desc + '</div>'
+            + '</div></a>';
+    });
+    html += '</div>';
+    root.innerHTML = html;
   })();
 
   /* ── EXPONER CALCS ─────────────────────────────────────────

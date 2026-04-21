@@ -627,15 +627,14 @@
     document.head.appendChild(sc);
 
     // ── BreadcrumbList schema ─────────────────────────────────
-    // Aparece en Google como: Calculadora.live › Categoría › Nombre
-    var catName = foundCat.replace(/^\S+\s*/, ''); // quita el emoji
+    // Aparece en Google como: Calculadora.live › Nombre
+    // Solo 2 niveles porque no existen páginas de categoría reales
     var bc = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       'itemListElement': [
         { '@type': 'ListItem', 'position': 1, 'name': 'Calculadora.live', 'item': 'https://calculadora.live/' },
-        { '@type': 'ListItem', 'position': 2, 'name': catName },
-        { '@type': 'ListItem', 'position': 3, 'name': found.n, 'item': 'https://calculadora.live' + found.u }
+        { '@type': 'ListItem', 'position': 2, 'name': found.n, 'item': 'https://calculadora.live' + found.u }
       ]
     };
     var bc_sc = document.createElement('script');

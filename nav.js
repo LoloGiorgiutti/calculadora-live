@@ -721,10 +721,12 @@
     sc.textContent = JSON.stringify(schema);
     document.head.appendChild(sc);
 
-    // HTML acordeón
+    // HTML acordeón — open por defecto para que Google vea el contenido
+    // (contenido oculto/colapsado no califica para rich results de FAQ)
     var html = '<div class="faq-section"><div class="faq-heading">Preguntas frecuentes</div>';
     faqs.forEach(function(f){
-      html += '<details class="faq-item"><summary>' + f.q + '</summary>'
+      if(!f.q || !f.a) return; // guard: saltar items incompletos
+      html += '<details class="faq-item" open><summary>' + f.q + '</summary>'
             + '<div class="faq-a">' + f.a + '</div></details>';
     });
     html += '</div>';

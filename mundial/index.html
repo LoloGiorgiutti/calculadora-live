@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Cuánto falta para el Mundial 2026? — Cuenta regresiva en vivo</title>
+<meta name="description" content="Cuenta regresiva en tiempo real para el Mundial de Fútbol 2026. Días, horas, minutos y segundos hasta el partido inaugural en México, Estados Unidos y Canadá.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/mundial">
+<meta property="og:title" content="¿Cuánto falta para el Mundial 2026?">
+<meta property="og:description" content="Cuenta regresiva en tiempo real hasta el partido inaugural del Mundial de Fútbol 2026.">
+<meta property="og:url" content="https://calculadora.live/mundial">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#09150a;
+    --surface:#0f2210;
+    --surface2:#142a15;
+    --gold:#F4C430;
+    --gold-dark:#c9a01a;
+    --gold-soft:rgba(244,196,48,.12);
+    --ink:#e8f0e8;
+    --ink-light:#9ab89a;
+    --ink-faint:#4a6b4a;
+    --border:#1e3a1e;
+    --hi:#2ecc71;
+    --radius:16px;
+    --radius-sm:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+  /* Header */
+  header{background:rgba(9,21,10,.95);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+  .logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.02em;}
+  .logo span{color:var(--gold);}
+
+  /* Hero */
+  .hero{text-align:center;padding:52px 24px 20px;position:relative;overflow:hidden;}
+  .hero::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse 70% 60% at 50% 0%, rgba(244,196,48,.08) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-soft);border:1px solid rgba(244,196,48,.25);border-radius:99px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px;}
+  .hero h1{font-size:clamp(24px,5vw,42px);font-weight:700;letter-spacing:-0.03em;line-height:1.15;margin-bottom:10px;color:var(--ink);}
+  .hero h1 span{color:var(--gold);}
+  .hero-sub{font-size:15px;color:var(--ink-light);margin-bottom:40px;}
+  .host-flags{display:flex;justify-content:center;align-items:center;gap:10px;font-size:28px;margin-bottom:8px;}
+  .host-label{font-size:11px;color:var(--ink-faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:44px;}
+
+  /* Countdown */
+  .countdown-wrap{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .cd-block{display:flex;flex-direction:column;align-items:center;min-width:72px;}
+  .cd-num{
+    font-size:clamp(36px,8vw,72px);font-weight:700;letter-spacing:-0.03em;line-height:1;
+    background:var(--surface2);border:1.5px solid rgba(244,196,48,.3);
+    border-radius:12px;padding:12px 16px;
+    color:var(--gold);
+    text-shadow:0 0 20px rgba(244,196,48,.4);
+    min-width:90px;text-align:center;
+    transition:transform .08s;
+  }
+  .cd-sep{font-size:clamp(28px,6vw,56px);font-weight:300;color:var(--ink-faint);align-self:center;padding-bottom:24px;line-height:1;}
+  .cd-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  .cd-ended{font-size:24px;font-weight:700;color:var(--gold);text-align:center;padding:32px 20px;}
+
+  /* Partido inaugural */
+  .kick-off{text-align:center;margin-bottom:56px;font-size:13px;color:var(--ink-light);}
+  .kick-off strong{color:var(--ink);}
+
+  /* Info grid */
+  .container{max-width:860px;margin:0 auto;padding:0 20px 64px;}
+
+  /* Argentina banner */
+  .arg-banner{
+    background:linear-gradient(135deg,#75aadb 0%,#75aadb 33%,#fff 33%,#fff 66%,#75aadb 66%);
+    border-radius:var(--radius);
+    padding:28px 32px;
+    display:flex;align-items:center;gap:20px;
+    margin-bottom:16px;
+    border:2px solid rgba(255,255,255,.15);
+    position:relative;overflow:hidden;
+  }
+  .arg-banner::after{content:'⭐⭐⭐';position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:22px;letter-spacing:2px;}
+  .arg-trophy{font-size:52px;line-height:1;flex-shrink:0;}
+  .arg-info{}
+  .arg-info h2{font-size:20px;font-weight:700;color:#1a1a3e;line-height:1.2;margin-bottom:4px;}
+  .arg-info p{font-size:13px;color:#2a2a5e;line-height:1.4;}
+
+  /* Stats grid */
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:16px;}
+  .stat-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:20px;text-align:center;}
+  .stat-n{font-size:36px;font-weight:700;color:var(--gold);letter-spacing:-0.02em;line-height:1;}
+  .stat-l{font-size:12px;color:var(--ink-light);margin-top:4px;line-height:1.3;}
+
+  /* Sedes */
+  .section-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+  .sedes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px;}
+  .sede-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:18px;display:flex;align-items:flex-start;gap:14px;}
+  .sede-flag{font-size:32px;line-height:1;flex-shrink:0;}
+  .sede-info{}
+  .sede-country{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+  .sede-cities{font-size:12px;color:var(--ink-light);line-height:1.5;}
+
+  /* Fechas clave */
+  .fechas-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px;}
+  .fecha-row{display:flex;align-items:center;gap:16px;padding:14px 18px;border-bottom:1px solid var(--border);}
+  .fecha-row:last-child{border-bottom:none;}
+  .fecha-icon{font-size:22px;flex-shrink:0;}
+  .fecha-info{}
+  .fecha-nombre{font-size:13px;font-weight:600;color:var(--ink);}
+  .fecha-date{font-size:12px;color:var(--ink-light);}
+  .fecha-highlight .fecha-nombre{color:var(--gold);}
+
+  footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);}
+
+  @media(max-width:600px){
+    .arg-banner{flex-direction:column;text-align:center;}
+    .arg-banner::after{position:static;transform:none;display:block;margin-top:8px;}
+    .countdown-wrap{gap:4px;}
+    .cd-num{min-width:68px;padding:10px 10px;}
+    .cd-sep{display:none;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">Calculadora<span>.live</span></a>
+</header>
+
+<div class="hero">
+  <div class="hero-badge">⚽ Mundial 2026</div>
+  <h1>¿Cuánto falta para el <span>Mundial?</span></h1>
+  <p class="hero-sub">Cuenta regresiva en tiempo real hasta el partido inaugural</p>
+
+  <div class="host-flags">🇲🇽 🇺🇸 🇨🇦</div>
+  <div class="host-label">México · Estados Unidos · Canadá</div>
+
+  <div class="countdown-wrap" id="countdown">
+    <div class="cd-block"><div class="cd-num" id="cd-d">--</div><div class="cd-label">Días</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block"><div class="cd-num" id="cd-h">--</div><div class="cd-label">Horas</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block"><div class="cd-num" id="cd-m">--</div><div class="cd-label">Minutos</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Segundos</div></div>
+  </div>
+
+  <div class="kick-off" id="kickoff-label">
+    Partido inaugural: <strong>11 de junio de 2026</strong> · Estadio Azteca, Ciudad de México
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Argentina campeón defensor -->
+  <div class="arg-banner">
+    <div class="arg-trophy">🏆</div>
+    <div class="arg-info">
+      <h2>Argentina — Campeón defensor</h2>
+      <p>Tricampeón mundial (1978, 1986, 2022). Messi y compañía defienden la corona ganada en Qatar.</p>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-n">48</div>
+      <div class="stat-l">Equipos clasificados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">104</div>
+      <div class="stat-l">Partidos en total</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">16</div>
+      <div class="stat-l">Estadios sede</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-n">3</div>
+      <div class="stat-l">Países organizadores</div>
+    </div>
+  </div>
+
+  <!-- Sedes -->
+  <div class="section-title">Países sede</div>
+  <div class="sedes-grid">
+    <div class="sede-card">
+      <div class="sede-flag">🇲🇽</div>
+      <div class="sede-info">
+        <div class="sede-country">México</div>
+        <div class="sede-cities">Ciudad de México · Guadalajara · Monterrey</div>
+      </div>
+    </div>
+    <div class="sede-card">
+      <div class="sede-flag">🇺🇸</div>
+      <div class="sede-info">
+        <div class="sede-country">Estados Unidos</div>
+        <div class="sede-cities">New York · Los Ángeles · Dallas · Miami · San Francisco · Seattle · Boston · Kansas City · Atlanta · Philadelphia</div>
+      </div>
+    </div>
+    <div class="sede-card">
+      <div class="sede-flag">🇨🇦</div>
+      <div class="sede-info">
+        <div class="sede-country">Canadá</div>
+        <div class="sede-cities">Toronto · Vancouver</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fechas clave -->
+  <div class="section-title">Fechas clave</div>
+  <div class="fechas-list">
+    <div class="fecha-row">
+      <div class="fecha-icon">🏟️</div>
+      <div class="fecha-info">
+        <div class="fecha-nombre">Partido inaugural</div>
+        <div class="fecha-date">11 de junio de 2026 · Estadio Azteca, México</div>
+      </div>
+    </div>
+    <div class="fecha-row">
+      <div class="fecha-icon">⚽</div>
+      <div class="fecha-info">
+        <div class="fecha-nombre">Fase de grupos</div>
+        <div class="fecha-date">11 de junio — 27 de junio de 2026</div>
+      </div>
+    </div>
+    <div class="fecha-row">
+      <div class="fecha-icon">🔥</div>
+      <div class="fecha-info">
+        <div class="fecha-nombre">Octavos de final</div>
+        <div class="fecha-date">29 de junio — 5 de julio de 2026</div>
+      </div>
+    </div>
+    <div class="fecha-row">
+      <div class="fecha-icon">💥</div>
+      <div class="fecha-info">
+        <div class="fecha-nombre">Cuartos de final</div>
+        <div class="fecha-date">7 — 11 de julio de 2026</div>
+      </div>
+    </div>
+    <div class="fecha-row">
+      <div class="fecha-icon">🌟</div>
+      <div class="fecha-info">
+        <div class="fecha-nombre">Semifinales</div>
+        <div class="fecha-date">14 — 15 de julio de 2026</div>
+      </div>
+    </div>
+    <div class="fecha-row fecha-highlight">
+      <div class="fecha-icon">🏆</div>
+      <div class="fecha-info">
+        <div class="fecha-nombre">Gran Final</div>
+        <div class="fecha-date">19 de julio de 2026 · MetLife Stadium, New York</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2026 Calculadora.live · Herramientas gratuitas</footer>
+
+<script>
+  // Cuenta regresiva — partido inaugural: 11/06/2026 21:00 CDT = 12/06/2026 02:00 UTC
+  var target = new Date('2026-06-12T02:00:00Z');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    var now = new Date();
+    var diff = target - now;
+
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML =
+        '<div class="cd-ended">🏆 ¡El Mundial ya comenzó!</div>';
+      document.getElementById('kickoff-label').style.display = 'none';
+      return;
+    }
+
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById('cd-d').textContent = d;
+    document.getElementById('cd-h').textContent = pad(h);
+    document.getElementById('cd-m').textContent = pad(m);
+    document.getElementById('cd-s').textContent = pad(s);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>
+
+<script src="/nav.js"></script>
+</body>
+</html>

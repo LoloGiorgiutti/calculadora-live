@@ -49,6 +49,11 @@
     { cat: '🤯 Tu vida en números', slug: 'vida-numeros', label: 'Vida en números', desc: 'Curiosidades sobre tu vida expresadas en números en tiempo real.', items: [
       { n: 'Tu vida en números', u: '/vida', icon:'🤯', badge:true, d: 'Latidos, pestañeos, pasos y más en tiempo real', hd:'Latidos, pestañeos, pasos y más — algunos contadores en tiempo real.' },
     ]},
+    { cat: '⚽ Mundial 2026', slug: 'mundial-2026', label: 'Mundial 2026', desc: 'Cuenta regresiva y herramientas sobre la Copa del Mundo 2026.', items: [
+      { n: '¿Cuánto falta para el Mundial?', u: '/mundial', icon:'🏆', badge:true, d: 'Cuenta regresiva en tiempo real', hd:'Cuenta regresiva en tiempo real hasta el partido inaugural del Mundial 2026 en México.' },
+    ]},
+    { cat: '🎮 Tests y juegos', slug: 'tests', label: 'Tests y juegos', desc: 'Ponete a prueba: velocidad de reacción, CPS test, prueba de teclado y más.', items: [
+    ]},
   ];
 
   /* ── FAQS ────────────────────────────────────────────────────────────────────
@@ -217,6 +222,13 @@
       { q: '¿Cuántos pasos da una persona por día en promedio?', a: 'La OMS recomienda 10.000 pasos diarios, aunque el promedio real de la mayoría de las personas es de entre 4.000 y 7.000. Cada paso recorre aproximadamente 75 cm.' },
       { q: '¿Cuántas respiraciones damos por día?', a: 'Respiramos entre 12 y 20 veces por minuto en reposo, lo que suma entre 17.280 y 28.800 respiraciones por día. Con el ejercicio esa cifra puede aumentar mucho.' },
       { q: '¿Cuántas horas dormimos en toda la vida?', a: 'Si dormimos 8 horas diarias durante 80 años, eso equivale a unos 233.600 horas o aproximadamente 26 años durmiendo. Nuestra calculadora personaliza este número según tu edad.' },
+    ],
+    '/mundial': [
+      { q: '¿Cuándo empieza el Mundial 2026?', a: 'El partido inaugural del Mundial 2026 es el 11 de junio de 2026 en el Estadio Azteca de Ciudad de México. Es el mismo estadio donde se jugó la final de México 1986.' },
+      { q: '¿Dónde se juega el Mundial 2026?', a: 'El Mundial 2026 se organiza en tres países: México (Ciudad de México, Guadalajara, Monterrey), Estados Unidos (11 ciudades incluyendo New York, Los Ángeles y Miami) y Canadá (Toronto y Vancouver).' },
+      { q: '¿Cuántos equipos participan en el Mundial 2026?', a: 'Por primera vez en la historia participan 48 selecciones, frente a los 32 de Qatar 2022. Esto genera 104 partidos en total, casi el doble que en ediciones anteriores.' },
+      { q: '¿Dónde se juega la final del Mundial 2026?', a: 'La final está programada para el 19 de julio de 2026 en el MetLife Stadium de East Rutherford, Nueva Jersey (área metropolitana de New York), con capacidad para más de 82.000 personas.' },
+      { q: '¿Argentina es el campeón defensor?', a: 'Sí. Argentina ganó el Mundial de Qatar 2022 en la final ante Francia (3-3 en tiempo reglamentario, 4-2 en penales). Es el tercer título mundial albiceleste, tras 1978 y 1986.' },
     ],
   };
 

@@ -35,15 +35,15 @@
   .logo span{color:var(--gold);}
 
   /* Hero */
-  .hero{text-align:center;padding:48px 24px 12px;position:relative;overflow:hidden;}
+  .hero{text-align:center;padding:48px 24px 40px;position:relative;overflow:hidden;}
   .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(244,196,48,.08) 0%,transparent 70%);pointer-events:none;}
   .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-soft);border:1px solid rgba(244,196,48,.25);border-radius:99px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px;}
   .hero h1{font-size:clamp(24px,5vw,42px);font-weight:700;letter-spacing:-0.03em;line-height:1.15;margin-bottom:8px;color:var(--ink);}
   .hero h1 span{color:var(--gold);}
-  .hero-sub{font-size:15px;color:var(--ink-light);margin-bottom:32px;}
+  .hero-sub{font-size:15px;color:var(--ink-light);margin-bottom:36px;}
 
   /* Countdown */
-  .countdown-wrap{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+  .countdown-wrap{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
   .cd-block{display:flex;flex-direction:column;align-items:center;}
   .cd-num{
     font-size:clamp(38px,9vw,76px);font-weight:700;letter-spacing:-0.03em;line-height:1;
@@ -55,30 +55,21 @@
   .cd-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
   .cd-ended{font-size:24px;font-weight:700;color:var(--gold);text-align:center;padding:32px 20px;}
 
-  /* Hora local */
-  .local-time-box{
-    display:inline-flex;flex-direction:column;align-items:center;gap:6px;
-    background:var(--surface);border:1.5px solid rgba(244,196,48,.2);
-    border-radius:var(--radius-sm);padding:14px 28px;margin-bottom:20px;
-  }
-  .lt-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);}
-  .lt-time{font-size:22px;font-weight:700;color:var(--gold);letter-spacing:-0.01em;}
-  .lt-desc{font-size:12px;color:var(--ink-light);}
-
-  /* Selector de zona horaria */
-  .tz-selector{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:40px;padding:0 16px;}
-  .tz-btn{
-    display:flex;align-items:center;gap:5px;padding:6px 12px;
-    background:var(--surface);border:1.5px solid var(--border);border-radius:99px;
-    cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
-    color:var(--ink-light);transition:border-color .15s,color .15s,background .15s;
-  }
-  .tz-btn:hover{border-color:rgba(244,196,48,.4);color:var(--ink);}
-  .tz-btn.active{background:var(--gold-soft);border-color:rgba(244,196,48,.5);color:var(--gold);font-weight:600;}
-  .tz-flag{font-size:15px;line-height:1;}
-
-  /* Info container */
+  /* Container */
   .container{max-width:860px;margin:0 auto;padding:0 20px 64px;}
+
+  /* Selector zona horaria — arriba del banner, alineado a la izquierda */
+  .tz-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .tz-row label{font-size:12px;color:var(--ink-faint);white-space:nowrap;}
+  #tz-select{
+    font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+    background:var(--surface);color:var(--ink);
+    border:1.5px solid var(--border);border-radius:8px;
+    padding:6px 10px;cursor:pointer;outline:none;
+    transition:border-color .15s;
+  }
+  #tz-select:focus,#tz-select:hover{border-color:rgba(244,196,48,.4);}
+  #tz-select option{background:#0f2210;color:#e8f0e8;}
 
   /* Argentina banner */
   .arg-banner{
@@ -123,9 +114,6 @@
     .cd-num{min-width:70px;padding:10px 10px;}
     .cd-sep{display:none;}
   }
-  @media(max-width:400px){
-    .local-time-box{padding:12px 16px;}
-  }
 </style>
 </head>
 <body>
@@ -147,19 +135,15 @@
     <div class="cd-sep">:</div>
     <div class="cd-block"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Segundos</div></div>
   </div>
-
-  <!-- Hora local -->
-  <div class="local-time-box">
-    <div class="lt-label">Hora de inicio en tu zona</div>
-    <div class="lt-time" id="lt-time">--:--</div>
-    <div class="lt-desc" id="lt-desc">Jueves 11 de junio de 2026</div>
-  </div>
-
-  <!-- Selector de zona horaria -->
-  <div class="tz-selector" id="tz-selector"></div>
 </div>
 
 <div class="container">
+
+  <!-- Selector de zona horaria -->
+  <div class="tz-row">
+    <label for="tz-select">🕐 Hora de inicio:</label>
+    <select id="tz-select"></select>
+  </div>
 
   <!-- Argentina campeón -->
   <div class="arg-banner">
@@ -258,81 +242,51 @@
 <script>
 (function () {
 
-  // ── Kickoff: 11 Jun 2026, 16:00 hora CDMX (UTC-6) = 22:00 UTC ──
+  // Kickoff: 11 Jun 2026, 16:00 CDMX (UTC-6) = 22:00 UTC
   var TARGET = new Date('2026-06-11T22:00:00Z');
 
-  // ── Zonas horarias disponibles ──────────────────────────────────
   var ZONES = [
-    { flag: '🇦🇷', label: 'Argentina',   tz: 'America/Argentina/Buenos_Aires' },
-    { flag: '🇲🇽', label: 'México',       tz: 'America/Mexico_City'             },
-    { flag: '🇺🇾', label: 'Uruguay',      tz: 'America/Montevideo'              },
-    { flag: '🇨🇱', label: 'Chile',        tz: 'America/Santiago'                },
-    { flag: '🇧🇷', label: 'Brasil',       tz: 'America/Sao_Paulo'              },
-    { flag: '🇨🇴', label: 'Colombia',     tz: 'America/Bogota'                  },
-    { flag: '🇵🇪', label: 'Perú',         tz: 'America/Lima'                    },
-    { flag: '🇻🇪', label: 'Venezuela',    tz: 'America/Caracas'                 },
-    { flag: '🇪🇸', label: 'España',       tz: 'Europe/Madrid'                   },
-    { flag: '🇺🇸', label: 'USA Este',     tz: 'America/New_York'                },
-    { flag: '🇺🇸', label: 'USA Oeste',    tz: 'America/Los_Angeles'             },
-    { flag: '🇨🇦', label: 'Canadá',       tz: 'America/Toronto'                 },
+    { flag: '🇦🇷', label: 'Argentina',  tz: 'America/Argentina/Buenos_Aires' },
+    { flag: '🇲🇽', label: 'México',      tz: 'America/Mexico_City'            },
+    { flag: '🇺🇾', label: 'Uruguay',     tz: 'America/Montevideo'             },
+    { flag: '🇨🇱', label: 'Chile',       tz: 'America/Santiago'               },
+    { flag: '🇧🇷', label: 'Brasil',      tz: 'America/Sao_Paulo'             },
+    { flag: '🇨🇴', label: 'Colombia',    tz: 'America/Bogota'                 },
+    { flag: '🇵🇪', label: 'Perú',        tz: 'America/Lima'                   },
+    { flag: '🇻🇪', label: 'Venezuela',   tz: 'America/Caracas'                },
+    { flag: '🇪🇸', label: 'España',      tz: 'Europe/Madrid'                  },
+    { flag: '🇺🇸', label: 'USA Este',    tz: 'America/New_York'               },
+    { flag: '🇺🇸', label: 'USA Oeste',   tz: 'America/Los_Angeles'            },
+    { flag: '🇨🇦', label: 'Canadá',      tz: 'America/Toronto'                },
   ];
 
-  // ── Detectar zona del usuario, con fallback a Argentina ─────────
+  function kickoffTime(tz) {
+    try {
+      return new Intl.DateTimeFormat('es-AR', {
+        timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false
+      }).format(TARGET);
+    } catch(e) { return '--:--'; }
+  }
+
+  // Detectar zona del usuario, fallback Argentina (índice 0)
   var userTz = '';
   try { userTz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch(e) {}
-
-  var activeIdx = 0; // fallback: Argentina
+  var defaultIdx = 0;
   for (var i = 0; i < ZONES.length; i++) {
-    if (ZONES[i].tz === userTz) { activeIdx = i; break; }
+    if (ZONES[i].tz === userTz) { defaultIdx = i; break; }
   }
 
-  // ── Formatear hora del kickoff en una zona dada ─────────────────
-  function formatKickoff(tz) {
-    try {
-      var timeStr = new Intl.DateTimeFormat('es-AR', {
-        timeZone: tz,
-        hour: '2-digit', minute: '2-digit', hour12: false
-      }).format(TARGET);
+  // Poblar el select con opciones: "🇦🇷 Argentina — 19:00 hs"
+  var sel = document.getElementById('tz-select');
+  ZONES.forEach(function(z, idx) {
+    var opt = document.createElement('option');
+    opt.value = idx;
+    opt.textContent = z.flag + ' ' + z.label + ' — ' + kickoffTime(z.tz) + ' hs';
+    if (idx === defaultIdx) opt.selected = true;
+    sel.appendChild(opt);
+  });
 
-      var dateStr = new Intl.DateTimeFormat('es-AR', {
-        timeZone: tz,
-        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-      }).format(TARGET);
-
-      // Capitalizar primera letra
-      dateStr = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
-      return { time: timeStr, date: dateStr };
-    } catch(e) {
-      return { time: '--:--', date: '' };
-    }
-  }
-
-  // ── Renderizar selector ─────────────────────────────────────────
-  var sel = document.getElementById('tz-selector');
-
-  function renderSelector() {
-    sel.innerHTML = '';
-    ZONES.forEach(function(z, idx) {
-      var btn = document.createElement('button');
-      btn.className = 'tz-btn' + (idx === activeIdx ? ' active' : '');
-      btn.innerHTML = '<span class="tz-flag">' + z.flag + '</span>' + z.label;
-      btn.addEventListener('click', function() {
-        activeIdx = idx;
-        updateLocalTime();
-        renderSelector();
-      });
-      sel.appendChild(btn);
-    });
-  }
-
-  // ── Actualizar hora local mostrada ──────────────────────────────
-  function updateLocalTime() {
-    var info = formatKickoff(ZONES[activeIdx].tz);
-    document.getElementById('lt-time').textContent = info.time + ' hs';
-    document.getElementById('lt-desc').textContent = info.date;
-  }
-
-  // ── Countdown ───────────────────────────────────────────────────
+  // Countdown
   function pad(n) { return String(n).padStart(2, '0'); }
 
   function tick() {
@@ -352,9 +306,6 @@
     document.getElementById('cd-s').textContent = pad(s);
   }
 
-  // ── Init ────────────────────────────────────────────────────────
-  renderSelector();
-  updateLocalTime();
   tick();
   setInterval(tick, 1000);
 

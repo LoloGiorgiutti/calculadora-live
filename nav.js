@@ -335,6 +335,19 @@
   '.faq-item[open]>summary{color:var(--hi)}',
   '.faq-item[open]>summary::after{transform:rotate(45deg)}',
   '.faq-a{padding:0 16px 14px;font-size:13px;color:var(--ink-light);line-height:1.65}',
+
+  /* ── CALCULADORAS RELACIONADAS ────────────────────────────────────────────── */
+  '.related-section{max-width:520px;margin:0 auto;padding:0 20px 32px}',
+  '.related-heading{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;',
+  'color:var(--ink-faint);margin-bottom:12px;display:flex;align-items:center;gap:8px}',
+  '.related-heading::after{content:"";flex:1;height:1px;background:var(--border)}',
+  '.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}',
+  '.related-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 12px;',
+  'background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);',
+  'text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s;text-align:center}',
+  '.related-card:hover{border-color:var(--hi);transform:translateY(-2px)}',
+  '.related-icon{font-size:24px;line-height:1}',
+  '.related-name{font-size:12px;font-weight:600;line-height:1.3;color:var(--ink)}',
   ].join('');
 
   var st = document.createElement('style');
@@ -612,6 +625,57 @@
     sc.type = 'application/ld+json';
     sc.textContent = JSON.stringify(schema);
     document.head.appendChild(sc);
+
+    // ── BreadcrumbList schema ─────────────────────────────────
+    // Aparece en Google como: Calculadora.live › Categoría › Nombre
+    var catName = foundCat.replace(/^\S+\s*/, ''); // quita el emoji
+    var bc = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': 'Calculadora.live', 'item': 'https://calculadora.live/' },
+        { '@type': 'ListItem', 'position': 2, 'name': catName },
+        { '@type': 'ListItem', 'position': 3, 'name': found.n, 'item': 'https://calculadora.live' + found.u }
+      ]
+    };
+    var bc_sc = document.createElement('script');
+    bc_sc.type = 'application/ld+json';
+    bc_sc.textContent = JSON.stringify(bc);
+    document.head.appendChild(bc_sc);
+  })();
+
+  /* ── CALCULADORAS RELACIONADAS ──────────────────────────────
+     Muestra 3 calculadoras aleatorias de la misma categoría.
+     Se actualiza automáticamente al agregar ítems a CALCS.    */
+  (function(){
+    var path = window.location.pathname.replace(/\/$/, '') || '/';
+    var curCat = null;
+    CALCS.forEach(function(cat){
+      cat.items.forEach(function(item){
+        if(item.u.replace(/\/$/, '') === path) curCat = cat;
+      });
+    });
+    if(!curCat || curCat.items.length < 2) return;
+
+    // Otras calculadoras de la misma categoría (excluye la actual)
+    var others = curCat.items.filter(function(i){ return i.u.replace(/\/$/, '') !== path; });
+    // Mezclar aleatoriamente y tomar hasta 3
+    others = others.slice().sort(function(){ return Math.random() - 0.5; }).slice(0, 3);
+
+    var html = '<div class="related-section"><div class="related-heading">Calculadoras relacionadas</div>'
+             + '<div class="related-grid">';
+    others.forEach(function(item){
+      html += '<a class="related-card" href="' + item.u + '">'
+            + '<span class="related-icon">' + (item.icon || '🔢') + '</span>'
+            + '<span class="related-name">' + item.n + '</span>'
+            + '</a>';
+    });
+    html += '</div></div>';
+
+    // Insertar antes de las FAQs si existen, o al final del body
+    var faq = document.querySelector('.faq-section');
+    if(faq){ faq.insertAdjacentHTML('beforebegin', html); }
+    else { document.body.insertAdjacentHTML('beforeend', html); }
   })();
 
   /* ── INYECCIÓN DE FAQs ─────────────────────────────────────

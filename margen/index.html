@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Margen de Ganancia — Precio de venta y markup</title>
-<meta name="description" content="Calculá el margen de ganancia, el markup y el precio de venta de tus productos. Dos modos: desde el costo o desde el margen deseado. Gratis y al instante.">
+<title>Calculadora de Margen de Ganancia — Precio, costo y markup</title>
+<meta name="description" content="Calculá el margen de ganancia, markup, precio de venta o ganancia nominal. Completá dos campos y los otros dos se calculan solos. Con selector de moneda.">
 <link rel="canonical" href="https://calculadora.live/margen">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -17,49 +17,48 @@ header{background:var(--surface);border-bottom:1px solid var(--border);padding:0
 .hero{text-align:center;padding:40px 20px 24px;max-width:600px;margin:0 auto;}
 .hero h1{font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:-.03em;margin-bottom:8px;}
 .hero p{font-size:14px;color:var(--ink-light);}
-.main{max-width:520px;margin:0 auto;padding:0 20px 60px;}
+.main{max-width:480px;margin:0 auto;padding:0 20px 60px;}
 
-/* Tabs de modo */
-.mode-tabs{display:flex;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:4px;margin-bottom:12px;gap:4px;}
-.mode-tab{flex:1;padding:9px;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:var(--ink-light);transition:all .15s;}
-.mode-tab.active{background:var(--hi);color:#fff;}
+/* Instrucción */
+.tip{text-align:center;font-size:13px;color:var(--ink-faint);margin-bottom:18px;background:var(--hi-soft);border-radius:var(--radius-sm);padding:10px 14px;}
+.tip strong{color:var(--hi);}
 
-.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:12px;}
-.card-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:18px;}
-.field{margin-bottom:16px;}
-.field:last-child{margin-bottom:0;}
-.field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;}
-.input-wrap{display:flex;align-items:center;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s;}
-.input-wrap:focus-within{border-color:var(--hi);}
-.input-prefix,.input-suffix{padding:0 12px;font-size:14px;font-weight:600;color:var(--ink-faint);background:transparent;white-space:nowrap;}
-.input-wrap input{flex:1;border:none;background:transparent;padding:12px 4px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--ink);outline:none;width:0;}
-.input-wrap input::placeholder{color:var(--ink-faint);font-weight:400;}
+/* Tarjeta de campos */
+.fields-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px;}
 
-/* Resultado grande */
-.result-hero{background:var(--hi);border-radius:var(--radius);padding:24px;text-align:center;margin-bottom:10px;display:none;}
-.result-hero-label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:6px;}
-.result-hero-val{font-size:52px;font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1;}
-.result-hero-unit{font-size:20px;font-weight:400;}
+/* Cada campo */
+.field-row{padding:16px 18px;border-bottom:1px solid var(--border);transition:background .15s;}
+.field-row:last-child{border-bottom:none;}
+.field-row.active-input{background:var(--hi-soft);}
+.field-row.computed{background:#FAFBFF;}
+.field-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.field-label{font-size:13px;font-weight:700;color:var(--ink);}
+.field-badge{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:99px;}
+.badge-input{background:var(--hi-soft);color:var(--hi);}
+.badge-calc{background:#F0F2F7;color:var(--ink-faint);}
+.field-bottom{display:flex;align-items:center;gap:0;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s;}
+.field-row.active-input .field-bottom{border-color:var(--hi);}
+.field-bottom input{flex:1;border:none;background:transparent;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;color:var(--ink);outline:none;min-width:0;}
+.field-bottom input::placeholder{color:var(--ink-faint);font-weight:400;font-size:15px;}
+.field-bottom input.computed-val{color:var(--hi);}
+.cur-select{border:none;border-left:1px solid var(--border);background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--hi);padding:0 12px;height:100%;cursor:pointer;outline:none;flex-shrink:0;}
+.pct-label{padding:0 14px;font-size:17px;font-weight:600;color:var(--ink-faint);flex-shrink:0;}
 
-/* Grid de datos */
-.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;display:none;}
-.result-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;}
-.result-item-label{font-size:11px;color:var(--ink-faint);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
-.result-item-val{font-size:20px;font-weight:700;color:var(--ink);}
-.result-item-val.hi{color:var(--hi);}
-.result-item-val.green{color:#27ae60;}
+/* Botón limpiar */
+.btn-clear{display:block;width:100%;padding:13px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;margin-bottom:16px;}
+.btn-clear:hover{background:var(--surface);color:var(--ink);}
 
-/* Info diferencia margen/markup */
-.info-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;}
+/* Info */
+.info-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px;}
 .info-title{font-size:13px;font-weight:700;margin-bottom:12px;}
-.info-row{display:flex;gap:10px;margin-bottom:8px;font-size:13px;}
+.info-row{display:flex;gap:10px;font-size:13px;margin-bottom:8px;align-items:flex-start;}
 .info-row:last-child{margin-bottom:0;}
-.info-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.info-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
 .info-text{color:var(--ink-light);line-height:1.5;}
 .info-text strong{color:var(--ink);}
+.markup-hint{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);font-size:12px;color:var(--ink-faint);line-height:1.6;}
 
 footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);}
-@media(max-width:400px){.result-grid{grid-template-columns:1fr;}.result-hero-val{font-size:40px;}}
 </style>
 </head>
 <body>
@@ -67,82 +66,88 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);bord
 
 <div class="hero">
   <h1>📊 Margen de Ganancia</h1>
-  <p>Calculá el margen, el markup y el precio de venta de tus productos</p>
+  <p>Completá cualquier dos campos y los otros dos se calculan automáticamente</p>
 </div>
 
 <div class="main">
-  <!-- Modo -->
-  <div class="mode-tabs">
-    <button class="mode-tab active" onclick="setMode('costo-precio',this)">Costo + Precio</button>
-    <button class="mode-tab" onclick="setMode('costo-margen',this)">Costo + Margen</button>
-  </div>
+  <div class="tip">Escribí en <strong>cualquier 2 campos</strong> → los otros 2 se completan solos</div>
 
-  <!-- Panel Modo 1: tengo costo y precio, calculo margen -->
-  <div id="panel-costo-precio" class="card">
-    <div class="card-title">Calculá el margen</div>
-    <div class="field">
-      <label>Precio de costo</label>
-      <div class="input-wrap">
-        <span class="input-prefix">$</span>
-        <input type="number" id="cp-costo" placeholder="1.000" min="0" oninput="calcMode1()">
+  <div class="fields-card">
+
+    <!-- Costo -->
+    <div class="field-row" id="row-costo">
+      <div class="field-top">
+        <span class="field-label">Costo</span>
+        <span class="field-badge" id="badge-costo"></span>
+      </div>
+      <div class="field-bottom">
+        <input type="number" id="costo" placeholder="0" min="0" step="any" oninput="onEdit('costo')" onfocus="onFocus('costo')">
+        <select class="cur-select" id="cur-costo" onchange="onCurChange('costo')">
+          <option>ARS</option><option>USD</option><option>EUR</option><option>BRL</option>
+          <option>MXN</option><option>CLP</option><option>COP</option><option>PEN</option><option>GBP</option>
+        </select>
       </div>
     </div>
-    <div class="field">
-      <label>Precio de venta</label>
-      <div class="input-wrap">
-        <span class="input-prefix">$</span>
-        <input type="number" id="cp-precio" placeholder="1.500" min="0" oninput="calcMode1()">
+
+    <!-- Margen % -->
+    <div class="field-row" id="row-margen">
+      <div class="field-top">
+        <span class="field-label">Margen de ganancia</span>
+        <span class="field-badge" id="badge-margen"></span>
+      </div>
+      <div class="field-bottom">
+        <input type="number" id="margen" placeholder="0" min="0" max="99.99" step="any" oninput="onEdit('margen')" onfocus="onFocus('margen')">
+        <span class="pct-label">%</span>
       </div>
     </div>
-  </div>
 
-  <!-- Panel Modo 2: tengo costo y margen deseado, calculo precio -->
-  <div id="panel-costo-margen" class="card" style="display:none;">
-    <div class="card-title">Calculá el precio de venta</div>
-    <div class="field">
-      <label>Precio de costo</label>
-      <div class="input-wrap">
-        <span class="input-prefix">$</span>
-        <input type="number" id="cm-costo" placeholder="1.000" min="0" oninput="calcMode2()">
+    <!-- Facturación / Precio de venta -->
+    <div class="field-row" id="row-precio">
+      <div class="field-top">
+        <span class="field-label">Facturación / Precio de venta</span>
+        <span class="field-badge" id="badge-precio"></span>
+      </div>
+      <div class="field-bottom">
+        <input type="number" id="precio" placeholder="0" min="0" step="any" oninput="onEdit('precio')" onfocus="onFocus('precio')">
+        <select class="cur-select" id="cur-precio">
+          <option>ARS</option><option>USD</option><option>EUR</option><option>BRL</option>
+          <option>MXN</option><option>CLP</option><option>COP</option><option>PEN</option><option>GBP</option>
+        </select>
       </div>
     </div>
-    <div class="field">
-      <label>Margen de ganancia deseado</label>
-      <div class="input-wrap">
-        <input type="number" id="cm-margen" placeholder="30" min="0" max="99.9" step="0.1" oninput="calcMode2()" style="padding-left:12px;">
-        <span class="input-suffix">%</span>
+
+    <!-- Ganancia -->
+    <div class="field-row" id="row-ganancia">
+      <div class="field-top">
+        <span class="field-label">Ganancia nominal</span>
+        <span class="field-badge" id="badge-ganancia"></span>
+      </div>
+      <div class="field-bottom">
+        <input type="number" id="ganancia" placeholder="0" min="0" step="any" oninput="onEdit('ganancia')" onfocus="onFocus('ganancia')">
+        <select class="cur-select" id="cur-ganancia">
+          <option>ARS</option><option>USD</option><option>EUR</option><option>BRL</option>
+          <option>MXN</option><option>CLP</option><option>COP</option><option>PEN</option><option>GBP</option>
+        </select>
       </div>
     </div>
+
   </div>
 
-  <!-- Resultado héroe -->
-  <div class="result-hero" id="result-hero">
-    <div class="result-hero-label" id="hero-label">Margen de ganancia</div>
-    <div class="result-hero-val" id="hero-val">—<span class="result-hero-unit" id="hero-unit">%</span></div>
-  </div>
-
-  <!-- Grid de datos -->
-  <div class="result-grid" id="result-grid">
-    <div class="result-item"><div class="result-item-label">Costo</div><div class="result-item-val" id="r-costo">—</div></div>
-    <div class="result-item"><div class="result-item-label">Precio de venta</div><div class="result-item-val hi" id="r-precio">—</div></div>
-    <div class="result-item"><div class="result-item-label">Ganancia ($)</div><div class="result-item-val green" id="r-ganancia">—</div></div>
-    <div class="result-item"><div class="result-item-label">Markup</div><div class="result-item-val" id="r-markup">—</div></div>
-  </div>
+  <button class="btn-clear" onclick="clearAll()">↺ Limpiar todo</button>
 
   <!-- Info -->
   <div class="info-card">
-    <div class="info-title">Margen vs Markup — ¿Cuál es la diferencia?</div>
+    <div class="info-title">¿Cómo funciona?</div>
     <div class="info-row">
       <div class="info-dot" style="background:var(--hi);"></div>
-      <div class="info-text"><strong>Margen de ganancia</strong>: porcentaje de ganancia sobre el precio de <em>venta</em>. Fórmula: (precio − costo) ÷ precio × 100.</div>
+      <div class="info-text"><strong>Margen</strong> = Ganancia ÷ Precio de venta × 100. Se calcula sobre lo que cobrás.</div>
     </div>
     <div class="info-row">
       <div class="info-dot" style="background:#27ae60;"></div>
-      <div class="info-text"><strong>Markup (recargo)</strong>: porcentaje de ganancia sobre el <em>costo</em>. Fórmula: (precio − costo) ÷ costo × 100. Siempre es mayor que el margen.</div>
+      <div class="info-text"><strong>Markup</strong> = Ganancia ÷ Costo × 100. Se calcula sobre lo que pagás. Siempre es mayor que el margen.</div>
     </div>
-    <div class="info-row">
-      <div class="info-dot" style="background:#e67e22;"></div>
-      <div class="info-text"><strong>Ejemplo</strong>: si comprás a $1.000 y vendés a $1.500 → margen = 33,3% · markup = 50%.</div>
+    <div class="markup-hint">
+      Ejemplo: comprás a $1.000 y vendés a $1.500 → <strong>Margen = 33,3%</strong> · Markup = 50% · Ganancia = $500
     </div>
   </div>
 </div>
@@ -150,56 +155,129 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);bord
 <footer>© 2026 Calculadora.live · Herramientas gratuitas</footer>
 
 <script>
-var currentMode = 'costo-precio';
-function fmt(n){ return '$' + n.toLocaleString('es-AR',{minimumFractionDigits:0,maximumFractionDigits:0}); }
-function pct(n){ return n.toFixed(1) + '%'; }
+// Historial de últimos 2 campos editados por el usuario
+var history = []; // max 2 field IDs
+var ALL = ['costo','margen','precio','ganancia'];
+var fmt4 = { minimumFractionDigits: 0, maximumFractionDigits: 4 };
 
-function setMode(mode, btn) {
-  currentMode = mode;
-  document.querySelectorAll('.mode-tab').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
-  document.getElementById('panel-costo-precio').style.display = mode === 'costo-precio' ? '' : 'none';
-  document.getElementById('panel-costo-margen').style.display = mode === 'costo-margen' ? '' : 'none';
-  hideResult();
+function getVal(id) { return parseFloat(document.getElementById(id).value); }
+function setVal(id, v) {
+  var el = document.getElementById(id);
+  var rounded = Math.round(v * 10000) / 10000;
+  el.value = isFinite(rounded) ? rounded : '';
+  el.classList.toggle('computed-val', true);
+}
+function clearVal(id) {
+  var el = document.getElementById(id);
+  el.value = '';
+  el.classList.remove('computed-val');
 }
 
-function hideResult() {
-  document.getElementById('result-hero').style.display = 'none';
-  document.getElementById('result-grid').style.display = 'none';
+function onFocus(id) {
+  // nothing — editing is tracked on input
 }
 
-function showResult(costo, precio, ganancia, margen, markup, heroLabel, heroVal, heroUnit) {
-  document.getElementById('result-hero').style.display = 'block';
-  document.getElementById('result-grid').style.display = 'grid';
-  document.getElementById('hero-label').textContent = heroLabel;
-  document.getElementById('hero-val').innerHTML = heroVal + '<span class="result-hero-unit">' + heroUnit + '</span>';
-  document.getElementById('r-costo').textContent = fmt(costo);
-  document.getElementById('r-precio').textContent = fmt(precio);
-  document.getElementById('r-ganancia').textContent = fmt(ganancia);
-  document.getElementById('r-markup').textContent = pct(markup);
+function onEdit(id) {
+  // Remove from history if already there, then add at front
+  history = history.filter(function(h){ return h !== id; });
+  history.unshift(id);
+  if(history.length > 2) history.length = 2;
+
+  // Remove computed style from edited field
+  document.getElementById(id).classList.remove('computed-val');
+
+  solve();
+  updateBadges();
 }
 
-function calcMode1() {
-  var costo  = parseFloat(document.getElementById('cp-costo').value)  || 0;
-  var precio = parseFloat(document.getElementById('cp-precio').value) || 0;
-  if(!costo || !precio || precio <= costo) { hideResult(); return; }
-  var ganancia = precio - costo;
-  var margen   = (ganancia / precio) * 100;
-  var markup   = (ganancia / costo) * 100;
-  showResult(costo, precio, ganancia, margen, markup, 'Margen de ganancia', margen.toFixed(1), '%');
+function solve() {
+  if(history.length < 2) { updateBadges(); return; }
+
+  var pair = history.slice().sort().join('+');
+  var c = getVal('costo'), m = getVal('margen'), p = getVal('precio'), g = getVal('ganancia');
+
+  // Get the computed fields (the ones NOT in history)
+  var computed = ALL.filter(function(f){ return history.indexOf(f) === -1; });
+
+  // Reset computed fields before recalculating
+  computed.forEach(function(f){ clearVal(f); });
+
+  var C = history.indexOf('costo')   !== -1 ? c : NaN;
+  var M = history.indexOf('margen')  !== -1 ? m : NaN;
+  var P = history.indexOf('precio')  !== -1 ? p : NaN;
+  var G = history.indexOf('ganancia')!== -1 ? g : NaN;
+
+  if(!isNaN(C) && !isNaN(M)) {
+    // costo + margen → precio, ganancia
+    if(M >= 100 || M < 0) return;
+    var newP = C / (1 - M/100);
+    var newG = newP - C;
+    setVal('precio', newP); setVal('ganancia', newG);
+  } else if(!isNaN(C) && !isNaN(P)) {
+    // costo + precio → ganancia, margen
+    if(P <= 0 || P <= C) return;
+    var newG = P - C;
+    var newM = newG / P * 100;
+    setVal('ganancia', newG); setVal('margen', newM);
+  } else if(!isNaN(C) && !isNaN(G)) {
+    // costo + ganancia → precio, margen
+    if(G < 0) return;
+    var newP = C + G;
+    var newM = newP > 0 ? G / newP * 100 : 0;
+    setVal('precio', newP); setVal('margen', newM);
+  } else if(!isNaN(M) && !isNaN(P)) {
+    // margen + precio → costo, ganancia
+    if(M >= 100 || M < 0 || P <= 0) return;
+    var newC = P * (1 - M/100);
+    var newG = P * M/100;
+    setVal('costo', newC); setVal('ganancia', newG);
+  } else if(!isNaN(M) && !isNaN(G)) {
+    // margen + ganancia → precio, costo
+    if(M <= 0 || M >= 100 || G < 0) return;
+    var newP = G * 100 / M;
+    var newC = newP - G;
+    setVal('precio', newP); setVal('costo', newC);
+  } else if(!isNaN(P) && !isNaN(G)) {
+    // precio + ganancia → costo, margen
+    if(P <= 0 || G < 0 || G > P) return;
+    var newC = P - G;
+    var newM = G / P * 100;
+    setVal('costo', newC); setVal('margen', newM);
+  }
 }
 
-function calcMode2() {
-  var costo  = parseFloat(document.getElementById('cm-costo').value)  || 0;
-  var margen = parseFloat(document.getElementById('cm-margen').value) || 0;
-  if(!costo || !margen || margen >= 100) { hideResult(); return; }
-  var precio   = costo / (1 - margen / 100);
-  var ganancia = precio - costo;
-  var markup   = (ganancia / costo) * 100;
-  showResult(costo, precio, ganancia, margen, markup, 'Precio de venta', fmt(precio).replace('$',''), '$');
-  // Fix hero: mostrar precio en grande sin unidad duplicada
-  document.getElementById('hero-val').innerHTML = fmt(precio);
-  document.getElementById('hero-label').textContent = 'Precio de venta';
+function updateBadges() {
+  ALL.forEach(function(id) {
+    var badge = document.getElementById('badge-' + id);
+    var row = document.getElementById('row-' + id);
+    var isInput = history.indexOf(id) !== -1;
+    var val = document.getElementById(id).value;
+    var isComputed = !isInput && val !== '';
+
+    if(isInput) {
+      badge.textContent = 'Dato';
+      badge.className = 'field-badge badge-input';
+      row.className = 'field-row active-input';
+    } else if(isComputed) {
+      badge.textContent = 'Calculado';
+      badge.className = 'field-badge badge-calc';
+      row.className = 'field-row computed';
+    } else {
+      badge.textContent = '';
+      badge.className = 'field-badge';
+      row.className = 'field-row';
+    }
+  });
+}
+
+function clearAll() {
+  history = [];
+  ALL.forEach(function(id) {
+    clearVal(id);
+    document.getElementById('badge-' + id).textContent = '';
+    document.getElementById('badge-' + id).className = 'field-badge';
+    document.getElementById('row-' + id).className = 'field-row';
+  });
 }
 </script>
 <script src="/nav.js"></script>

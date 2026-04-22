@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Cuánto Gana Por Segundo? Messi, Ronaldo, Taylor Swift — Contador en vivo</title>
+<meta name="description" content="Mirá en tiempo real cuánto ganan por segundo Messi, Cristiano Ronaldo, Taylor Swift, Elon Musk y más. También podés ingresar tu propio sueldo y comparar.">
+<link rel="canonical" href="https://calculadora.live/cuanto-gana">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F2F7;--surface:#fff;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;position:sticky;top:0;z-index:100;}
+.logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.02em;}
+.logo span{color:var(--hi);}
+.hero{text-align:center;padding:40px 20px 24px;max-width:640px;margin:0 auto;}
+.hero h1{font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:-.03em;margin-bottom:8px;}
+.hero p{font-size:14px;color:var(--ink-light);}
+.main{max-width:640px;margin:0 auto;padding:0 20px 60px;}
+
+/* Tabs categoría */
+.cat-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;justify-content:center;}
+.cat-tab{padding:7px 16px;border:1.5px solid var(--border);border-radius:99px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;}
+.cat-tab.active{background:var(--hi);border-color:var(--hi);color:#fff;}
+
+/* Grid de personas */
+.people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:16px;}
+.person-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px;cursor:pointer;transition:all .15s;text-align:center;}
+.person-card:hover{border-color:var(--hi);transform:translateY(-2px);}
+.person-card.selected{border-color:var(--hi);background:var(--hi-soft);box-shadow:0 4px 16px rgba(26,95,232,.15);}
+.p-emoji{font-size:32px;margin-bottom:6px;line-height:1;}
+.p-name{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.p-rate{font-size:11px;color:var(--ink-faint);}
+.p-rate strong{color:var(--hi);}
+
+/* Contador principal */
+.counter-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:28px 24px;margin-bottom:12px;text-align:center;display:none;}
+.counter-card.visible{display:block;}
+.counter-who{font-size:13px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.counter-name{font-size:22px;font-weight:700;color:var(--ink);margin-bottom:20px;}
+.counter-label{font-size:12px;color:var(--ink-faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em;font-weight:600;}
+.counter-val{font-size:clamp(36px,7vw,58px);font-weight:700;color:var(--hi);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;margin-bottom:20px;}
+.counter-note{font-size:11px;color:var(--ink-faint);line-height:1.5;}
+
+/* Mini stats */
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;}
+.mini-stat{background:var(--bg);border-radius:var(--radius-sm);padding:10px;text-align:center;}
+.mini-stat-n{font-size:16px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
+.mini-stat-l{font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.07em;margin-top:2px;}
+
+/* Botón reset */
+.btn-reset{padding:10px 20px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;}
+.btn-reset:hover{background:var(--surface);color:var(--ink);}
+
+/* Tu sueldo personalizado */
+.custom-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px;}
+.custom-title{font-size:13px;font-weight:700;margin-bottom:14px;}
+.custom-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;}
+.custom-field{flex:2;min-width:120px;}
+.custom-field label{display:block;font-size:12px;font-weight:600;color:var(--ink-light);margin-bottom:5px;}
+.input-wrap{display:flex;align-items:center;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s;}
+.input-wrap:focus-within{border-color:var(--hi);}
+.input-wrap input,.input-wrap select{flex:1;border:none;background:transparent;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--ink);outline:none;width:0;}
+.custom-period{flex:1;min-width:100px;}
+.btn-custom{padding:10px 18px;background:var(--hi);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
+.btn-custom:hover{opacity:.9;}
+
+/* Comparativa yo vs famoso */
+.compare-strip{background:var(--hi-soft);border:1.5px solid rgba(26,95,232,.15);border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--ink-light);margin-bottom:12px;display:none;line-height:1.6;}
+.compare-strip strong{color:var(--ink);}
+.compare-strip span{color:var(--hi);font-weight:700;}
+
+/* Disclaimer */
+.disclaimer{font-size:12px;color:var(--ink-faint);text-align:center;line-height:1.5;padding:0 8px;}
+
+footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);}
+@media(max-width:480px){.people-grid{grid-template-columns:1fr 1fr;}.mini-stats{grid-template-columns:1fr 1fr 1fr;}}
+</style>
+</head>
+<body>
+<header><a class="logo" href="/">Calculadora<span>.live</span></a></header>
+
+<div class="hero">
+  <h1>💸 ¿Cuánto gana por segundo?</h1>
+  <p>Mirá en tiempo real cómo crece la fortuna de los famosos más ricos del mundo</p>
+</div>
+
+<div class="main">
+
+  <!-- Tabs -->
+  <div class="cat-tabs">
+    <button class="cat-tab active" onclick="setCat('todos',this)">Todos</button>
+    <button class="cat-tab" onclick="setCat('deportes',this)">⚽ Deportes</button>
+    <button class="cat-tab" onclick="setCat('musica',this)">🎤 Música</button>
+    <button class="cat-tab" onclick="setCat('empresarios',this)">🚀 Empresarios</button>
+  </div>
+
+  <!-- Grid de personas -->
+  <div class="people-grid" id="people-grid"></div>
+
+  <!-- Contador en vivo -->
+  <div class="counter-card" id="counter-card">
+    <div class="counter-who">Ganando ahora mismo</div>
+    <div class="counter-name" id="counter-name">—</div>
+    <div class="counter-label">Ganado desde que abriste esta página</div>
+    <div class="counter-val" id="counter-val">US$ 0</div>
+    <div class="mini-stats">
+      <div class="mini-stat"><div class="mini-stat-n" id="ms-seg">0</div><div class="mini-stat-l">por segundo</div></div>
+      <div class="mini-stat"><div class="mini-stat-n" id="ms-min">0</div><div class="mini-stat-l">por minuto</div></div>
+      <div class="mini-stat"><div class="mini-stat-n" id="ms-hora">0</div><div class="mini-stat-l">por hora</div></div>
+    </div>
+    <button class="btn-reset" onclick="resetCounter()">↺ Reiniciar contador</button>
+    <div class="counter-note" id="counter-note"></div>
+  </div>
+
+  <!-- Comparativa -->
+  <div class="compare-strip" id="compare-strip"></div>
+
+  <!-- Tu sueldo personalizado -->
+  <div class="custom-card">
+    <div class="custom-title">💡 ¿Y tu sueldo? Miralo en tiempo real</div>
+    <div class="custom-row">
+      <div class="custom-field">
+        <label>Monto</label>
+        <div class="input-wrap">
+          <input type="number" id="custom-val" placeholder="100.000" min="0">
+        </div>
+      </div>
+      <div class="custom-period">
+        <label>Período</label>
+        <div class="input-wrap">
+          <select id="custom-period">
+            <option value="hora">Por hora</option>
+            <option value="dia">Por día (8h)</option>
+            <option value="semana">Por semana</option>
+            <option value="mes" selected>Por mes</option>
+            <option value="anio">Por año</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-custom" onclick="setCustom()">Ver</button>
+    </div>
+  </div>
+
+  <div class="disclaimer">⚠️ Los ingresos mostrados son estimaciones basadas en reportes de Forbes, Bloomberg y medios especializados. No representan cifras oficiales.</div>
+
+</div>
+
+<footer>© 2026 Calculadora.live · Herramientas gratuitas</footer>
+
+<script>
+var PERSONAS = [
+  // Deportes
+  { id:'messi',    cat:'deportes',    emoji:'⭐', name:'Lionel Messi',       flag:'🇦🇷', annual:135e6,   note:'Inter Miami + sponsors (Forbes est.)' },
+  { id:'ronaldo',  cat:'deportes',    emoji:'⚽', name:'Cristiano Ronaldo',  flag:'🇵🇹', annual:200e6,   note:'Al-Nassr + CR7 brand (Forbes est.)' },
+  { id:'neymar',   cat:'deportes',    emoji:'🇧🇷', name:'Neymar Jr.',        flag:'🇧🇷', annual:70e6,    note:'Al-Hilal + sponsors (est.)' },
+  { id:'lebron',   cat:'deportes',    emoji:'🏀', name:'LeBron James',       flag:'🇺🇸', annual:130e6,   note:'NBA + Nike + inversiones (Forbes)' },
+  { id:'mbappé',   cat:'deportes',    emoji:'⚡', name:'Kylian Mbappé',      flag:'🇫🇷', annual:110e6,   note:'Real Madrid + sponsors (Forbes)' },
+  // Música
+  { id:'taylorswift', cat:'musica',   emoji:'🎤', name:'Taylor Swift',       flag:'🇺🇸', annual:1000e6,  note:'Eras Tour + streaming (Bloomberg est.)' },
+  { id:'badbunny', cat:'musica',      emoji:'🐰', name:'Bad Bunny',           flag:'🇵🇷', annual:88e6,    note:'Giras + streaming (Forbes est.)' },
+  { id:'rihanna',  cat:'musica',      emoji:'💎', name:'Rihanna',             flag:'🇧🇧', annual:600e6,   note:'Fenty Beauty + música (Forbes)' },
+  { id:'shakira',  cat:'musica',      emoji:'🎸', name:'Shakira',             flag:'🇨🇴', annual:45e6,    note:'Música + sponsors (est.)' },
+  { id:'jbalvin',  cat:'musica',      emoji:'🎶', name:'J Balvin',            flag:'🇨🇴', annual:23e6,    note:'Streams + shows (est.)' },
+  // Empresarios (incremento patrimonial)
+  { id:'musk',     cat:'empresarios', emoji:'🚀', name:'Elon Musk',           flag:'🇺🇸', annual:100000e6, note:'Incremento patrimonial estimado (Bloomberg)' },
+  { id:'bezos',    cat:'empresarios', emoji:'📦', name:'Jeff Bezos',          flag:'🇺🇸', annual:25000e6,  note:'Incremento patrimonial estimado (Bloomberg)' },
+  { id:'zuckerberg',cat:'empresarios',emoji:'💻', name:'Mark Zuckerberg',     flag:'🇺🇸', annual:30000e6,  note:'Incremento patrimonial estimado (Bloomberg)' },
+];
+
+var PER_SEC = {}; // id → $/sec
+PERSONAS.forEach(function(p){ PER_SEC[p.id] = p.annual / (365.25 * 24 * 3600); });
+
+var currentId   = null;
+var customPerSec= null;
+var startTime   = null;
+var rafId       = null;
+var currentCat  = 'todos';
+
+function formatNum(n) {
+  if(n >= 1e9) return 'US$ ' + (n/1e9).toFixed(2) + 'B';
+  if(n >= 1e6) return 'US$ ' + (n/1e6).toFixed(2) + 'M';
+  if(n >= 1e3) return 'US$ ' + n.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  return 'US$ ' + n.toFixed(4);
+}
+function formatRate(n) {
+  if(n >= 1e6) return 'US$ ' + (n/1e6).toFixed(2) + 'M';
+  if(n >= 1e3) return 'US$ ' + Math.round(n).toLocaleString('es-AR');
+  if(n >= 1)   return 'US$ ' + n.toFixed(2);
+  if(n >= 0.01)return 'US$ ' + n.toFixed(4);
+  return 'US$ ' + n.toFixed(6);
+}
+
+function setCat(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-tab').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderGrid();
+}
+
+function renderGrid() {
+  var grid = document.getElementById('people-grid');
+  var list = currentCat === 'todos' ? PERSONAS : PERSONAS.filter(function(p){ return p.cat === currentCat; });
+  grid.innerHTML = '';
+  list.forEach(function(p) {
+    var rateStr = p.annual >= 1e9
+      ? 'US$ ' + (p.annual/1e9).toFixed(1) + 'B/año'
+      : 'US$ ' + (p.annual/1e6).toFixed(0) + 'M/año';
+    var secStr = PER_SEC[p.id] >= 1000
+      ? '<strong>US$ ' + Math.round(PER_SEC[p.id]).toLocaleString('es-AR') + '</strong>/seg'
+      : '<strong>US$ ' + PER_SEC[p.id].toFixed(2) + '</strong>/seg';
+    var div = document.createElement('div');
+    div.className = 'person-card' + (p.id === currentId ? ' selected' : '');
+    div.innerHTML = '<div class="p-emoji">' + p.flag + ' ' + p.emoji + '</div>'
+                  + '<div class="p-name">' + p.name + '</div>'
+                  + '<div class="p-rate">' + secStr + '</div>';
+    div.onclick = function(){ selectPerson(p.id); };
+    grid.appendChild(div);
+  });
+}
+
+function selectPerson(id) {
+  currentId   = id;
+  customPerSec= null;
+  startCounter(PER_SEC[id]);
+
+  var p = PERSONAS.find(function(x){ return x.id === id; });
+  document.getElementById('counter-name').textContent = p.flag + ' ' + p.name;
+  document.getElementById('counter-note').textContent = '* ' + p.note;
+
+  renderGrid();
+  showCompare(PER_SEC[id], p.name);
+}
+
+function startCounter(perSec) {
+  cancelAnimationFrame(rafId);
+  startTime = Date.now();
+
+  var card = document.getElementById('counter-card');
+  card.classList.add('visible');
+
+  // Mini stats
+  document.getElementById('ms-seg').textContent  = formatRate(perSec);
+  document.getElementById('ms-min').textContent  = formatRate(perSec * 60);
+  document.getElementById('ms-hora').textContent = formatRate(perSec * 3600);
+
+  function loop() {
+    var elapsed = (Date.now() - startTime) / 1000;
+    var earned  = elapsed * perSec;
+    document.getElementById('counter-val').textContent = formatNum(earned);
+    rafId = requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+function resetCounter() {
+  startTime = Date.now();
+}
+
+function setCustom() {
+  var val    = parseFloat(document.getElementById('custom-val').value);
+  var period = document.getElementById('custom-period').value;
+  if(!val || val <= 0) return;
+
+  var perAnio;
+  switch(period) {
+    case 'hora':   perAnio = val * 8 * 5 * 52; break;
+    case 'dia':    perAnio = val * 5 * 52; break;
+    case 'semana': perAnio = val * 52; break;
+    case 'mes':    perAnio = val * 12; break;
+    case 'anio':   perAnio = val; break;
+  }
+  var perSec = perAnio / (365.25 * 24 * 3600);
+  customPerSec = perSec;
+  currentId = null;
+
+  document.getElementById('counter-name').textContent = '👤 Tu sueldo en tiempo real';
+  document.getElementById('counter-note').textContent = 'Ingreso anual estimado: ' + Math.round(perAnio).toLocaleString('es-AR');
+  startCounter(perSec);
+  renderGrid();
+
+  // Comparativa
+  if(currentId === null) {
+    document.getElementById('compare-strip').style.display = 'none';
+  }
+}
+
+function showCompare(famousSec, famousName) {
+  // Solo si hay custom
+  if(!customPerSec) { document.getElementById('compare-strip').style.display = 'none'; return; }
+  var ratio = famousSec / customPerSec;
+  var strip = document.getElementById('compare-strip');
+  strip.style.display = 'block';
+  strip.innerHTML = famousSec > customPerSec
+    ? '<strong>' + famousName + '</strong> gana <span>' + Math.round(ratio).toLocaleString('es-AR') + '×</span> más por segundo que vos según los datos que ingresaste.'
+    : '¡Tu ingreso es <span>' + Math.round(1/ratio) + '×</span> menor al de <strong>' + famousName + '</strong> — ¡seguí trabajando!';
+}
+
+// Init
+renderGrid();
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

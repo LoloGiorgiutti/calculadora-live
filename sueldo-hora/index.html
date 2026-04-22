@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Sueldo por Hora, Día, Semana, Mes y Año</title>
+<meta name="description" content="Convertí tu sueldo entre cualquier período: hora, día, semana, quincena, mes y año. Ingresá uno y los demás se calculan automáticamente.">
+<link rel="canonical" href="https://calculadora.live/sueldo-hora">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F2F7;--surface:#fff;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;position:sticky;top:0;z-index:100;}
+.logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.02em;}
+.logo span{color:var(--hi);}
+.hero{text-align:center;padding:40px 20px 24px;max-width:600px;margin:0 auto;}
+.hero h1{font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:-.03em;margin-bottom:8px;}
+.hero p{font-size:14px;color:var(--ink-light);}
+.main{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+
+/* Config de horas */
+.config-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:12px;}
+.config-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+.config-row{display:flex;gap:12px;}
+.config-field{flex:1;}
+.config-label{font-size:12px;font-weight:600;color:var(--ink-light);margin-bottom:5px;}
+.config-input{display:flex;align-items:center;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s;}
+.config-input:focus-within{border-color:var(--hi);}
+.config-input input{flex:1;border:none;background:transparent;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--ink);outline:none;width:0;}
+.config-input span{padding:0 10px;font-size:12px;color:var(--ink-faint);white-space:nowrap;}
+
+/* Moneda selector */
+.cur-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.cur-row label{font-size:13px;font-weight:600;color:var(--ink);}
+.cur-sel{border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--hi);padding:8px 12px;cursor:pointer;outline:none;transition:border-color .15s;}
+.cur-sel:hover{border-color:var(--hi);}
+
+/* Campos de períodos */
+.periods-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px;}
+.period-row{display:flex;align-items:center;border-bottom:1px solid var(--border);transition:background .15s;}
+.period-row:last-child{border-bottom:none;}
+.period-row.active{background:var(--hi-soft);}
+.period-icon{width:44px;text-align:center;font-size:18px;flex-shrink:0;padding:14px 0;}
+.period-label{flex:1;padding:14px 0;min-width:0;}
+.period-name{font-size:13px;font-weight:700;color:var(--ink);}
+.period-sub{font-size:11px;color:var(--ink-faint);}
+.period-input-wrap{display:flex;align-items:center;gap:4px;padding-right:16px;flex-shrink:0;}
+.cur-sym{font-size:13px;font-weight:700;color:var(--ink-faint);white-space:nowrap;}
+.period-input{border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:var(--ink);outline:none;text-align:right;width:130px;}
+.period-input::placeholder{color:var(--ink-faint);font-weight:400;font-size:14px;}
+.period-input.computed{color:var(--hi);}
+
+/* Resumen visual */
+.summary-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px;display:none;}
+.summary-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.summary-item{background:var(--bg);border-radius:var(--radius-sm);padding:12px 14px;}
+.summary-label{font-size:11px;color:var(--ink-faint);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;}
+.summary-val{font-size:18px;font-weight:700;color:var(--ink);}
+.summary-val.big{font-size:22px;color:var(--hi);}
+
+footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);}
+@media(max-width:400px){.period-input{width:100px;font-size:14px;}.summary-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header><a class="logo" href="/">Calculadora<span>.live</span></a></header>
+
+<div class="hero">
+  <h1>💼 Convertidor de Sueldo</h1>
+  <p>Ingresá tu sueldo en cualquier período y los demás se calculan solos</p>
+</div>
+
+<div class="main">
+
+  <!-- Configuración -->
+  <div class="config-card">
+    <div class="config-title">Configuración</div>
+    <div class="config-row">
+      <div class="config-field">
+        <div class="config-label">Horas por día</div>
+        <div class="config-input">
+          <input type="number" id="horas-dia" value="8" min="1" max="24" step="0.5" oninput="recalcular()">
+          <span>h</span>
+        </div>
+      </div>
+      <div class="config-field">
+        <div class="config-label">Días por semana</div>
+        <div class="config-input">
+          <input type="number" id="dias-semana" value="5" min="1" max="7" step="1" oninput="recalcular()">
+          <span>días</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selector moneda -->
+  <div class="cur-row">
+    <label>Moneda:</label>
+    <select class="cur-sel" id="moneda" onchange="updateSymbols()">
+      <option value="$">ARS — Peso argentino ($)</option>
+      <option value="US$">USD — Dólar (US$)</option>
+      <option value="€">EUR — Euro (€)</option>
+      <option value="R$">BRL — Real brasileño (R$)</option>
+      <option value="MX$">MXN — Peso mexicano (MX$)</option>
+      <option value="CLP$">CLP — Peso chileno (CLP$)</option>
+      <option value="COP$">COP — Peso colombiano (COP$)</option>
+      <option value="S/">PEN — Sol peruano (S/)</option>
+      <option value="£">GBP — Libra (£)</option>
+    </select>
+  </div>
+
+  <!-- Períodos -->
+  <div class="periods-card" id="periods-card">
+
+    <div class="period-row" id="row-hora">
+      <div class="period-icon">⏱️</div>
+      <div class="period-label">
+        <div class="period-name">Por hora</div>
+        <div class="period-sub" id="sub-hora">— hs/día</div>
+      </div>
+      <div class="period-input-wrap">
+        <span class="cur-sym" id="sym-hora">$</span>
+        <input class="period-input" type="number" id="hora" placeholder="0" min="0" step="any" oninput="onInput('hora')">
+      </div>
+    </div>
+
+    <div class="period-row" id="row-dia">
+      <div class="period-icon">📅</div>
+      <div class="period-label">
+        <div class="period-name">Por día</div>
+        <div class="period-sub" id="sub-dia">— hs</div>
+      </div>
+      <div class="period-input-wrap">
+        <span class="cur-sym" id="sym-dia">$</span>
+        <input class="period-input" type="number" id="dia" placeholder="0" min="0" step="any" oninput="onInput('dia')">
+      </div>
+    </div>
+
+    <div class="period-row" id="row-semana">
+      <div class="period-icon">🗓️</div>
+      <div class="period-label">
+        <div class="period-name">Por semana</div>
+        <div class="period-sub" id="sub-semana">— días</div>
+      </div>
+      <div class="period-input-wrap">
+        <span class="cur-sym" id="sym-semana">$</span>
+        <input class="period-input" type="number" id="semana" placeholder="0" min="0" step="any" oninput="onInput('semana')">
+      </div>
+    </div>
+
+    <div class="period-row" id="row-quincena">
+      <div class="period-icon">📆</div>
+      <div class="period-label">
+        <div class="period-name">Por quincena</div>
+        <div class="period-sub">15 días</div>
+      </div>
+      <div class="period-input-wrap">
+        <span class="cur-sym" id="sym-quincena">$</span>
+        <input class="period-input" type="number" id="quincena" placeholder="0" min="0" step="any" oninput="onInput('quincena')">
+      </div>
+    </div>
+
+    <div class="period-row" id="row-mes">
+      <div class="period-icon">💼</div>
+      <div class="period-label">
+        <div class="period-name">Por mes</div>
+        <div class="period-sub" id="sub-mes">— semanas</div>
+      </div>
+      <div class="period-input-wrap">
+        <span class="cur-sym" id="sym-mes">$</span>
+        <input class="period-input" type="number" id="mes" placeholder="0" min="0" step="any" oninput="onInput('mes')">
+      </div>
+    </div>
+
+    <div class="period-row" id="row-anio">
+      <div class="period-icon">📊</div>
+      <div class="period-label">
+        <div class="period-name">Por año</div>
+        <div class="period-sub" id="sub-anio">— meses</div>
+      </div>
+      <div class="period-input-wrap">
+        <span class="cur-sym" id="sym-anio">$</span>
+        <input class="period-input" type="number" id="anio" placeholder="0" min="0" step="any" oninput="onInput('anio')">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Resumen -->
+  <div class="summary-card" id="summary-card">
+    <div class="summary-title">Resumen</div>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="summary-label">Por hora</div>
+        <div class="summary-val" id="s-hora">—</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Por día</div>
+        <div class="summary-val" id="s-dia">—</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Por mes</div>
+        <div class="summary-val big" id="s-mes">—</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Por año</div>
+        <div class="summary-val big" id="s-anio">—</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2026 Calculadora.live · Herramientas gratuitas</footer>
+
+<script>
+var activeField = null;
+
+function getConfig() {
+  var hd = parseFloat(document.getElementById('horas-dia').value)   || 8;
+  var ds = parseFloat(document.getElementById('dias-semana').value) || 5;
+  return { hd: hd, ds: ds };
+}
+
+function onInput(field) {
+  activeField = field;
+  // Clear computed style on active field
+  document.getElementById(field).classList.remove('computed');
+  recalcular();
+}
+
+function recalcular() {
+  if(!activeField) return;
+  var val = parseFloat(document.getElementById(activeField).value);
+  if(isNaN(val) || val < 0) { clearComputed(); return; }
+
+  var { hd, ds } = getConfig();
+  var hora;
+
+  // Convert to hourly rate based on active field
+  switch(activeField) {
+    case 'hora':     hora = val; break;
+    case 'dia':      hora = val / hd; break;
+    case 'semana':   hora = val / (hd * ds); break;
+    case 'quincena': hora = val / (hd * ds * 2); break; // 2 semanas
+    case 'mes':      hora = val / (hd * ds * (52/12)); break;
+    case 'anio':     hora = val / (hd * ds * 52); break;
+  }
+
+  // Fill all fields
+  var FIELDS = ['hora','dia','semana','quincena','mes','anio'];
+  FIELDS.forEach(function(f) {
+    if(f === activeField) return;
+    var computed;
+    switch(f) {
+      case 'hora':     computed = hora; break;
+      case 'dia':      computed = hora * hd; break;
+      case 'semana':   computed = hora * hd * ds; break;
+      case 'quincena': computed = hora * hd * ds * 2; break;
+      case 'mes':      computed = hora * hd * ds * (52/12); break;
+      case 'anio':     computed = hora * hd * ds * 52; break;
+    }
+    var el = document.getElementById(f);
+    el.value = Math.round(computed * 100) / 100;
+    el.classList.add('computed');
+    document.getElementById('row-' + f).classList.remove('active');
+  });
+
+  document.getElementById('row-' + activeField).classList.add('active');
+
+  // Actualizar subtítulos
+  document.getElementById('sub-hora').textContent = hd + ' hs/día · ' + ds + ' días/semana';
+  document.getElementById('sub-dia').textContent = hd + ' horas';
+  document.getElementById('sub-semana').textContent = ds + ' días de ' + hd + ' hs';
+  document.getElementById('sub-mes').textContent = (ds * 52/12).toFixed(1) + ' semanas';
+  document.getElementById('sub-anio').textContent = '12 meses · ' + (ds*52) + ' días';
+
+  // Resumen
+  var sym = document.querySelector('#moneda option:checked').value;
+  function f(n) { return sym + ' ' + Math.round(n).toLocaleString('es-AR'); }
+  document.getElementById('summary-card').style.display = 'block';
+  document.getElementById('s-hora').textContent  = f(hora);
+  document.getElementById('s-dia').textContent   = f(hora * hd);
+  document.getElementById('s-mes').textContent   = f(hora * hd * ds * (52/12));
+  document.getElementById('s-anio').textContent  = f(hora * hd * ds * 52);
+}
+
+function clearComputed() {
+  ['hora','dia','semana','quincena','mes','anio'].forEach(function(f) {
+    if(f !== activeField) {
+      document.getElementById(f).value = '';
+      document.getElementById(f).classList.remove('computed');
+      document.getElementById('row-' + f).classList.remove('active');
+    }
+  });
+  document.getElementById('summary-card').style.display = 'none';
+}
+
+function updateSymbols() {
+  var sym = document.querySelector('#moneda option:checked').value;
+  ['hora','dia','semana','quincena','mes','anio'].forEach(function(f) {
+    document.getElementById('sym-' + f).textContent = sym;
+  });
+  if(activeField) recalcular();
+}
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

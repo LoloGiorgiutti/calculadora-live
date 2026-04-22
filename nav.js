@@ -18,6 +18,7 @@
       { n: 'Calculadora de service', u: '/service',            icon:'🔧', d: '¿Cuándo te toca el próximo service?',        hd:'¿Cuándo te toca el service y cuánto cuesta aproximadamente?' },
     ]},
     { cat: '💰 Finanzas y economía', slug: 'finanzas', label: 'Finanzas', desc: 'Sueldo neto, préstamos, inflación, inversiones y más.', items: [
+      { n: 'Convertidor de sueldo',      u: '/sueldo-hora',  icon:'💼', badge:true, d: 'Hora, día, semana, mes y año — convertí al instante', hd:'Convertí tu sueldo entre cualquier período. Ingresá uno y los demás se calculan solos.' },
       { n: 'Calculadora de ahorros',    u: '/ahorros',       icon:'💰', badge:true, d: '¿Cuándo llegás a tu meta de ahorro?',    hd:'Calculá en cuánto tiempo llegás a tu objetivo con aportes mensuales e intereses.' },
       { n: 'Margen de ganancia',        u: '/margen',        icon:'📊', badge:true, d: 'Precio de venta, margen y markup',       hd:'Calculá el margen de ganancia, el markup y el precio de venta de tus productos.' },
       { n: 'Calculadora de sueldo neto', u: '/sueldo-neto',   icon:'💼', badge:true, d: 'Descuentos ANSES, PAMI y ganancias',         hd:'¿Cuánto te depositan? Calculá tu sueldo neto con descuentos ANSES y PAMI.' },
@@ -50,7 +51,8 @@
       { n: 'Tutti Frutti',        u: '/tutti-frutti', icon:'🍉', badge:true, d: 'Sorteo de letras para el juego clásico argentino',  hd:'Sorteo de letras para el juego clásico argentino. Con timer y categorías.' },
     ]},
     { cat: '🤯 Tu vida en números', slug: 'vida-numeros', label: 'Vida en números', desc: 'Curiosidades sobre tu vida expresadas en números en tiempo real.', items: [
-      { n: 'Tu vida en números', u: '/vida', icon:'🤯', badge:true, d: 'Latidos, pestañeos, pasos y más en tiempo real', hd:'Latidos, pestañeos, pasos y más — algunos contadores en tiempo real.' },
+      { n: 'Tu vida en números',         u: '/vida',        icon:'🤯', badge:true, d: 'Latidos, pestañeos, pasos y más en tiempo real', hd:'Latidos, pestañeos, pasos y más — algunos contadores en tiempo real.' },
+      { n: '¿Cuánto gana por segundo?',  u: '/cuanto-gana', icon:'💸', badge:true, d: 'Messi, Taylor Swift, Elon Musk en tiempo real', hd:'Mirá cuánto ganan por segundo los famosos más ricos del mundo. Con contador en vivo y comparativa.' },
     ]},
     { cat: '⚽ Mundial 2026', slug: 'mundial-2026', label: 'Mundial 2026', desc: 'Cuenta regresiva y herramientas sobre la Copa del Mundo 2026.', items: [
       { n: '¿Cuánto falta para el Mundial?', u: '/mundial', icon:'🏆', badge:true, d: 'Cuenta regresiva en tiempo real', hd:'Cuenta regresiva en tiempo real hasta el partido inaugural del Mundial 2026 en México.' },
@@ -228,6 +230,20 @@
       { q: '¿Cuántos pasos da una persona por día en promedio?', a: 'La OMS recomienda 10.000 pasos diarios, aunque el promedio real de la mayoría de las personas es de entre 4.000 y 7.000. Cada paso recorre aproximadamente 75 cm.' },
       { q: '¿Cuántas respiraciones damos por día?', a: 'Respiramos entre 12 y 20 veces por minuto en reposo, lo que suma entre 17.280 y 28.800 respiraciones por día. Con el ejercicio esa cifra puede aumentar mucho.' },
       { q: '¿Cuántas horas dormimos en toda la vida?', a: 'Si dormimos 8 horas diarias durante 80 años, eso equivale a unos 233.600 horas o aproximadamente 26 años durmiendo. Nuestra calculadora personaliza este número según tu edad.' },
+    ],
+    '/cuanto-gana': [
+      { q: '¿Cuánto gana Messi por segundo?', a: 'Según estimaciones de Forbes, Lionel Messi genera alrededor de 135 millones de dólares por año entre salario en Inter Miami, sponsor con Adidas, Pepsi, Apple y otras marcas. Eso equivale a aproximadamente US$ 4,28 por segundo.' },
+      { q: '¿Cuánto gana Cristiano Ronaldo por día?', a: 'Cristiano Ronaldo genera alrededor de US$ 200 millones anuales sumando su contrato con Al-Nassr y su marca CR7. Eso equivale aproximadamente a US$ 547.000 por día o US$ 6,34 por segundo.' },
+      { q: '¿Cuánto gana Taylor Swift por hora?', a: 'En 2023-2024, con la Eras Tour, Taylor Swift generó aproximadamente 1.000 millones de dólares, lo que equivale a unos US$ 31 por segundo o más de US$ 110.000 por hora.' },
+      { q: '¿Cuánto gana Elon Musk por segundo?', a: 'Elon Musk no tiene un salario convencional alto, pero su patrimonio neto creció más de 100.000 millones de dólares en algunos años según Bloomberg Billionaires Index, lo que equivale a miles de dólares por segundo en ganancias patrimoniales.' },
+      { q: '¿Son exactas estas cifras?', a: 'No exactamente. Las cifras son estimaciones basadas en reportes de Forbes, Bloomberg y medios especializados. Los ingresos reales varían según las inversiones, contratos y performance de cada año. La herramienta es de carácter informativo y educativo.' },
+    ],
+    '/sueldo-hora': [
+      { q: '¿Cuánto es mi sueldo por hora si gano $500.000 por mes?', a: 'Con 8 horas diarias y 5 días a la semana, hay aproximadamente 173 horas laborales por mes. $500.000 ÷ 173 = $2.890 por hora aproximadamente. Nuestra calculadora hace esta conversión automáticamente.' },
+      { q: '¿Cuántas horas laborales tiene el año?', a: 'Con 8 horas diarias y 5 días a la semana, el año laboral tiene aproximadamente 2.080 horas (52 semanas × 40 horas). Podés ajustar esta configuración en la calculadora según tu jornada real.' },
+      { q: '¿Cómo convierto sueldo mensual a sueldo anual?', a: 'Multiplicá el sueldo mensual por 12. Si además querés incluir el aguinaldo (SAC), sumá 1 mes más: sueldo mensual × 13. Para el cálculo de sueldo anual sin aguinaldo, simplemente × 12.' },
+      { q: '¿Cuánto es el sueldo mínimo por hora en Argentina?', a: 'El Salario Mínimo Vital y Móvil (SMVM) se actualiza periódicamente. Para calcular el valor por hora, dividí el SMVM mensual por las horas mensuales según tu jornada. Consultá el valor actualizado en el sitio del Ministerio de Trabajo.' },
+      { q: '¿Para qué sirve convertir el sueldo a distintos períodos?', a: 'Es útil para comparar propuestas laborales (una oferta en dólares por hora vs. un sueldo mensual en pesos), negociar aumentos, calcular el costo real de un freelancer, o entender cuánto ganás realmente por cada hora trabajada.' },
     ],
     '/reaccion': [
       { q: '¿Cuál es el tiempo de reacción humano promedio?', a: 'El tiempo de reacción visual promedio en adultos es de entre 200 y 300 milisegundos. Los deportistas entrenados pueden estar por debajo de los 200 ms. Resultados menores a 150 ms son prácticamente imposibles de forma natural.' },

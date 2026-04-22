@@ -156,7 +156,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);bord
 
 <script>
 // Historial de últimos 2 campos editados por el usuario
-var history = []; // max 2 field IDs
+var editHistory = []; // max 2 field IDs
 var ALL = ['costo','margen','precio','ganancia'];
 var fmt4 = { minimumFractionDigits: 0, maximumFractionDigits: 4 };
 
@@ -178,10 +178,10 @@ function onFocus(id) {
 }
 
 function onEdit(id) {
-  // Remove from history if already there, then add at front
-  history = history.filter(function(h){ return h !== id; });
-  history.unshift(id);
-  if(history.length > 2) history.length = 2;
+  // Remove from editHistory if already there, then add at front
+  editHistory = editHistory.filter(function(h){ return h !== id; });
+  editHistory.unshift(id);
+  if(editHistory.length > 2) editHistory.length = 2;
 
   // Remove computed style from edited field
   document.getElementById(id).classList.remove('computed-val');
@@ -191,21 +191,20 @@ function onEdit(id) {
 }
 
 function solve() {
-  if(history.length < 2) { updateBadges(); return; }
+  if(editHistory.length < 2) { updateBadges(); return; }
 
-  var pair = history.slice().sort().join('+');
   var c = getVal('costo'), m = getVal('margen'), p = getVal('precio'), g = getVal('ganancia');
 
-  // Get the computed fields (the ones NOT in history)
-  var computed = ALL.filter(function(f){ return history.indexOf(f) === -1; });
+  // Get the computed fields (the ones NOT in editHistory)
+  var computed = ALL.filter(function(f){ return editHistory.indexOf(f) === -1; });
 
   // Reset computed fields before recalculating
   computed.forEach(function(f){ clearVal(f); });
 
-  var C = history.indexOf('costo')   !== -1 ? c : NaN;
-  var M = history.indexOf('margen')  !== -1 ? m : NaN;
-  var P = history.indexOf('precio')  !== -1 ? p : NaN;
-  var G = history.indexOf('ganancia')!== -1 ? g : NaN;
+  var C = editHistory.indexOf('costo')   !== -1 ? c : NaN;
+  var M = editHistory.indexOf('margen')  !== -1 ? m : NaN;
+  var P = editHistory.indexOf('precio')  !== -1 ? p : NaN;
+  var G = editHistory.indexOf('ganancia')!== -1 ? g : NaN;
 
   if(!isNaN(C) && !isNaN(M)) {
     // costo + margen → precio, ganancia
@@ -250,7 +249,7 @@ function updateBadges() {
   ALL.forEach(function(id) {
     var badge = document.getElementById('badge-' + id);
     var row = document.getElementById('row-' + id);
-    var isInput = history.indexOf(id) !== -1;
+    var isInput = editHistory.indexOf(id) !== -1;
     var val = document.getElementById(id).value;
     var isComputed = !isInput && val !== '';
 
@@ -271,7 +270,7 @@ function updateBadges() {
 }
 
 function clearAll() {
-  history = [];
+  editHistory = [];
   ALL.forEach(function(id) {
     clearVal(id);
     document.getElementById('badge-' + id).textContent = '';

@@ -181,8 +181,8 @@ var currentCat  = 'todos';
 function formatNum(n) {
   if(n >= 1e9) return 'US$ ' + (n/1e9).toFixed(2) + 'B';
   if(n >= 1e6) return 'US$ ' + (n/1e6).toFixed(2) + 'M';
-  if(n >= 1e3) return 'US$ ' + n.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
-  return 'US$ ' + n.toFixed(4);
+  if(n >= 1000) return 'US$ ' + Math.floor(n).toLocaleString('es-AR');
+  return 'US$ ' + n.toFixed(2);
 }
 function formatRate(n) {
   if(n >= 1e6) return 'US$ ' + (n/1e6).toFixed(2) + 'M';

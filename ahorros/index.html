@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Ahorros — ¿Cuándo llegás a tu meta?</title>
+<meta name="description" content="Calculá en cuánto tiempo llegás a tu meta de ahorro. Ingresá tu objetivo, lo que ya tenés, tu aporte mensual y la tasa de interés. Resultado al instante.">
+<link rel="canonical" href="https://calculadora.live/ahorros">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F2F7;--surface:#fff;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;position:sticky;top:0;z-index:100;}
+.logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.02em;}
+.logo span{color:var(--hi);}
+.hero{text-align:center;padding:40px 20px 24px;max-width:600px;margin:0 auto;}
+.hero h1{font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:-.03em;margin-bottom:8px;}
+.hero p{font-size:14px;color:var(--ink-light);}
+.main{max-width:520px;margin:0 auto;padding:0 20px 60px;}
+
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:12px;}
+.card-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:18px;}
+
+.field{margin-bottom:16px;}
+.field:last-child{margin-bottom:0;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.field-hint{font-size:11px;color:var(--ink-faint);margin-top:4px;}
+.input-wrap{display:flex;align-items:center;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s;}
+.input-wrap:focus-within{border-color:var(--hi);}
+.input-prefix,.input-suffix{padding:0 12px;font-size:14px;font-weight:600;color:var(--ink-faint);background:transparent;white-space:nowrap;}
+.input-wrap input{flex:1;border:none;background:transparent;padding:12px 4px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--ink);outline:none;width:0;}
+.input-wrap input::placeholder{color:var(--ink-faint);font-weight:400;}
+
+.btn-calc{width:100%;padding:15px;background:var(--hi);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;margin-top:4px;}
+.btn-calc:hover{opacity:.9;}
+
+/* Resultado */
+.result-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:12px;display:none;}
+.result-main-label{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px;}
+.result-main-val{font-size:44px;font-weight:700;color:var(--hi);letter-spacing:-.03em;line-height:1;margin-bottom:4px;}
+.result-main-sub{font-size:13px;color:var(--ink-light);margin-bottom:20px;}
+.result-rows{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.result-item{background:var(--bg);border-radius:var(--radius-sm);padding:12px 14px;}
+.result-item-label{font-size:11px;color:var(--ink-faint);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.result-item-val{font-size:17px;font-weight:700;color:var(--ink);}
+
+/* Sin interés vs con interés */
+.compare-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px;display:none;}
+.compare-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+.compare-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.compare-row:last-child{border-bottom:none;}
+.compare-label{color:var(--ink-light);}
+.compare-val{font-weight:700;color:var(--ink);}
+.compare-val.hi{color:var(--hi);}
+
+footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);}
+@media(max-width:400px){.result-rows{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header><a class="logo" href="/">Calculadora<span>.live</span></a></header>
+
+<div class="hero">
+  <h1>💰 Calculadora de Ahorros</h1>
+  <p>¿Cuándo llegás a tu meta? Calculá el tiempo y los intereses al instante</p>
+</div>
+
+<div class="main">
+  <div class="card">
+    <div class="card-title">Tu plan de ahorro</div>
+
+    <div class="field">
+      <label>¿Cuánto querés juntar?</label>
+      <div class="input-wrap">
+        <span class="input-prefix">$</span>
+        <input type="number" id="objetivo" placeholder="500.000" min="0" oninput="calcular()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>¿Cuánto tenés ahorrado hoy?</label>
+      <div class="input-wrap">
+        <span class="input-prefix">$</span>
+        <input type="number" id="actual" placeholder="0" min="0" oninput="calcular()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>¿Cuánto podés ahorrar por mes?</label>
+      <div class="input-wrap">
+        <span class="input-prefix">$</span>
+        <input type="number" id="mensual" placeholder="50.000" min="0" oninput="calcular()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Tasa de interés mensual <span style="font-weight:400;color:var(--ink-faint)">(opcional)</span></label>
+      <div class="input-wrap">
+        <input type="number" id="tasa" placeholder="0" min="0" step="0.1" oninput="calcular()" style="padding-left:12px;">
+        <span class="input-suffix">% / mes</span>
+      </div>
+      <div class="field-hint">Dejá en 0 si no contás con rendimiento. Caja de ahorro típica: 2-3% mensual.</div>
+    </div>
+  </div>
+
+  <!-- Resultado principal -->
+  <div class="result-card" id="result-card">
+    <div class="result-main-label">Tiempo estimado</div>
+    <div class="result-main-val" id="r-tiempo">—</div>
+    <div class="result-main-sub" id="r-fecha">—</div>
+
+    <div class="result-rows">
+      <div class="result-item">
+        <div class="result-item-label">Total aportado</div>
+        <div class="result-item-val" id="r-aportado">—</div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-label">Intereses ganados</div>
+        <div class="result-item-val" id="r-intereses" style="color:var(--hi)">—</div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-label">Objetivo</div>
+        <div class="result-item-val" id="r-objetivo">—</div>
+      </div>
+      <div class="result-item">
+        <div class="result-item-label">Excedente</div>
+        <div class="result-item-val" id="r-excedente" style="color:#27ae60">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparativa sin/con tasa -->
+  <div class="compare-card" id="compare-card">
+    <div class="compare-title">Comparativa — Con y sin rendimiento</div>
+    <div class="compare-row">
+      <span class="compare-label">Sin rendimiento (guardando en casa)</span>
+      <span class="compare-val" id="c-sin">—</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-label">Con tu tasa actual</span>
+      <span class="compare-val hi" id="c-con">—</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-label">Tiempo que ahorrás</span>
+      <span class="compare-val hi" id="c-diff">—</span>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 Calculadora.live · Herramientas gratuitas</footer>
+
+<script>
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('es-AR');
+}
+function mesesATexto(m) {
+  m = Math.ceil(m);
+  var a = Math.floor(m / 12);
+  var mo = m % 12;
+  var parts = [];
+  if(a > 0) parts.push(a + (a === 1 ? ' año' : ' años'));
+  if(mo > 0) parts.push(mo + (mo === 1 ? ' mes' : ' meses'));
+  return parts.join(' y ') || 'ya lo tenés';
+}
+function fechaFutura(meses) {
+  var d = new Date();
+  d.setMonth(d.getMonth() + Math.ceil(meses));
+  return d.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' });
+}
+
+function calcMeses(objetivo, actual, mensual, tasaMensual) {
+  if(mensual <= 0) return Infinity;
+  var faltante = objetivo - actual;
+  if(faltante <= 0) return 0;
+  if(tasaMensual <= 0) {
+    return faltante / mensual;
+  }
+  // Fórmula valor futuro anualidad: FV = PMT * [(1+r)^n - 1] / r + PV*(1+r)^n = objetivo
+  // Despejar n numéricamente (iteración simple)
+  var r = tasaMensual / 100;
+  var n = 0;
+  var acum = actual;
+  while(acum < objetivo && n < 3600) {
+    acum = acum * (1 + r) + mensual;
+    n++;
+  }
+  return n;
+}
+
+function calcular() {
+  var objetivo = parseFloat(document.getElementById('objetivo').value) || 0;
+  var actual   = parseFloat(document.getElementById('actual').value)   || 0;
+  var mensual  = parseFloat(document.getElementById('mensual').value)  || 0;
+  var tasa     = parseFloat(document.getElementById('tasa').value)     || 0;
+
+  if(!objetivo || !mensual) {
+    document.getElementById('result-card').style.display = 'none';
+    document.getElementById('compare-card').style.display = 'none';
+    return;
+  }
+
+  var meses = calcMeses(objetivo, actual, mensual, tasa);
+  if(!isFinite(meses)) {
+    document.getElementById('result-card').style.display = 'none';
+    return;
+  }
+
+  var mesesCeil = Math.ceil(meses);
+  var totalAportado = actual + mensual * mesesCeil;
+  var intereses = Math.max(0, objetivo - totalAportado + (meses === 0 ? 0 : 0));
+
+  // Calcular total final real con interés compuesto
+  var totalFinal;
+  if(tasa > 0) {
+    var r = tasa / 100;
+    var acum = actual;
+    for(var i = 0; i < mesesCeil; i++) { acum = acum * (1+r) + mensual; }
+    totalFinal = acum;
+    intereses = totalFinal - actual - mensual * mesesCeil;
+  } else {
+    totalFinal = actual + mensual * mesesCeil;
+    intereses = 0;
+  }
+
+  document.getElementById('result-card').style.display = 'block';
+  document.getElementById('r-tiempo').textContent = mesesATexto(meses);
+  document.getElementById('r-fecha').textContent = 'Fecha estimada: ' + fechaFutura(meses);
+  document.getElementById('r-aportado').textContent = fmt(actual + mensual * mesesCeil);
+  document.getElementById('r-intereses').textContent = tasa > 0 ? fmt(intereses) : '$0';
+  document.getElementById('r-objetivo').textContent = fmt(objetivo);
+  document.getElementById('r-excedente').textContent = fmt(Math.max(0, totalFinal - objetivo));
+
+  // Comparativa (solo si hay tasa)
+  if(tasa > 0) {
+    var mesesSin = calcMeses(objetivo, actual, mensual, 0);
+    document.getElementById('compare-card').style.display = 'block';
+    document.getElementById('c-sin').textContent = mesesATexto(mesesSin);
+    document.getElementById('c-con').textContent = mesesATexto(meses);
+    var diff = Math.ceil(mesesSin) - mesesCeil;
+    document.getElementById('c-diff').textContent = diff > 0 ? mesesATexto(diff) + ' menos' : 'Sin diferencia';
+  } else {
+    document.getElementById('compare-card').style.display = 'none';
+  }
+}
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

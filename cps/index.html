@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPS Test — Test de Clicks por Segundo</title>
+<meta name="description" content="¿Cuántos clicks por segundo podés hacer? Test de CPS gratuito online. Elegí el tiempo (5, 10 o 30 segundos) y descubrí tu velocidad de click.">
+<link rel="canonical" href="https://calculadora.live/cps">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F2F7;--surface:#fff;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;position:sticky;top:0;z-index:100;}
+.logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.02em;}
+.logo span{color:var(--hi);}
+.hero{text-align:center;padding:40px 20px 24px;max-width:600px;margin:0 auto;}
+.hero h1{font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:-.03em;margin-bottom:8px;}
+.hero p{font-size:14px;color:var(--ink-light);}
+.main{max-width:520px;margin:0 auto;padding:0 20px 60px;}
+
+/* Timer selector */
+.time-selector{display:flex;justify-content:center;gap:8px;margin-bottom:20px;}
+.time-btn{padding:8px 20px;border:1.5px solid var(--border);border-radius:99px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;}
+.time-btn.active{background:var(--hi);border-color:var(--hi);color:#fff;}
+.time-btn:hover:not(.active){border-color:var(--hi);color:var(--hi);}
+.time-btn:disabled{opacity:.4;cursor:default;}
+
+/* Stats en vivo */
+.live-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;}
+.live-stat{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center;}
+.live-stat-n{font-size:28px;font-weight:700;color:var(--hi);letter-spacing:-.02em;line-height:1;}
+.live-stat-l{font-size:11px;color:var(--ink-faint);margin-top:3px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
+
+/* Área de click */
+#click-area{
+  width:100%;height:200px;background:var(--surface);
+  border:2.5px solid var(--border);border-radius:var(--radius);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;user-select:none;-webkit-user-select:none;
+  transition:background .1s,border-color .1s,transform .06s;
+  margin-bottom:12px;position:relative;overflow:hidden;
+}
+#click-area:active{transform:scale(.99);}
+#click-area.active-state{border-color:var(--hi);background:var(--hi-soft);}
+#click-area.done{background:#F8FFF9;border-color:#27ae60;}
+.click-label{font-size:22px;font-weight:700;color:var(--ink-light);text-align:center;}
+.click-sub{font-size:13px;color:var(--ink-faint);margin-top:6px;}
+
+/* Barra de tiempo */
+.time-bar-wrap{height:6px;background:var(--bg);border-radius:99px;overflow:hidden;margin-bottom:16px;}
+#time-bar{height:100%;border-radius:99px;background:var(--hi);width:100%;transition:width .1s linear;}
+
+/* Resultado */
+.result-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;margin-bottom:12px;display:none;}
+.result-cps{font-size:64px;font-weight:700;color:var(--hi);letter-spacing:-.03em;line-height:1;}
+.result-unit{font-size:18px;font-weight:400;color:var(--ink-light);}
+.result-rating{font-size:16px;font-weight:600;margin:10px 0 4px;}
+.result-detail{font-size:13px;color:var(--ink-light);}
+
+/* Historial */
+.history-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:12px;display:none;}
+.history-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;}
+.hist-row{display:flex;align-items:center;gap:10px;font-size:13px;margin-bottom:6px;}
+.hist-row:last-child{margin-bottom:0;}
+.hist-num{width:16px;color:var(--ink-faint);font-weight:600;text-align:right;flex-shrink:0;}
+.hist-bar-wrap{flex:1;height:8px;background:var(--bg);border-radius:99px;overflow:hidden;}
+.hist-bar{height:100%;border-radius:99px;background:var(--hi);}
+.hist-val{width:60px;text-align:right;font-weight:600;font-size:13px;}
+.btn-reset{display:block;width:100%;padding:14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:background .15s,color .15s;margin-bottom:12px;display:none;}
+.btn-reset:hover{background:var(--surface);color:var(--ink);}
+
+/* Info ratings */
+.info-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;}
+.info-title{font-size:13px;font-weight:700;margin-bottom:10px;}
+.rating-list{display:flex;flex-direction:column;gap:6px;}
+.rating-item{display:flex;align-items:center;gap:10px;font-size:13px;}
+.rating-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.rating-range{font-weight:600;width:60px;flex-shrink:0;}
+.rating-label{color:var(--ink-light);}
+
+footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);}
+@media(max-width:400px){.live-stat-n{font-size:22px;}.result-cps{font-size:48px;}}
+</style>
+</head>
+<body>
+<header><a class="logo" href="/">Calculadora<span>.live</span></a></header>
+
+<div class="hero">
+  <h1>🖱️ CPS Test</h1>
+  <p>Hacé click lo más rápido posible. Descubrí cuántos clicks por segundo podés hacer.</p>
+</div>
+
+<div class="main">
+  <!-- Selector de tiempo -->
+  <div class="time-selector">
+    <button class="time-btn active" onclick="setTime(5,this)">5 seg</button>
+    <button class="time-btn" onclick="setTime(10,this)">10 seg</button>
+    <button class="time-btn" onclick="setTime(15,this)">15 seg</button>
+    <button class="time-btn" onclick="setTime(30,this)">30 seg</button>
+  </div>
+
+  <!-- Stats en vivo -->
+  <div class="live-stats">
+    <div class="live-stat"><div class="live-stat-n" id="stat-time">5</div><div class="live-stat-l">Segundos</div></div>
+    <div class="live-stat"><div class="live-stat-n" id="stat-clicks">0</div><div class="live-stat-l">Clicks</div></div>
+    <div class="live-stat"><div class="live-stat-n" id="stat-cps">0.00</div><div class="live-stat-l">CPS</div></div>
+  </div>
+
+  <!-- Barra de tiempo -->
+  <div class="time-bar-wrap"><div id="time-bar"></div></div>
+
+  <!-- Área de click -->
+  <div id="click-area" onclick="handleClick()">
+    <div class="click-label" id="click-label">Click para empezar</div>
+    <div class="click-sub" id="click-sub">Intentá clickear lo más rápido posible</div>
+  </div>
+
+  <!-- Resultado -->
+  <div class="result-card" id="result-card">
+    <div class="result-cps" id="result-cps">0.00<span class="result-unit"> CPS</span></div>
+    <div class="result-rating" id="result-rating"></div>
+    <div class="result-detail" id="result-detail"></div>
+  </div>
+
+  <!-- Historial -->
+  <div class="history-card" id="history-card">
+    <div class="history-title">Mejores resultados</div>
+    <div id="hist-rows"></div>
+  </div>
+
+  <button class="btn-reset" id="btn-reset" onclick="resetGame()">🔄 Intentar de nuevo</button>
+
+  <!-- Referencia -->
+  <div class="info-card">
+    <div class="info-title">Escala de valoración (CPS)</div>
+    <div class="rating-list">
+      <div class="rating-item"><div class="rating-dot" style="background:#B4B8CC;"></div><span class="rating-range">&lt; 3</span><span class="rating-label">Principiante</span></div>
+      <div class="rating-item"><div class="rating-dot" style="background:#60647A;"></div><span class="rating-range">3 – 5</span><span class="rating-label">Normal</span></div>
+      <div class="rating-item"><div class="rating-dot" style="background:#1A5FE8;"></div><span class="rating-range">5 – 7</span><span class="rating-label">Bueno 👍</span></div>
+      <div class="rating-item"><div class="rating-dot" style="background:#27ae60;"></div><span class="rating-range">7 – 9</span><span class="rating-label">¡Gamer! 🎮</span></div>
+      <div class="rating-item"><div class="rating-dot" style="background:#e74c3c;"></div><span class="rating-range">&gt; 9</span><span class="rating-label">¡Monstruo! 🔥</span></div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 Calculadora.live · Herramientas gratuitas</footer>
+
+<script>
+var duration = 5;
+var clicks = 0;
+var running = false;
+var startTime = null;
+var interval = null;
+var best = [];
+
+function setTime(s, btn) {
+  if(running) return;
+  duration = s;
+  document.querySelectorAll('.time-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('stat-time').textContent = s;
+  resetGame();
+}
+
+function getRating(cps) {
+  if(cps < 3)  return { text:'Principiante', color:'#B4B8CC' };
+  if(cps < 5)  return { text:'Normal', color:'#60647A' };
+  if(cps < 7)  return { text:'¡Bien! 👍', color:'#1A5FE8' };
+  if(cps < 9)  return { text:'¡Gamer! 🎮', color:'#27ae60' };
+  return            { text:'¡Monstruo! 🔥', color:'#e74c3c' };
+}
+
+function handleClick() {
+  if(!running) {
+    // Primer click: arrancar
+    startGame();
+    return;
+  }
+  clicks++;
+  var elapsed = (Date.now() - startTime) / 1000;
+  var cps = elapsed > 0 ? (clicks / elapsed).toFixed(2) : '0.00';
+  document.getElementById('stat-clicks').textContent = clicks;
+  document.getElementById('stat-cps').textContent = cps;
+
+  // Efecto visual
+  var area = document.getElementById('click-area');
+  area.style.background = 'var(--hi-soft)';
+  setTimeout(function(){ area.style.background = ''; }, 60);
+}
+
+function startGame() {
+  running = true;
+  clicks = 0;
+  startTime = Date.now();
+  document.getElementById('click-area').classList.add('active-state');
+  document.getElementById('click-label').textContent = '¡CLICK!';
+  document.getElementById('click-sub').textContent = '';
+  document.getElementById('result-card').style.display = 'none';
+  document.querySelectorAll('.time-btn').forEach(function(b){ b.disabled = true; });
+
+  var bar = document.getElementById('time-bar');
+  bar.style.transition = 'width ' + duration + 's linear';
+  bar.style.width = '0%';
+
+  interval = setInterval(function() {
+    var elapsed = (Date.now() - startTime) / 1000;
+    var left = Math.max(0, duration - elapsed);
+    document.getElementById('stat-time').textContent = left.toFixed(1);
+    if(elapsed >= duration) { endGame(); }
+  }, 50);
+}
+
+function endGame() {
+  clearInterval(interval);
+  running = false;
+  var totalTime = (Date.now() - startTime) / 1000;
+  var cps = (clicks / Math.min(totalTime, duration));
+  var cpsFixed = cps.toFixed(2);
+  var r = getRating(cps);
+
+  document.getElementById('click-area').classList.remove('active-state');
+  document.getElementById('click-area').classList.add('done');
+  document.getElementById('click-label').textContent = '¡Terminado!';
+  document.getElementById('click-sub').textContent = clicks + ' clicks en ' + duration + ' segundos';
+
+  document.getElementById('result-cps').innerHTML = cpsFixed + '<span class="result-unit"> CPS</span>';
+  document.getElementById('result-rating').innerHTML = '<span style="color:' + r.color + '">' + r.text + '</span>';
+  document.getElementById('result-detail').textContent = clicks + ' clicks en ' + duration + ' s';
+  document.getElementById('result-card').style.display = 'block';
+  document.getElementById('btn-reset').style.display = 'block';
+
+  // Guardar en historial (top 5)
+  best.push(parseFloat(cpsFixed));
+  best.sort(function(a,b){return b-a;});
+  if(best.length > 5) best.length = 5;
+  renderHistory();
+
+  document.querySelectorAll('.time-btn').forEach(function(b){ b.disabled = false; });
+}
+
+function renderHistory() {
+  if(best.length === 0) return;
+  var card = document.getElementById('history-card');
+  card.style.display = 'block';
+  var max = best[0];
+  var html = '';
+  best.forEach(function(v, i) {
+    var pct = Math.round((v / max) * 100);
+    html += '<div class="hist-row">'
+          + '<span class="hist-num">' + (i+1) + '</span>'
+          + '<div class="hist-bar-wrap"><div class="hist-bar" style="width:' + pct + '%"></div></div>'
+          + '<span class="hist-val">' + v + ' CPS</span>'
+          + '</div>';
+  });
+  document.getElementById('hist-rows').innerHTML = html;
+}
+
+function resetGame() {
+  clearInterval(interval);
+  running = false;
+  clicks = 0;
+  startTime = null;
+  document.getElementById('stat-time').textContent = duration;
+  document.getElementById('stat-clicks').textContent = '0';
+  document.getElementById('stat-cps').textContent = '0.00';
+  document.getElementById('time-bar').style.transition = 'none';
+  document.getElementById('time-bar').style.width = '100%';
+  document.getElementById('click-area').className = '';
+  document.getElementById('click-label').textContent = 'Click para empezar';
+  document.getElementById('click-sub').textContent = 'Intentá clickear lo más rápido posible';
+  document.getElementById('result-card').style.display = 'none';
+  document.getElementById('btn-reset').style.display = 'none';
+  document.querySelectorAll('.time-btn').forEach(function(b){ b.disabled = false; });
+}
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

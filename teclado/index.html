@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prueba de Teclado Online — Testeá todas las teclas</title>
+<meta name="description" content="Probá si todas las teclas de tu teclado funcionan correctamente. Presioná cada tecla y comprobá que responde. Herramienta gratuita online.">
+<link rel="canonical" href="https://calculadora.live/teclado">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F2F7;--surface:#fff;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;position:sticky;top:0;z-index:100;}
+.logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.02em;}
+.logo span{color:var(--hi);}
+.hero{text-align:center;padding:40px 20px 24px;max-width:640px;margin:0 auto;}
+.hero h1{font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:-.03em;margin-bottom:8px;}
+.hero p{font-size:14px;color:var(--ink-light);}
+.main{max-width:760px;margin:0 auto;padding:0 20px 60px;}
+
+/* Stats */
+.stats-row{display:flex;gap:10px;margin-bottom:16px;justify-content:center;}
+.stat-chip{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 20px;text-align:center;flex:1;max-width:160px;}
+.stat-chip-n{font-size:24px;font-weight:700;color:var(--hi);letter-spacing:-.02em;line-height:1;}
+.stat-chip-l{font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-top:2px;}
+
+/* Progress bar */
+.progress-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.progress-bar-bg{flex:1;height:10px;background:var(--bg);border-radius:99px;overflow:hidden;}
+#progress-bar{height:100%;border-radius:99px;background:var(--hi);width:0%;transition:width .3s;}
+.progress-pct{font-size:14px;font-weight:700;color:var(--hi);width:40px;text-align:right;flex-shrink:0;}
+
+/* Last key */
+.last-key-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;min-height:56px;}
+.last-key-label{font-size:12px;color:var(--ink-faint);font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
+.last-key-val{font-size:18px;font-weight:700;color:var(--ink);}
+.last-key-code{font-size:11px;color:var(--ink-faint);margin-left:8px;}
+
+/* Keyboard */
+.keyboard-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px;overflow-x:auto;}
+.kb-row{display:flex;gap:5px;margin-bottom:5px;justify-content:flex-start;}
+.key{
+  display:flex;align-items:center;justify-content:center;
+  min-width:36px;height:36px;padding:0 4px;
+  background:var(--bg);border:1.5px solid var(--border);border-radius:6px;
+  font-size:11px;font-weight:600;color:var(--ink-light);
+  transition:background .15s,border-color .15s,color .15s;
+  cursor:default;user-select:none;flex-shrink:0;text-align:center;line-height:1.2;
+  white-space:nowrap;
+}
+.key.pressed{background:var(--hi);border-color:var(--hi);color:#fff;}
+.key.wide-15{min-width:54px;}
+.key.wide-2{min-width:72px;}
+.key.wide-25{min-width:90px;}
+.key.wide-3{min-width:108px;}
+.key.wide-7{min-width:252px;}
+.key.fn{font-size:9px;height:30px;min-width:30px;}
+
+/* Botones acción */
+.btn-row{display:flex;gap:10px;margin-bottom:12px;}
+.btn-action{flex:1;padding:12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;}
+.btn-reset{background:var(--bg);color:var(--ink-light);}
+.btn-reset:hover{background:var(--surface);color:var(--ink);}
+.btn-all{background:var(--hi-soft);color:var(--hi);border-color:rgba(26,95,232,.2);}
+.btn-all:hover{background:var(--hi);color:#fff;}
+
+/* Leyenda */
+.legend{display:flex;gap:16px;justify-content:center;font-size:12px;color:var(--ink-light);}
+.legend-item{display:flex;align-items:center;gap:6px;}
+.legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0;}
+
+footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);}
+@media(max-width:480px){.keyboard-card{padding:12px 8px;}.key{min-width:28px;height:28px;font-size:9px;gap:3px;}.key.wide-15{min-width:40px;}.key.wide-2{min-width:52px;}.key.wide-25{min-width:64px;}.key.wide-3{min-width:76px;}.key.wide-7{min-width:180px;}}
+</style>
+</head>
+<body>
+<header><a class="logo" href="/">Calculadora<span>.live</span></a></header>
+
+<div class="hero">
+  <h1>⌨️ Prueba de Teclado</h1>
+  <p>Presioná cada tecla y verificá que tu teclado funciona correctamente</p>
+</div>
+
+<div class="main">
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-chip"><div class="stat-chip-n" id="pressed-count">0</div><div class="stat-chip-l">Teclas presionadas</div></div>
+    <div class="stat-chip"><div class="stat-chip-n" id="total-count">0</div><div class="stat-chip-l">Total de teclas</div></div>
+  </div>
+
+  <!-- Progreso -->
+  <div class="progress-wrap">
+    <div class="progress-bar-bg"><div id="progress-bar"></div></div>
+    <div class="progress-pct" id="progress-pct">0%</div>
+  </div>
+
+  <!-- Última tecla -->
+  <div class="last-key-card">
+    <span class="last-key-label">Última tecla:</span>
+    <span class="last-key-val" id="last-key-val">—</span>
+    <span class="last-key-code" id="last-key-code"></span>
+  </div>
+
+  <!-- Teclado visual -->
+  <div class="keyboard-card">
+    <div id="keyboard"></div>
+  </div>
+
+  <!-- Acciones -->
+  <div class="btn-row">
+    <button class="btn-action btn-reset" onclick="resetKeys()">🔄 Reiniciar</button>
+    <button class="btn-action btn-all" onclick="markAll()">✓ Marcar todas</button>
+  </div>
+
+  <!-- Leyenda -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--bg);border:1.5px solid var(--border);"></div> Sin probar</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--hi);"></div> Presionada ✓</div>
+  </div>
+</div>
+
+<footer>© 2026 Calculadora.live · Herramientas gratuitas</footer>
+
+<script>
+// Layout del teclado QWERTY con códigos de teclas
+// Cada fila es un array de [display, keyCode(s), clases-extra]
+var ROWS = [
+  // Fila 0 — Función
+  [
+    ['Esc','Escape','fn'],['F1','F1','fn'],['F2','F2','fn'],['F3','F3','fn'],['F4','F4','fn'],
+    ['F5','F5','fn'],['F6','F6','fn'],['F7','F7','fn'],['F8','F8','fn'],
+    ['F9','F9','fn'],['F10','F10','fn'],['F11','F11','fn'],['F12','F12','fn']
+  ],
+  // Fila 1 — Números
+  [
+    ['`','Backquote'],['1','Digit1'],['2','Digit2'],['3','Digit3'],['4','Digit4'],
+    ['5','Digit5'],['6','Digit6'],['7','Digit7'],['8','Digit8'],['9','Digit9'],
+    ['0','Digit0'],['-','Minus'],['=','Equal'],['⌫ Retro','Backspace','wide-2']
+  ],
+  // Fila 2 — QWERTY
+  [
+    ['Tab','Tab','wide-15'],['Q','KeyQ'],['W','KeyW'],['E','KeyE'],['R','KeyR'],
+    ['T','KeyT'],['Y','KeyY'],['U','KeyU'],['I','KeyI'],['O','KeyO'],['P','KeyP'],
+    ['[','BracketLeft'],[']','BracketRight'],['\\','Backslash']
+  ],
+  // Fila 3 — ASDF
+  [
+    ['Caps','CapsLock','wide-2'],['A','KeyA'],['S','KeyS'],['D','KeyD'],['F','KeyF'],
+    ['G','KeyG'],['H','KeyH'],['J','KeyJ'],['K','KeyK'],['L','KeyL'],
+    [';','Semicolon'],["'",'Quote'],['Enter','Enter','wide-2']
+  ],
+  // Fila 4 — ZXCV
+  [
+    ['⇧ Shift','ShiftLeft','wide-25'],['Z','KeyZ'],['X','KeyX'],['C','KeyC'],['V','KeyV'],
+    ['B','KeyB'],['N','KeyN'],['M','KeyM'],[',','Comma'],['.','.'],
+    ['/','Slash'],['⇧ Shift','ShiftRight','wide-25']
+  ],
+  // Fila 5 — Espacio
+  [
+    ['Ctrl','ControlLeft','wide-15'],['Alt','AltLeft','wide-15'],
+    ['','Space','wide-7'],
+    ['Alt','AltRight','wide-15'],['Ctrl','ControlRight','wide-15']
+  ]
+];
+
+var pressed = {};
+var totalKeys = 0;
+
+function buildKeyboard() {
+  var kb = document.getElementById('keyboard');
+  kb.innerHTML = '';
+
+  ROWS.forEach(function(row, ri) {
+    var rowEl = document.createElement('div');
+    rowEl.className = 'kb-row';
+    if(ri === 0) rowEl.style.marginBottom = '10px';
+
+    row.forEach(function(k) {
+      var label = k[0];
+      var code  = k[1];
+      var extra = k[2] || '';
+      var el = document.createElement('div');
+      el.className = 'key ' + extra;
+      el.id = 'key-' + code;
+      el.textContent = label || code;
+      rowEl.appendChild(el);
+      if(code !== '') totalKeys++;
+    });
+    kb.appendChild(rowEl);
+  });
+
+  document.getElementById('total-count').textContent = totalKeys;
+}
+
+document.addEventListener('keydown', function(e) {
+  e.preventDefault();
+  var code = e.code;
+  var key  = e.key;
+
+  // Actualizar última tecla
+  document.getElementById('last-key-val').textContent = key.length === 1 ? key.toUpperCase() : key;
+  document.getElementById('last-key-code').textContent = '(' + code + ')';
+
+  // Highlight en teclado visual
+  var el = document.getElementById('key-' + code);
+  if(el && !pressed[code]) {
+    el.classList.add('pressed');
+    pressed[code] = true;
+    updateStats();
+  }
+});
+
+function updateStats() {
+  var count = Object.keys(pressed).length;
+  document.getElementById('pressed-count').textContent = count;
+  var pct = Math.round((count / totalKeys) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+function resetKeys() {
+  pressed = {};
+  document.querySelectorAll('.key.pressed').forEach(function(el){ el.classList.remove('pressed'); });
+  document.getElementById('pressed-count').textContent = '0';
+  document.getElementById('progress-bar').style.width = '0%';
+  document.getElementById('progress-pct').textContent = '0%';
+  document.getElementById('last-key-val').textContent = '—';
+  document.getElementById('last-key-code').textContent = '';
+}
+
+function markAll() {
+  document.querySelectorAll('.key').forEach(function(el) {
+    var code = el.id.replace('key-', '');
+    if(code && !pressed[code]) {
+      el.classList.add('pressed');
+      pressed[code] = true;
+    }
+  });
+  updateStats();
+}
+
+buildKeyboard();
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

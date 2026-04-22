@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Pérdida de Peso — ¿Cuánto tiempo para bajar de peso?</title>
+<meta name="description" content="Calculá en cuánto tiempo llegás a tu peso ideal. Ingresá tu peso actual, objetivo, altura y actividad física. Basado en déficit calórico y TDEE.">
+<link rel="canonical" href="https://calculadora.live/perdida-peso">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F2F7;--surface:#fff;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;position:sticky;top:0;z-index:100;}
+.logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.02em;}
+.logo span{color:var(--hi);}
+.hero{text-align:center;padding:40px 20px 24px;max-width:600px;margin:0 auto;}
+.hero h1{font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:-.03em;margin-bottom:8px;}
+.hero p{font-size:14px;color:var(--ink-light);}
+.main{max-width:520px;margin:0 auto;padding:0 20px 60px;}
+
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:12px;}
+.card-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:18px;}
+.fields-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.field{margin-bottom:16px;}
+.field:last-child{margin-bottom:0;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.input-wrap{display:flex;align-items:center;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color .15s;}
+.input-wrap:focus-within{border-color:var(--hi);}
+.input-prefix,.input-suffix{padding:0 12px;font-size:14px;font-weight:600;color:var(--ink-faint);white-space:nowrap;}
+.input-wrap input,.input-wrap select{flex:1;border:none;background:transparent;padding:12px 4px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--ink);outline:none;width:0;}
+.input-wrap select{padding-left:12px;cursor:pointer;}
+.input-wrap input::placeholder{color:var(--ink-faint);font-weight:400;}
+
+/* Selector sexo */
+.sex-btns{display:flex;gap:8px;}
+.sex-btn{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;color:var(--ink-light);}
+.sex-btn.active{background:var(--hi-soft);border-color:var(--hi);color:var(--hi);}
+
+/* Resultado TDEE */
+.tdee-banner{background:var(--hi-soft);border:1.5px solid rgba(26,95,232,.2);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:16px;display:none;text-align:center;}
+.tdee-val{font-size:28px;font-weight:700;color:var(--hi);letter-spacing:-.02em;}
+.tdee-label{font-size:12px;color:var(--ink-light);margin-top:2px;}
+
+/* Tabla de déficits */
+.deficit-table{display:none;}
+.deficit-header{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px;}
+.deficit-row{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+.deficit-row.recommended{border-color:rgba(26,95,232,.4);background:var(--hi-soft);}
+.deficit-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.deficit-info{flex:1;}
+.deficit-desc{font-size:13px;font-weight:600;color:var(--ink);}
+.deficit-kcal{font-size:11px;color:var(--ink-faint);margin-top:1px;}
+.deficit-result{text-align:right;flex-shrink:0;}
+.deficit-time{font-size:16px;font-weight:700;color:var(--ink);}
+.deficit-date{font-size:11px;color:var(--ink-faint);margin-top:1px;}
+.recommended-badge{font-size:10px;font-weight:700;background:var(--hi);color:#fff;padding:2px 8px;border-radius:99px;display:inline-block;margin-left:6px;letter-spacing:.04em;}
+
+/* Disclaimer */
+.disclaimer{font-size:12px;color:var(--ink-faint);text-align:center;padding:0 8px;line-height:1.5;}
+
+footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);}
+@media(max-width:400px){.fields-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header><a class="logo" href="/">Calculadora<span>.live</span></a></header>
+
+<div class="hero">
+  <h1>⚖️ ¿Cuánto tarda en bajar de peso?</h1>
+  <p>Calculá el tiempo estimado según tu metabolismo y nivel de actividad</p>
+</div>
+
+<div class="main">
+  <div class="card">
+    <div class="card-title">Tus datos</div>
+
+    <!-- Sexo -->
+    <div class="field">
+      <label>Sexo biológico</label>
+      <div class="sex-btns">
+        <button class="sex-btn active" id="btn-m" onclick="setSexo('m')">♂ Hombre</button>
+        <button class="sex-btn" id="btn-f" onclick="setSexo('f')">♀ Mujer</button>
+      </div>
+    </div>
+
+    <!-- Edad + Altura -->
+    <div class="fields-row">
+      <div class="field" style="margin-bottom:0;">
+        <label>Edad</label>
+        <div class="input-wrap">
+          <input type="number" id="edad" placeholder="30" min="15" max="99" oninput="calcular()">
+          <span class="input-suffix">años</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Altura</label>
+        <div class="input-wrap">
+          <input type="number" id="altura" placeholder="170" min="100" max="250" oninput="calcular()">
+          <span class="input-suffix">cm</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Peso actual + objetivo -->
+    <div class="fields-row" style="margin-top:16px;">
+      <div class="field" style="margin-bottom:0;">
+        <label>Peso actual</label>
+        <div class="input-wrap">
+          <input type="number" id="peso-actual" placeholder="85" min="30" max="300" step="0.1" oninput="calcular()">
+          <span class="input-suffix">kg</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Peso objetivo</label>
+        <div class="input-wrap">
+          <input type="number" id="peso-objetivo" placeholder="75" min="30" max="300" step="0.1" oninput="calcular()">
+          <span class="input-suffix">kg</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actividad -->
+    <div class="field" style="margin-top:16px;">
+      <label>Nivel de actividad</label>
+      <div class="input-wrap">
+        <select id="actividad" onchange="calcular()">
+          <option value="1.2">Sedentario (sin ejercicio)</option>
+          <option value="1.375">Ligero (1-3 días por semana)</option>
+          <option value="1.55" selected>Moderado (3-5 días por semana)</option>
+          <option value="1.725">Activo (6-7 días por semana)</option>
+          <option value="1.9">Muy activo (doble turno / físico)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- TDEE -->
+  <div class="tdee-banner" id="tdee-banner">
+    <div class="tdee-val" id="tdee-val">—</div>
+    <div class="tdee-label">Calorías que quemás por día (TDEE)</div>
+  </div>
+
+  <!-- Tabla de déficits -->
+  <div class="deficit-table" id="deficit-table">
+    <div class="deficit-header">Tiempo estimado según déficit calórico</div>
+
+    <div class="deficit-row">
+      <div class="deficit-dot" style="background:#B4B8CC;"></div>
+      <div class="deficit-info">
+        <div class="deficit-desc">Suave <span style="color:var(--ink-faint);font-weight:400;font-size:12px;">−300 kcal/día</span></div>
+        <div class="deficit-kcal">~0,3 kg por semana · sin pasar hambre</div>
+      </div>
+      <div class="deficit-result">
+        <div class="deficit-time" id="t-300">—</div>
+        <div class="deficit-date" id="d-300">—</div>
+      </div>
+    </div>
+
+    <div class="deficit-row recommended">
+      <div class="deficit-dot" style="background:var(--hi);"></div>
+      <div class="deficit-info">
+        <div class="deficit-desc">Moderado <span style="color:var(--ink-faint);font-weight:400;font-size:12px;">−500 kcal/día</span>
+          <span class="recommended-badge">Recomendado</span>
+        </div>
+        <div class="deficit-kcal">~0,5 kg por semana · sostenible y efectivo</div>
+      </div>
+      <div class="deficit-result">
+        <div class="deficit-time" id="t-500">—</div>
+        <div class="deficit-date" id="d-500">—</div>
+      </div>
+    </div>
+
+    <div class="deficit-row">
+      <div class="deficit-dot" style="background:#e67e22;"></div>
+      <div class="deficit-info">
+        <div class="deficit-desc">Agresivo <span style="color:var(--ink-faint);font-weight:400;font-size:12px;">−750 kcal/día</span></div>
+        <div class="deficit-kcal">~0,75 kg por semana · requiere supervisión</div>
+      </div>
+      <div class="deficit-result">
+        <div class="deficit-time" id="t-750">—</div>
+        <div class="deficit-date" id="d-750">—</div>
+      </div>
+    </div>
+
+    <div class="deficit-row">
+      <div class="deficit-dot" style="background:#e74c3c;"></div>
+      <div class="deficit-info">
+        <div class="deficit-desc">Muy agresivo <span style="color:var(--ink-faint);font-weight:400;font-size:12px;">−1000 kcal/día</span></div>
+        <div class="deficit-kcal">~1 kg por semana · no recomendado sin médico</div>
+      </div>
+      <div class="deficit-result">
+        <div class="deficit-time" id="t-1000">—</div>
+        <div class="deficit-date" id="d-1000">—</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="disclaimer" id="disclaimer" style="display:none;">⚕️ Esta calculadora es orientativa. Consultá con un profesional de la salud antes de iniciar cualquier plan de pérdida de peso.</p>
+</div>
+
+<footer>© 2026 Calculadora.live · Herramientas gratuitas</footer>
+
+<script>
+var sexo = 'm';
+function setSexo(s) {
+  sexo = s;
+  document.getElementById('btn-m').classList.toggle('active', s === 'm');
+  document.getElementById('btn-f').classList.toggle('active', s === 'f');
+  calcular();
+}
+
+function semanas(deficit, kgPerder) {
+  // 1 kg grasa ≈ 7700 kcal
+  return (kgPerder * 7700) / (deficit * 7);
+}
+function semToText(sem) {
+  if(sem < 1) return 'menos de 1 semana';
+  var weeks = Math.round(sem);
+  if(weeks < 5) return weeks + (weeks === 1 ? ' semana' : ' semanas');
+  var months = (sem / 4.33).toFixed(1);
+  var mFloor = Math.floor(sem / 4.33);
+  if(mFloor < 24) return mFloor + (mFloor === 1 ? ' mes' : ' meses');
+  var years = (mFloor / 12).toFixed(1);
+  return years + ' años';
+}
+function fechaEn(sem) {
+  var d = new Date();
+  d.setDate(d.getDate() + Math.round(sem * 7));
+  return d.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' });
+}
+
+function calcular() {
+  var edad    = parseFloat(document.getElementById('edad').value)        || 0;
+  var altura  = parseFloat(document.getElementById('altura').value)      || 0;
+  var actual  = parseFloat(document.getElementById('peso-actual').value) || 0;
+  var objetivo= parseFloat(document.getElementById('peso-objetivo').value)|| 0;
+  var act     = parseFloat(document.getElementById('actividad').value)   || 1.55;
+
+  var banner = document.getElementById('tdee-banner');
+  var table  = document.getElementById('deficit-table');
+  var disc   = document.getElementById('disclaimer');
+
+  if(!edad || !altura || !actual || !objetivo || actual <= objetivo) {
+    banner.style.display = 'none';
+    table.style.display  = 'none';
+    disc.style.display   = 'none';
+    return;
+  }
+
+  // BMR Mifflin-St Jeor
+  var bmr;
+  if(sexo === 'm') {
+    bmr = 10 * actual + 6.25 * altura - 5 * edad + 5;
+  } else {
+    bmr = 10 * actual + 6.25 * altura - 5 * edad - 161;
+  }
+  var tdee = Math.round(bmr * act);
+  var kgPerder = actual - objetivo;
+
+  banner.style.display = 'block';
+  document.getElementById('tdee-val').textContent = tdee.toLocaleString('es-AR') + ' kcal';
+
+  var deficits = [300, 500, 750, 1000];
+  deficits.forEach(function(d) {
+    if(tdee - d < 1200) {
+      document.getElementById('t-' + d).textContent = 'No aplicable';
+      document.getElementById('d-' + d).textContent = 'Déficit demasiado alto';
+      return;
+    }
+    var sem = semanas(d, kgPerder);
+    document.getElementById('t-' + d).textContent = semToText(sem);
+    document.getElementById('d-' + d).textContent = fechaEn(sem);
+  });
+
+  table.style.display = 'block';
+  disc.style.display  = 'block';
+}
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

@@ -18,6 +18,8 @@
       { n: 'Calculadora de service', u: '/service',            icon:'🔧', d: '¿Cuándo te toca el próximo service?',        hd:'¿Cuándo te toca el service y cuánto cuesta aproximadamente?' },
     ]},
     { cat: '💰 Finanzas y economía', slug: 'finanzas', label: 'Finanzas', desc: 'Sueldo neto, préstamos, inflación, inversiones y más.', items: [
+      { n: 'Calculadora de ahorros',    u: '/ahorros',       icon:'💰', badge:true, d: '¿Cuándo llegás a tu meta de ahorro?',    hd:'Calculá en cuánto tiempo llegás a tu objetivo con aportes mensuales e intereses.' },
+      { n: 'Margen de ganancia',        u: '/margen',        icon:'📊', badge:true, d: 'Precio de venta, margen y markup',       hd:'Calculá el margen de ganancia, el markup y el precio de venta de tus productos.' },
       { n: 'Calculadora de sueldo neto', u: '/sueldo-neto',   icon:'💼', badge:true, d: 'Descuentos ANSES, PAMI y ganancias',         hd:'¿Cuánto te depositan? Calculá tu sueldo neto con descuentos ANSES y PAMI.' },
       { n: 'Calculadora de aguinaldo',   u: '/aguinaldo',     icon:'🎁', badge:true, d: '1° o 2° semestre',                            hd:'Calculá tu SAC del primer o segundo semestre al instante.' },
       { n: 'Rendimiento Mercado Pago',   u: '/mercado-pago',  icon:'💳', d: 'Intereses por días',                          hd:'¿Cuánto ganás dejando plata en Mercado Pago? Calculalo por días.' },
@@ -26,6 +28,7 @@
       { n: 'Calculadora de inflación',   u: '/inflacion',     icon:'📊', d: 'Actualizá precios por inflación histórica',   hd:'¿Cuánto vale hoy lo que costaba antes? Actualizá precios por inflación.' },
     ]},
     { cat: '💪 Salud y entrenamiento', slug: 'salud', label: 'Salud', desc: 'IMC, calorías, proteína, hidratación y más.', items: [
+      { n: 'Calculadora de pérdida de peso', u: '/perdida-peso', icon:'⚖️', badge:true, d: '¿Cuánto tiempo para llegar a tu peso ideal?', hd:'Calculá el tiempo estimado para bajar de peso según tu metabolismo y nivel de actividad.' },
       { n: 'Calculadora de IMC',          u: '/imc',          icon:'⚖️', d: 'Índice de masa corporal (OMS)',               hd:'Índice de masa corporal con interpretación y peso ideal.' },
       { n: 'Calorías diarias (BMR/TDEE)', u: '/bmr',          icon:'🔥', d: 'Metabolismo basal y TDEE',                    hd:'¿Cuántas calorías necesitás por día según tu actividad?' },
       { n: 'Calculadora de 1RM',          u: '/1rm',          icon:'🏋️', d: 'Repetición máxima por fórmula',             hd:'Estimá tu repetición máxima en cualquier ejercicio.' },
@@ -53,6 +56,9 @@
       { n: '¿Cuánto falta para el Mundial?', u: '/mundial', icon:'🏆', badge:true, d: 'Cuenta regresiva en tiempo real', hd:'Cuenta regresiva en tiempo real hasta el partido inaugural del Mundial 2026 en México.' },
     ]},
     { cat: '🎮 Tests y juegos', slug: 'tests', label: 'Tests y juegos', desc: 'Ponete a prueba: velocidad de reacción, CPS test, prueba de teclado y más.', items: [
+      { n: 'Test de velocidad de reacción', u: '/reaccion',  icon:'⚡', badge:true, d: '¿Cuánto tardás en reaccionar?',           hd:'Medí tu tiempo de reacción en milisegundos. ¿Tenés reflejos de gato?' },
+      { n: 'CPS Test',                      u: '/cps',       icon:'🖱️', badge:true, d: 'Clicks por segundo en 5, 10 o 30 seg',    hd:'¿Cuántos clicks por segundo podés hacer? Elegí el tiempo y descubrilo.' },
+      { n: 'Prueba de teclado',             u: '/teclado',   icon:'⌨️', badge:true, d: 'Verificá que todas las teclas funcionen', hd:'Presioná cada tecla y comprobá que tu teclado responde correctamente.' },
     ]},
   ];
 
@@ -222,6 +228,48 @@
       { q: '¿Cuántos pasos da una persona por día en promedio?', a: 'La OMS recomienda 10.000 pasos diarios, aunque el promedio real de la mayoría de las personas es de entre 4.000 y 7.000. Cada paso recorre aproximadamente 75 cm.' },
       { q: '¿Cuántas respiraciones damos por día?', a: 'Respiramos entre 12 y 20 veces por minuto en reposo, lo que suma entre 17.280 y 28.800 respiraciones por día. Con el ejercicio esa cifra puede aumentar mucho.' },
       { q: '¿Cuántas horas dormimos en toda la vida?', a: 'Si dormimos 8 horas diarias durante 80 años, eso equivale a unos 233.600 horas o aproximadamente 26 años durmiendo. Nuestra calculadora personaliza este número según tu edad.' },
+    ],
+    '/reaccion': [
+      { q: '¿Cuál es el tiempo de reacción humano promedio?', a: 'El tiempo de reacción visual promedio en adultos es de entre 200 y 300 milisegundos. Los deportistas entrenados pueden estar por debajo de los 200 ms. Resultados menores a 150 ms son prácticamente imposibles de forma natural.' },
+      { q: '¿Qué factores afectan el tiempo de reacción?', a: 'La fatiga, el alcohol, la edad, el estrés y la distracción aumentan el tiempo de reacción. El entrenamiento físico, la concentración y el buen descanso lo mejoran. Los estímulos auditivos se procesan ligeramente más rápido que los visuales.' },
+      { q: '¿Cómo mejorar la velocidad de reacción?', a: 'Practicando regularmente. El deporte, los videojuegos de acción, los ejercicios de coordinación y el entrenamiento de reflejos reducen el tiempo de reacción con el tiempo. También mejora al estar descansado y concentrado.' },
+      { q: '¿Por qué sale un tiempo muy bajo (menos de 150 ms)?', a: 'Si el resultado es menor a 150 ms, probablemente ocurrió un clic anticipado o accidental. El sistema nervioso humano necesita al menos ese tiempo mínimo para procesar una señal visual y producir una respuesta motora.' },
+      { q: '¿Es útil el test para deportes?', a: 'Sí. El tiempo de reacción es clave en deportes como el tenis, el fútbol, las artes marciales y los eSports. Sin embargo, este test mide solo la reacción a estímulos visuales simples y no reemplaza pruebas especializadas.' },
+    ],
+    '/cps': [
+      { q: '¿Qué es el CPS y cómo se mide?', a: 'CPS significa Clicks Por Segundo (Clicks Per Second en inglés). Se mide contando cuántos clicks hacés durante un período de tiempo fijo (por ejemplo 5 segundos) y dividiendo por ese tiempo.' },
+      { q: '¿Cuántos CPS es un buen resultado?', a: 'Para un usuario promedio, entre 5 y 7 CPS es un buen resultado. Los gamers competitivos suelen superar los 8-9 CPS. Resultados por encima de 10 CPS son excepcionales y requieren técnicas especiales.' },
+      { q: '¿Qué es el butterfly clicking?', a: 'Es una técnica donde se usan dos dedos alternados sobre el mismo botón del mouse para duplicar la velocidad de clicks. Puede generar más de 15 CPS pero está prohibida en muchos servidores de videojuegos.' },
+      { q: '¿En qué juegos importa el CPS?', a: 'El CPS es relevante en juegos PvP como Minecraft (modo combate), algunos títulos de battle royale y cualquier juego donde la velocidad de ataque está ligada a la velocidad de clicks.' },
+      { q: '¿Puede dañar el mouse hacer el test muchas veces?', a: 'Un uso excesivo puede acelerar el desgaste del switch del mouse. Lo mismo aplica para la muñeca: hacer el test de forma repetida e intensa puede causar molestias. Tomá descansos regularmente.' },
+    ],
+    '/teclado': [
+      { q: '¿Para qué sirve la prueba de teclado?', a: 'Sirve para verificar que todas las teclas de tu teclado funcionan correctamente. Es útil cuando sospechás que una tecla no responde, cuando comprás un teclado usado, o después de limpiar el teclado.' },
+      { q: '¿Qué hacer si una tecla no responde?', a: 'Primero limpiá debajo de la tecla con aire comprimido. Si sigue sin responder, puede ser un problema físico del switch (en teclados mecánicos es reemplazable) o un problema de software. Actualizá los drivers del teclado y probá en otro dispositivo.' },
+      { q: '¿Por qué algunas teclas no aparecen en la prueba?', a: 'La prueba detecta las teclas por su código estándar. Algunas teclas específicas de fabricante o combinaciones especiales pueden no registrarse en el estándar del navegador.' },
+      { q: '¿Funciona con teclados en español?', a: 'Sí, aunque la distribución visual mostrada es QWERTY estándar. Las teclas se detectan por código de posición, por lo que funciona independientemente del idioma configurado en el sistema.' },
+      { q: '¿Puedo hacer la prueba en el celular?', a: 'En celulares la prueba es limitada porque los teclados virtuales no generan los mismos eventos de teclado físico. La herramienta está diseñada para teclados físicos conectados a PC o notebook.' },
+    ],
+    '/ahorros': [
+      { q: '¿Cómo calculo cuánto tiempo tarda en llegar a mi meta de ahorro?', a: 'Necesitás saber: el monto objetivo, cuánto tenés ahorrado hoy, cuánto podés aportar por mes, y si tenés algún rendimiento sobre el dinero. Con esos datos la calculadora estima los meses necesarios.' },
+      { q: '¿Qué tasa de interés mensual pongo?', a: 'Depende de dónde estés invirtiendo. Una caja de ahorro tradicional rinde poco. Cuentas remuneradas como Mercado Pago, Naranja X o plazos fijos pueden rendir entre 2% y 4% mensual según el contexto. Si guardás en efectivo, ponés 0.' },
+      { q: '¿Conviene ahorrar aunque sea poco por mes?', a: 'Absolutamente. El efecto del interés compuesto hace que incluso aportes pequeños generen diferencias grandes con el tiempo. Un aporte mensual constante de poco dinero siempre supera a un ahorro esporádico mayor.' },
+      { q: '¿Qué pasa si aumento el aporte mensual?', a: 'El tiempo para llegar a tu meta se reduce significativamente. Por ejemplo, duplicar el aporte mensual puede reducir el tiempo casi a la mitad, dependiendo de la tasa de interés.' },
+      { q: '¿La calculadora tiene en cuenta la inflación?', a: 'No directamente. Para compensar la inflación, ingresá una tasa de interés real (tasa nominal menos inflación mensual estimada). Si la inflación supera tu tasa de rendimiento, en términos reales estarías perdiendo poder adquisitivo.' },
+    ],
+    '/margen': [
+      { q: '¿Cuál es la diferencia entre margen de ganancia y markup?', a: 'El margen se calcula sobre el precio de venta: (precio − costo) ÷ precio × 100. El markup se calcula sobre el costo: (precio − costo) ÷ costo × 100. El markup siempre es mayor que el margen para el mismo producto.' },
+      { q: '¿Qué margen de ganancia es bueno?', a: 'Depende del sector. En retail, márgenes del 20–40% son comunes. En servicios puede ser mayor al 50%. En tecnología o supermercados puede ser menor al 10%. Lo importante es que cubra costos fijos, impuestos y deje ganancia neta.' },
+      { q: '¿Cómo calculo el precio de venta si quiero un margen del 30%?', a: 'Fórmula: precio = costo ÷ (1 − 0,30). Si comprás a $1.000 y querés 30% de margen, el precio de venta es $1.000 ÷ 0,70 = $1.428,57. Nuestra calculadora hace esto automáticamente en el modo "Costo + Margen".' },
+      { q: '¿El margen de ganancia incluye los costos fijos?', a: 'El margen bruto (que calcula esta herramienta) solo considera el costo directo del producto. El margen neto requiere descontar también alquiler, sueldos, impuestos y otros gastos operativos.' },
+      { q: '¿Por qué no debo confundir markup con margen?', a: 'Porque llevan a errores de precio. Si querés un margen del 50% y aplicás un markup del 50%, en realidad tu margen es solo del 33%. El margen del 50% requiere un markup del 100% (duplicar el costo).' },
+    ],
+    '/perdida-peso': [
+      { q: '¿Cuánto peso se puede bajar por semana de forma segura?', a: 'La recomendación médica general es perder entre 0,5 y 1 kg por semana. Pérdidas mayores suelen implicar pérdida de músculo y agua, son difíciles de mantener y pueden generar deficiencias nutricionales.' },
+      { q: '¿Qué es el déficit calórico?', a: 'Es la diferencia entre las calorías que consumís y las que quemás. Si quemás 2.000 kcal y comés 1.500 kcal, tenés un déficit de 500 kcal. Aproximadamente 7.700 kcal de déficit acumulado equivalen a 1 kg de grasa perdida.' },
+      { q: '¿Qué es el TDEE?', a: 'El TDEE (Total Daily Energy Expenditure) es el total de calorías que quemás por día incluyendo tu actividad física. Se calcula multiplicando el metabolismo basal (BMR) por un factor de actividad.' },
+      { q: '¿Cuántas calorías menos debo comer para bajar de peso?', a: 'Un déficit de 500 kcal por día genera una pérdida de aproximadamente 0,5 kg por semana, considerado el punto óptimo entre efectividad y sostenibilidad. No se recomienda bajar de 1.200 kcal/día sin supervisión médica.' },
+      { q: '¿Puedo bajar de peso sin hacer ejercicio?', a: 'Sí. La pérdida de peso depende principalmente del balance calórico (lo que comés vs. lo que quemás). Sin embargo, el ejercicio ayuda a preservar la masa muscular, mejora la salud metabólica y facilita mantener el déficit calórico.' },
     ],
     '/mundial': [
       { q: '¿Cuándo empieza el Mundial 2026?', a: 'El partido inaugural del Mundial 2026 es el 11 de junio de 2026 en el Estadio Azteca de Ciudad de México. Es el mismo estadio donde se jugó la final de México 1986.' },

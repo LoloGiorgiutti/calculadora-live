@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test de Velocidad de Reacción — ¿Qué tan rápido reaccionás?</title>
+<meta name="description" content="Medí tu tiempo de reacción en milisegundos. Test gratuito de velocidad de reacción online. ¿Cuánto tardás en reaccionar? Promedio, récord y comparativa.">
+<link rel="canonical" href="https://calculadora.live/reaccion">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F0F2F7;--surface:#fff;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;position:sticky;top:0;z-index:100;}
+.logo{font-size:18px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.02em;}
+.logo span{color:var(--hi);}
+.hero{text-align:center;padding:40px 20px 24px;max-width:600px;margin:0 auto;}
+.hero h1{font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:-.03em;margin-bottom:8px;}
+.hero p{font-size:14px;color:var(--ink-light);}
+.main{max-width:520px;margin:0 auto;padding:0 20px 60px;}
+
+/* Círculo principal */
+.circle-wrap{display:flex;justify-content:center;margin-bottom:24px;}
+#circle{
+  width:260px;height:260px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;user-select:none;-webkit-user-select:none;
+  transition:background .15s,transform .08s;
+  background:#4a6b9a;
+  box-shadow:0 8px 40px rgba(0,0,0,.12);
+}
+#circle:active{transform:scale(.97);}
+#circle.wait{background:#e74c3c;cursor:default;}
+#circle.go{background:#27ae60;box-shadow:0 8px 40px rgba(39,174,96,.35);}
+#circle.result{background:var(--hi);box-shadow:0 8px 40px rgba(26,95,232,.25);}
+#circle.early{background:#e67e22;}
+.circle-label{font-size:18px;font-weight:700;color:#fff;text-align:center;padding:0 20px;line-height:1.3;}
+.circle-sub{font-size:13px;color:rgba(255,255,255,.75);margin-top:6px;text-align:center;padding:0 20px;}
+
+/* Resultado actual */
+.result-big{font-size:56px;font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1;}
+.result-unit{font-size:18px;font-weight:400;color:rgba(255,255,255,.8);}
+.result-rating{font-size:13px;color:rgba(255,255,255,.85);margin-top:4px;text-align:center;}
+
+/* Historial */
+.history-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px;}
+.history-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+.history-rows{display:flex;flex-direction:column;gap:6px;}
+.history-row{display:flex;align-items:center;gap:10px;font-size:13px;}
+.h-num{width:18px;color:var(--ink-faint);font-weight:600;text-align:right;flex-shrink:0;}
+.h-bar-wrap{flex:1;height:8px;background:var(--bg);border-radius:99px;overflow:hidden;}
+.h-bar{height:100%;border-radius:99px;background:var(--hi);transition:width .4s;}
+.h-ms{width:56px;text-align:right;font-weight:600;color:var(--ink);}
+.h-badge{font-size:11px;padding:2px 8px;border-radius:99px;font-weight:600;flex-shrink:0;}
+
+.avg-row{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;}
+.avg-label{color:var(--ink-light);}
+.avg-val{font-weight:700;font-size:18px;color:var(--hi);}
+
+.btn-reset{display:block;width:100%;padding:14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:background .15s,color .15s;margin-top:4px;}
+.btn-reset:hover{background:var(--surface);color:var(--ink);}
+
+/* Info */
+.info-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px;}
+.info-title{font-size:13px;font-weight:700;margin-bottom:10px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.info-item{background:var(--bg);border-radius:var(--radius-sm);padding:10px 12px;}
+.info-range{font-size:11px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.info-desc{font-size:11px;color:var(--ink-light);}
+@media(max-width:480px){#circle{width:220px;height:220px;}.result-big{font-size:44px;}.info-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header><a class="logo" href="/">Calculadora<span>.live</span></a></header>
+
+<div class="hero">
+  <h1>⚡ Test de Velocidad de Reacción</h1>
+  <p>Esperá que el círculo se ponga verde y hacé click lo más rápido posible</p>
+</div>
+
+<div class="main">
+  <div class="circle-wrap">
+    <div id="circle" onclick="handleClick()">
+      <div class="circle-label" id="circle-label">Presioná<br>para empezar</div>
+      <div class="circle-sub" id="circle-sub"></div>
+    </div>
+  </div>
+
+  <div class="history-card" id="history-card" style="display:none;">
+    <div class="history-title">
+      <span>Últimos intentos</span>
+      <span id="attempts-count"></span>
+    </div>
+    <div class="history-rows" id="history-rows"></div>
+    <div class="avg-row" id="avg-row" style="display:none;">
+      <span class="avg-label">Promedio</span>
+      <span class="avg-val" id="avg-val">—</span>
+    </div>
+  </div>
+
+  <button class="btn-reset" id="btn-reset" style="display:none;" onclick="resetAll()">Reiniciar todo</button>
+
+  <div class="info-card">
+    <div class="info-title">Tiempos de referencia</div>
+    <div class="info-grid">
+      <div class="info-item"><div class="info-range" style="color:#e74c3c;">&lt; 150 ms</div><div class="info-desc">Imposible / sospechoso</div></div>
+      <div class="info-item"><div class="info-range" style="color:#27ae60;">150–200 ms</div><div class="info-desc">Reflejos de élite 🐱</div></div>
+      <div class="info-item"><div class="info-range" style="color:#1A5FE8;">200–250 ms</div><div class="info-desc">Por encima de la media</div></div>
+      <div class="info-item"><div class="info-range" style="color:#60647A;">250–350 ms</div><div class="info-desc">Tiempo promedio normal</div></div>
+      <div class="info-item"><div class="info-range" style="color:#e67e22;">350–500 ms</div><div class="info-desc">Podés mejorar</div></div>
+      <div class="info-item"><div class="info-range" style="color:#B4B8CC;">&gt; 500 ms</div><div class="info-desc">¡Seguí practicando!</div></div>
+    </div>
+  </div>
+</div>
+
+<footer style="text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);">© 2026 Calculadora.live</footer>
+
+<script>
+var state = 'idle'; // idle | wait | go | result | early
+var timeout = null;
+var startTime = null;
+var results = [];
+var MAX = 6;
+
+var circle = document.getElementById('circle');
+var label  = document.getElementById('circle-label');
+var sub    = document.getElementById('circle-sub');
+
+function getRating(ms) {
+  if(ms < 150) return { text:'Sospechoso 🤔', color:'#e74c3c' };
+  if(ms < 200) return { text:'Élite 🐱', color:'#27ae60' };
+  if(ms < 250) return { text:'¡Muy rápido!', color:'#1A5FE8' };
+  if(ms < 300) return { text:'Por encima de la media', color:'#1A5FE8' };
+  if(ms < 350) return { text:'Promedio', color:'#60647A' };
+  if(ms < 500) return { text:'Podés mejorar', color:'#e67e22' };
+  return { text:'¡Seguí practicando!', color:'#B4B8CC' };
+}
+
+function handleClick() {
+  if(state === 'idle') {
+    startWait();
+  } else if(state === 'wait') {
+    tooEarly();
+  } else if(state === 'go') {
+    var ms = Date.now() - startTime;
+    showResult(ms);
+  } else if(state === 'result' || state === 'early') {
+    startWait();
+  }
+}
+
+function startWait() {
+  state = 'wait';
+  circle.className = 'wait';
+  label.innerHTML = 'Esperá...';
+  sub.textContent = 'No hagas click todavía';
+  clearTimeout(timeout);
+  var delay = 1500 + Math.random() * 3000;
+  timeout = setTimeout(goGreen, delay);
+}
+
+function goGreen() {
+  state = 'go';
+  circle.className = 'go';
+  label.innerHTML = '¡AHORA!';
+  sub.textContent = '';
+  startTime = Date.now();
+}
+
+function tooEarly() {
+  clearTimeout(timeout);
+  state = 'early';
+  circle.className = 'early';
+  label.innerHTML = '¡Muy rápido!';
+  sub.textContent = 'Esperá la señal verde. Click para reintentar.';
+}
+
+function showResult(ms) {
+  state = 'result';
+  results.unshift(ms);
+  if(results.length > MAX) results.pop();
+
+  var r = getRating(ms);
+  circle.className = 'result';
+  label.innerHTML = '<div class="result-big">' + ms + '<span class="result-unit"> ms</span></div>';
+  sub.innerHTML = '<div class="result-rating">' + r.text + '</div><div style="margin-top:6px;font-size:12px;color:rgba(255,255,255,.7)">Click para intentar de nuevo</div>';
+
+  renderHistory();
+}
+
+function renderHistory() {
+  var card = document.getElementById('history-card');
+  var rows = document.getElementById('history-rows');
+  var avgRow = document.getElementById('avg-row');
+  var avgVal = document.getElementById('avg-val');
+  var attCount = document.getElementById('attempts-count');
+  var resetBtn = document.getElementById('btn-reset');
+
+  card.style.display = 'block';
+  resetBtn.style.display = 'block';
+  attCount.textContent = results.length + ' / ' + MAX + ' intentos';
+
+  var max = Math.max.apply(null, results);
+  var html = '';
+  results.forEach(function(ms, i) {
+    var pct = Math.round((ms / max) * 100);
+    var r = getRating(ms);
+    html += '<div class="history-row">'
+          + '<span class="h-num">' + (i+1) + '</span>'
+          + '<div class="h-bar-wrap"><div class="h-bar" style="width:' + pct + '%;background:' + r.color + '"></div></div>'
+          + '<span class="h-ms">' + ms + ' ms</span>'
+          + '</div>';
+  });
+  rows.innerHTML = html;
+
+  if(results.length >= 2) {
+    var avg = Math.round(results.reduce(function(a,b){return a+b;},0) / results.length);
+    avgRow.style.display = 'flex';
+    avgVal.textContent = avg + ' ms';
+  }
+}
+
+function resetAll() {
+  results = [];
+  state = 'idle';
+  circle.className = '';
+  label.innerHTML = 'Presioná<br>para empezar';
+  sub.textContent = '';
+  document.getElementById('history-card').style.display = 'none';
+  document.getElementById('btn-reset').style.display = 'none';
+}
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

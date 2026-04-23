@@ -519,6 +519,8 @@ var MAX_HIST = 5;
 
 function saveToHistory(formula, result) {
   var hist = getHistory();
+  // No guardar si es idéntico al último registro (evita duplicados por re-triggers)
+  if(hist.length && hist[0].formula === formula && hist[0].result === result) return;
   hist.unshift({ formula: formula, result: result, ts: Date.now() });
   if(hist.length > MAX_HIST) hist.length = MAX_HIST;
   try { localStorage.setItem(HIST_KEY, JSON.stringify(hist)); } catch(e){}

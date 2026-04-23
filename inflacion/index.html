@@ -80,6 +80,13 @@
   .faq-q:first-of-type{margin-top:0}
   .est-tag{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:#FEF3C7;color:#92400E;margin-left:4px;vertical-align:middle}
   .approx-tag{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:#F3E8FF;color:#6B21A8;margin-left:4px;vertical-align:middle}
+  .cmp-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);gap:8px}
+  .cmp-row:last-child{border-bottom:none}
+  .cmp-label{font-size:13px;color:var(--ink-light);flex:1}
+  .cmp-pct{font-size:13px;font-weight:700;color:#DC2626;text-align:right;white-space:nowrap}
+  .cmp-val{font-size:13px;font-weight:600;color:var(--ink);text-align:right;white-space:nowrap;min-width:80px}
+  .cmp-active .cmp-label{color:var(--hi);font-weight:700}
+  .cmp-na{font-size:12px;color:var(--ink-faint);font-style:italic}
 </style>
 </head>
 <body>
@@ -164,6 +171,12 @@
         <div class="equiv-box"><div class="equiv-val" id="eq-hoy">—</div><div class="equiv-lbl" id="eq-lbl-hoy">—</div></div>
       </div>
     </div>
+  </div>
+
+  <!-- Tabla comparativa multi-fuente -->
+  <div class="card" id="compare-card" style="display:none;padding:20px 24px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;">Comparativa de índices · mismo período</div>
+    <div id="compare-rows"></div>
   </div>
 
   <button class="chart-toggle" id="chart-toggle" onclick="toggleChart()">
@@ -526,6 +539,44 @@ function calcular(){
   document.getElementById('eq-lbl-hoy').textContent=hastaLabel;
 
   if(chartBuilt) redrawChart();
+
+  // Tabla comparativa multi-fuente
+  updateCompare(y1, m1, y2, m2, valor);
+}
+
+function updateCompare(y1, m1, y2, m2, valor) {
+  if(!valor) { document.getElementById('compare-card').style.display='none'; return; }
+  var FUENTE_LIST = [
+    { id:'ipc',        label:'📊 IPC (INDEC)' },
+    { id:'usd_oficial',label:'💵 Dólar oficial' },
+    { id:'usd_blue',   label:'💵 Dólar blue' },
+    { id:'uva',        label:'🏠 UVA' },
+  ];
+  var html = '';
+  FUENTE_LIST.forEach(function(f) {
+    // Calcular factor para esta fuente
+    var pct = null;
+    if(f.id === 'ipc') {
+      pct = acumulado(y1, m1, y2, m2);
+    } else {
+      var tbl = f.id==='usd_oficial' ? USD_OFICIAL : f.id==='usd_blue' ? USD_BLUE : UVA;
+      var k1 = y1+'-'+p2(m1), k2 = y2+'-'+p2(m2);
+      if(tbl[k1] && tbl[k2]) pct = tbl[k2]/tbl[k1]-1;
+    }
+    var isActive = f.id === currentFuente;
+    html += '<div class="cmp-row' + (isActive?' cmp-active':'') + '">';
+    html += '<span class="cmp-label">' + f.label + (isActive?' ✓':'') + '</span>';
+    if(pct !== null) {
+      var actualizado = valor * (1 + pct);
+      html += '<span class="cmp-pct">+' + (pct*100).toFixed(1) + '%</span>';
+      html += '<span class="cmp-val">' + fmtShort(actualizado) + '</span>';
+    } else {
+      html += '<span class="cmp-pct cmp-na">sin datos</span><span class="cmp-val cmp-na">—</span>';
+    }
+    html += '</div>';
+  });
+  document.getElementById('compare-rows').innerHTML = html;
+  document.getElementById('compare-card').style.display = 'block';
 }
 
 /* ═══ GRÁFICO ═══════════════════════════════════════════════ */

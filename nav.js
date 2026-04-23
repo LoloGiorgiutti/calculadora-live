@@ -429,6 +429,16 @@
   '.related-card:hover{border-color:var(--hi);transform:translateY(-2px)}',
   '.related-icon{font-size:24px;line-height:1}',
   '.related-name{font-size:12px;font-weight:600;line-height:1.3;color:var(--ink)}',
+
+  /* ── BOTÓN COMPARTIR ─────────────────────────────────────────────────────── */
+  '.share-btn{display:flex;align-items:center;justify-content:center;gap:8px;',
+  'padding:11px 16px;background:var(--surface);border:1.5px solid var(--border);',
+  'border-radius:var(--radius-sm);font-family:"DM Sans",sans-serif;font-size:13px;',
+  'font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;',
+  'width:100%;margin-bottom:0}',
+  '.share-btn:hover{border-color:var(--hi);color:var(--hi);background:var(--hi-soft)}',
+  '.share-btn.nv-copied{border-color:#16a34a !important;color:#16a34a !important}',
+  '.share-wrap{max-width:520px;margin:0 auto;padding:0 20px 24px}',
   ].join('');
 
   var st = document.createElement('style');
@@ -886,5 +896,51 @@
       e.preventDefault();
     }
   });
+
+  /* ── COMPARTIR ─────────────────────────────────────────────────────────────
+     Función global accesible desde cualquier página.
+     En móvil usa el Web Share API nativo (WhatsApp, Telegram, etc.)
+     En desktop copia la URL al portapapeles.                                 */
+  window.compartir = function() {
+    var url = window.location.href.split('?')[0];
+    var title = document.title;
+    if (navigator.share) {
+      navigator.share({ title: title, url: url }).catch(function(){});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(function() {
+        var btns = document.querySelectorAll('.share-btn');
+        btns.forEach(function(btn) {
+          var orig = btn.innerHTML;
+          btn.classList.add('nv-copied');
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ¡Enlace copiado!';
+          setTimeout(function() { btn.classList.remove('nv-copied'); btn.innerHTML = orig; }, 2000);
+        });
+      });
+    }
+  };
+
+  /* ── AUTO-INJECT BOTÓN COMPARTIR ───────────────────────────────────────────
+     Se inyecta automáticamente en todas las calculadoras (no en home,
+     páginas de categoría ni páginas legales).                                */
+  (function() {
+    var path = window.location.pathname.replace(/\/$/, '') || '/';
+    var skip = ['/', '/autos', '/finanzas', '/salud', '/fechas', '/matematica',
+                '/generadores', '/vida-numeros', '/mundial-2026', '/tests',
+                '/privacidad', '/terminos'];
+    if (skip.indexOf(path) !== -1) return;
+
+    var svgShare = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="flex-shrink:0"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>';
+    var wrap = document.createElement('div');
+    wrap.className = 'share-wrap';
+    wrap.innerHTML = '<button class="share-btn" onclick="compartir()">' + svgShare + ' Compartir</button>';
+
+    // Insertar antes del footer
+    var footer = document.querySelector('footer');
+    if (footer) {
+      footer.parentNode.insertBefore(wrap, footer);
+    } else {
+      document.body.appendChild(wrap);
+    }
+  })();
 
 })();

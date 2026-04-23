@@ -136,6 +136,14 @@
         <div class="stat-val" id="r-horas">—</div>
         <div class="stat-lbl" id="r-horas-lbl">Horas aprox.</div>
       </div>
+      <div class="stat-box">
+        <div class="stat-val" id="r-gen" style="font-size:15px">—</div>
+        <div class="stat-lbl">Generación</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="r-dia-nac" style="font-size:15px">—</div>
+        <div class="stat-lbl">Nació un</div>
+      </div>
     </div>
     <div id="birthday-box" class="birthday-box" style="display:none">
       <span class="birthday-icon">🎉</span>
@@ -335,7 +343,7 @@
     var nacM = nacSoloFecha.getMonth();
     var nacD = nacSoloFecha.getDate();
     var proxCump = new Date(ref.getFullYear(), nacM, nacD);
-    if(proxCump <= ref) proxCump.setFullYear(ref.getFullYear()+1);
+    if(proxCump < ref) proxCump.setFullYear(ref.getFullYear()+1);
     var diasHastaCump = Math.round((proxCump - ref) / (1000*60*60*24));
 
     bdBox.style.display='flex';
@@ -345,6 +353,20 @@
       document.getElementById('birthday-text').innerHTML =
         'Faltan <strong>' + diasHastaCump + ' día' + (diasHastaCump!==1?'s':'') + '</strong> para tu próximo cumpleaños';
     }
+
+    // Generación (basada en año de nacimiento, no en la edad calculada)
+    var nacYear = nacSoloFecha.getFullYear();
+    var gen = nacYear >= 2013 ? 'Generación Alpha'
+            : nacYear >= 1997 ? 'Generación Z'
+            : nacYear >= 1981 ? 'Millennial'
+            : nacYear >= 1965 ? 'Generación X'
+            : nacYear >= 1946 ? 'Baby Boomer'
+            : 'Silent Generation';
+    document.getElementById('r-gen').textContent = gen;
+
+    // Día de la semana de nacimiento
+    var DIAS_SEMANA = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+    document.getElementById('r-dia-nac').textContent = DIAS_SEMANA[nacSoloFecha.getDay()];
   }
 </script>
 <script src="/nav.js"></script>

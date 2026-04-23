@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Prototipo E · Nordic Quiet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2EDE4;
+    --bg-2:#E8E1D4;
+    --surface:#FBF8F2;
+    --ink:#1E2823;
+    --ink-2:#4A564F;
+    --ink-3:#8A9188;
+    --line:#D4CCBC;
+    --line-2:#E5DFD0;
+    --accent:#1F4A3A;
+    --accent-soft:#D9E5DD;
+    --terra:#B55A3A;
+    --terra-soft:#F0DED0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.008em}
+  a{color:inherit;text-decoration:none}
+  .serif{font-family:'Spectral',serif}
+
+  /* HEADER */
+  header{background:var(--bg);border-bottom:1px solid var(--line)}
+  .header-inner{max-width:1180px;margin:0 auto;padding:22px 32px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-family:'Spectral',serif;font-weight:400;font-size:24px;letter-spacing:-0.02em}
+  .logo .dot{color:var(--terra)}
+  .nav{display:flex;gap:32px;font-size:14px;color:var(--ink-2);font-weight:500}
+  .nav a{position:relative;padding:4px 0;transition:color .15s}
+  .nav a:hover{color:var(--accent)}
+  .nav a::after{content:'';position:absolute;bottom:-2px;left:50%;right:50%;height:1px;background:var(--accent);transition:all .2s}
+  .nav a:hover::after{left:0;right:0}
+
+  /* HERO */
+  .hero{max-width:1180px;margin:0 auto;padding:80px 32px 40px;display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:center}
+  .hero-kicker{font-family:'Spectral',serif;font-style:italic;font-size:15px;color:var(--terra);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+  .hero-kicker::before{content:'';width:36px;height:1px;background:var(--terra)}
+  h1{font-family:'Spectral',serif;font-size:68px;font-weight:300;line-height:1.05;letter-spacing:-0.03em;margin-bottom:24px}
+  h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+  .hero-lead{font-size:16px;color:var(--ink-2);line-height:1.65;margin-bottom:36px;max-width:440px}
+  .hero-search{max-width:440px;position:relative}
+  .hero-search input{width:100%;padding:17px 22px 17px 50px;background:var(--surface);border:1px solid var(--line);border-radius:99px;font-family:inherit;font-size:14px;color:var(--ink);outline:none;transition:all .15s}
+  .hero-search input:focus{border-color:var(--accent);background:#fff}
+  .hero-search::before{content:'';position:absolute;left:22px;top:50%;transform:translateY(-50%);width:16px;height:16px;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%231F4A3A" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>') no-repeat}
+
+  /* Hero visual decorativo */
+  .hero-visual{aspect-ratio:1/1.05;background:linear-gradient(160deg,var(--accent) 0%,#2A5C48 100%);border-radius:8px;padding:40px;color:#EFECE4;position:relative;overflow:hidden}
+  .hv-label{font-family:'Spectral',serif;font-style:italic;font-size:13px;opacity:.7;margin-bottom:16px}
+  .hv-num{font-family:'Spectral',serif;font-size:120px;font-weight:300;letter-spacing:-0.05em;line-height:1}
+  .hv-num .sm{font-size:48px;opacity:.6}
+  .hv-desc{font-family:'Spectral',serif;font-style:italic;font-size:18px;margin-top:20px;line-height:1.4;opacity:.85;max-width:240px}
+  .hv-corner{position:absolute;bottom:40px;right:40px;width:64px;height:64px;border:1px solid rgba(239,236,228,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Spectral',serif;font-style:italic;font-size:13px;opacity:.7}
+
+  /* CATEGORIES */
+  main{max-width:1180px;margin:0 auto;padding:60px 32px 100px}
+  .cat{margin-bottom:72px}
+  .cat-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+  .cat-label{font-family:'Spectral',serif;font-style:italic;font-size:15px;color:var(--terra);margin-bottom:8px}
+  .cat-title{font-family:'Spectral',serif;font-size:42px;font-weight:300;letter-spacing:-0.025em;line-height:1}
+  .cat-title em{font-style:italic;color:var(--accent)}
+  .cat-link{font-size:13px;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--accent-soft);border-radius:99px;transition:all .15s}
+  .cat-link:hover{background:var(--accent);color:#fff;gap:12px}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px 26px;transition:all .2s;cursor:pointer;display:flex;flex-direction:column;min-height:220px}
+  .card:hover{background:#fff;border-color:var(--accent);transform:translateY(-2px)}
+  .card-num{font-family:'Spectral',serif;font-style:italic;font-size:14px;color:var(--terra);margin-bottom:18px}
+  .card-title{font-family:'Spectral',serif;font-size:24px;font-weight:400;letter-spacing:-0.02em;line-height:1.2;margin-bottom:10px;color:var(--ink)}
+  .card-desc{font-size:13.5px;color:var(--ink-2);line-height:1.6;flex:1;margin-bottom:16px}
+  .card-more{font-family:'Spectral',serif;font-style:italic;font-size:14px;color:var(--accent);display:inline-flex;align-items:center;gap:6px;transition:gap .15s}
+  .card:hover .card-more{gap:10px}
+
+  /* CALC PREVIEW */
+  .calc-preview{margin-top:80px;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .calc-head{padding:48px 48px 36px;text-align:center;background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%);border-bottom:1px solid var(--line-2)}
+  .calc-kicker{font-family:'Spectral',serif;font-style:italic;font-size:15px;color:var(--terra);margin-bottom:16px}
+  .calc-h2{font-family:'Spectral',serif;font-size:44px;font-weight:300;letter-spacing:-0.025em;line-height:1.1;max-width:620px;margin:0 auto 14px}
+  .calc-h2 em{font-style:italic;color:var(--accent)}
+  .calc-dek{font-size:15px;color:var(--ink-2);max-width:460px;margin:0 auto;line-height:1.6}
+  .calc-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .calc-inputs{padding:44px}
+  .form-title{font-family:'Spectral',serif;font-style:italic;font-size:16px;color:var(--ink-3);margin-bottom:28px;display:flex;align-items:center;gap:12px}
+  .form-title::after{content:'';flex:1;height:1px;background:var(--line-2)}
+  .field{margin-bottom:22px}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-2);margin-bottom:8px}
+  .field input{width:100%;padding:14px 18px;background:var(--bg);border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:15px;font-weight:500;color:var(--ink);outline:none;transition:all .15s}
+  .field input:focus{border-color:var(--accent);background:#fff}
+
+  .calc-result{padding:44px;background:var(--accent);color:#EFECE4;display:flex;flex-direction:column;justify-content:center}
+  .res-lbl{font-family:'Spectral',serif;font-style:italic;font-size:15px;color:rgba(239,236,228,.7);margin-bottom:20px}
+  .res-big{font-family:'Spectral',serif;font-size:88px;font-weight:300;letter-spacing:-0.04em;line-height:.95;margin-bottom:14px}
+  .res-big .currency{font-size:34px;opacity:.6;vertical-align:top;margin-right:4px}
+  .res-sub{font-family:'Spectral',serif;font-style:italic;font-size:16px;line-height:1.5;margin-bottom:28px;opacity:.85}
+  .res-breakdown{border-top:1px solid rgba(239,236,228,.2);padding-top:20px}
+  .br-row{display:flex;justify-content:space-between;padding:9px 0;font-size:13.5px;color:rgba(239,236,228,.8)}
+  .br-row b{font-family:'Spectral',serif;font-size:16px;font-weight:400;color:#EFECE4}
+  .br-row.total{border-top:1px solid rgba(239,236,228,.2);margin-top:8px;padding-top:14px}
+  .br-row.total b{color:#F5D9C4;font-weight:500}
+
+  /* FOOTER */
+  footer{max-width:1180px;margin:0 auto;padding:48px 32px;border-top:1px solid var(--line);text-align:center}
+  .footer-logo{font-family:'Spectral',serif;font-weight:400;font-size:22px;margin-bottom:12px}
+  .footer-logo .dot{color:var(--terra)}
+  .footer-tag{font-family:'Spectral',serif;font-style:italic;font-size:13px;color:var(--ink-3);margin-bottom:18px}
+  .footer-links{font-size:12px;color:var(--ink-3)}
+  .footer-links a:hover{color:var(--accent)}
+
+  @media(max-width:820px){
+    .hero{grid-template-columns:1fr;gap:40px}
+    .hero-visual{max-width:360px;margin:0 auto}
+    h1{font-size:48px}
+    .cat-title{font-size:32px}
+    .calc-h2{font-size:32px}
+    .cards{grid-template-columns:1fr}
+    .calc-body{grid-template-columns:1fr}
+    .nav{display:none}
+    .res-big{font-size:62px}
+    .hv-num{font-size:80px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">Calculadora<span class="dot">.</span>live</a>
+    <nav class="nav">
+      <a href="#">Finanzas</a>
+      <a href="#">Salud</a>
+      <a href="#">Autos</a>
+      <a href="#">Fechas</a>
+      <a href="#">Matemática</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="hero-kicker">Cuarenta y tres calculadoras · Primavera 2026</div>
+    <h1>Una herramienta,<br><em>una respuesta clara.</em></h1>
+    <p class="hero-lead">Hacer cuentas debería sentirse como abrir una ventana: rápido, luminoso y sin fricción. Calculadoras pensadas para la vida en Argentina.</p>
+    <div class="hero-search">
+      <input placeholder="sueldo, inflación, IMC, aguinaldo…">
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hv-label">Sueldo neto promedio · abril 2026</div>
+    <div class="hv-num">83<span class="sm">%</span></div>
+    <div class="hv-desc">del bruto llega a tu bolsillo, luego de aportes.</div>
+    <div class="hv-corner">→</div>
+  </div>
+</section>
+
+<main>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div>
+        <div class="cat-label">Capítulo I</div>
+        <div class="cat-title">Finanzas <em>personales</em></div>
+      </div>
+      <a href="#" class="cat-link">Ver las 8 completas →</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-num">n.º 01 · la más usada</div>
+        <div class="card-title">Sueldo en mano</div>
+        <div class="card-desc">De bruto a neto con los descuentos vigentes: jubilación, obra social, PAMI y Ganancias si corresponde.</div>
+        <span class="card-more">Abrir →</span>
+      </div>
+      <div class="card">
+        <div class="card-num">n.º 02 · tendencia</div>
+        <div class="card-title">Inflación acumulada</div>
+        <div class="card-desc">Actualizá un monto entre dos fechas. Ve el efecto del IPC, dólar blue, oficial y UVA en paralelo.</div>
+        <span class="card-more">Abrir →</span>
+      </div>
+      <div class="card">
+        <div class="card-num">n.º 03 · temporada</div>
+        <div class="card-title">Aguinaldo (SAC)</div>
+        <div class="card-desc">Primera y segunda cuota del sueldo anual complementario, con proporcional.</div>
+        <span class="card-more">Abrir →</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div>
+        <div class="cat-label">Capítulo II</div>
+        <div class="cat-title">Salud y <em>bienestar</em></div>
+      </div>
+      <a href="#" class="cat-link">Ver las 6 completas →</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-num">n.º 01 · popular</div>
+        <div class="card-title">Índice de masa corporal</div>
+        <div class="card-desc">El IMC con interpretación clara según los rangos establecidos por la Organización Mundial de la Salud.</div>
+        <span class="card-more">Abrir →</span>
+      </div>
+      <div class="card">
+        <div class="card-num">n.º 02 · fitness</div>
+        <div class="card-title">Proteína diaria</div>
+        <div class="card-desc">Cuántos gramos de proteína necesitás por día según tu objetivo y nivel de actividad.</div>
+        <span class="card-more">Abrir →</span>
+      </div>
+      <div class="card">
+        <div class="card-num">n.º 03 · nutrición</div>
+        <div class="card-title">Metabolismo basal</div>
+        <div class="card-desc">BMR con la fórmula Mifflin-St Jeor, más el gasto calórico total (TDEE) ajustado.</div>
+        <span class="card-more">Abrir →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALC PREVIEW -->
+  <div class="calc-preview">
+    <div class="calc-head">
+      <div class="calc-kicker">Calculadora en vivo · Finanzas</div>
+      <h2 class="calc-h2">De tu bruto al bolsillo,<br><em>paso por paso.</em></h2>
+      <p class="calc-dek">Aplicamos los descuentos vigentes a tu sueldo bruto declarado y te mostramos, con claridad, cuánto efectivamente llega a tu cuenta.</p>
+    </div>
+    <div class="calc-body">
+      <div class="calc-inputs">
+        <div class="form-title">Tus datos</div>
+        <div class="field">
+          <label>Sueldo bruto mensual</label>
+          <input value="$ 1.850.000">
+        </div>
+        <div class="field">
+          <label>Ganancias (si aplica)</label>
+          <input value="$ 0">
+        </div>
+        <div class="field">
+          <label>Aportes totales</label>
+          <input value="17 %">
+        </div>
+      </div>
+      <div class="calc-result">
+        <div class="res-lbl">— Tu sueldo neto</div>
+        <div class="res-big"><span class="currency">$</span>1.535.500</div>
+        <div class="res-sub">«El 83 % del bruto llega efectivamente a tu cuenta, una vez aplicados los descuentos de ley.»</div>
+        <div class="res-breakdown">
+          <div class="br-row"><span>Bruto declarado</span><b>$1.850.000</b></div>
+          <div class="br-row"><span>— Jubilación · 11 %</span><b>−$203.500</b></div>
+          <div class="br-row"><span>— Obra social · 3 %</span><b>−$55.500</b></div>
+          <div class="br-row"><span>— PAMI · 3 %</span><b>−$55.500</b></div>
+          <div class="br-row total"><span>Neto en mano</span><b>$1.535.500</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-logo">Calculadora<span class="dot">.</span>live</div>
+  <div class="footer-tag">Hecho con calma, desde Buenos Aires · 2026</div>
+  <div class="footer-links">
+    <a href="#">Privacidad</a> &nbsp;·&nbsp; <a href="#">Términos</a> &nbsp;·&nbsp; <a href="#">Contacto</a>
+  </div>
+</footer>
+
+</body>
+</html>

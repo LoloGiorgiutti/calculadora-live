@@ -4,68 +4,107 @@
 <meta charset="UTF-8">
 <title>Prototipos · Calculadora.live</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:wght@400;500&family=Archivo+Black&family=Spectral:wght@400&family=Geist:wght@500&family=Instrument+Serif&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Inter',sans-serif;background:#F0F2F7;color:#080A12;min-height:100vh;padding:60px 24px}
-  .wrap{max-width:980px;margin:0 auto}
+  body{font-family:'Inter',sans-serif;background:#F0F2F7;color:#080A12;min-height:100vh;padding:60px 24px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1100px;margin:0 auto}
   h1{font-size:36px;font-weight:700;letter-spacing:-0.025em;margin-bottom:8px}
-  .sub{color:#60647A;font-size:16px;margin-bottom:40px}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .proto{background:#fff;border:1px solid #D4D8E6;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
-  .proto:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.08)}
-  .preview{height:180px;display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:600;letter-spacing:-0.04em}
-  .preview.a{background:linear-gradient(135deg,#FAFBFC 0%,#EBF2FF 100%);color:#0A1E3F}
-  .preview.b{background:#0A0A0B;color:#fff}
-  .preview.c{background:#F7F3EC;color:#9A2F1F;font-family:'Fraunces',serif;font-style:italic}
-  .info{padding:20px}
+  .sub{color:#60647A;font-size:16px;margin-bottom:40px;max-width:640px;line-height:1.55}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:40px}
+  .proto{background:#fff;border:1px solid #D4D8E6;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;transition:all .15s;display:flex;flex-direction:column}
+  .proto:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.09);border-color:#1A5FE8}
+  .preview{height:200px;display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:600;letter-spacing:-0.04em;position:relative;overflow:hidden}
+  .preview.a{background:linear-gradient(135deg,#FAFBFC 0%,#EBF2FF 100%);color:#0A1E3F;font-family:'Instrument Serif',serif;font-style:italic}
+  .preview.b{background:#0A0A0B;color:#fff;font-family:'Geist',sans-serif}
+  .preview.b::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:24px 24px}
+  .preview.c{background:#F7F3EC;color:#9A2F1F;font-family:'Fraunces',serif;font-style:italic;font-weight:500}
+  .preview.d{background:#FFFFFF;color:#0A0A0A;border-bottom:1px solid #EAEAEA;font-family:'Inter',sans-serif;font-weight:500}
+  .preview.e{background:#1F4A3A;color:#EFECE4;font-family:'Spectral',serif;font-weight:300;font-style:italic}
+  .preview.f{background:#FFE34D;color:#0E0E0C;font-family:'Archivo Black',sans-serif;font-size:84px}
+  .info{padding:22px;flex:1;display:flex;flex-direction:column}
   .label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1A5FE8;margin-bottom:8px}
-  .title{font-size:18px;font-weight:700;margin-bottom:6px}
-  .desc{font-size:13px;color:#60647A;line-height:1.5}
-  .meta{font-size:11px;color:#B4B8CC;margin-top:12px;display:flex;gap:12px}
-  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .title{font-size:18px;font-weight:700;margin-bottom:6px;letter-spacing:-0.015em}
+  .desc{font-size:13px;color:#60647A;line-height:1.5;flex:1;margin-bottom:14px}
+  .meta{font-size:11px;color:#8A8FA3;display:flex;gap:10px;flex-wrap:wrap}
+  .meta span{background:#F0F2F7;padding:3px 8px;border-radius:4px;border:1px solid #E5E8F0}
+  .note{margin-top:12px;padding:16px 18px;background:#fff;border:1px solid #D4D8E6;border-radius:12px;font-size:13px;color:#4A4E63;line-height:1.55}
+  .note b{color:#080A12}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>Prototipos de rediseño</h1>
-  <p class="sub">Tres direcciones visuales. Abrí cada uno, mirá, comparalo con el actual, y decime cuál te pide el cuerpo. También podés pedirme mezclas ("la A pero con tipografía de la C", etc.).</p>
+  <p class="sub">Seis direcciones visuales distintas. Abrí cada una, mirala en celular también (<kbd>⌘+Shift+M</kbd> en Chrome), compará, y decime cuál te tira más. También podés pedir mezclas o ajustes sobre cualquiera.</p>
 
   <div class="grid">
 
     <a href="a-fintech.html" class="proto">
       <div class="preview a">A</div>
       <div class="info">
-        <div class="label">Opción A</div>
-        <div class="title">Fintech Pro</div>
-        <div class="desc">Blanco limpio, azul corporativo, tipografía serif para números grandes. Sensación Wise / Mercury. Confiable, transmite "finanzas".</div>
-        <div class="meta"><span>Inter + Instrument Serif</span> · <span>Luminoso</span></div>
+        <div class="label">Opción A · Fintech Pro</div>
+        <div class="title">Confiable & bancario</div>
+        <div class="desc">Blanco limpio, azul corporativo, serif elegante para números. Sensación Wise / Mercury. Transmite seriedad financiera sin riesgos.</div>
+        <div class="meta"><span>Inter + Serif</span><span>Luminoso</span><span>Azul</span></div>
       </div>
     </a>
 
     <a href="b-tech.html" class="proto">
       <div class="preview b">B</div>
       <div class="info">
-        <div class="label">Opción B</div>
-        <div class="title">Tech Modern</div>
-        <div class="desc">Dark mode completo, grilla sutil, font monoespaciada para números. Sensación Linear / Vercel. Moderno, atrae desarrolladores y gente joven.</div>
-        <div class="meta"><span>Geist + Geist Mono</span> · <span>Oscuro</span></div>
+        <div class="label">Opción B · Tech Modern</div>
+        <div class="title">Oscuro & moderno</div>
+        <div class="desc">Dark mode completo, grilla sutil, font monoespaciada para los números. Sensación Linear / Vercel. Joven y tecnológico.</div>
+        <div class="meta"><span>Geist + Mono</span><span>Oscuro</span><span>Violeta</span></div>
       </div>
     </a>
 
     <a href="c-editorial.html" class="proto">
       <div class="preview c">C</div>
       <div class="info">
-        <div class="label">Opción C</div>
-        <div class="title">Editorial Premium</div>
-        <div class="desc">Tipografía serif, beige cálido, acento rojo vino. Sensación The Economist / NYT. Diferenciador, muy "serio", memorable.</div>
-        <div class="meta"><span>Fraunces + Inter</span> · <span>Cálido</span></div>
+        <div class="label">Opción C · Editorial Premium</div>
+        <div class="title">Revista clásica</div>
+        <div class="desc">Serif editorial, beige cálido, rojo vino. Sensación The Economist / NYT. Muy diferenciador y memorable, único en el rubro.</div>
+        <div class="meta"><span>Fraunces</span><span>Cálido</span><span>Rojo vino</span></div>
+      </div>
+    </a>
+
+    <a href="d-minimal.html" class="proto">
+      <div class="preview d">D</div>
+      <div class="info">
+        <div class="label">Opción D · Minimal Mono</div>
+        <div class="title">Puro & minimalista</div>
+        <div class="desc">Blanco puro, negro, monoespaciada para todo lo numérico. Sensación Apple product page / Notion. Máxima seriedad, cero decoración.</div>
+        <div class="meta"><span>Inter + JetBrains</span><span>Blanco</span><span>Negro</span></div>
+      </div>
+    </a>
+
+    <a href="e-nordic.html" class="proto">
+      <div class="preview e">E</div>
+      <div class="info">
+        <div class="label">Opción E · Nordic Quiet</div>
+        <div class="title">Calma & artesanal</div>
+        <div class="desc">Beige arena + verde bosque + terracota. Tipografía serif suave. Sensación Aesop / Kinfolk. Premium pero cálido, no agresivo.</div>
+        <div class="meta"><span>Spectral + DM Sans</span><span>Tierra</span><span>Verde</span></div>
+      </div>
+    </a>
+
+    <a href="f-bold.html" class="proto">
+      <div class="preview f">F</div>
+      <div class="info">
+        <div class="label">Opción F · Bold Magazine</div>
+        <div class="title">Impacto visual</div>
+        <div class="desc">Tipografía enorme, amarillo eléctrico + negro, bordes gruesos. Sensación Monocle / Pitchfork. Imposible ignorar, muy argentino-moderno.</div>
+        <div class="meta"><span>Archivo Black</span><span>Amarillo</span><span>Contraste fuerte</span></div>
       </div>
     </a>
 
   </div>
 
-  <p class="sub" style="margin-top:40px;font-size:14px">💡 Los tres muestran la <strong>nueva estructura de home</strong> (top 3 por categoría + link a la completa) y un <strong>preview de calculadora</strong> con el sueldo-neto como ejemplo.</p>
+  <div class="note">
+    💡 <b>Cada prototipo muestra:</b> home con top-3 por categoría + link "ver todas" + preview de la calculadora de sueldo-neto. Son solo estáticos (no funcionan los inputs) — es para evaluar la dirección visual. Una vez elegido el ganador (o una mezcla) lo aplicamos al sitio completo.
+  </div>
 </div>
 </body>
 </html>

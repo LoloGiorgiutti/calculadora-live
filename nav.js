@@ -934,9 +934,12 @@
     wrap.className = 'share-wrap';
     wrap.innerHTML = '<button class="share-btn" onclick="compartir()">' + svgShare + ' Compartir</button>';
 
-    // Insertar antes del footer
+    // Insertar antes de las calculadoras relacionadas (o antes del footer como fallback)
+    var related = document.querySelector('.related-section');
     var footer = document.querySelector('footer');
-    if (footer) {
+    if (related) {
+      related.parentNode.insertBefore(wrap, related);
+    } else if (footer) {
       footer.parentNode.insertBefore(wrap, footer);
     } else {
       document.body.appendChild(wrap);

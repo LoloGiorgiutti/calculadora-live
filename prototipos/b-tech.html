@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Prototipo B · Tech Modern</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0B;
+    --surface:#121214;
+    --surface-2:#1A1A1D;
+    --ink:#FAFAFA;
+    --ink-2:#A0A0A8;
+    --ink-3:#5A5A62;
+    --line:#26262B;
+    --line-2:#1E1E22;
+    --accent:#4F46E5;
+    --accent-glow:rgba(79,70,229,.25);
+    --pos:#34D399;
+    --neg:#F87171;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Geist',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:'Geist Mono',monospace;font-feature-settings:'tnum'}
+
+  /* Subtle grid bg */
+  body::before{
+    content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%);
+  }
+  body>*{position:relative;z-index:1}
+
+  /* HEADER */
+  header{border-bottom:1px solid var(--line);background:rgba(10,10,11,.75);backdrop-filter:blur(12px);position:sticky;top:0;z-index:10}
+  .header-inner{max-width:1200px;margin:0 auto;padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-size:15px;font-weight:600;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
+  .logo-dot{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#7C3AED);display:flex;align-items:center;justify-content:center;font-family:'Geist Mono';font-size:12px;font-weight:600;color:#fff}
+  .nav{display:flex;gap:4px}
+  .nav a{padding:6px 12px;border-radius:6px;font-size:13px;color:var(--ink-2);transition:all .15s}
+  .nav a:hover{background:var(--surface-2);color:var(--ink)}
+  .header-right{display:flex;gap:8px;align-items:center}
+  .kbd-btn{padding:6px 10px;background:var(--surface);border:1px solid var(--line);border-radius:7px;font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:8px;cursor:pointer;transition:border-color .15s}
+  .kbd-btn:hover{border-color:var(--ink-3)}
+  .kbd-btn kbd{background:var(--surface-2);padding:1px 5px;border-radius:3px;font-family:'Geist Mono';font-size:10px;color:var(--ink-2)}
+
+  /* HERO */
+  .hero{max-width:1200px;margin:0 auto;padding:80px 28px 40px;text-align:center;position:relative}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 7px;background:var(--surface);border:1px solid var(--line);border-radius:99px;font-size:12px;color:var(--ink-2);margin-bottom:32px;font-family:'Geist Mono'}
+  .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--pos);box-shadow:0 0 8px var(--pos)}
+  h1{font-size:68px;font-weight:600;line-height:1.02;letter-spacing:-0.045em;margin-bottom:20px}
+  h1 .grad{background:linear-gradient(135deg,#fff 20%,#8B8B92 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-p{font-size:17px;color:var(--ink-2);max-width:540px;margin:0 auto 40px;line-height:1.55}
+  .search-wrap{max-width:500px;margin:0 auto;position:relative}
+  .search-wrap input{width:100%;padding:14px 120px 14px 44px;background:var(--surface);border:1px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;color:var(--ink);outline:none;transition:all .15s}
+  .search-wrap input::placeholder{color:var(--ink-3)}
+  .search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-glow)}
+  .search-wrap::before{content:'';position:absolute;left:16px;top:50%;transform:translateY(-50%);width:16px;height:16px;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%235A5A62" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>') no-repeat}
+  .search-wrap .hint{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:'Geist Mono';font-size:11px;color:var(--ink-3);padding:3px 7px;background:var(--surface-2);border-radius:5px;border:1px solid var(--line)}
+
+  /* POPULAR CHIPS */
+  .pop{max-width:1200px;margin:0 auto;padding:0 28px 56px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+  .chip{padding:6px 14px;background:var(--surface);border:1px solid var(--line);border-radius:99px;font-size:12px;color:var(--ink-2);cursor:pointer;transition:all .15s}
+  .chip:hover{border-color:var(--accent);color:var(--ink)}
+  .chip .mono{color:var(--ink-3);margin-left:6px}
+
+  /* CATEGORIES */
+  main{max-width:1200px;margin:0 auto;padding:0 28px 80px}
+  .cat{margin-bottom:48px}
+  .cat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+  .cat-title-wrap{display:flex;align-items:baseline;gap:14px}
+  .cat-title{font-size:20px;font-weight:600;letter-spacing:-0.02em}
+  .cat-count{font-family:'Geist Mono';font-size:12px;color:var(--ink-3);padding:2px 8px;background:var(--surface);border:1px solid var(--line);border-radius:5px}
+  .cat-link{font-size:13px;color:var(--ink-2);display:flex;align-items:center;gap:6px;transition:color .15s;font-weight:500}
+  .cat-link:hover{color:var(--accent)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden}
+  .card::before{content:'';position:absolute;inset:0;background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%),rgba(79,70,229,.08),transparent 40%);opacity:0;transition:opacity .2s}
+  .card:hover{border-color:#3A3A42;background:var(--surface-2)}
+  .card:hover::before{opacity:1}
+  .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .card-tag{font-family:'Geist Mono';font-size:10px;color:var(--accent);padding:2px 7px;background:rgba(79,70,229,.12);border-radius:4px;text-transform:uppercase;letter-spacing:.05em}
+  .card-arrow{color:var(--ink-3);transition:all .15s}
+  .card:hover .card-arrow{color:var(--ink);transform:translate(2px,-2px)}
+  .card-title{font-size:15px;font-weight:600;margin-bottom:4px;letter-spacing:-0.01em}
+  .card-desc{font-size:13px;color:var(--ink-2);line-height:1.5}
+
+  /* CALC PREVIEW */
+  .calc-preview{margin-top:72px;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .calc-head{padding:28px 32px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .calc-breadcrumb{font-family:'Geist Mono';font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+  .calc-breadcrumb .sep{opacity:.5}
+  .calc-breadcrumb .curr{color:var(--ink)}
+  .calc-actions{display:flex;gap:8px}
+  .calc-btn{padding:6px 10px;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;font-size:12px;color:var(--ink-2);cursor:pointer;font-family:inherit}
+  .calc-btn:hover{border-color:var(--ink-3);color:var(--ink)}
+  .calc-h2{font-size:28px;font-weight:600;letter-spacing:-0.025em;padding:28px 32px 8px}
+  .calc-sub{padding:0 32px 24px;color:var(--ink-2);font-size:14px;border-bottom:1px solid var(--line)}
+  .calc-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .calc-inputs{padding:28px 32px;border-right:1px solid var(--line)}
+  .field{margin-bottom:18px}
+  .field-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+  .field label{font-size:12px;font-weight:500;color:var(--ink-2)}
+  .field-hint{font-family:'Geist Mono';font-size:11px;color:var(--ink-3)}
+  .field input{width:100%;padding:11px 14px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-family:'Geist Mono';font-size:15px;font-weight:500;color:var(--ink);outline:none;transition:border-color .15s}
+  .field input:focus{border-color:var(--accent)}
+  .calc-result{padding:28px 32px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(135deg,var(--surface) 0%,var(--surface-2) 100%);position:relative}
+  .calc-result::before{content:'';position:absolute;top:28px;right:32px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);filter:blur(30px)}
+  .res-lbl{font-family:'Geist Mono';font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  .res-big{font-family:'Geist Mono';font-size:56px;font-weight:500;letter-spacing:-0.03em;line-height:1;margin-bottom:10px;display:flex;align-items:baseline;gap:4px}
+  .res-curr{font-size:22px;color:var(--ink-3);font-weight:400}
+  .res-delta{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;background:rgba(52,211,153,.12);color:var(--pos);border-radius:5px;font-size:12px;font-family:'Geist Mono';margin-bottom:20px;align-self:flex-start}
+  .res-breakdown{border-top:1px solid var(--line);padding-top:16px;margin-top:6px}
+  .br-row{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;color:var(--ink-2);font-family:'Geist Mono'}
+  .br-row b{font-weight:500;color:var(--ink)}
+  .br-row.neg b{color:var(--neg)}
+  .br-row.pos b{color:var(--pos)}
+
+  /* FOOTER */
+  footer{max-width:1200px;margin:0 auto;padding:36px 28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);font-family:'Geist Mono'}
+  footer a:hover{color:var(--ink)}
+
+  @media(max-width:720px){
+    h1{font-size:44px}
+    .cards{grid-template-columns:1fr}
+    .calc-body{grid-template-columns:1fr}
+    .calc-inputs{border-right:0;border-bottom:1px solid var(--line)}
+    .nav{display:none}
+    .res-big{font-size:42px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo"><span class="logo-dot">c</span>calculadora<span style="color:var(--ink-3)">.live</span></a>
+    <nav class="nav">
+      <a href="#">Finanzas</a>
+      <a href="#">Salud</a>
+      <a href="#">Autos</a>
+      <a href="#">Fechas</a>
+      <a href="#">Matemática</a>
+      <a href="#">Tests</a>
+    </nav>
+    <div class="header-right">
+      <div class="kbd-btn">Buscar <kbd>⌘K</kbd></div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow"><span class="eyebrow-dot"></span>43 calculadoras activas · v2.0</div>
+  <h1><span class="grad">Calculá cualquier cosa.<br>Al instante.</span></h1>
+  <p class="hero-p">Herramientas rápidas para sueldos, inflación, salud, autos y fechas. Sin ads invasivas, sin registro, sin fricción.</p>
+  <div class="search-wrap">
+    <input placeholder="sueldo neto, imc, inflación…">
+    <span class="hint">⌘K</span>
+  </div>
+</section>
+
+<div class="pop">
+  <div class="chip">Sueldo neto <span class="mono">·  12k</span></div>
+  <div class="chip">IMC <span class="mono">·  8.2k</span></div>
+  <div class="chip">Inflación <span class="mono">·  6.5k</span></div>
+  <div class="chip">Aguinaldo <span class="mono">·  5.1k</span></div>
+  <div class="chip">Nafta <span class="mono">·  4.8k</span></div>
+  <div class="chip">Días entre fechas <span class="mono">·  3.2k</span></div>
+</div>
+
+<main>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div class="cat-title-wrap">
+        <div class="cat-title">Finanzas</div>
+        <div class="cat-count">08</div>
+      </div>
+      <a href="#" class="cat-link">Ver todas <span>→</span></a>
+    </div>
+    <div class="cards">
+      <a href="#" class="card">
+        <div class="card-head">
+          <div class="card-tag">Popular</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-title">Sueldo en mano</div>
+        <div class="card-desc">Bruto → neto con descuentos reales 2026.</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-head">
+          <div class="card-tag">Trending</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-title">Inflación acumulada</div>
+        <div class="card-desc">IPC, dólar blue, oficial y UVA.</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-head">
+          <div class="card-tag">Temporada</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-title">Aguinaldo (SAC)</div>
+        <div class="card-desc">Primera y segunda cuota.</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div class="cat-title-wrap">
+        <div class="cat-title">Salud y fitness</div>
+        <div class="cat-count">06</div>
+      </div>
+      <a href="#" class="cat-link">Ver todas <span>→</span></a>
+    </div>
+    <div class="cards">
+      <a href="#" class="card">
+        <div class="card-head">
+          <div class="card-tag">Top</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-title">IMC</div>
+        <div class="card-desc">Índice de masa corporal + interpretación.</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-head">
+          <div class="card-tag">Fitness</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-title">Proteína diaria</div>
+        <div class="card-desc">Según objetivo y nivel de actividad.</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-head">
+          <div class="card-tag">Nutrición</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-title">BMR + TDEE</div>
+        <div class="card-desc">Metabolismo basal + gasto total.</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div class="cat-title-wrap">
+        <div class="cat-title">Autos</div>
+        <div class="cat-count">03</div>
+      </div>
+      <a href="#" class="cat-link">Ver todas <span>→</span></a>
+    </div>
+    <div class="cards">
+      <a href="#" class="card">
+        <div class="card-head">
+          <div class="card-tag">Viajes</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-title">Costo por viaje</div>
+        <div class="card-desc">Km × consumo × precio nafta.</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-head">
+          <div class="card-tag">Impuesto</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-title">Patente 2026</div>
+        <div class="card-desc">Tabla actualizada por provincia.</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-head">
+          <div class="card-tag">Service</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-title">Service programado</div>
+        <div class="card-desc">Próximo service + costo estimado.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- CALC PREVIEW -->
+  <div class="calc-preview">
+    <div class="calc-head">
+      <div class="calc-breadcrumb">
+        <span>finanzas</span>
+        <span class="sep">/</span>
+        <span class="curr">sueldo-neto</span>
+      </div>
+      <div class="calc-actions">
+        <div class="calc-btn">Compartir</div>
+        <div class="calc-btn">Guardar</div>
+      </div>
+    </div>
+    <h2 class="calc-h2">Sueldo neto en mano</h2>
+    <div class="calc-sub">Descuentos jubilatorios + obra social + PAMI sobre el bruto declarado.</div>
+    <div class="calc-body">
+      <div class="calc-inputs">
+        <div class="field">
+          <div class="field-row">
+            <label>Sueldo bruto</label>
+            <span class="field-hint">ARS mensual</span>
+          </div>
+          <input value="1850000">
+        </div>
+        <div class="field">
+          <div class="field-row">
+            <label>Ganancias</label>
+            <span class="field-hint">si aplica</span>
+          </div>
+          <input value="0">
+        </div>
+        <div class="field">
+          <div class="field-row">
+            <label>Aportes</label>
+            <span class="field-hint">% sobre bruto</span>
+          </div>
+          <input value="17">
+        </div>
+      </div>
+      <div class="calc-result">
+        <div class="res-lbl">Neto en mano</div>
+        <div class="res-big"><span class="res-curr">$</span>1.535.500</div>
+        <div class="res-delta">▲ 83% del bruto</div>
+        <div class="res-breakdown">
+          <div class="br-row"><span>bruto</span><b>1.850.000</b></div>
+          <div class="br-row neg"><span>jubilación · 11%</span><b>−203.500</b></div>
+          <div class="br-row neg"><span>obra social · 3%</span><b>−55.500</b></div>
+          <div class="br-row neg"><span>pami · 3%</span><b>−55.500</b></div>
+          <div class="br-row pos"><span>neto mensual</span><b>1.535.500</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div>© 2026 calculadora.live · built in BA</div>
+  <div><a href="#">privacy</a> · <a href="#">terms</a> · <a href="#">github</a></div>
+</footer>
+
+</body>
+</html>

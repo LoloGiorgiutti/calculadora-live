@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Prototipos · Calculadora.live</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:#F0F2F7;color:#080A12;min-height:100vh;padding:60px 24px}
+  .wrap{max-width:980px;margin:0 auto}
+  h1{font-size:36px;font-weight:700;letter-spacing:-0.025em;margin-bottom:8px}
+  .sub{color:#60647A;font-size:16px;margin-bottom:40px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .proto{background:#fff;border:1px solid #D4D8E6;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
+  .proto:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.08)}
+  .preview{height:180px;display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:600;letter-spacing:-0.04em}
+  .preview.a{background:linear-gradient(135deg,#FAFBFC 0%,#EBF2FF 100%);color:#0A1E3F}
+  .preview.b{background:#0A0A0B;color:#fff}
+  .preview.c{background:#F7F3EC;color:#9A2F1F;font-family:'Fraunces',serif;font-style:italic}
+  .info{padding:20px}
+  .label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1A5FE8;margin-bottom:8px}
+  .title{font-size:18px;font-weight:700;margin-bottom:6px}
+  .desc{font-size:13px;color:#60647A;line-height:1.5}
+  .meta{font-size:11px;color:#B4B8CC;margin-top:12px;display:flex;gap:12px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Prototipos de rediseño</h1>
+  <p class="sub">Tres direcciones visuales. Abrí cada uno, mirá, comparalo con el actual, y decime cuál te pide el cuerpo. También podés pedirme mezclas ("la A pero con tipografía de la C", etc.).</p>
+
+  <div class="grid">
+
+    <a href="a-fintech.html" class="proto">
+      <div class="preview a">A</div>
+      <div class="info">
+        <div class="label">Opción A</div>
+        <div class="title">Fintech Pro</div>
+        <div class="desc">Blanco limpio, azul corporativo, tipografía serif para números grandes. Sensación Wise / Mercury. Confiable, transmite "finanzas".</div>
+        <div class="meta"><span>Inter + Instrument Serif</span> · <span>Luminoso</span></div>
+      </div>
+    </a>
+
+    <a href="b-tech.html" class="proto">
+      <div class="preview b">B</div>
+      <div class="info">
+        <div class="label">Opción B</div>
+        <div class="title">Tech Modern</div>
+        <div class="desc">Dark mode completo, grilla sutil, font monoespaciada para números. Sensación Linear / Vercel. Moderno, atrae desarrolladores y gente joven.</div>
+        <div class="meta"><span>Geist + Geist Mono</span> · <span>Oscuro</span></div>
+      </div>
+    </a>
+
+    <a href="c-editorial.html" class="proto">
+      <div class="preview c">C</div>
+      <div class="info">
+        <div class="label">Opción C</div>
+        <div class="title">Editorial Premium</div>
+        <div class="desc">Tipografía serif, beige cálido, acento rojo vino. Sensación The Economist / NYT. Diferenciador, muy "serio", memorable.</div>
+        <div class="meta"><span>Fraunces + Inter</span> · <span>Cálido</span></div>
+      </div>
+    </a>
+
+  </div>
+
+  <p class="sub" style="margin-top:40px;font-size:14px">💡 Los tres muestran la <strong>nueva estructura de home</strong> (top 3 por categoría + link a la completa) y un <strong>preview de calculadora</strong> con el sueldo-neto como ejemplo.</p>
+</div>
+</body>
+</html>

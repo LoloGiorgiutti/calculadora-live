@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Prototipo A · Fintech Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFBFC;
+    --surface:#FFFFFF;
+    --ink:#0A1E3F;
+    --ink-2:#3C4858;
+    --ink-3:#8B95A5;
+    --line:#E5E9EF;
+    --line-2:#F0F3F7;
+    --accent:#0066FF;
+    --accent-soft:#EBF2FF;
+    --accent-dark:#0050CC;
+    --pos:#00875A;
+    --pos-soft:#E8F5EE;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+  a{color:inherit;text-decoration:none}
+
+  /* HEADER */
+  header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+  .header-inner{max-width:1180px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em}
+  .logo b{font-weight:800}
+  .logo i{color:var(--accent);font-style:normal}
+  .nav{display:flex;gap:28px;font-size:14px;font-weight:500;color:var(--ink-2)}
+  .nav a:hover{color:var(--ink)}
+  .cta-search{padding:8px 14px;border:1px solid var(--line);border-radius:8px;font-size:13px;color:var(--ink-3);display:flex;align-items:center;gap:8px;cursor:pointer}
+  .cta-search:hover{border-color:var(--ink-3)}
+  .cta-search kbd{background:var(--line-2);padding:2px 6px;border-radius:4px;font-size:11px;font-family:inherit}
+
+  /* HERO */
+  .hero{max-width:1180px;margin:0 auto;padding:72px 32px 48px;text-align:center}
+  .eyebrow{display:inline-block;padding:5px 12px;background:var(--accent-soft);color:var(--accent);border-radius:99px;font-size:12px;font-weight:600;margin-bottom:24px}
+  h1{font-family:'Instrument Serif',serif;font-size:64px;font-weight:400;line-height:1.05;letter-spacing:-0.035em;margin-bottom:18px;color:var(--ink)}
+  h1 i{font-style:italic;color:var(--accent)}
+  .hero p{font-size:18px;color:var(--ink-2);max-width:560px;margin:0 auto 36px;line-height:1.55;font-weight:400}
+  .search-big{max-width:520px;margin:0 auto;position:relative}
+  .search-big input{width:100%;padding:18px 20px 18px 52px;border:1.5px solid var(--line);border-radius:14px;font-family:inherit;font-size:15px;background:var(--surface);color:var(--ink);outline:none;transition:all .15s;box-shadow:0 1px 3px rgba(10,30,63,.04)}
+  .search-big input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+  .search-big::before{content:'';position:absolute;left:20px;top:50%;transform:translateY(-50%);width:18px;height:18px;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%238B95A5" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>') no-repeat}
+
+  /* STATS STRIP */
+  .stats{max-width:1180px;margin:0 auto;padding:0 32px 56px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .stat{background:var(--surface);padding:22px 24px}
+  .stat-num{font-family:'Instrument Serif',serif;font-size:34px;font-weight:400;letter-spacing:-0.03em;color:var(--ink);line-height:1}
+  .stat-lbl{font-size:12px;color:var(--ink-3);margin-top:6px;font-weight:500;letter-spacing:.01em}
+
+  /* CATEGORIES */
+  main{max-width:1180px;margin:0 auto;padding:0 32px 80px}
+  .cat-block{margin-bottom:56px}
+  .cat-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .cat-title{font-size:22px;font-weight:700;letter-spacing:-0.022em}
+  .cat-title span{color:var(--ink-3);font-weight:400;margin-left:8px;font-size:14px}
+  .cat-link{font-size:13px;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:4px;transition:gap .15s}
+  .cat-link:hover{gap:8px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;transition:all .15s;cursor:pointer;position:relative;overflow:hidden}
+  .card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,102,255,.06)}
+  .card-label{font-size:11px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+  .card-title{font-size:17px;font-weight:600;letter-spacing:-0.015em;margin-bottom:6px;color:var(--ink)}
+  .card-desc{font-size:13px;color:var(--ink-3);line-height:1.5}
+  .card-arrow{position:absolute;right:20px;bottom:20px;color:var(--ink-3);transition:color .15s,transform .15s}
+  .card:hover .card-arrow{color:var(--accent);transform:translateX(3px)}
+
+  /* CALC PREVIEW */
+  .calc-preview{margin-top:80px;background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+  .calc-head{padding:32px 40px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FAFBFC 0%,#FFFFFF 100%)}
+  .calc-eyebrow{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+  .calc-h2{font-family:'Instrument Serif',serif;font-size:36px;font-weight:400;letter-spacing:-0.025em;color:var(--ink);line-height:1.15}
+  .calc-h2 i{font-style:italic;color:var(--accent)}
+  .calc-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .calc-inputs{padding:36px 40px;border-right:1px solid var(--line)}
+  .field{margin-bottom:22px}
+  .field label{display:block;font-size:12px;font-weight:600;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+  .field input,.field select{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:16px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  .field input:focus,.field select:focus{border-color:var(--accent)}
+  .calc-result{padding:36px 40px;background:var(--bg);display:flex;flex-direction:column;justify-content:center}
+  .res-lbl{font-size:12px;font-weight:600;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}
+  .res-big{font-family:'Instrument Serif',serif;font-size:68px;font-weight:400;letter-spacing:-0.035em;color:var(--ink);line-height:1;margin-bottom:8px}
+  .res-big .currency{font-size:28px;color:var(--ink-3);vertical-align:top;margin-right:4px}
+  .res-sub{font-size:14px;color:var(--ink-2);margin-bottom:20px}
+  .res-breakdown{border-top:1px solid var(--line);padding-top:18px;margin-top:4px}
+  .br-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;color:var(--ink-2)}
+  .br-row b{font-weight:600;color:var(--ink)}
+  .br-row.neg b{color:#D92D20}
+  .br-row.pos b{color:var(--pos)}
+
+  /* FOOTER */
+  footer{max-width:1180px;margin:0 auto;padding:40px 32px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:13px;color:var(--ink-3)}
+  footer a:hover{color:var(--ink)}
+
+  @media(max-width:720px){
+    .cards{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    h1{font-size:42px}
+    .calc-body{grid-template-columns:1fr}
+    .calc-inputs{border-right:0;border-bottom:1px solid var(--line)}
+    .res-big{font-size:52px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo"><b>Calculadora</b><i>.live</i></a>
+    <nav class="nav">
+      <a href="#">Finanzas</a>
+      <a href="#">Salud</a>
+      <a href="#">Autos</a>
+      <a href="#">Fechas</a>
+      <a href="#">Matemática</a>
+    </nav>
+    <div class="cta-search">Buscar calculadora <kbd>⌘K</kbd></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">+40 calculadoras · Gratis · Sin registro</div>
+  <h1>Calculadoras <i>que suman</i><br>en tu día a día.</h1>
+  <p>Desde tu sueldo neto hasta cuánta nafta te rinde el auto. Herramientas precisas, rápidas y pensadas para Argentina.</p>
+  <div class="search-big">
+    <input placeholder="Buscá: sueldo, IMC, inflación, aguinaldo…">
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">43</div>
+    <div class="stat-lbl">Calculadoras</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">9</div>
+    <div class="stat-lbl">Categorías</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">0s</div>
+    <div class="stat-lbl">Tiempo de carga</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100%</div>
+    <div class="stat-lbl">Gratis, siempre</div>
+  </div>
+</div>
+
+<main>
+
+  <div class="cat-block">
+    <div class="cat-head">
+      <div class="cat-title">Finanzas <span>8 calculadoras</span></div>
+      <a href="#" class="cat-link">Ver todas →</a>
+    </div>
+    <div class="cards">
+      <a href="#" class="card">
+        <div class="card-label">Más usada</div>
+        <div class="card-title">Sueldo en mano</div>
+        <div class="card-desc">De bruto a neto con descuentos reales 2026.</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-label">Tendencia</div>
+        <div class="card-title">Inflación acumulada</div>
+        <div class="card-desc">IPC, dólar blue, oficial y UVA en paralelo.</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-label">Mensual</div>
+        <div class="card-title">Aguinaldo (SAC)</div>
+        <div class="card-desc">Junio y diciembre, con proporcional.</div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="cat-block">
+    <div class="cat-head">
+      <div class="cat-title">Salud y fitness <span>6 calculadoras</span></div>
+      <a href="#" class="cat-link">Ver todas →</a>
+    </div>
+    <div class="cards">
+      <a href="#" class="card">
+        <div class="card-label">Popular</div>
+        <div class="card-title">Índice de masa corporal</div>
+        <div class="card-desc">IMC con interpretación OMS.</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-label">Deporte</div>
+        <div class="card-title">Proteína diaria</div>
+        <div class="card-desc">Según tu objetivo y nivel de actividad.</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-label">Nutrición</div>
+        <div class="card-title">Metabolismo basal</div>
+        <div class="card-desc">BMR + calorías de mantenimiento.</div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="cat-block">
+    <div class="cat-head">
+      <div class="cat-title">Autos <span>3 calculadoras</span></div>
+      <a href="#" class="cat-link">Ver todas →</a>
+    </div>
+    <div class="cards">
+      <a href="#" class="card">
+        <div class="card-label">Nafta</div>
+        <div class="card-title">Costo por viaje</div>
+        <div class="card-desc">Km, consumo y precio por litro.</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-label">Impuesto</div>
+        <div class="card-title">Patente 2026</div>
+        <div class="card-desc">Tabla actualizada por provincia.</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#" class="card">
+        <div class="card-label">Mantenimiento</div>
+        <div class="card-title">Service programado</div>
+        <div class="card-desc">Próximos km y costo estimado.</div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- CALC PREVIEW -->
+  <div class="calc-preview">
+    <div class="calc-head">
+      <div class="calc-eyebrow">Ejemplo · Finanzas</div>
+      <div class="calc-h2">Calculá tu sueldo <i>en mano</i>.</div>
+    </div>
+    <div class="calc-body">
+      <div class="calc-inputs">
+        <div class="field">
+          <label>Sueldo bruto mensual</label>
+          <input value="1.850.000" type="text">
+        </div>
+        <div class="field">
+          <label>Aportes personales</label>
+          <input value="17%" type="text">
+        </div>
+        <div class="field">
+          <label>Ganancias (si aplica)</label>
+          <input value="0" type="text">
+        </div>
+      </div>
+      <div class="calc-result">
+        <div class="res-lbl">Tu sueldo en mano</div>
+        <div class="res-big"><span class="currency">$</span>1.535.500</div>
+        <div class="res-sub">Equivale al 83% del bruto</div>
+        <div class="res-breakdown">
+          <div class="br-row"><span>Bruto</span><b>$1.850.000</b></div>
+          <div class="br-row neg"><span>Jubilación (11%)</span><b>−$203.500</b></div>
+          <div class="br-row neg"><span>Obra social (3%)</span><b>−$55.500</b></div>
+          <div class="br-row neg"><span>PAMI (3%)</span><b>−$55.500</b></div>
+          <div class="br-row pos"><span>Neto mensual</span><b>$1.535.500</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div>© 2026 Calculadora.live · Hecho en Argentina</div>
+  <div><a href="#">Privacidad</a> · <a href="#">Términos</a></div>
+</footer>
+
+</body>
+</html>

@@ -55,6 +55,10 @@ header{background:var(--surface);border-bottom:1px solid var(--border);padding:0
 .compare-val{font-weight:700;color:var(--ink);}
 .compare-val.hi{color:var(--hi);}
 
+.chart-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px;display:none;}
+.chart-title{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.chart-sub{font-size:11px;color:var(--ink-faint);margin-bottom:12px;}
+
 footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);}
 @media(max-width:400px){.result-rows{grid-template-columns:1fr;}}
 </style>
@@ -147,6 +151,13 @@ footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);bord
       <span class="compare-val hi" id="c-diff">—</span>
     </div>
   </div>
+
+  <!-- Gráfico de progreso -->
+  <div class="chart-card" id="chart-card">
+    <div class="chart-title">Progreso mes a mes</div>
+    <div class="chart-sub" id="chart-sub">Crecimiento de tus ahorros hasta la meta</div>
+    <div id="chart-svg-wrap"></div>
+  </div>
 </div>
 
 <footer>© 2026 Calculadora.live · Herramientas gratuitas</footer>
@@ -232,6 +243,10 @@ function calcular() {
   document.getElementById('r-objetivo').textContent = fmt(objetivo);
   document.getElementById('r-excedente').textContent = fmt(Math.max(0, totalFinal - objetivo));
 
+  // Gráfico
+  var series = buildSeries(objetivo, actual, mensual, tasa);
+  renderChart(series, objetivo);
+
   // Comparativa (solo si hay tasa)
   if(tasa > 0) {
     var mesesSin = calcMeses(objetivo, actual, mensual, 0);
@@ -243,6 +258,58 @@ function calcular() {
   } else {
     document.getElementById('compare-card').style.display = 'none';
   }
+}
+
+function buildSeries(objetivo, actual, mensual, tasa) {
+  var r = tasa / 100;
+  var series = [];
+  var acum = actual;
+  var mesesTotal = Math.min(Math.ceil(calcMeses(objetivo, actual, mensual, tasa)) + 1, 361);
+  for(var i = 0; i <= mesesTotal; i++) {
+    series.push({ m: i, v: acum });
+    if(acum >= objetivo) break;
+    acum = tasa > 0 ? acum * (1 + r) + mensual : acum + mensual;
+  }
+  return series;
+}
+
+function renderChart(series, objetivo) {
+  var n = series.length;
+  if(n < 2) { document.getElementById('chart-card').style.display='none'; return; }
+  var maxV = Math.max(series[n-1].v, objetivo);
+  var W=480, H=140, PL=8, PR=8, PT=8, PB=24, cW=W-PL-PR, cH=H-PT-PB;
+  function xOf(i){ return PL + (i/(n-1))*cW; }
+  function yOf(v){ return PT + cH - (Math.min(v,maxV)/maxV)*cH; }
+
+  var pts = series.map(function(d,i){ return xOf(i)+','+yOf(d.v); });
+  var linePath = 'M ' + pts.join(' L ');
+  var areaPath = 'M '+PL+','+(PT+cH)+' L '+pts.join(' L ')+' L '+(PL+cW)+','+(PT+cH)+' Z';
+
+  // Línea del objetivo
+  var objY = yOf(objetivo);
+  var objLine = '<line x1="'+PL+'" y1="'+objY+'" x2="'+(PL+cW)+'" y2="'+objY+'" stroke="#1A5FE8" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>';
+  var objLabel = '<text x="'+(PL+cW-4)+'" y="'+(objY-4)+'" font-size="8" fill="#1A5FE8" text-anchor="end" opacity="0.6">Meta</text>';
+
+  // Labels del eje X (meses o años según duración)
+  var xLabels = '';
+  var step = n <= 13 ? 1 : n <= 25 ? 3 : n <= 61 ? 6 : 12;
+  series.forEach(function(d,i){
+    if(i % step === 0 || i === n-1) {
+      var x = xOf(i);
+      var lbl = d.m < 12 ? 'mes '+d.m : (d.m%12===0 ? 'año '+(d.m/12) : '');
+      if(lbl) xLabels += '<text x="'+x+'" y="'+(H-4)+'" font-size="8" fill="#B4B8CC" text-anchor="middle">'+lbl+'</text>';
+    }
+  });
+
+  var svg = '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block" xmlns="http://www.w3.org/2000/svg">'
+    + '<defs><linearGradient id="ahGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1A5FE8" stop-opacity="0.2"/><stop offset="100%" stop-color="#1A5FE8" stop-opacity="0.02"/></linearGradient></defs>'
+    + objLine + objLabel
+    + '<path d="'+areaPath+'" fill="url(#ahGrad)"/>'
+    + '<path d="'+linePath+'" fill="none" stroke="#1A5FE8" stroke-width="2" stroke-linejoin="round"/>'
+    + xLabels + '</svg>';
+
+  document.getElementById('chart-svg-wrap').innerHTML = svg;
+  document.getElementById('chart-card').style.display = 'block';
 }
 </script>
 <script src="/nav.js"></script>

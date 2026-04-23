@@ -76,6 +76,17 @@
   .ex-chip{padding:5px 11px;border-radius:99px;background:var(--hi-soft);border:1px solid #BFDBFE;font-size:11px;font-weight:600;color:var(--hi);cursor:pointer;transition:all .15s}
   .ex-chip:hover{background:var(--hi);color:#fff}
 
+  .history-section{margin-bottom:14px;display:none}
+  .history-heading{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .history-heading::after{content:'';flex:1;height:1px;background:var(--border)}
+  .hist-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 14px;margin-bottom:6px;cursor:pointer;transition:border-color .15s;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .hist-item:hover{border-color:var(--hi)}
+  .hist-item:last-child{margin-bottom:0}
+  .hist-formula{font-size:12px;color:var(--ink-light);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hist-result{font-size:13px;font-weight:700;color:var(--hi);flex-shrink:0}
+  .hist-clear{font-size:11px;color:var(--ink-faint);background:none;border:none;cursor:pointer;padding:0;font-family:'DM Sans',sans-serif;margin-left:8px}
+  .hist-clear:hover{color:var(--ink)}
+
   /* apply type tabs */
   .ap-tabs{display:flex;gap:8px;margin-bottom:18px}
   .ap-tab{flex:1;padding:9px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;text-align:center}
@@ -127,6 +138,12 @@
     <div class="result-eyebrow" id="res-eyebrow">Resultado</div>
     <div class="result-val" id="res-val">—</div>
     <div class="result-detail" id="res-detail"></div>
+  </div>
+
+  <!-- Historial -->
+  <div class="history-section" id="history-section">
+    <div class="history-heading">Usados recientemente <button class="hist-clear" onclick="clearHistory()">✕ Borrar</button></div>
+    <div id="history-list"></div>
   </div>
 
   <!-- ── MODO 1: X% de Y = Z ─────────────────────────── -->
@@ -279,6 +296,10 @@ function showResult(eyebrow, valHTML, detail){
   document.getElementById('res-val').innerHTML = valHTML;
   document.getElementById('res-detail').innerHTML = detail;
   document.getElementById('result-box').classList.add('visible');
+  // Guardar en historial (usar textContent para limpiar HTML)
+  var tmpDiv = document.createElement('div');
+  tmpDiv.innerHTML = valHTML;
+  saveToHistory(eyebrow + ' → ' + detail, tmpDiv.textContent.trim());
 }
 function hideResult(){
   document.getElementById('result-box').classList.remove('visible');
@@ -491,6 +512,54 @@ function loadM4(base,pct,res,type){
     el.dispatchEvent(new Event('input'));
   });
 }
+
+/* ── Historial localStorage ──────────────── */
+var HIST_KEY = 'pct_history';
+var MAX_HIST = 5;
+
+function saveToHistory(formula, result) {
+  var hist = getHistory();
+  hist.unshift({ formula: formula, result: result, ts: Date.now() });
+  if(hist.length > MAX_HIST) hist.length = MAX_HIST;
+  try { localStorage.setItem(HIST_KEY, JSON.stringify(hist)); } catch(e){}
+  renderHistory();
+}
+
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem(HIST_KEY)) || []; } catch(e){ return []; }
+}
+
+function clearHistory() {
+  try { localStorage.removeItem(HIST_KEY); } catch(e){}
+  renderHistory();
+}
+
+function renderHistory() {
+  var hist = getHistory();
+  var section = document.getElementById('history-section');
+  var list = document.getElementById('history-list');
+  if(!hist.length) { section.style.display='none'; return; }
+  section.style.display='block';
+  list.innerHTML = hist.map(function(h) {
+    return '<div class="hist-item" onclick="restoreHist(\''+escHist(h.formula)+'\',\''+escHist(h.result)+'\')">'+
+      '<span class="hist-formula">'+escHtml(h.formula)+'</span>'+
+      '<span class="hist-result">'+escHtml(h.result)+'</span>'+
+      '</div>';
+  }).join('');
+}
+
+function escHist(s){ return String(s).replace(/'/g,"\\'"); }
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function restoreHist(formula, result) {
+  // Solo mostrar en el result-box — no re-cargar los inputs (complicado con 4 modos)
+  document.getElementById('res-detail').textContent = formula;
+  document.getElementById('res-val').textContent = result;
+  document.getElementById('result-box').classList.add('visible');
+}
+
+// Cargar historial al inicio
+renderHistory();
 
 /* ── Mode switching ──────────────────────── */
 function setMode(id, btn){

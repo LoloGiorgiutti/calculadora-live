@@ -66,6 +66,10 @@
   }
   input[type="number"]:focus { border-color: var(--hi); }
 
+  .dir-tabs{display:flex;gap:8px;margin-bottom:20px;}
+  .dir-tab{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all .15s;text-align:center;}
+  .dir-tab.active{background:var(--hi);border-color:var(--hi);color:#fff;}
+
   /* Toggle switch */
   .toggle-row { display: flex; justify-content: space-between; align-items: center; }
   .toggle-lbl { font-size: 14px; font-weight: 500; color: var(--ink); }
@@ -144,9 +148,14 @@
     <p class="page-sub">¿Cuánto te depositan? Calculá tu salario neto con todos los descuentos · Argentina 2026</p>
   </div>
 
+  <div class="dir-tabs">
+    <button class="dir-tab active" id="tab-normal" onclick="setDir('normal')">💼 Bruto → Neto</button>
+    <button class="dir-tab" id="tab-inverso" onclick="setDir('inverso')">🔄 Neto → Bruto</button>
+  </div>
+
   <div class="card">
     <div class="field">
-      <label>Salario bruto mensual</label>
+      <label><span id="lbl-input">Salario bruto mensual</span></label>
       <div class="input-wrap">
         <span class="input-prefix">$</span>
         <input type="number" id="bruto" placeholder="0" min="0" step="1000" oninput="calcular()">
@@ -176,7 +185,7 @@
 
   <!-- Resultado -->
   <div class="result-card">
-    <div class="result-eyebrow">Tu sueldo neto estimado</div>
+    <div class="result-eyebrow" id="result-eyebrow">Tu sueldo neto estimado</div>
     <div id="result-main" class="result-main"><span class="empty-state">Ingresá tu sueldo bruto</span></div>
     <div id="result-sub" class="result-sub"></div>
     <div id="result-rows" class="result-rows" style="display:none">
@@ -238,8 +247,35 @@
 
   function fmt(n) { return '$\u00A0' + Math.round(n).toLocaleString('es-AR'); }
 
+  var currentDir = 'normal';
+
+  function setDir(dir) {
+    currentDir = dir;
+    document.getElementById('tab-normal').classList.toggle('active', dir === 'normal');
+    document.getElementById('tab-inverso').classList.toggle('active', dir === 'inverso');
+
+    var lblInput = document.getElementById('lbl-input');
+    var inputBruto = document.getElementById('bruto');
+    var eyebrow = document.getElementById('result-eyebrow');
+
+    if(dir === 'normal') {
+      lblInput.textContent = 'Salario bruto mensual';
+      inputBruto.placeholder = '0';
+      eyebrow.textContent = 'Tu sueldo neto estimado';
+      document.getElementById('result-main').innerHTML = '<span class="empty-state">Ingresá tu sueldo bruto</span>';
+    } else {
+      lblInput.textContent = 'Sueldo neto deseado';
+      inputBruto.placeholder = '0';
+      eyebrow.textContent = 'Bruto necesario';
+      document.getElementById('result-main').innerHTML = '<span class="empty-state">Ingresá el neto que querés cobrar</span>';
+    }
+    document.getElementById('result-rows').style.display = 'none';
+    document.getElementById('result-sub').textContent = '';
+    document.getElementById('bruto').value = '';
+  }
+
   function calcular() {
-    const bruto = parseFloat(document.getElementById('bruto').value) || 0;
+    const inputVal = parseFloat(document.getElementById('bruto').value) || 0;
     const conGanancias = document.getElementById('toggle-ganancias').checked;
     const ganancias = conGanancias ? (parseFloat(document.getElementById('ganancias').value) || 0) : 0;
 
@@ -247,36 +283,62 @@
     const subEl  = document.getElementById('result-sub');
     const rowsEl = document.getElementById('result-rows');
 
-    if (!bruto) {
-      mainEl.innerHTML = '<span class="empty-state">Ingresá tu sueldo bruto</span>';
+    if (!inputVal) {
+      mainEl.innerHTML = currentDir === 'normal'
+        ? '<span class="empty-state">Ingresá tu sueldo bruto</span>'
+        : '<span class="empty-state">Ingresá el neto que querés cobrar</span>';
       subEl.textContent = '';
       rowsEl.style.display = 'none';
       return;
     }
 
-    const jub  = bruto * 0.11;
-    const os   = bruto * 0.03;
-    const pami = bruto * 0.03;
-    const totalDesc = jub + os + pami + ganancias;
-    const neto = bruto - totalDesc;
-    const netoPct = Math.round((neto / bruto) * 100);
-    const descPct = 100 - netoPct;
-
-    mainEl.innerHTML = `<span class="currency">$</span>${Math.round(neto).toLocaleString('es-AR')}`;
-    subEl.textContent = `Te descuentan ${descPct}% del bruto`;
-    rowsEl.style.display = 'flex';
-
-    document.getElementById('r-bruto').textContent    = fmt(bruto);
-    document.getElementById('r-jub').textContent      = '− ' + fmt(jub);
-    document.getElementById('r-os').textContent       = '− ' + fmt(os);
-    document.getElementById('r-pami').textContent     = '− ' + fmt(pami);
-    document.getElementById('r-neto').textContent     = fmt(neto);
-    if (conGanancias) document.getElementById('r-ganancias').textContent = '− ' + fmt(ganancias);
-
-    document.getElementById('bar-neto').style.width = netoPct + '%';
-    document.getElementById('bar-desc').style.width = descPct + '%';
-    document.getElementById('lbl-neto-pct').textContent = `Neto ${netoPct}%`;
-    document.getElementById('lbl-desc-pct').textContent = `Descuentos ${descPct}%`;
+    var bruto, neto;
+    if(currentDir === 'normal') {
+      bruto = inputVal;
+      const jub  = bruto * 0.11;
+      const os   = bruto * 0.03;
+      const pami = bruto * 0.03;
+      const totalDesc = jub + os + pami + ganancias;
+      neto = bruto - totalDesc;
+      const netoPct = Math.round((neto / bruto) * 100);
+      const descPct = 100 - netoPct;
+      mainEl.innerHTML = `<span class="currency">$</span>${Math.round(neto).toLocaleString('es-AR')}`;
+      subEl.textContent = `Te descuentan ${descPct}% del bruto`;
+      rowsEl.style.display = 'flex';
+      document.getElementById('r-bruto').textContent    = fmt(bruto);
+      document.getElementById('r-jub').textContent      = '− ' + fmt(jub);
+      document.getElementById('r-os').textContent       = '− ' + fmt(os);
+      document.getElementById('r-pami').textContent     = '− ' + fmt(pami);
+      document.getElementById('r-neto').textContent     = fmt(neto);
+      if (conGanancias) document.getElementById('r-ganancias').textContent = '− ' + fmt(ganancias);
+      document.getElementById('bar-neto').style.width = netoPct + '%';
+      document.getElementById('bar-desc').style.width = descPct + '%';
+      document.getElementById('lbl-neto-pct').textContent = `Neto ${netoPct}%`;
+      document.getElementById('lbl-desc-pct').textContent = `Descuentos ${descPct}%`;
+    } else {
+      // Modo inverso: input es el neto deseado
+      neto = inputVal;
+      bruto = (neto + ganancias) / 0.83;
+      const jub  = bruto * 0.11;
+      const os   = bruto * 0.03;
+      const pami = bruto * 0.03;
+      const totalDesc = jub + os + pami + ganancias;
+      const netoPct = Math.round((neto / bruto) * 100);
+      const descPct = 100 - netoPct;
+      mainEl.innerHTML = `<span class="currency">$</span>${Math.round(bruto).toLocaleString('es-AR')}`;
+      subEl.textContent = `Necesitás negociar un bruto ${descPct}% mayor`;
+      rowsEl.style.display = 'flex';
+      document.getElementById('r-bruto').textContent    = fmt(bruto);
+      document.getElementById('r-jub').textContent      = '− ' + fmt(jub);
+      document.getElementById('r-os').textContent       = '− ' + fmt(os);
+      document.getElementById('r-pami').textContent     = '− ' + fmt(pami);
+      document.getElementById('r-neto').textContent     = fmt(neto);
+      if (conGanancias) document.getElementById('r-ganancias').textContent = '− ' + fmt(ganancias);
+      document.getElementById('bar-neto').style.width = netoPct + '%';
+      document.getElementById('bar-desc').style.width = descPct + '%';
+      document.getElementById('lbl-neto-pct').textContent = `Neto ${netoPct}%`;
+      document.getElementById('lbl-desc-pct').textContent = `Descuentos ${descPct}%`;
+    }
   }
 </script>
 <div class="faq-section">

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Prototipo I · Quant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-2:#F8F9FB;
+    --bg-3:#F2F3F7;
+    --ink:#0A0E16;
+    --ink-2:#2A2F3C;
+    --ink-3:#6B7280;
+    --ink-4:#9CA3AF;
+    --line:#E5E7EB;
+    --line-2:#EEF0F4;
+    --accent:#0040DD;
+    --accent-hover:#0030B5;
+    --accent-soft:#E7EDFF;
+    --pos:#059669;
+    --pos-soft:#D1FAE5;
+    --neg:#DC2626;
+    --neg-soft:#FEE2E2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'JetBrains Mono',monospace;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:'tnum','ss02';font-size:13px}
+  a{color:inherit;text-decoration:none}
+  .sans{font-family:'Inter',sans-serif;letter-spacing:-0.011em}
+
+  /* TICKER */
+  .ticker{background:var(--ink);color:#fff;padding:8px 0;border-bottom:1px solid var(--ink);font-size:11px}
+  .ticker-inner{max-width:1320px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:32px;justify-content:space-between}
+  .tk-tag{color:#10B981;font-weight:600;letter-spacing:.1em}
+  .tk-row{display:flex;gap:24px;flex:1;justify-content:center}
+  .tk-item{display:flex;gap:8px;align-items:center;color:rgba(255,255,255,.6)}
+  .tk-item b{color:#fff;font-weight:500}
+  .tk-up{color:#10B981}
+  .tk-dn{color:#EF4444}
+  .tk-time{color:rgba(255,255,255,.4)}
+
+  /* HEADER */
+  header{border-bottom:1px solid var(--line);background:var(--bg)}
+  .header-inner{max-width:1320px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+  .logo{font-size:14px;font-weight:700;letter-spacing:-0.02em;display:flex;align-items:baseline;gap:3px;font-family:'Inter',sans-serif}
+  .logo .mark{background:var(--ink);color:#fff;padding:2px 6px;font-family:'JetBrains Mono';font-size:11px;border-radius:3px;margin-right:6px}
+  .logo .suffix{color:var(--ink-4);font-weight:500}
+  .nav{display:flex;gap:0;border:1px solid var(--line);border-radius:8px;padding:3px;background:var(--bg-2)}
+  .nav a{padding:6px 12px;border-radius:6px;font-size:12px;color:var(--ink-2);font-weight:500;transition:all .1s;font-family:'Inter',sans-serif}
+  .nav a:hover{color:var(--ink);background:#fff}
+  .nav a.active{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .header-right{display:flex;gap:8px;align-items:center}
+  .search-mini{padding:7px 10px 7px 32px;background:var(--bg-2);border:1px solid var(--line);border-radius:7px;font-size:12px;color:var(--ink-3);position:relative;min-width:280px;display:flex;justify-content:space-between;cursor:pointer;font-family:inherit}
+  .search-mini::before{content:'';position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%236B7280" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>') no-repeat}
+  .search-mini:hover{border-color:var(--ink-3);background:#fff}
+  .search-mini kbd{font-size:10px;padding:1px 5px;background:#fff;border:1px solid var(--line);border-radius:3px;color:var(--ink-3)}
+
+  /* BREADCRUMB BAR */
+  .bc-bar{border-bottom:1px solid var(--line);background:var(--bg-2)}
+  .bc-inner{max-width:1320px;margin:0 auto;padding:10px 24px;display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--ink-3)}
+  .bc-trail{display:flex;gap:8px;align-items:center}
+  .bc-trail .curr{color:var(--ink);font-weight:500}
+  .bc-right{display:flex;gap:16px;color:var(--ink-3)}
+  .bc-right b{color:var(--ink);font-weight:500}
+
+  /* HERO */
+  .hero{max-width:1320px;margin:0 auto;padding:48px 24px 32px}
+  .hero-label{font-size:11px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+  .hero-label::before{content:'';width:20px;height:1px;background:var(--ink)}
+  .hero-label .pulse{display:inline-block;width:6px;height:6px;background:var(--pos);border-radius:50%;margin-left:4px;box-shadow:0 0 0 3px var(--pos-soft)}
+  h1{font-family:'Inter',sans-serif;font-size:60px;font-weight:700;line-height:1.02;letter-spacing:-0.038em;margin-bottom:20px;max-width:900px}
+  h1 .muted{color:var(--ink-4);font-weight:600}
+  .hero-lead{font-family:'Inter',sans-serif;font-size:17px;color:var(--ink-2);line-height:1.55;margin-bottom:28px;max-width:620px}
+  .hero-actions{display:flex;gap:8px;align-items:center;font-family:'Inter',sans-serif}
+  .btn-primary{padding:11px 20px;background:var(--ink);color:#fff;border-radius:8px;font-size:13px;font-weight:600;border:0;cursor:pointer;font-family:inherit;transition:background .12s;display:flex;align-items:center;gap:8px}
+  .btn-primary:hover{background:var(--accent)}
+  .btn-outline{padding:11px 16px;background:#fff;border:1px solid var(--line);color:var(--ink-2);font-size:13px;font-weight:500;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .12s}
+  .btn-outline:hover{border-color:var(--ink-3);color:var(--ink)}
+
+  /* DASHBOARD GRID */
+  .dashboard{max-width:1320px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+  .dcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px;transition:all .15s}
+  .dcard:hover{border-color:var(--ink-3)}
+  .dc-lbl{font-size:10.5px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;font-weight:500}
+  .dc-val{font-size:22px;font-weight:600;letter-spacing:-0.02em;color:var(--ink);display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+  .dc-val .unit{font-size:12px;color:var(--ink-3);font-weight:400}
+  .dc-delta{font-size:11px;display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:4px}
+  .dc-delta.up{background:var(--pos-soft);color:var(--pos)}
+  .dc-delta.dn{background:var(--neg-soft);color:var(--neg)}
+  .dc-spark{height:24px;margin-top:8px}
+
+  .dcard.big{grid-column:span 2}
+
+  /* CATEGORIES */
+  main{max-width:1320px;margin:0 auto;padding:0 24px 80px}
+  .section-title{font-family:'Inter',sans-serif;font-size:13px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px;font-weight:600}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--line)}
+
+  .cat{margin-bottom:44px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  .cat-head{background:var(--bg-2);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+  .cat-head-left{display:flex;align-items:baseline;gap:14px;font-family:'Inter',sans-serif}
+  .cat-idx{font-size:11px;color:var(--ink-4);font-family:'JetBrains Mono'}
+  .cat-title{font-size:16px;font-weight:600;letter-spacing:-0.015em;color:var(--ink)}
+  .cat-count{font-size:11px;color:var(--ink-3);padding:2px 7px;background:#fff;border:1px solid var(--line);border-radius:4px;font-family:'JetBrains Mono'}
+  .cat-link{font-size:12px;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;padding:5px 10px;transition:gap .15s}
+  .cat-link:hover{gap:10px}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+  .card{padding:20px;cursor:pointer;transition:background .12s;border-right:1px solid var(--line)}
+  .card:last-child{border-right:0}
+  .card:hover{background:var(--bg-2)}
+  .card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+  .card-tag{font-size:10px;padding:2px 7px;background:var(--accent-soft);color:var(--accent);border-radius:4px;font-weight:600;letter-spacing:.04em}
+  .card-stats{font-size:11px;color:var(--ink-3);display:flex;gap:4px;align-items:baseline}
+  .card-stats b{color:var(--pos);font-weight:500}
+  .card-title{font-family:'Inter',sans-serif;font-size:16px;font-weight:600;letter-spacing:-0.015em;margin-bottom:4px;color:var(--ink)}
+  .card-desc{font-family:'Inter',sans-serif;font-size:13px;color:var(--ink-2);line-height:1.5;margin-bottom:14px}
+  .card-foot{display:flex;justify-content:space-between;align-items:center}
+  .card-cta{font-size:11.5px;color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:4px}
+  .card:hover .card-cta{gap:8px}
+  .card-meta{font-size:10.5px;color:var(--ink-4);display:flex;gap:10px}
+
+  /* CALC PREVIEW */
+  .calc-preview{margin-top:56px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  .calc-tabs{background:var(--bg-2);border-bottom:1px solid var(--line);padding:0 20px;display:flex;align-items:stretch;height:42px}
+  .calc-tab{padding:0 16px;display:flex;align-items:center;font-size:12px;color:var(--ink-3);border-right:1px solid var(--line);font-family:'Inter',sans-serif;font-weight:500;cursor:pointer}
+  .calc-tab:first-child{border-left:1px solid var(--line)}
+  .calc-tab.active{background:#fff;color:var(--ink);font-weight:600;border-bottom:1px solid #fff;margin-bottom:-1px}
+  .calc-tab-actions{margin-left:auto;display:flex;gap:6px;align-items:center}
+  .tab-btn{padding:5px 10px;background:#fff;border:1px solid var(--line);border-radius:5px;font-size:11px;color:var(--ink-2);font-family:'Inter',sans-serif;cursor:pointer;font-weight:500}
+  .tab-btn:hover{border-color:var(--ink-3)}
+
+  .calc-head{padding:24px 28px;border-bottom:1px solid var(--line)}
+  .calc-title{font-family:'Inter',sans-serif;font-size:28px;font-weight:700;letter-spacing:-0.025em;margin-bottom:6px;line-height:1.1}
+  .calc-sub{font-family:'Inter',sans-serif;font-size:14px;color:var(--ink-2);max-width:600px}
+
+  .calc-body{display:grid;grid-template-columns:340px 1fr;gap:0}
+  .calc-inputs{padding:24px 28px;border-right:1px solid var(--line);background:var(--bg-2)}
+  .form-title{font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--line);font-weight:600}
+  .field{margin-bottom:16px}
+  .field-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .field label{font-size:12px;font-weight:500;color:var(--ink-2);font-family:'Inter',sans-serif}
+  .field-hint{font-size:10.5px;color:var(--ink-4)}
+  .field input{width:100%;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:6px;font-family:'JetBrains Mono';font-size:14px;font-weight:500;color:var(--ink);outline:none;transition:all .12s}
+  .field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+  .calc-result{padding:28px 32px;display:grid;grid-template-rows:auto 1fr;gap:24px}
+  .res-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+  .res-main{flex:1}
+  .res-lbl{font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;font-weight:600}
+  .res-big{font-family:'Inter',sans-serif;font-size:72px;font-weight:700;letter-spacing:-0.042em;line-height:.95;color:var(--ink);display:flex;align-items:baseline;gap:4px}
+  .res-big .currency{font-size:28px;color:var(--accent);font-weight:500}
+  .res-meta{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+  .res-chip{padding:4px 10px;background:var(--bg-2);border:1px solid var(--line);border-radius:6px;font-size:11px;color:var(--ink-2);font-family:'JetBrains Mono'}
+  .res-chip.good{background:var(--pos-soft);border-color:transparent;color:var(--pos);font-weight:500}
+
+  .res-side{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:16px;min-width:200px}
+  .res-side-lbl{font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;font-weight:600}
+  .res-side-items{display:flex;flex-direction:column;gap:10px}
+  .rsi{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-2)}
+  .rsi b{font-weight:500;color:var(--ink)}
+
+  .res-table{border-top:1px solid var(--line);padding-top:18px;margin-top:4px}
+  .res-table-head{font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;font-weight:600}
+  .rt-row{display:grid;grid-template-columns:1fr auto auto;gap:16px;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:12.5px;align-items:baseline}
+  .rt-row:last-child{border-bottom:0}
+  .rt-label{color:var(--ink-2)}
+  .rt-percent{color:var(--ink-3);font-size:11.5px}
+  .rt-value{color:var(--ink);font-weight:500;text-align:right}
+  .rt-row.neg .rt-value{color:var(--neg)}
+  .rt-row.total{border-top:1px solid var(--line);margin-top:4px;padding-top:14px;font-size:13.5px;border-bottom:0}
+  .rt-row.total .rt-value{color:var(--pos);font-weight:700}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line);background:var(--bg-2)}
+  .footer-inner{max-width:1320px;margin:0 auto;padding:20px 24px;display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3)}
+  footer a:hover{color:var(--ink)}
+
+  @media(max-width:900px){
+    .dashboard{grid-template-columns:repeat(2,1fr)}
+    .dcard.big{grid-column:span 2}
+    .cards{grid-template-columns:1fr}
+    .card{border-right:0;border-bottom:1px solid var(--line)}
+    .card:last-child{border-bottom:0}
+    .calc-body{grid-template-columns:1fr}
+    .calc-inputs{border-right:0;border-bottom:1px solid var(--line)}
+    .res-top{flex-direction:column}
+    h1{font-size:40px}
+    .res-big{font-size:52px}
+    .nav,.search-mini{display:none}
+    .tk-row{overflow-x:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="tk-tag">● LIVE / ARG</span>
+    <div class="tk-row">
+      <span class="tk-item">IPC m/m <b>2.1%</b> <span class="tk-dn">−0.3</span></span>
+      <span class="tk-item">USD blue <b>1.285</b> <span class="tk-up">+0.8%</span></span>
+      <span class="tk-item">USD of <b>1.078</b> <span class="tk-dn">−0.2%</span></span>
+      <span class="tk-item">UVA <b>1.024,5</b> <span class="tk-up">+0.1%</span></span>
+      <span class="tk-item">SMVM <b>322.200</b></span>
+      <span class="tk-item">Tasa BCRA <b>40%</b></span>
+    </div>
+    <span class="tk-time">23.04.2026 · 14:32:08</span>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo"><span class="mark">c</span>calculadora<span class="suffix">.live</span></a>
+    <nav class="nav">
+      <a href="#" class="active">Inicio</a>
+      <a href="#">Finanzas</a>
+      <a href="#">Salud</a>
+      <a href="#">Autos</a>
+      <a href="#">Fechas</a>
+      <a href="#">Matemática</a>
+    </nav>
+    <div class="header-right">
+      <div class="search-mini"><span>Buscar entre 43 calculadoras</span><kbd>⌘K</kbd></div>
+    </div>
+  </div>
+</header>
+
+<div class="bc-bar">
+  <div class="bc-inner">
+    <div class="bc-trail">
+      <span>/</span><span class="curr">inicio</span>
+    </div>
+    <div class="bc-right">
+      <span>v <b>2.0.3</b></span>
+      <span>último update <b>23 abr · 14:28</b></span>
+      <span><b>43</b> calc activas</span>
+    </div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-label">Datos y herramientas para Argentina <span class="pulse"></span></div>
+  <h1 class="sans">Las cuentas de tu día,<br><span class="muted">con precisión quirúrgica.</span></h1>
+  <p class="hero-lead">43 calculadoras conectadas a datos oficiales: sueldos, inflación, salud, autos, fechas. Sin registros, sin publicidad invasiva, sin esperas.</p>
+  <div class="hero-actions">
+    <button class="btn-primary">Explorar calculadoras →</button>
+    <button class="btn-outline">Ver destacadas</button>
+  </div>
+</section>
+
+<div class="dashboard">
+  <div class="dcard big">
+    <div class="dc-lbl">IPC Argentina — mensual</div>
+    <div class="dc-val">2.1 <span class="unit">%</span> <span class="dc-delta dn">▼ 0.3pp</span></div>
+    <svg class="dc-spark" width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
+      <path d="M0,8 L20,10 L40,6 L60,12 L80,14 L100,10 L120,18 L140,22 L160,20 L180,24 L200,26" fill="none" stroke="#0040DD" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <div class="dcard">
+    <div class="dc-lbl">USD Blue</div>
+    <div class="dc-val">1.285 <span class="dc-delta up">+0.8%</span></div>
+  </div>
+  <div class="dcard">
+    <div class="dc-lbl">USD Oficial</div>
+    <div class="dc-val">1.078 <span class="dc-delta dn">−0.2%</span></div>
+  </div>
+  <div class="dcard">
+    <div class="dc-lbl">UVA</div>
+    <div class="dc-val">1.024<span class="unit">,5</span></div>
+  </div>
+  <div class="dcard">
+    <div class="dc-lbl">SMVM</div>
+    <div class="dc-val">322k</div>
+  </div>
+</div>
+
+<main>
+
+  <div class="section-title sans">— Categorías ·  9 secciones</div>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div class="cat-head-left">
+        <span class="cat-idx">[01]</span>
+        <span class="cat-title">Finanzas personales</span>
+        <span class="cat-count">8 calc</span>
+      </div>
+      <a href="#" class="cat-link">Ver todas →</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">POPULAR</span>
+          <span class="card-stats"><b>12.4k</b> uso / mes</span>
+        </div>
+        <div class="card-title">Sueldo en mano</div>
+        <div class="card-desc">De bruto a neto con descuentos reales 2026.</div>
+        <div class="card-foot">
+          <span class="card-cta">Abrir →</span>
+          <span class="card-meta"><span>~ 15s</span></span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">TRENDING</span>
+          <span class="card-stats"><b>8.1k</b> uso / mes</span>
+        </div>
+        <div class="card-title">Inflación acumulada</div>
+        <div class="card-desc">IPC, blue, oficial y UVA en paralelo.</div>
+        <div class="card-foot">
+          <span class="card-cta">Abrir →</span>
+          <span class="card-meta"><span>~ 20s</span></span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-tag">TEMPORADA</span>
+          <span class="card-stats"><b>5.1k</b> uso / mes</span>
+        </div>
+        <div class="card-title">Aguinaldo (SAC)</div>
+        <div class="card-desc">Primera y segunda cuota, con proporcional.</div>
+        <div class="card-foot">
+          <span class="card-cta">Abrir →</span>
+          <span class="card-meta"><span>~ 10s</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div class="cat-head-left">
+        <span class="cat-idx">[02]</span>
+        <span class="cat-title">Salud y fitness</span>
+        <span class="cat-count">6 calc</span>
+      </div>
+      <a href="#" class="cat-link">Ver todas →</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-head"><span class="card-tag">POPULAR</span><span class="card-stats"><b>6.2k</b> / mes</span></div>
+        <div class="card-title">IMC</div>
+        <div class="card-desc">Índice de masa corporal con interpretación OMS.</div>
+        <div class="card-foot"><span class="card-cta">Abrir →</span><span class="card-meta"><span>~ 8s</span></span></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-tag">FITNESS</span><span class="card-stats"><b>4.3k</b> / mes</span></div>
+        <div class="card-title">Proteína diaria</div>
+        <div class="card-desc">Gramos/día según objetivo y actividad.</div>
+        <div class="card-foot"><span class="card-cta">Abrir →</span><span class="card-meta"><span>~ 12s</span></span></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-tag">NUTRICIÓN</span><span class="card-stats"><b>3.8k</b> / mes</span></div>
+        <div class="card-title">Metabolismo basal</div>
+        <div class="card-desc">BMR Mifflin-St Jeor + TDEE ajustado.</div>
+        <div class="card-foot"><span class="card-cta">Abrir →</span><span class="card-meta"><span>~ 15s</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div class="cat-head-left">
+        <span class="cat-idx">[03]</span>
+        <span class="cat-title">Autos</span>
+        <span class="cat-count">3 calc</span>
+      </div>
+      <a href="#" class="cat-link">Ver todas →</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-head"><span class="card-tag">VIAJES</span><span class="card-stats"><b>2.4k</b> / mes</span></div>
+        <div class="card-title">Costo por viaje</div>
+        <div class="card-desc">Km × consumo × precio nafta actual.</div>
+        <div class="card-foot"><span class="card-cta">Abrir →</span><span class="card-meta"><span>~ 10s</span></span></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-tag">IMPUESTO</span><span class="card-stats"><b>1.9k</b> / mes</span></div>
+        <div class="card-title">Patente 2026</div>
+        <div class="card-desc">Tabla actualizada por provincia.</div>
+        <div class="card-foot"><span class="card-cta">Abrir →</span><span class="card-meta"><span>~ 20s</span></span></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-tag">SERVICE</span><span class="card-stats"><b>1.2k</b> / mes</span></div>
+        <div class="card-title">Service programado</div>
+        <div class="card-desc">Próximo service + costo estimado.</div>
+        <div class="card-foot"><span class="card-cta">Abrir →</span><span class="card-meta"><span>~ 8s</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALC PREVIEW -->
+  <div class="calc-preview">
+    <div class="calc-tabs">
+      <div class="calc-tab active">Sueldo-neto.calc</div>
+      <div class="calc-tab">Aportes.ref</div>
+      <div class="calc-tab">Escala 2026</div>
+      <div class="calc-tab-actions">
+        <button class="tab-btn">Compartir</button>
+        <button class="tab-btn">Guardar</button>
+      </div>
+    </div>
+    <div class="calc-head">
+      <div class="calc-title sans">¿Cuánto te queda del bruto?</div>
+      <div class="calc-sub">Aplicamos descuentos jubilatorios, obra social y PAMI a tu sueldo bruto declarado. Resultado en tiempo real.</div>
+    </div>
+    <div class="calc-body">
+      <div class="calc-inputs">
+        <div class="form-title">Inputs ·  3 campos</div>
+        <div class="field">
+          <div class="field-row"><label>Sueldo bruto</label><span class="field-hint">ARS/mes</span></div>
+          <input value="1850000">
+        </div>
+        <div class="field">
+          <div class="field-row"><label>Ganancias</label><span class="field-hint">opcional</span></div>
+          <input value="0">
+        </div>
+        <div class="field">
+          <div class="field-row"><label>Aportes totales</label><span class="field-hint">% bruto</span></div>
+          <input value="17">
+        </div>
+      </div>
+
+      <div class="calc-result">
+        <div class="res-top">
+          <div class="res-main">
+            <div class="res-lbl">Output · sueldo neto</div>
+            <div class="res-big"><span class="currency">$</span>1.535.500</div>
+            <div class="res-meta">
+              <span class="res-chip good">▲ 83% del bruto</span>
+              <span class="res-chip">+ $53k vs mes pasado</span>
+              <span class="res-chip">ranking: top 23%</span>
+            </div>
+          </div>
+          <div class="res-side">
+            <div class="res-side-lbl">Comparar con</div>
+            <div class="res-side-items">
+              <div class="rsi"><span>SMVM</span><b>4.77×</b></div>
+              <div class="rsi"><span>Canasta básica</span><b>1.82×</b></div>
+              <div class="rsi"><span>Alquiler 2 amb CABA</span><b>3.41×</b></div>
+              <div class="rsi"><span>USD blue</span><b>1.194</b></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="res-table">
+          <div class="res-table-head">Desglose de aportes</div>
+          <div class="rt-row">
+            <span class="rt-label">Sueldo bruto declarado</span>
+            <span class="rt-percent">100%</span>
+            <span class="rt-value">$ 1.850.000</span>
+          </div>
+          <div class="rt-row neg">
+            <span class="rt-label">Jubilación (SIPA)</span>
+            <span class="rt-percent">−11%</span>
+            <span class="rt-value">−$ 203.500</span>
+          </div>
+          <div class="rt-row neg">
+            <span class="rt-label">Obra social</span>
+            <span class="rt-percent">−3%</span>
+            <span class="rt-value">−$ 55.500</span>
+          </div>
+          <div class="rt-row neg">
+            <span class="rt-label">PAMI (Ley 19.032)</span>
+            <span class="rt-percent">−3%</span>
+            <span class="rt-value">−$ 55.500</span>
+          </div>
+          <div class="rt-row total">
+            <span class="rt-label">Neto en mano</span>
+            <span class="rt-percent">83%</span>
+            <span class="rt-value">$ 1.535.500</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 calculadora.live · built in buenos aires · v2.0.3</div>
+    <div><a href="#">privacidad</a> &nbsp;·&nbsp; <a href="#">términos</a> &nbsp;·&nbsp; <a href="#">contacto</a> &nbsp;·&nbsp; <a href="#">api</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

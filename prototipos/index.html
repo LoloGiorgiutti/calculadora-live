@@ -4,106 +4,96 @@
 <meta charset="UTF-8">
 <title>Prototipos · Calculadora.live</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:wght@400;500&family=Archivo+Black&family=Spectral:wght@400&family=Geist:wght@500&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Inter',sans-serif;background:#F0F2F7;color:#080A12;min-height:100vh;padding:60px 24px;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1100px;margin:0 auto}
+  body{font-family:'Inter',sans-serif;background:#F0F2F7;color:#080A12;min-height:100vh;padding:56px 24px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto}
   h1{font-size:36px;font-weight:700;letter-spacing:-0.025em;margin-bottom:8px}
-  .sub{color:#60647A;font-size:16px;margin-bottom:40px;max-width:640px;line-height:1.55}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:40px}
-  .proto{background:#fff;border:1px solid #D4D8E6;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;transition:all .15s;display:flex;flex-direction:column}
-  .proto:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.09);border-color:#1A5FE8}
-  .preview{height:200px;display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:600;letter-spacing:-0.04em;position:relative;overflow:hidden}
-  .preview.a{background:linear-gradient(135deg,#FAFBFC 0%,#EBF2FF 100%);color:#0A1E3F;font-family:'Instrument Serif',serif;font-style:italic}
-  .preview.b{background:#0A0A0B;color:#fff;font-family:'Geist',sans-serif}
-  .preview.b::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:24px 24px}
-  .preview.c{background:#F7F3EC;color:#9A2F1F;font-family:'Fraunces',serif;font-style:italic;font-weight:500}
-  .preview.d{background:#FFFFFF;color:#0A0A0A;border-bottom:1px solid #EAEAEA;font-family:'Inter',sans-serif;font-weight:500}
-  .preview.e{background:#1F4A3A;color:#EFECE4;font-family:'Spectral',serif;font-weight:300;font-style:italic}
-  .preview.f{background:#FFE34D;color:#0E0E0C;font-family:'Archivo Black',sans-serif;font-size:84px}
+  .sub{color:#60647A;font-size:16px;margin-bottom:40px;max-width:680px;line-height:1.6}
+  .sub b{color:#080A12}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:32px}
+  .proto{background:#fff;border:1px solid #D4D8E6;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;transition:all .18s;display:flex;flex-direction:column}
+  .proto:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.1);border-color:#1A5FE8}
+  .preview{height:210px;display:flex;align-items:center;justify-content:center;font-size:80px;font-weight:600;letter-spacing:-0.04em;position:relative;overflow:hidden}
+  .preview.g{background:#FCFCFD;color:#0066FF;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .preview.g::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(0,102,255,.08) 0%,transparent 60%)}
+  .preview.h{background:linear-gradient(180deg,#F7F8FA 0%,#F7F8FA 50%,#0A0E1A 50%,#0A0E1A 100%);color:#0A0E1A;font-weight:700}
+  .preview.h::after{content:'H';position:absolute;color:#fff;top:60%}
+  .preview.h>span{display:none}
+  .preview.i{background:#FFFFFF;color:#0A0E16;font-family:'JetBrains Mono',monospace;font-weight:500}
+  .preview.i::before{content:'';position:absolute;inset:0;background-image:linear-gradient(#E5E7EB 1px,transparent 1px),linear-gradient(90deg,#E5E7EB 1px,transparent 1px);background-size:32px 32px;opacity:.4}
   .info{padding:22px;flex:1;display:flex;flex-direction:column}
   .label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1A5FE8;margin-bottom:8px}
-  .title{font-size:18px;font-weight:700;margin-bottom:6px;letter-spacing:-0.015em}
-  .desc{font-size:13px;color:#60647A;line-height:1.5;flex:1;margin-bottom:14px}
-  .meta{font-size:11px;color:#8A8FA3;display:flex;gap:10px;flex-wrap:wrap}
-  .meta span{background:#F0F2F7;padding:3px 8px;border-radius:4px;border:1px solid #E5E8F0}
-  .note{margin-top:12px;padding:16px 18px;background:#fff;border:1px solid #D4D8E6;border-radius:12px;font-size:13px;color:#4A4E63;line-height:1.55}
+  .title{font-size:19px;font-weight:700;margin-bottom:6px;letter-spacing:-0.018em}
+  .desc{font-size:13.5px;color:#60647A;line-height:1.55;flex:1;margin-bottom:16px}
+  .meta{font-size:11px;color:#8A8FA3;display:flex;gap:8px;flex-wrap:wrap}
+  .meta span{background:#F0F2F7;padding:3px 8px;border-radius:4px;border:1px solid #E5E8F0;font-weight:500}
+  .note{margin-top:18px;padding:18px 22px;background:#fff;border:1px solid #D4D8E6;border-radius:12px;font-size:13.5px;color:#4A4E63;line-height:1.6}
   .note b{color:#080A12}
+  .note ul{margin-top:10px;padding-left:20px}
+  .note li{margin-bottom:4px}
   @media(max-width:860px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>Prototipos de rediseño</h1>
-  <p class="sub">Seis direcciones visuales distintas. Abrí cada una, mirala en celular también (<kbd>⌘+Shift+M</kbd> en Chrome), compará, y decime cuál te tira más. También podés pedir mezclas o ajustes sobre cualquiera.</p>
+  <h1>Prototipos · iteración 2</h1>
+  <p class="sub">Tres direcciones nuevas basadas en tu feedback: querías un <b>punto medio entre A (Fintech Pro), B (Tech Modern) y D (Minimal Mono)</b>. Todas son <b>limpias, serias, con monoespaciada para números</b> y agregan elementos nuevos (tickers en vivo, sparklines, dashboards).</p>
 
   <div class="grid">
 
-    <a href="a-fintech.html" class="proto">
-      <div class="preview a">A</div>
+    <a href="g-composed.html" class="proto">
+      <div class="preview g">G</div>
       <div class="info">
-        <div class="label">Opción A · Fintech Pro</div>
-        <div class="title">Confiable & bancario</div>
-        <div class="desc">Blanco limpio, azul corporativo, serif elegante para números. Sensación Wise / Mercury. Transmite seriedad financiera sin riesgos.</div>
-        <div class="meta"><span>Inter + Serif</span><span>Luminoso</span><span>Azul</span></div>
+        <div class="label">Opción G · Composed</div>
+        <div class="title">Fintech refinado</div>
+        <div class="desc">Blanco, azul eléctrico y serif italic para los números grandes. Ticker en vivo arriba, sparklines en cada card. Elegante + data-driven. Es la evolución natural de la A.</div>
+        <div class="meta"><span>Inter + Serif + Mono</span><span>Ticker live</span><span>Sparklines</span></div>
       </div>
     </a>
 
-    <a href="b-tech.html" class="proto">
-      <div class="preview b">B</div>
+    <a href="h-contrast.html" class="proto">
+      <div class="preview h"><span>H</span></div>
       <div class="info">
-        <div class="label">Opción B · Tech Modern</div>
-        <div class="title">Oscuro & moderno</div>
-        <div class="desc">Dark mode completo, grilla sutil, font monoespaciada para los números. Sensación Linear / Vercel. Joven y tecnológico.</div>
-        <div class="meta"><span>Geist + Mono</span><span>Oscuro</span><span>Violeta</span></div>
+        <div class="label">Opción H · Contrast</div>
+        <div class="title">Duotono dramático</div>
+        <div class="desc">Header + hero oscuros con glow, resto de la página claro, cards de resultado en negro con gradientes. Contraste fuerte, sensación premium sin ser full-dark-mode.</div>
+        <div class="meta"><span>Inter + Mono</span><span>Light + Dark</span><span>Glow sutil</span></div>
       </div>
     </a>
 
-    <a href="c-editorial.html" class="proto">
-      <div class="preview c">C</div>
+    <a href="i-quant.html" class="proto">
+      <div class="preview i">I</div>
       <div class="info">
-        <div class="label">Opción C · Editorial Premium</div>
-        <div class="title">Revista clásica</div>
-        <div class="desc">Serif editorial, beige cálido, rojo vino. Sensación The Economist / NYT. Muy diferenciador y memorable, único en el rubro.</div>
-        <div class="meta"><span>Fraunces</span><span>Cálido</span><span>Rojo vino</span></div>
-      </div>
-    </a>
-
-    <a href="d-minimal.html" class="proto">
-      <div class="preview d">D</div>
-      <div class="info">
-        <div class="label">Opción D · Minimal Mono</div>
-        <div class="title">Puro & minimalista</div>
-        <div class="desc">Blanco puro, negro, monoespaciada para todo lo numérico. Sensación Apple product page / Notion. Máxima seriedad, cero decoración.</div>
-        <div class="meta"><span>Inter + JetBrains</span><span>Blanco</span><span>Negro</span></div>
-      </div>
-    </a>
-
-    <a href="e-nordic.html" class="proto">
-      <div class="preview e">E</div>
-      <div class="info">
-        <div class="label">Opción E · Nordic Quiet</div>
-        <div class="title">Calma & artesanal</div>
-        <div class="desc">Beige arena + verde bosque + terracota. Tipografía serif suave. Sensación Aesop / Kinfolk. Premium pero cálido, no agresivo.</div>
-        <div class="meta"><span>Spectral + DM Sans</span><span>Tierra</span><span>Verde</span></div>
-      </div>
-    </a>
-
-    <a href="f-bold.html" class="proto">
-      <div class="preview f">F</div>
-      <div class="info">
-        <div class="label">Opción F · Bold Magazine</div>
-        <div class="title">Impacto visual</div>
-        <div class="desc">Tipografía enorme, amarillo eléctrico + negro, bordes gruesos. Sensación Monocle / Pitchfork. Imposible ignorar, muy argentino-moderno.</div>
-        <div class="meta"><span>Archivo Black</span><span>Amarillo</span><span>Contraste fuerte</span></div>
+        <div class="label">Opción I · Quant</div>
+        <div class="title">Dashboard profesional</div>
+        <div class="desc">Mono-first, denso en datos: breadcrumb, ticker, dashboard con sparklines, breakdowns tipo tabla, métricas comparativas laterales. Sensación Bloomberg Terminal en claro.</div>
+        <div class="meta"><span>JetBrains Mono</span><span>Dashboard</span><span>Data-dense</span></div>
       </div>
     </a>
 
   </div>
 
   <div class="note">
-    💡 <b>Cada prototipo muestra:</b> home con top-3 por categoría + link "ver todas" + preview de la calculadora de sueldo-neto. Son solo estáticos (no funcionan los inputs) — es para evaluar la dirección visual. Una vez elegido el ganador (o una mezcla) lo aplicamos al sitio completo.
+    💡 <b>Elementos nuevos que incluí</b> (no estaban en A/B/D):
+    <ul>
+      <li><b>Ticker en vivo</b> (IPC, dólar blue, oficial, UVA) — datos reales que suman valor percibido</li>
+      <li><b>Sparklines</b> en cards y stat cards — muestran tendencia sin ocupar espacio</li>
+      <li><b>Contadores de uso</b> ("12.4k usos / mes") — crea prueba social sin pedir reviews</li>
+      <li><b>Breadcrumb + versión + timestamp</b> — sensación de producto "profesional" (sobre todo en I)</li>
+      <li><b>Dashboard arriba</b> (I y parcialmente G) — la home misma ya da utilidad antes de entrar a una calc</li>
+      <li><b>Comparativas laterales</b> (I) — "¿cuánto es tu sueldo vs SMVM, canasta, alquiler?" — killer feature</li>
+    </ul>
+  </div>
+
+  <div class="note" style="background:#EEF6FF;border-color:#BFD9FF">
+    🎯 <b>Recomendación para decidir:</b> abrilos en este orden: <b>G → H → I</b>. Mirá en desktop y mobile. Después decime:
+    <ul>
+      <li>Cuál te atrae visualmente al primer vistazo</li>
+      <li>Cuál te genera más "confianza" para usarlo 5 veces por semana</li>
+      <li>Si hay algún elemento específico que querés combinar entre dos</li>
+    </ul>
   </div>
 </div>
 </body>

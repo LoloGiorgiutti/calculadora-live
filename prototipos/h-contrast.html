@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Prototipo H · Contrast</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F8FA;
+    --surface:#FFFFFF;
+    --ink:#0A0E1A;
+    --ink-2:#363B4F;
+    --ink-3:#858AA0;
+    --line:#E4E7EE;
+    --line-2:#EFF1F6;
+    --accent:#4F6BFF;
+    --accent-2:#7C5CFF;
+    --accent-soft:#EEF1FF;
+    --dark:#0A0E1A;
+    --dark-2:#141929;
+    --dark-line:#1F2438;
+    --pos:#22C55E;
+    --pos-dark:#064E3B;
+    --neg:#EF4444;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum'}
+
+  /* HEADER */
+  header{background:var(--dark);color:#fff;border-bottom:1px solid var(--dark-line)}
+  .header-inner{max-width:1240px;margin:0 auto;padding:0 32px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+  .logo{font-size:16px;font-weight:700;letter-spacing:-0.025em;display:flex;align-items:center;gap:10px}
+  .logo-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:14px;font-weight:700;color:#fff}
+  .logo .suffix{color:rgba(255,255,255,.5);font-weight:500}
+  .nav{display:flex;gap:2px}
+  .nav a{padding:7px 13px;border-radius:7px;font-size:13px;color:rgba(255,255,255,.7);font-weight:500;transition:all .12s}
+  .nav a:hover{background:var(--dark-2);color:#fff}
+  .nav a.active{color:var(--accent);background:rgba(79,107,255,.12)}
+  .header-right{display:flex;gap:10px;align-items:center}
+  .search-pill{padding:7px 14px 7px 36px;background:var(--dark-2);border:1px solid var(--dark-line);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:28px;cursor:pointer;position:relative;min-width:240px;justify-content:space-between;transition:all .15s;font-family:inherit}
+  .search-pill::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23858AA0" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>') no-repeat}
+  .search-pill:hover{border-color:var(--ink-3)}
+  .search-pill kbd{font-family:'JetBrains Mono';font-size:10px;padding:2px 5px;background:var(--dark);border:1px solid var(--dark-line);border-radius:3px;color:rgba(255,255,255,.6)}
+
+  /* HERO - dark panel */
+  .hero-wrap{background:var(--dark);color:#fff;padding:64px 0 100px;position:relative;overflow:hidden}
+  .hero-wrap::before{content:'';position:absolute;top:-200px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(79,107,255,.18) 0%,transparent 50%);filter:blur(40px)}
+  .hero-wrap::after{content:'';position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(124,92,255,.12) 0%,transparent 50%);filter:blur(40px)}
+  .hero{max-width:1240px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1.3fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:5px 14px 5px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:99px;font-size:12px;font-weight:500;color:rgba(255,255,255,.8);margin-bottom:28px;font-family:'JetBrains Mono'}
+  .he-pulse{width:6px;height:6px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 3px rgba(34,197,94,.25);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.2)}}
+  h1{font-size:72px;font-weight:700;line-height:1;letter-spacing:-0.04em;margin-bottom:22px}
+  h1 .grad{background:linear-gradient(135deg,#fff 20%,#A0A5BD 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1 .acc{color:var(--accent)}
+  .hero-lead{font-size:18px;color:rgba(255,255,255,.7);line-height:1.55;margin-bottom:40px;max-width:500px;font-weight:400}
+  .hero-actions{display:flex;gap:12px;align-items:center}
+  .btn-primary{padding:13px 24px;background:#fff;color:var(--dark);border-radius:10px;font-size:14px;font-weight:600;border:0;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:8px}
+  .btn-primary:hover{background:var(--accent);color:#fff}
+  .btn-ghost{padding:13px 20px;font-size:14px;font-weight:500;color:rgba(255,255,255,.7);cursor:pointer;transition:color .15s}
+  .btn-ghost:hover{color:#fff}
+
+  /* Hero side - data card */
+  .hero-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:28px;backdrop-filter:blur(10px)}
+  .hc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .hc-lbl{font-family:'JetBrains Mono';font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em}
+  .hc-tag{padding:3px 9px;background:rgba(34,197,94,.15);color:var(--pos);border-radius:5px;font-family:'JetBrains Mono';font-size:10.5px;font-weight:600}
+  .hc-items{display:flex;flex-direction:column;gap:14px}
+  .hc-item{display:flex;justify-content:space-between;align-items:baseline}
+  .hc-item-lbl{font-size:13px;color:rgba(255,255,255,.7)}
+  .hc-item-val{font-family:'JetBrains Mono';font-size:16px;font-weight:500;display:flex;align-items:baseline;gap:7px}
+  .hc-item-delta{font-family:'JetBrains Mono';font-size:11px;color:var(--pos)}
+  .hc-item-delta.dn{color:var(--neg)}
+
+  /* CATEGORIES - light section */
+  main{max-width:1240px;margin:0 auto;padding:0 32px 100px;margin-top:-60px;position:relative;z-index:2}
+  .cat{margin-bottom:48px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:0 4px 30px rgba(10,14,26,.04)}
+  .cat-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--line-2)}
+  .cat-title-wrap{display:flex;align-items:baseline;gap:14px}
+  .cat-kicker{font-family:'JetBrains Mono';font-size:11px;color:var(--ink-3);letter-spacing:.05em}
+  .cat-title{font-size:24px;font-weight:700;letter-spacing:-0.022em}
+  .cat-count{font-family:'JetBrains Mono';font-size:11px;color:var(--ink-3);padding:2px 8px;background:var(--bg);border-radius:5px;font-weight:500}
+  .cat-link{font-size:13px;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent-soft);border-radius:8px;transition:all .15s}
+  .cat-link:hover{background:var(--accent);color:#fff;gap:10px}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .card{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:20px;cursor:pointer;transition:all .18s;position:relative}
+  .card:hover{border-color:var(--accent);background:var(--surface);transform:translateY(-2px);box-shadow:0 10px 24px rgba(79,107,255,.08)}
+  .card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+  .card-tag{font-family:'JetBrains Mono';font-size:10px;color:var(--accent);padding:3px 8px;background:var(--accent-soft);border-radius:4px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+  .card-uses{font-family:'JetBrains Mono';font-size:11px;color:var(--ink-3)}
+  .card-title{font-size:16px;font-weight:600;letter-spacing:-0.015em;margin-bottom:4px}
+  .card-desc{font-size:13px;color:var(--ink-2);line-height:1.5;margin-bottom:14px}
+  .card-cta{font-size:12px;font-family:'JetBrains Mono';color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:4px;transition:gap .15s}
+  .card:hover .card-cta{gap:8px}
+
+  /* CALC PREVIEW */
+  .calc-preview{margin-top:64px;background:var(--surface);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 8px 40px rgba(10,14,26,.06)}
+  .calc-head{padding:36px 40px;border-bottom:1px solid var(--line);background:var(--surface)}
+  .calc-breadcrumb{font-family:'JetBrains Mono';font-size:12px;color:var(--ink-3);margin-bottom:14px}
+  .calc-breadcrumb .curr{color:var(--ink)}
+  .calc-h2{font-size:38px;font-weight:700;letter-spacing:-0.032em;line-height:1.05}
+  .calc-h2 .acc{background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .calc-sub{margin-top:10px;font-size:15px;color:var(--ink-2);max-width:560px}
+
+  .calc-body{display:grid;grid-template-columns:1fr 1.15fr;gap:0}
+  .calc-inputs{padding:36px 40px;border-right:1px solid var(--line)}
+  .form-title{font-family:'JetBrains Mono';font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+  .form-title::after{content:'';flex:1;height:1px;background:var(--line)}
+  .field{margin-bottom:20px}
+  .field-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .field label{font-size:13px;font-weight:500;color:var(--ink-2)}
+  .field-hint{font-family:'JetBrains Mono';font-size:11px;color:var(--ink-3)}
+  .field input{width:100%;padding:13px 16px;background:var(--bg);border:1.5px solid transparent;border-radius:10px;font-family:'JetBrains Mono';font-size:16px;font-weight:500;color:var(--ink);outline:none;transition:all .15s}
+  .field input:focus{background:#fff;border-color:var(--accent)}
+
+  /* DARK result panel contrast */
+  .calc-result{padding:36px 40px;background:var(--dark);color:#fff;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+  .calc-result::before{content:'';position:absolute;top:-50px;right:-50px;width:300px;height:300px;background:radial-gradient(circle,rgba(79,107,255,.18) 0%,transparent 60%);filter:blur(30px);pointer-events:none}
+  .res-lbl{font-family:'JetBrains Mono';font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;position:relative}
+  .res-big{font-size:80px;font-weight:600;letter-spacing:-0.04em;line-height:.95;margin-bottom:14px;position:relative;background:linear-gradient(135deg,#fff 30%,#A5ABC5 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .res-big .currency{font-size:30px;color:var(--accent);vertical-align:top;margin-right:4px;font-weight:500;-webkit-text-fill-color:var(--accent)}
+  .res-delta{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:rgba(34,197,94,.15);color:var(--pos);border-radius:6px;font-family:'JetBrains Mono';font-size:12px;font-weight:500;margin-bottom:24px;align-self:flex-start;position:relative}
+  .res-breakdown{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;position:relative}
+  .br-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13.5px;color:rgba(255,255,255,.65);font-family:'JetBrains Mono'}
+  .br-row b{font-weight:500;color:#fff}
+  .br-row.neg b{color:#FF8A80}
+  .br-row.total{border-top:1px solid rgba(255,255,255,.1);margin-top:8px;padding-top:14px}
+  .br-row.total b{color:var(--accent);font-size:15px}
+
+  /* FOOTER */
+  footer{max-width:1240px;margin:0 auto;padding:40px 32px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);font-family:'JetBrains Mono'}
+  footer a:hover{color:var(--ink)}
+
+  @media(max-width:820px){
+    .hero{grid-template-columns:1fr;gap:32px}
+    h1{font-size:48px}
+    .cards{grid-template-columns:1fr}
+    .calc-body{grid-template-columns:1fr}
+    .calc-inputs{border-right:0;border-bottom:1px solid var(--line)}
+    .nav,.search-pill{display:none}
+    .res-big{font-size:60px}
+    .cat{padding:20px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo"><span class="logo-mark">c</span>calculadora<span class="suffix">.live</span></a>
+    <nav class="nav">
+      <a href="#" class="active">Inicio</a>
+      <a href="#">Finanzas</a>
+      <a href="#">Salud</a>
+      <a href="#">Autos</a>
+      <a href="#">Fechas</a>
+      <a href="#">Matemática</a>
+    </nav>
+    <div class="header-right">
+      <div class="search-pill">
+        <span>Buscar calculadora...</span>
+        <kbd>⌘K</kbd>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="hero-wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow"><span class="he-pulse"></span>43 calculadoras activas · v2.0</div>
+      <h1><span class="grad">Todas las cuentas</span><br><span class="acc">que importan.</span></h1>
+      <p class="hero-lead">Sueldo neto, inflación real, IMC, patentes y 40 herramientas más. Precisas, instantáneas, sin fricciones.</p>
+      <div class="hero-actions">
+        <button class="btn-primary">Empezar ahora →</button>
+        <span class="btn-ghost">Ver más populares</span>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hc-head">
+        <div class="hc-lbl">Indicadores · Argentina</div>
+        <div class="hc-tag">En vivo</div>
+      </div>
+      <div class="hc-items">
+        <div class="hc-item">
+          <div class="hc-item-lbl">IPC mensual</div>
+          <div class="hc-item-val">2.1% <span class="hc-item-delta dn">−0.3</span></div>
+        </div>
+        <div class="hc-item">
+          <div class="hc-item-lbl">Dólar blue</div>
+          <div class="hc-item-val">$1.285 <span class="hc-item-delta">+0.8%</span></div>
+        </div>
+        <div class="hc-item">
+          <div class="hc-item-lbl">Dólar oficial</div>
+          <div class="hc-item-val">$1.078 <span class="hc-item-delta dn">−0.2%</span></div>
+        </div>
+        <div class="hc-item">
+          <div class="hc-item-lbl">UVA</div>
+          <div class="hc-item-val">$1.024,5 <span class="hc-item-delta">+0.1%</span></div>
+        </div>
+        <div class="hc-item">
+          <div class="hc-item-lbl">Salario mínimo</div>
+          <div class="hc-item-val">$322.200</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div class="cat-title-wrap">
+        <div class="cat-kicker">01 /</div>
+        <div class="cat-title">Finanzas personales</div>
+        <div class="cat-count">8 calc</div>
+      </div>
+      <a href="#" class="cat-link">Ver todas →</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-head"><span class="card-tag">Más usada</span><span class="card-uses">12.4k/mes</span></div>
+        <div class="card-title">Sueldo en mano</div>
+        <div class="card-desc">De bruto a neto con descuentos reales 2026.</div>
+        <span class="card-cta">Calcular →</span>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-tag">Trending</span><span class="card-uses">8.1k/mes</span></div>
+        <div class="card-title">Inflación acumulada</div>
+        <div class="card-desc">IPC, dólar blue, oficial y UVA en paralelo.</div>
+        <span class="card-cta">Calcular →</span>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-tag">Temporada</span><span class="card-uses">5.1k/mes</span></div>
+        <div class="card-title">Aguinaldo (SAC)</div>
+        <div class="card-desc">Primera y segunda cuota, con proporcional.</div>
+        <span class="card-cta">Calcular →</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div class="cat-title-wrap">
+        <div class="cat-kicker">02 /</div>
+        <div class="cat-title">Salud y fitness</div>
+        <div class="cat-count">6 calc</div>
+      </div>
+      <a href="#" class="cat-link">Ver todas →</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-head"><span class="card-tag">Popular</span><span class="card-uses">6.2k/mes</span></div>
+        <div class="card-title">Índice de masa corporal</div>
+        <div class="card-desc">IMC con interpretación clara según OMS.</div>
+        <span class="card-cta">Calcular →</span>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-tag">Fitness</span><span class="card-uses">4.3k/mes</span></div>
+        <div class="card-title">Proteína diaria</div>
+        <div class="card-desc">Gramos según tu objetivo y actividad.</div>
+        <span class="card-cta">Calcular →</span>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-tag">Nutrición</span><span class="card-uses">3.8k/mes</span></div>
+        <div class="card-title">Metabolismo basal</div>
+        <div class="card-desc">BMR Mifflin-St Jeor + TDEE ajustado.</div>
+        <span class="card-cta">Calcular →</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-head">
+      <div class="cat-title-wrap">
+        <div class="cat-kicker">03 /</div>
+        <div class="cat-title">Autos</div>
+        <div class="cat-count">3 calc</div>
+      </div>
+      <a href="#" class="cat-link">Ver todas →</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-head"><span class="card-tag">Viajes</span><span class="card-uses">2.4k/mes</span></div>
+        <div class="card-title">Costo por viaje</div>
+        <div class="card-desc">Km × consumo × precio nafta.</div>
+        <span class="card-cta">Calcular →</span>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-tag">Impuesto</span><span class="card-uses">1.9k/mes</span></div>
+        <div class="card-title">Patente 2026</div>
+        <div class="card-desc">Tabla actualizada por provincia.</div>
+        <span class="card-cta">Calcular →</span>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-tag">Service</span><span class="card-uses">1.2k/mes</span></div>
+        <div class="card-title">Service programado</div>
+        <div class="card-desc">Próximo service y costo estimado.</div>
+        <span class="card-cta">Calcular →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALC PREVIEW -->
+  <div class="calc-preview">
+    <div class="calc-head">
+      <div class="calc-breadcrumb">finanzas / <span class="curr">sueldo-neto</span></div>
+      <h2 class="calc-h2">¿Cuánto te queda <span class="acc">en mano?</span></h2>
+      <p class="calc-sub">Aplicamos los descuentos vigentes a tu sueldo bruto y te mostramos el neto mensual con detalle de cada aporte.</p>
+    </div>
+    <div class="calc-body">
+      <div class="calc-inputs">
+        <div class="form-title">Ingresá tus datos</div>
+        <div class="field">
+          <div class="field-row"><label>Sueldo bruto</label><span class="field-hint">ARS / mes</span></div>
+          <input value="1850000">
+        </div>
+        <div class="field">
+          <div class="field-row"><label>Ganancias</label><span class="field-hint">opcional</span></div>
+          <input value="0">
+        </div>
+        <div class="field">
+          <div class="field-row"><label>Aportes</label><span class="field-hint">% bruto</span></div>
+          <input value="17">
+        </div>
+      </div>
+      <div class="calc-result">
+        <div class="res-lbl">— Sueldo neto en mano</div>
+        <div class="res-big"><span class="currency">$</span>1.535.500</div>
+        <div class="res-delta">▲ 83% del bruto declarado</div>
+        <div class="res-breakdown">
+          <div class="br-row"><span>bruto declarado</span><b>1.850.000</b></div>
+          <div class="br-row neg"><span>jubilación · 11%</span><b>−203.500</b></div>
+          <div class="br-row neg"><span>obra social · 3%</span><b>−55.500</b></div>
+          <div class="br-row neg"><span>pami · 3%</span><b>−55.500</b></div>
+          <div class="br-row total"><span>neto en mano</span><b>1.535.500</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div>© 2026 calculadora.live · built in buenos aires</div>
+  <div><a href="#">privacidad</a> &nbsp; <a href="#">términos</a> &nbsp; <a href="#">contacto</a></div>
+</footer>
+
+</body>
+</html>

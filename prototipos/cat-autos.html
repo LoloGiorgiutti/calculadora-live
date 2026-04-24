@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Prototipo · Página de Categoría</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F8FA;
+    --surface:#FFFFFF;
+    --ink:#0A0E1A;
+    --ink-2:#363B4F;
+    --ink-3:#858AA0;
+    --line:#E4E7EE;
+    --line-2:#EFF1F6;
+    --accent:#4F6BFF;
+    --accent-2:#7C5CFF;
+    --accent-soft:#EEF1FF;
+    --dark:#0A0E1A;
+    --dark-2:#141929;
+    --dark-3:#1A2038;
+    --dark-line:#1F2438;
+    --pos:#22C55E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+  a{color:inherit;text-decoration:none}
+
+  /* ── HEADER (idéntico homepage) ── */
+  header{background:var(--dark);border-bottom:1px solid var(--dark-line);position:sticky;top:0;z-index:100}
+  .header-inner{max-width:1240px;margin:0 auto;padding:0 32px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em}
+  .logo .name{color:#fff}
+  .logo .dot{color:var(--accent)}
+  .header-nav{display:flex;gap:2px;margin-left:8px}
+  .header-nav a{padding:7px 12px;border-radius:7px;font-size:13px;color:rgba(255,255,255,.6);font-weight:500;transition:all .12s}
+  .header-nav a:hover,.header-nav a.active{background:var(--dark-2);color:#fff}
+  .header-nav a.active{color:var(--accent);background:rgba(79,107,255,.12)}
+  .search-pill{padding:8px 14px 8px 36px;background:var(--dark-2);border:1px solid var(--dark-line);border-radius:9px;font-size:13px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:24px;cursor:pointer;position:relative;min-width:220px;justify-content:space-between;transition:all .15s;font-family:inherit}
+  .search-pill::before{content:'';position:absolute;left:13px;top:50%;transform:translateY(-50%);width:14px;height:14px;opacity:.45;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23fff" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>') no-repeat center/contain}
+  .search-pill kbd{font-family:'JetBrains Mono';font-size:10px;padding:2px 6px;background:rgba(255,255,255,.06);border:1px solid var(--dark-line);border-radius:4px;color:rgba(255,255,255,.4)}
+
+  /* ── HERO de categoría (más compacto que homepage) ── */
+  .cat-hero{background:var(--dark);color:#fff;padding:48px 0 96px;position:relative;overflow:hidden}
+  .cat-hero::before{content:'';position:absolute;top:-120px;right:-60px;width:600px;height:600px;background:radial-gradient(circle,rgba(79,107,255,.12) 0%,transparent 55%);pointer-events:none}
+
+  .cat-hero-inner{max-width:1240px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
+
+  /* Breadcrumb */
+  .breadcrumb{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:28px}
+  .breadcrumb a{color:rgba(255,255,255,.4);transition:color .12s}
+  .breadcrumb a:hover{color:rgba(255,255,255,.75)}
+  .breadcrumb-sep{opacity:.35}
+  .breadcrumb .curr{color:rgba(255,255,255,.65)}
+
+  .cat-hero-content{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .cat-hero-left{}
+
+  .cat-label{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}
+  .cat-label-dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+
+  .cat-hero h1{font-size:52px;font-weight:700;line-height:1.04;letter-spacing:-0.035em;margin-bottom:14px;color:#fff}
+  .cat-hero-desc{font-size:17px;color:rgba(255,255,255,.6);line-height:1.6;max-width:520px}
+
+  .cat-hero-stats{display:flex;gap:32px;flex-shrink:0}
+  .cat-stat{}
+  .cat-stat-n{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:600;color:#fff;letter-spacing:-0.03em;line-height:1}
+  .cat-stat-lbl{font-size:12px;color:rgba(255,255,255,.4);margin-top:4px;font-family:'JetBrains Mono',monospace}
+
+  /* ── MAIN ── */
+  main{max-width:1240px;margin:0 auto;padding:0 32px 80px;margin-top:-48px;position:relative;z-index:2}
+
+  /* Toolbar */
+  .toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 20px;box-shadow:0 2px 12px rgba(10,14,26,.04)}
+  .toolbar-left{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-3)}
+  .toolbar-left b{color:var(--ink-2);font-weight:600}
+  .toolbar-right{display:flex;gap:8px}
+  .sort-btn{padding:6px 12px;border-radius:7px;border:1.5px solid var(--line);background:var(--bg);font-size:12px;font-weight:500;color:var(--ink-3);cursor:pointer;font-family:'Inter',sans-serif;transition:all .12s}
+  .sort-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .sort-btn:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+
+  /* Cards grid */
+  .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:24px;cursor:pointer;transition:all .18s;display:flex;flex-direction:column}
+  .card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 28px rgba(79,107,255,.09)}
+  .card-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);padding:3px 8px;background:var(--accent-soft);border-radius:4px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:16px;align-self:flex-start}
+  .card-title{font-size:18px;font-weight:600;letter-spacing:-0.018em;margin-bottom:8px}
+  .card-desc{font-size:13px;color:var(--ink-3);line-height:1.55;flex:1;margin-bottom:18px}
+  .card-cta{font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:4px;transition:gap .15s;margin-top:auto}
+  .card:hover .card-cta{gap:8px}
+
+  /* ── OTRAS CATEGORÍAS ── */
+  .other-cats{margin-top:56px}
+  .other-cats-head{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+  .other-cats-head::after{content:'';flex:1;height:1px;background:var(--line)}
+  .other-cats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .other-cat-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;transition:all .15s;display:flex;flex-direction:column;gap:4px}
+  .other-cat-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,107,255,.07)}
+  .other-cat-name{font-size:14px;font-weight:600;color:var(--ink)}
+  .other-cat-n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3)}
+
+  /* ── FOOTER ── */
+  footer{max-width:1240px;margin:0 auto;padding:40px 32px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);font-family:'JetBrains Mono',monospace}
+  footer a{color:inherit}
+  footer a:hover{color:var(--ink)}
+
+  @media(max-width:1024px){
+    .header-nav,.search-pill{display:none}
+    .cat-hero h1{font-size:38px}
+    .cards-grid{grid-template-columns:repeat(2,1fr)}
+    .other-cats-grid{grid-template-columns:repeat(2,1fr)}
+    .cat-hero-content{flex-direction:column;gap:24px;align-items:flex-start}
+  }
+  @media(max-width:600px){
+    .cat-hero-inner,.main{padding:0 20px}
+    main{padding:0 16px 60px}
+    .cards-grid{grid-template-columns:1fr}
+    .other-cats-grid{grid-template-columns:1fr 1fr}
+    footer{flex-direction:column;gap:12px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="name">Calculadora</span><span class="dot">.live</span>
+    </a>
+    <nav class="header-nav">
+      <a href="/finanzas/">Finanzas</a>
+      <a href="/salud/">Salud</a>
+      <a href="/autos/" class="active">Autos</a>
+      <a href="/fechas/">Fechas</a>
+      <a href="/matematica/">Matemática</a>
+    </nav>
+    <div class="search-pill">
+      <span>Buscar calculadora…</span>
+      <kbd>⌘K</kbd>
+    </div>
+  </div>
+</header>
+
+<section class="cat-hero">
+  <div class="cat-hero-inner">
+
+    <div class="breadcrumb">
+      <a href="/">Inicio</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="curr">Autos</span>
+    </div>
+
+    <div class="cat-hero-content">
+      <div class="cat-hero-left">
+        <div class="cat-label"><span class="cat-label-dot"></span>Categoría</div>
+        <h1>Autos</h1>
+        <p class="cat-hero-desc">Calculadoras gratuitas para todo lo relacionado con tu auto. Costo de viajes, patente por provincia y cuándo te toca el service.</p>
+      </div>
+      <div class="cat-hero-stats">
+        <div class="cat-stat">
+          <div class="cat-stat-n">3</div>
+          <div class="cat-stat-lbl">calculadoras</div>
+        </div>
+        <div class="cat-stat">
+          <div class="cat-stat-n">100%</div>
+          <div class="cat-stat-lbl">gratuitas</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<main>
+
+  <div class="toolbar">
+    <div class="toolbar-left">Mostrando <b>3 calculadoras</b> en Autos</div>
+    <div class="toolbar-right">
+      <button class="sort-btn active">Todas</button>
+      <button class="sort-btn">Más usadas</button>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+
+    <a href="/nafta/" class="card">
+      <div class="card-tag">Popular</div>
+      <div class="card-title">Calculadora de nafta</div>
+      <div class="card-desc">¿Cuánto cuesta el viaje en auto? Calculá el costo por combustible según los kilómetros y el precio actualizado.</div>
+      <span class="card-cta">Calcular →</span>
+    </a>
+
+    <a href="/patente/" class="card">
+      <div class="card-title">Calculadora de patente</div>
+      <div class="card-desc">Calculá cuánto pagás de patente según la provincia y el valor de tu auto. Tabla actualizada 2026.</div>
+      <span class="card-cta">Calcular →</span>
+    </a>
+
+    <a href="/service/" class="card">
+      <div class="card-title">Calculadora de service</div>
+      <div class="card-desc">¿Cuándo te toca el próximo service y cuánto cuesta aproximadamente? Ingresá los km actuales.</div>
+      <span class="card-cta">Calcular →</span>
+    </a>
+
+  </div>
+
+  <!-- Otras categorías -->
+  <div class="other-cats">
+    <div class="other-cats-head">Otras categorías</div>
+    <div class="other-cats-grid">
+      <a href="/finanzas/" class="other-cat-card">
+        <div class="other-cat-name">Finanzas</div>
+        <div class="other-cat-n">9 calculadoras</div>
+      </a>
+      <a href="/salud/" class="other-cat-card">
+        <div class="other-cat-name">Salud</div>
+        <div class="other-cat-n">6 calculadoras</div>
+      </a>
+      <a href="/fechas/" class="other-cat-card">
+        <div class="other-cat-name">Fechas</div>
+        <div class="other-cat-n">3 calculadoras</div>
+      </a>
+      <a href="/matematica/" class="other-cat-card">
+        <div class="other-cat-name">Matemática</div>
+        <div class="other-cat-n">3 calculadoras</div>
+      </a>
+      <a href="/generadores/" class="other-cat-card">
+        <div class="other-cat-name">Generadores</div>
+        <div class="other-cat-n">2 calculadoras</div>
+      </a>
+      <a href="/tests/" class="other-cat-card">
+        <div class="other-cat-name">Tests</div>
+        <div class="other-cat-n">3 calculadoras</div>
+      </a>
+      <a href="/vida-numeros/" class="other-cat-card">
+        <div class="other-cat-name">Vida en números</div>
+        <div class="other-cat-n">2 calculadoras</div>
+      </a>
+      <a href="/mundial-2026/" class="other-cat-card">
+        <div class="other-cat-name">Mundial 2026</div>
+        <div class="other-cat-n">1 calculadora</div>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div>© 2026 Calculadora.live</div>
+  <div><a href="/privacidad/">Privacidad</a> &nbsp;·&nbsp; <a href="/terminos/">Términos</a></div>
+</footer>
+
+</body>
+</html>

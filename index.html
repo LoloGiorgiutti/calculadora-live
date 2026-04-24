@@ -14,183 +14,338 @@
 <meta property="og:url" content="https://calculadora.live/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #F0F2F7;
-    --surface: #FFFFFF;
-    --ink: #080A12;
-    --ink-light: #60647A;
-    --ink-faint: #B4B8CC;
-    --hi: #1A5FE8;
-    --hi-soft: #EEF3FD;
-    --border: #D4D8E6;
-    --radius: 16px;
-    --radius-sm: 10px;
-    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  :root{
+    --bg:#F7F8FA;
+    --surface:#FFFFFF;
+    --ink:#0A0E1A;
+    --ink-2:#363B4F;
+    --ink-3:#858AA0;
+    --line:#E4E7EE;
+    --line-2:#EFF1F6;
+    --accent:#4F6BFF;
+    --accent-2:#7C5CFF;
+    --accent-soft:#EEF1FF;
+    --dark:#0A0E1A;
+    --dark-2:#141929;
+    --dark-3:#1A2038;
+    --dark-line:#1F2438;
+    --pos:#22C55E;
+    --pos-soft:rgba(34,197,94,.15);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:'JetBrains Mono',monospace;font-feature-settings:'tnum'}
 
   /* ── HEADER ── */
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    position: sticky; top: 0; z-index: 100;
-  }
-  .logo {
-    font-size: 18px; font-weight: 700; color: var(--ink);
-    text-decoration: none; letter-spacing: -0.02em;
-  }
-  .logo span { color: var(--hi); }
+  header{background:var(--dark);border-bottom:1px solid var(--dark-line);position:sticky;top:0;z-index:100}
+  .header-inner{max-width:1240px;margin:0 auto;padding:0 24px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+
+  .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em;flex-shrink:0}
+  .logo .name{color:#fff}
+  .logo .dot{color:var(--accent)}
+
+  .header-nav{display:flex;gap:2px;margin-left:8px}
+  .header-nav a{padding:7px 12px;border-radius:7px;font-size:13px;color:rgba(255,255,255,.6);font-weight:500;transition:all .12s;white-space:nowrap}
+  .header-nav a:hover{background:var(--dark-2);color:#fff}
+
+  .search-pill{padding:8px 14px 8px 36px;background:var(--dark-2);border:1px solid var(--dark-line);border-radius:9px;font-size:13px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:24px;cursor:pointer;position:relative;min-width:220px;justify-content:space-between;transition:all .15s;font-family:inherit}
+  .search-pill::before{content:'';position:absolute;left:13px;top:50%;transform:translateY(-50%);width:14px;height:14px;opacity:.45;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23fff" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>') no-repeat center/contain}
+  .search-pill:hover{border-color:rgba(255,255,255,.2)}
+  .search-pill kbd{font-family:'JetBrains Mono';font-size:10px;padding:2px 6px;background:rgba(255,255,255,.06);border:1px solid var(--dark-line);border-radius:4px;color:rgba(255,255,255,.4)}
+
+  /* Override nav.js hamburger color for dark header */
+  #nav-toggle .nb{background:rgba(255,255,255,.85) !important}
+  #nav-toggle:hover{background:rgba(255,255,255,.1) !important}
 
   /* ── HERO ── */
-  .hero {
-    text-align: center;
-    padding: 56px 24px 40px;
-    max-width: 640px;
-    margin: 0 auto;
-  }
-  .hero h1 {
-    font-size: clamp(22px, 4.5vw, 36px);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.2;
-    margin-bottom: 12px;
-    text-wrap: balance;
-  }
-  .hero p {
-    font-size: 16px;
-    color: var(--ink-light);
-    font-weight: 400;
-    line-height: 1.5;
-  }
+  .hero-wrap{background:var(--dark);color:#fff;padding:72px 0 108px;position:relative;overflow:hidden}
+  .hero-wrap::before{content:'';position:absolute;top:-150px;right:-80px;width:700px;height:700px;background:radial-gradient(circle,rgba(79,107,255,.15) 0%,transparent 55%);pointer-events:none}
+  .hero-wrap::after{content:'';position:absolute;bottom:-80px;left:-60px;width:500px;height:500px;background:radial-gradient(circle,rgba(124,92,255,.1) 0%,transparent 55%);pointer-events:none}
 
-  /* ── GRID ── */
-  .container { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
+  .hero{max-width:1240px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
 
-  .category { margin-bottom: 40px; }
-  .category-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .category-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:99px;font-size:12px;font-weight:500;color:rgba(255,255,255,.8);margin-bottom:32px;font-family:'JetBrains Mono',monospace}
+  .he-pulse{width:6px;height:6px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 3px rgba(34,197,94,.25);flex-shrink:0}
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 12px;
-  }
+  .hero h1{font-size:68px;font-weight:700;line-height:1.02;letter-spacing:-0.04em;margin-bottom:24px}
+  .hero h1 .muted{background:linear-gradient(135deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,.4) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:600}
+  .hero h1 .acc{color:#fff}
 
-  .calc-card {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    text-decoration: none;
-    color: var(--ink);
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
-    cursor: pointer;
-  }
-  .calc-card:hover {
-    border-color: var(--hi);
-    box-shadow: 0 4px 20px rgba(26,95,232,0.12);
-    transform: translateY(-2px);
-  }
-  .calc-icon {
-    font-size: 28px;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-  .calc-info { flex: 1; }
-  .calc-name {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 3px;
-    line-height: 1.2;
-  }
-  .calc-desc {
-    font-size: 12px;
-    color: var(--ink-light);
-    line-height: 1.4;
-  }
-  .badge-new {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
-    background: var(--hi); color: white;
-    padding: 2px 7px; border-radius: 99px;
-    text-transform: uppercase; margin-left: 6px;
-    vertical-align: middle;
-  }
+  .hero-lead{font-size:18px;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:40px;max-width:520px;font-weight:400}
+
+  .hero-actions{display:flex;gap:12px;align-items:center}
+  .btn-primary{padding:13px 24px;background:#fff;color:var(--dark);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:inline-flex;align-items:center;gap:8px;border:0;text-decoration:none}
+  .btn-primary:hover{background:var(--accent);color:#fff}
+  .btn-ghost{padding:13px 20px;font-size:14px;font-weight:500;color:rgba(255,255,255,.65);cursor:pointer;transition:color .15s;text-decoration:none}
+  .btn-ghost:hover{color:#fff}
+
+  /* Hero categories card */
+  .hero-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:24px;backdrop-filter:blur(12px)}
+  .hc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+  .hc-lbl{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.09em}
+  .hc-count{font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 8px;background:rgba(79,107,255,.2);color:var(--accent);border-radius:5px;letter-spacing:.03em}
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .cat-chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:3px;text-decoration:none}
+  .cat-chip:hover{background:rgba(255,255,255,.1);border-color:rgba(79,107,255,.4)}
+  .cat-chip-name{font-size:13px;font-weight:600;color:#fff}
+  .cat-chip-n{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.4)}
+
+  /* ── MAIN (light, overlaps hero) ── */
+  main{max-width:1240px;margin:0 auto;padding:0 32px 100px;margin-top:-60px;position:relative;z-index:2}
+
+  /* Category blocks */
+  .cat-block{margin-bottom:48px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:0 2px 20px rgba(10,14,26,.04)}
+  .cat-block-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--line-2)}
+  .cat-title-wrap{display:flex;align-items:baseline;gap:14px}
+  .cat-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-3)}
+  .cat-title{font-size:24px;font-weight:700;letter-spacing:-0.022em}
+  .cat-count{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3);padding:2px 8px;background:var(--bg);border:1px solid var(--line);border-radius:5px}
+  .cat-link{font-size:13px;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent-soft);border-radius:9px;transition:all .15s;white-space:nowrap}
+  .cat-link:hover{background:var(--accent);color:#fff;gap:10px}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:var(--bg);border:1px solid var(--line);border-radius:13px;padding:22px;cursor:pointer;transition:all .18s;position:relative;display:flex;flex-direction:column}
+  .card:hover{border-color:var(--accent);background:var(--surface);transform:translateY(-2px);box-shadow:0 10px 28px rgba(79,107,255,.09)}
+  .card-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);padding:3px 8px;background:var(--accent-soft);border-radius:4px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:14px;align-self:flex-start}
+  .card-title{font-size:17px;font-weight:600;letter-spacing:-0.017em;margin-bottom:6px;color:var(--ink)}
+  .card-desc{font-size:13px;color:var(--ink-3);line-height:1.55;margin-bottom:16px;flex:1}
+  .card-cta{font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:4px;transition:gap .15s;margin-top:auto}
+  .card:hover .card-cta{gap:8px}
+
+  /* ── CALC PREVIEW ── */
+  .calc-preview{margin-top:64px;background:var(--surface);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 4px 30px rgba(10,14,26,.05)}
+  .calc-head{padding:36px 44px;border-bottom:1px solid var(--line)}
+  .calc-breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3);margin-bottom:14px;letter-spacing:.03em}
+  .calc-breadcrumb .curr{color:var(--ink-2)}
+  .calc-h2{font-size:36px;font-weight:700;letter-spacing:-0.032em;line-height:1.1}
+  .calc-h2 .acc{background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .calc-sub{margin-top:10px;font-size:15px;color:var(--ink-3);max-width:600px;line-height:1.55}
+
+  .calc-body{display:grid;grid-template-columns:1fr 1.2fr}
+  .calc-inputs{padding:36px 44px;border-right:1px solid var(--line)}
+  .form-title{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+  .form-title::after{content:'';flex:1;height:1px;background:var(--line)}
+
+  .mode-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .mode-tab{padding:7px 13px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;color:var(--ink-3);cursor:pointer;transition:all .15s}
+  .mode-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  .field{margin-bottom:18px}
+  .field-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+  .field label{font-size:12.5px;font-weight:500;color:var(--ink-2)}
+  .field-hint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3)}
+  .field input{width:100%;padding:13px 16px;background:var(--bg);border:1.5px solid transparent;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:500;color:var(--ink);outline:none;transition:all .15s;letter-spacing:-.01em}
+  .field input:focus{background:#fff;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+  .calc-result{padding:36px 44px;background:var(--dark);color:#fff;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+  .calc-result::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(79,107,255,.2) 0%,transparent 60%);pointer-events:none}
+  .calc-result::after{content:'';position:absolute;bottom:-40px;left:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(124,92,255,.12) 0%,transparent 60%);pointer-events:none}
+
+  .res-lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.12em;margin-bottom:16px;position:relative;z-index:1}
+  .res-eyebrow{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:8px;position:relative;z-index:1;font-family:'JetBrains Mono',monospace}
+  .res-big{font-size:82px;font-weight:700;letter-spacing:-0.045em;line-height:.95;margin-bottom:14px;position:relative;z-index:1;background:linear-gradient(135deg,#fff 20%,rgba(255,255,255,.7) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .res-sign{display:inline-block;padding:5px 12px;border-radius:6px;font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:22px;align-self:flex-start;position:relative;z-index:1}
+  .res-sign.pos{background:rgba(34,197,94,.15);color:var(--pos)}
+  .res-detail{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:24px;position:relative;z-index:1;line-height:1.55}
+  .res-breakdown{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;position:relative;z-index:1}
+  .br-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:rgba(255,255,255,.6);font-family:'JetBrains Mono',monospace}
+  .br-row b{font-weight:500;color:#fff}
+  .br-row.total{border-top:1px solid rgba(255,255,255,.12);margin-top:8px;padding-top:14px;font-size:14px}
+  .br-row.total b{font-size:16px;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
 
   /* ── FOOTER ── */
-  footer {
-    text-align: center;
-    padding: 24px;
-    font-size: 12px;
-    color: var(--ink-faint);
-    border-top: 1px solid var(--border);
-  }
+  footer{max-width:1240px;margin:0 auto;padding:40px 32px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);font-family:'JetBrains Mono',monospace}
+  footer a{color:inherit;text-decoration:none}
+  footer a:hover{color:var(--ink)}
 
-  @media (max-width: 480px) {
-    .grid { grid-template-columns: 1fr; }
-    .hero { padding: 36px 20px 28px; }
+  /* ── RESPONSIVE ── */
+  @media(max-width:1024px){
+    .header-nav,.search-pill{display:none}
+    .hero{grid-template-columns:1fr;gap:36px}
+    .hero h1{font-size:46px}
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .calc-body{grid-template-columns:1fr}
+    .calc-inputs{border-right:0;border-bottom:1px solid var(--line)}
+    .res-big{font-size:60px}
+    .cat-block{padding:20px}
+    .calc-head,.calc-inputs,.calc-result{padding:24px}
+  }
+  @media(max-width:600px){
+    .hero{padding:0 20px}
+    main{padding:0 16px 60px}
+    .cards{grid-template-columns:1fr}
+    .hero h1{font-size:38px}
+    .cat-block-head{flex-direction:column;gap:12px;align-items:flex-start}
+    footer{flex-direction:column;gap:12px;text-align:center;justify-content:center}
   }
 </style>
 </head>
 <body>
 
 <header>
-  <a class="logo" href="/">Calculadora<span>.live</span></a>
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="name">Calculadora</span><span class="dot">.live</span>
+    </a>
+    <nav class="header-nav" id="desktop-nav"></nav>
+    <div class="search-pill" onclick="document.getElementById('nav-toggle')?.click()">
+      <span>Buscar calculadora…</span>
+      <kbd>⌘K</kbd>
+    </div>
+  </div>
 </header>
 
-<div class="hero">
-  <h1>Calculadoras gratuitas de todo tipo</h1>
-  <p>Herramientas simples, rápidas y actualizadas.</p>
-</div>
+<section class="hero-wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow" id="hero-eyebrow"><span class="he-pulse"></span>&nbsp;<span id="hero-eyebrow-text">Calculadoras · gratis · sin registro</span></div>
+      <h1><span class="acc">Todas las cuentas</span><br><span class="muted">que importan.</span></h1>
+      <p class="hero-lead">Herramientas precisas para tu vida diaria. Sueldos, salud, autos, fechas, matemática y más. Sin fricciones, sin esperas.</p>
+      <div class="hero-actions">
+        <a href="#calculadoras" class="btn-primary">Explorar calculadoras →</a>
+        <a href="/porcentaje" class="btn-ghost">Ver la más usada</a>
+      </div>
+    </div>
 
-<div class="container" id="home-grid-root"></div>
+    <div class="hero-card">
+      <div class="hc-head">
+        <div class="hc-lbl">Categorías</div>
+        <div class="hc-count" id="hc-count">…</div>
+      </div>
+      <div class="cat-grid" id="hero-cat-grid">
+        <!-- generado por JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="calculadoras">
+  <div id="home-grid-root"></div>
+
+  <!-- CALC PREVIEW – Porcentaje -->
+  <div class="calc-preview">
+    <div class="calc-head">
+      <div class="calc-breadcrumb">matemática / <span class="curr">porcentaje</span></div>
+      <h2 class="calc-h2">Calculadora de <span class="acc">porcentajes</span></h2>
+      <p class="calc-sub">Completá dos campos y el tercero se calcula automáticamente. Cuatro modos: X% de Y, variación entre valores, aumentos y descuentos.</p>
+    </div>
+    <div class="calc-body">
+      <div class="calc-inputs">
+        <div class="form-title">Modo de cálculo</div>
+        <div class="mode-tabs">
+          <button class="mode-tab">X% de Y</button>
+          <button class="mode-tab">¿Qué % es X de Y?</button>
+          <button class="mode-tab active">Variación %</button>
+          <button class="mode-tab">Aumentar / descontar</button>
+        </div>
+        <div class="field">
+          <div class="field-row"><label>Valor inicial</label><span class="field-hint">número</span></div>
+          <input value="50.000" type="text" readonly>
+        </div>
+        <div class="field">
+          <div class="field-row"><label>Valor final</label><span class="field-hint">número</span></div>
+          <input value="85.000" type="text" readonly>
+        </div>
+        <div class="field">
+          <div class="field-row"><label>Variación</label><span class="field-hint">auto</span></div>
+          <input value="70 %" type="text" style="background:var(--accent-soft);border-color:#BFDBFE;color:var(--accent)" readonly>
+        </div>
+        <a href="/porcentaje" class="btn-primary" style="margin-top:8px;justify-content:center">Usar la calculadora →</a>
+      </div>
+      <div class="calc-result">
+        <div class="res-lbl">Resultado</div>
+        <div class="res-eyebrow">Variación de 50.000 a 85.000</div>
+        <div class="res-big">+70%</div>
+        <div class="res-sign pos">▲ Aumentó</div>
+        <div class="res-detail">Diferencia absoluta: <strong style="color:#fff">+35.000</strong><br>El valor aumentó 1.7 veces.</div>
+        <div class="res-breakdown">
+          <div class="br-row"><span>Valor inicial</span><b>50.000</b></div>
+          <div class="br-row"><span>Valor final</span><b>85.000</b></div>
+          <div class="br-row"><span>Diferencia</span><b>+35.000</b></div>
+          <div class="br-row total"><span>Variación porcentual</span><b>+70%</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
 
 <footer>
-  © 2026 Calculadora.live · Herramientas gratuitas · <a href="/privacidad/" style="color:inherit;">Privacidad</a> · <a href="/terminos/" style="color:inherit;">Términos</a>
+  <div>© 2026 Calculadora.live</div>
+  <div><a href="/privacidad/">Privacidad</a> &nbsp;·&nbsp; <a href="/terminos/">Términos</a></div>
 </footer>
 
-<!-- nav.js expone window.__CALCS; este script inline genera el grid sincrónicamente después -->
 <script src="/nav.js"></script>
 <script>
 (function(){
+  if(!window.__CALCS) return;
+  var calcs = window.__CALCS;
+
+  /* ── Eyebrow: contar total de calculadoras ── */
+  var total = calcs.reduce(function(s,c){return s+c.items.length},0);
+  var eyebrow = document.getElementById('hero-eyebrow-text');
+  if(eyebrow) eyebrow.textContent = total + ' calculadoras · gratis · sin registro';
+
+  /* ── Hero categories counter ── */
+  var hcCount = document.getElementById('hc-count');
+  if(hcCount) hcCount.textContent = calcs.length + ' secciones · ' + total + ' calc';
+
+  /* ── Hero categories grid ── */
+  var catGridEl = document.getElementById('hero-cat-grid');
+  if(catGridEl){
+    var cgHtml = '';
+    calcs.forEach(function(cat){
+      cgHtml += '<a href="/' + cat.slug + '/" class="cat-chip">'
+        + '<div class="cat-chip-name">' + cat.label + '</div>'
+        + '<div class="cat-chip-n">' + cat.items.length + ' calculadoras</div>'
+        + '</a>';
+    });
+    catGridEl.innerHTML = cgHtml;
+  }
+
+  /* ── Desktop nav links (5 principales) ── */
+  var navEl = document.getElementById('desktop-nav');
+  if(navEl){
+    var navCats = ['finanzas','salud','autos','fechas','matematica'];
+    var navHtml = '';
+    calcs.forEach(function(cat){
+      if(navCats.indexOf(cat.slug)!==-1){
+        navHtml += '<a href="/' + cat.slug + '/">' + cat.label + '</a>';
+      }
+    });
+    navEl.innerHTML = navHtml;
+  }
+
+  /* ── Home grid: top 3 por categoría ── */
   var root = document.getElementById('home-grid-root');
-  if(!root || !window.__CALCS) return;
+  if(!root) return;
   var html = '';
-  window.__CALCS.forEach(function(cat){
-    html += '<div class="category"><div class="category-title">' + cat.cat + '</div><div class="grid">';
-    cat.items.forEach(function(item){
-      var badge = item.badge ? '<span class="badge-new">nuevo</span>' : '';
-      var desc  = item.hd || item.d;
-      html += '<a class="calc-card" href="' + item.u + '">'
-        + '<div class="calc-icon">' + (item.icon || '🔢') + '</div>'
-        + '<div class="calc-info">'
-        + '<div class="calc-name">' + item.n + badge + '</div>'
-        + '<div class="calc-desc">' + desc + '</div>'
-        + '</div></a>';
+  calcs.forEach(function(cat, idx){
+    var num = (idx+1 < 10 ? '0' : '') + (idx+1);
+    /* strip emoji from category name */
+    var catName = cat.cat.replace(/^\S+\s+/, '');
+    html += '<div class="cat-block">'
+      + '<div class="cat-block-head">'
+      + '<div class="cat-title-wrap">'
+      + '<div class="cat-num">' + num + ' /</div>'
+      + '<div class="cat-title">' + catName + '</div>'
+      + '<div class="cat-count">' + cat.items.length + ' calc</div>'
+      + '</div>'
+      + '<a href="/' + cat.slug + '/" class="cat-link">Ver todas →</a>'
+      + '</div>'
+      + '<div class="cards">';
+    var top3 = cat.items.slice(0,3);
+    top3.forEach(function(item){
+      var tag = item.badge ? '<div class="card-tag">Nuevo</div>' : '';
+      html += '<a class="card" href="' + item.u + '">'
+        + tag
+        + '<div class="card-title">' + item.n + '</div>'
+        + '<div class="card-desc">' + (item.hd || item.d) + '</div>'
+        + '<span class="card-cta">Calcular →</span>'
+        + '</a>';
     });
     html += '</div></div>';
   });

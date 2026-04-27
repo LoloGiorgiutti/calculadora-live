@@ -465,7 +465,11 @@
   'html[data-theme="dark"] body{background:#0E1525;color:#E2E4F0;}',
 
   /* Headers claros (calculadoras) → se vuelven oscuros */
-  'html[data-theme="dark"] header{background:#0D1117 !important;border-bottom-color:#1F2438 !important;}',
+  'html[data-theme="dark"] header{background:#0A0E1A !important;border-bottom-color:#1F2438 !important;}',
+  /* Nafta usa #site-header (div) en lugar de header */
+  'html[data-theme="dark"] #site-header{background:#0A0E1A !important;border-bottom-color:#1F2438 !important;}',
+  'html[data-theme="dark"] #site-header a{color:rgba(255,255,255,.75) !important;}',
+  'html[data-theme="dark"] #site-header a span{color:#4F6BFF !important;}',
   'html[data-theme="dark"] .logo{color:#E2E4F0 !important;}',
   'html[data-theme="dark"] .logo span{color:#4F6BFF !important;}',
 
@@ -484,7 +488,7 @@
   'border-color:#4F6BFF !important;box-shadow:0 0 0 3px rgba(79,107,255,.15) !important;}',
 
   /* Footer */
-  'html[data-theme="dark"] footer{background:#0D1117 !important;',
+  'html[data-theme="dark"] footer{background:#0A0E1A !important;',
   'border-top-color:#1F2438 !important;color:#404565 !important;}',
 
   /* Superficies genéricas que usan background:#fff o var(--surface) */

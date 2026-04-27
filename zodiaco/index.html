@@ -5,284 +5,609 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¿Cuál es mi signo del zodiaco? — Calculadora.live</title>
-<meta name="description" content="Ingresá tu fecha de nacimiento y descubrí tu signo del zodiaco con descripción completa: elemento, planeta regente, personalidad, compatibilidad y más.">
+<title>¿Cuál es mi signo del zodiaco? Carta natal completa — Calculadora.live</title>
+<meta name="description" content="Descubrí tu signo solar, lunar, ascendente y la posición de todos los planetas en tu carta natal. Ingresá tu fecha, hora y ciudad de nacimiento.">
 <link rel="canonical" href="https://calculadora.live/zodiaco/">
-<meta property="og:title" content="¿Cuál es mi signo del zodiaco? — Calculadora.live">
-<meta property="og:description" content="Ingresá tu fecha de nacimiento y descubrí tu signo del zodiaco con descripción completa.">
-<meta property="og:url" content="https://calculadora.live/zodiaco/">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--accent:#4F6BFF;--accent-2:#7C5CFF;--accent-soft:#EEF1FF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;}
+:root{--bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--line-2:#EFF1F6;--accent:#4F6BFF;--accent-2:#7C5CFF;--accent-soft:#EEF1FF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;--pos:#22C55E;}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-
 header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
 .logo{font-size:16px;font-weight:700;letter-spacing:-0.03em;color:var(--ink)}
 .logo span{color:var(--accent)}
-
-.hero{background:var(--dark);color:#fff;padding:36px 20px 28px;text-align:center}
-.breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:14px;letter-spacing:.03em}
-.breadcrumb a{color:rgba(255,255,255,.4)}
-.breadcrumb a:hover{color:rgba(255,255,255,.7)}
-h1{font-size:clamp(24px,5vw,36px);font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}
-.hero-sub{font-size:15px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto}
-
-.main{max-width:560px;margin:0 auto;padding:28px 20px 80px}
-
+.hero{background:var(--dark);color:#fff;padding:36px 20px 28px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(124,92,255,.18) 0%,transparent 60%);pointer-events:none}
+.breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:14px;letter-spacing:.03em;position:relative;z-index:1}
+.breadcrumb a{color:rgba(255,255,255,.4)}.breadcrumb a:hover{color:rgba(255,255,255,.7)}
+h1{font-size:clamp(24px,5vw,38px);font-weight:700;letter-spacing:-0.03em;margin-bottom:8px;position:relative;z-index:1}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.6);max-width:520px;margin:0 auto;position:relative;z-index:1}
+.main{max-width:640px;margin:0 auto;padding:28px 20px 80px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;margin-bottom:20px}
-
-.field{margin-bottom:0}
+.field{margin-bottom:18px}
+.field:last-child{margin-bottom:0}
 .field label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:8px}
-.field input{width:100%;padding:13px 16px;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:500;color:var(--ink);outline:none;transition:all .15s}
-.field input:focus{background:#fff;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-
-.btn{width:100%;margin-top:18px;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.field input,.field select{width:100%;padding:12px 16px;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;font-family:'Inter',sans-serif;font-size:15px;font-weight:500;color:var(--ink);outline:none;transition:all .15s}
+.field input:focus,.field select:focus{background:#fff;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field-hint{font-size:12px;color:var(--ink-3);margin-top:5px}
+.optional-badge{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:2px 7px;margin-left:8px}
+.toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;cursor:pointer;user-select:none}
+.toggle-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent)}
+.toggle-row span{font-size:13px;color:var(--ink-2)}
+.hidden{display:none}
+.btn{width:100%;margin-top:20px;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s}
 .btn:hover{opacity:.88}
-
-/* Resultado */
+/* ─── RESULTADO ─── */
 #result{display:none}
-
-.sign-header{text-align:center;padding:28px 24px 20px;border-bottom:1px solid var(--line);margin-bottom:24px}
-.sign-symbol{font-size:72px;line-height:1;margin-bottom:12px}
-.sign-name{font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:4px}
-.sign-dates{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-3);letter-spacing:.04em}
-
-.attrs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
-.attr{background:var(--bg);border-radius:10px;padding:14px 16px}
-.attr-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
-.attr-value{font-size:14px;font-weight:600;color:var(--ink)}
-
-.section-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sign-hero{text-align:center;padding:28px 20px 24px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.sign-sym{font-size:64px;line-height:1;margin-bottom:10px}
+.sign-name{font-size:34px;font-weight:800;letter-spacing:-0.03em;margin-bottom:4px}
+.sign-dates{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-3);letter-spacing:.04em;margin-bottom:16px}
+.sign-attrs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.s-attr{background:var(--bg);border-radius:9px;padding:11px 12px;text-align:center}
+.s-attr-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);margin-bottom:3px}
+.s-attr-val{font-size:13px;font-weight:600;color:var(--ink)}
+.sign-desc{font-size:14px;color:var(--ink-2);line-height:1.75}
+.traits{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.trait{padding:5px 11px;background:var(--accent-soft);color:var(--accent);border-radius:99px;font-size:12px;font-weight:600}
+/* Carta natal */
+.section-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);padding:14px 0 8px;display:flex;align-items:center;gap:10px}
 .section-title::after{content:'';flex:1;height:1px;background:var(--line)}
-
-.desc{font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:24px}
-
-.traits{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
-.trait{padding:6px 12px;background:var(--accent-soft);color:var(--accent);border-radius:99px;font-size:12px;font-weight:600}
-
-.compat{display:flex;gap:10px;flex-wrap:wrap}
-.compat-sign{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--bg);border-radius:10px;padding:10px 14px;min-width:60px}
-.compat-sign span:first-child{font-size:22px}
-.compat-sign span:last-child{font-size:11px;font-weight:600;color:var(--ink-3)}
-
-@media(max-width:480px){.attrs{grid-template-columns:1fr}}
+.planet-row{display:flex;align-items:flex-start;gap:14px;padding:13px 0;border-bottom:1px solid var(--line-2)}
+.planet-row:last-child{border-bottom:none}
+.planet-icon{font-size:20px;width:28px;text-align:center;flex-shrink:0;padding-top:1px}
+.planet-meta{flex:1;min-width:0}
+.planet-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin-bottom:2px}
+.planet-sign{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.planet-sign .sign-sym-sm{color:var(--accent);font-size:13px;margin-left:4px}
+.planet-desc{font-size:13px;color:var(--ink-2);line-height:1.6}
+.planet-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.tag-asc{background:rgba(34,197,94,.12);color:#16a34a}
+.tag-retro{background:rgba(239,68,68,.1);color:#dc2626}
+/* Resumen narrativo */
+.narrative{font-size:14px;color:var(--ink-2);line-height:1.8}
+.narrative p{margin-bottom:16px}
+.narrative p:last-child{margin-bottom:0}
+.compat-grid{display:flex;flex-wrap:wrap;gap:10px}
+.compat-chip{display:flex;align-items:center;gap:7px;padding:8px 14px;background:var(--bg);border:1px solid var(--line);border-radius:9px}
+.compat-chip .csym{font-size:18px}
+.compat-chip .cname{font-size:13px;font-weight:600;color:var(--ink)}
+.incomplete-note{padding:12px 16px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:9px;font-size:13px;color:#92400e;margin-bottom:16px}
+@media(max-width:480px){.sign-attrs{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<header>
-  <a href="/" class="logo">Calculadora<span>.live</span></a>
-</header>
-
+<header><a href="/" class="logo">Calculadora<span>.live</span></a></header>
 <div class="hero">
   <div class="breadcrumb"><a href="/">Inicio</a> / <a href="/fechas/">Fechas</a> / Signo del zodiaco</div>
-  <h1>¿Cuál es tu signo del zodiaco?</h1>
-  <p class="hero-sub">Ingresá tu fecha de nacimiento y descubrí tu signo con descripción completa</p>
+  <h1>Tu carta natal completa</h1>
+  <p class="hero-sub">Sol, Luna, Ascendente y todos los planetas según tu fecha, hora y lugar de nacimiento</p>
 </div>
-
 <div class="main">
   <div class="card">
     <div class="field">
       <label>Fecha de nacimiento</label>
       <input type="date" id="fecha" max="">
     </div>
-    <button class="btn" onclick="calcular()">Ver mi signo →</button>
+    <div class="field">
+      <label>Hora de nacimiento <span class="optional-badge">opcional</span></label>
+      <input type="time" id="hora" placeholder="--:--">
+      <div class="field-hint">Requerida para calcular el Ascendente y mejorar la precisión de la Luna.</div>
+    </div>
+    <div class="field" id="city-field" style="display:none">
+      <label>Ciudad de nacimiento <span class="optional-badge">para el ascendente</span></label>
+      <select id="ciudad">
+        <option value="">— Seleccioná tu ciudad —</option>
+        <optgroup label="Argentina">
+          <option value="-34.6037,-58.3816">Buenos Aires</option>
+          <option value="-31.4135,-64.1811">Córdoba</option>
+          <option value="-32.9575,-60.6394">Rosario</option>
+          <option value="-32.8908,-68.8272">Mendoza</option>
+          <option value="-34.9205,-57.9536">La Plata</option>
+          <option value="-38.0023,-57.5575">Mar del Plata</option>
+          <option value="-26.8241,-65.2226">San Miguel de Tucumán</option>
+          <option value="-24.7821,-65.4232">Salta</option>
+          <option value="-27.4692,-58.8306">Resistencia</option>
+          <option value="-31.5375,-68.5364">San Juan</option>
+          <option value="-38.9516,-68.0591">Neuquén</option>
+          <option value="-41.1335,-71.3103">Bariloche</option>
+          <option value="-51.6230,-69.2168">Río Gallegos</option>
+        </optgroup>
+        <optgroup label="Latinoamérica">
+          <option value="-34.9011,-56.1645">Montevideo</option>
+          <option value="-33.4372,-70.6506">Santiago</option>
+          <option value="-15.8397,-47.9297">Brasília</option>
+          <option value="-23.5505,-46.6333">São Paulo</option>
+          <option value="-22.9068,-43.1729">Río de Janeiro</option>
+          <option value="-12.0464,-77.0428">Lima</option>
+          <option value="4.7109,-74.0721">Bogotá</option>
+          <option value="10.4806,-66.9036">Caracas</option>
+          <option value="19.4285,-99.1277">Ciudad de México</option>
+          <option value="14.0723,-87.2059">Tegucigalpa</option>
+          <option value="23.1136,-82.3666">La Habana</option>
+        </optgroup>
+        <optgroup label="Resto del mundo">
+          <option value="40.4165,-3.7026">Madrid</option>
+          <option value="41.3851,2.1734">Barcelona</option>
+          <option value="48.8566,2.3522">París</option>
+          <option value="51.5074,-0.1278">Londres</option>
+          <option value="41.9028,12.4964">Roma</option>
+          <option value="52.5200,13.4050">Berlín</option>
+          <option value="40.7127,-74.0059">Nueva York</option>
+          <option value="34.0522,-118.2437">Los Ángeles</option>
+          <option value="35.6762,139.6503">Tokio</option>
+          <option value="31.2304,121.4737">Shanghái</option>
+          <option value="-33.8688,151.2093">Sídney</option>
+        </optgroup>
+      </select>
+    </div>
+    <button class="btn" onclick="calcular()">Ver mi carta natal →</button>
   </div>
 
-  <div class="card" id="result">
-    <div class="sign-header">
-      <div class="sign-symbol" id="r-symbol"></div>
-      <div class="sign-name" id="r-name"></div>
-      <div class="sign-dates" id="r-dates"></div>
+  <div id="result">
+    <!-- Signo solar -->
+    <div class="card">
+      <div class="sign-hero">
+        <div class="sign-sym" id="r-sym"></div>
+        <div class="sign-name" id="r-name"></div>
+        <div class="sign-dates" id="r-dates"></div>
+        <div class="sign-attrs" id="r-attrs"></div>
+        <p class="sign-desc" id="r-desc"></p>
+        <div class="traits" id="r-traits"></div>
+      </div>
     </div>
 
-    <div class="attrs" id="r-attrs"></div>
+    <!-- Carta natal -->
+    <div class="card">
+      <div id="incomplete-note" class="incomplete-note hidden">
+        ℹ️ Sin hora de nacimiento el Ascendente no se puede calcular y la posición de la Luna es aproximada.
+      </div>
+      <div class="section-title">Luminarias</div>
+      <div id="planets-lum"></div>
+      <div class="section-title">Planetas personales</div>
+      <div id="planets-personal"></div>
+      <div class="section-title">Planetas sociales</div>
+      <div id="planets-social"></div>
+      <div class="section-title">Planetas transpersonales</div>
+      <div id="planets-trans"></div>
+    </div>
 
-    <div class="section-title">Personalidad</div>
-    <p class="desc" id="r-desc"></p>
+    <!-- Compatibilidad -->
+    <div class="card">
+      <div class="section-title" style="padding-top:0">Mayor compatibilidad</div>
+      <div class="compat-grid" id="r-compat"></div>
+    </div>
 
-    <div class="section-title">Rasgos principales</div>
-    <div class="traits" id="r-traits"></div>
-
-    <div class="section-title">Mayor compatibilidad</div>
-    <div class="compat" id="r-compat"></div>
+    <!-- Resumen narrativo -->
+    <div class="card">
+      <div class="section-title" style="padding-top:0">Tu perfil astrológico</div>
+      <div class="narrative" id="r-narrative"></div>
+    </div>
   </div>
 </div>
 
 <script src="/nav.js"></script>
 <script>
-// Fecha máx = hoy
+// ── Mostrar campo de ciudad si hay hora ──────────────────────────────────
+document.getElementById('hora').addEventListener('input', function(){
+  document.getElementById('city-field').style.display = this.value ? 'block' : 'none';
+});
 document.getElementById('fecha').max = new Date().toISOString().split('T')[0];
 
+// ── DATOS DE SIGNOS ──────────────────────────────────────────────────────
 var SIGNOS = [
-  {
-    n:'Capricornio', sym:'♑', emoji:'🐐',
-    desde:[12,22], hasta:[1,19],
-    elemento:'Tierra', planeta:'Saturno', modalidad:'Cardinal', polaridad:'Femenino',
-    color:'Marrón, gris', piedra:'Granate, obsidiana',
-    desc:'Capricornio es el signo más disciplinado y ambicioso del zodiaco. Nacidos bajo la influencia de Saturno, los capricornianos son personas responsables, organizadas y con una determinación de hierro para alcanzar sus metas. Tienen una mentalidad práctica y realista, y raramente se dejan llevar por emociones impulsivas. Su perseverancia es legendaria: si se proponen algo, lo logran, aunque les lleve años. Son leales, confiables y excelentes en posiciones de liderazgo y negocios.',
-    rasgos:['Ambicioso','Disciplinado','Responsable','Paciente','Práctico','Reservado'],
-    compat:['♉','♍','♏','♓']
-  },
-  {
-    n:'Acuario', sym:'♒', emoji:'🏺',
-    desde:[1,20], hasta:[2,18],
-    elemento:'Aire', planeta:'Urano / Saturno', modalidad:'Fijo', polaridad:'Masculino',
-    color:'Azul eléctrico, plateado', piedra:'Amatista, aguamarina',
-    desc:'Acuario es el signo más original e innovador del zodiaco. Regidos por Urano, los acuarianos son visionarios, independientes y profundamente humanitarios. Aman la libertad intelectual y siempre buscan romper moldes y convenciones. Son pensadores adelantados a su tiempo, con una capacidad única para ver el mundo desde perspectivas que otros no perciben. Aunque pueden parecer distantes emocionalmente, tienen una profunda preocupación por el bienestar colectivo y la justicia social.',
-    rasgos:['Original','Independiente','Humanitario','Intelectual','Excéntrico','Visionario'],
-    compat:['♊','♎','♈','♐']
-  },
-  {
-    n:'Piscis', sym:'♓', emoji:'🐟',
-    desde:[2,19], hasta:[3,20],
-    elemento:'Agua', planeta:'Neptuno / Júpiter', modalidad:'Mutable', polaridad:'Femenino',
-    color:'Azul mar, violeta', piedra:'Piedra de luna, amatista',
-    desc:'Piscis es el signo más intuitivo, empático y soñador del zodiaco. Regidos por Neptuno, los piscianos son almas sensibles con una profunda conexión con el mundo espiritual y emocional. Tienen una imaginación desbordante y una capacidad artística innata. Son compasivos hasta el extremo, siempre dispuestos a ayudar a los demás, aunque a veces esto los lleve a descuidar sus propias necesidades. Su naturaleza mística les da una visión del mundo única, llena de poesía y significado.',
-    rasgos:['Empático','Intuitivo','Creativo','Compasivo','Soñador','Adaptable'],
-    compat:['♋','♏','♑','♉']
-  },
-  {
-    n:'Aries', sym:'♈', emoji:'🐏',
-    desde:[3,21], hasta:[4,19],
-    elemento:'Fuego', planeta:'Marte', modalidad:'Cardinal', polaridad:'Masculino',
-    color:'Rojo, naranja', piedra:'Diamante, rubí',
+  { n:'Aries',      sym:'♈', emoji:'🐏', desde:[3,21],hasta:[4,19],  elem:'Fuego',  planeta:'Marte',          modal:'Cardinal',  pol:'Masculino', color:'Rojo, naranja',      piedra:'Diamante, rubí',
     desc:'Aries es el primer signo del zodiaco y uno de los más enérgicos y apasionados. Regidos por Marte, los arianos son líderes natos, valientes e impulsivos. Tienen una energía inagotable y una confianza en sí mismos que los lleva a asumir riesgos donde otros dudan. Son directos, honestos y a veces impacientes, ya que siempre quieren estar en movimiento y ver resultados rápidos. Su entusiasmo es contagioso y su coraje los convierte en pioneros en todo lo que emprenden.',
-    rasgos:['Valiente','Apasionado','Líder','Impulsivo','Enérgico','Directo'],
-    compat:['♌','♐','♊','♒']
-  },
-  {
-    n:'Tauro', sym:'♉', emoji:'🐂',
-    desde:[4,20], hasta:[5,20],
-    elemento:'Tierra', planeta:'Venus', modalidad:'Fijo', polaridad:'Femenino',
-    color:'Verde, rosa', piedra:'Esmeralda, malaquita',
+    rasgos:['Valiente','Apasionado','Líder','Impulsivo','Enérgico','Directo'], compat:['♌','♐','♊','♒'] },
+  { n:'Tauro',      sym:'♉', emoji:'🐂', desde:[4,20],hasta:[5,20],  elem:'Tierra', planeta:'Venus',           modal:'Fijo',      pol:'Femenino',  color:'Verde, rosa',        piedra:'Esmeralda, malaquita',
     desc:'Tauro es el signo más estable, paciente y sensual del zodiaco. Regidos por Venus, los taurinos tienen una profunda apreciación por la belleza, el confort y los placeres de la vida. Son personas confiables, perseverantes y con los pies en la tierra, que valoran la seguridad por encima de todo. Una vez que se comprometen con algo o alguien, son absolutamente leales. Su lado artístico es muy marcado, y suelen tener buen gusto para la música, la gastronomía y todo lo estético.',
-    rasgos:['Estable','Paciente','Leal','Sensual','Determinado','Práctico'],
-    compat:['♍','♑','♋','♓']
-  },
-  {
-    n:'Géminis', sym:'♊', emoji:'👯',
-    desde:[5,21], hasta:[6,20],
-    elemento:'Aire', planeta:'Mercurio', modalidad:'Mutable', polaridad:'Masculino',
-    color:'Amarillo, plateado', piedra:'Ágata, citrino',
-    desc:'Géminis es el signo más versátil y comunicativo del zodiaco. Regidos por Mercurio, los geminianos tienen una mente ágil, curiosa e inquieta que los lleva a interesarse en infinidad de temas. Son excelentes conversadores, ingeniosos y adaptables a cualquier situación. Su dualidad los hace capaces de ver todos los lados de una situación, aunque a veces esto genera indecisión. Adoran aprender, compartir información y relacionarse con personas diversas. Son el alma de cualquier reunión social.',
-    rasgos:['Comunicativo','Curioso','Versátil','Inteligente','Sociable','Ingenioso'],
-    compat:['♎','♒','♈','♌']
-  },
-  {
-    n:'Cáncer', sym:'♋', emoji:'🦀',
-    desde:[6,21], hasta:[7,22],
-    elemento:'Agua', planeta:'Luna', modalidad:'Cardinal', polaridad:'Femenino',
-    color:'Blanco, plateado', piedra:'Perla, piedra de luna',
+    rasgos:['Estable','Paciente','Leal','Sensual','Determinado','Práctico'], compat:['♍','♑','♋','♓'] },
+  { n:'Géminis',    sym:'♊', emoji:'👯', desde:[5,21],hasta:[6,20],  elem:'Aire',   planeta:'Mercurio',        modal:'Mutable',   pol:'Masculino', color:'Amarillo, plateado', piedra:'Ágata, citrino',
+    desc:'Géminis es el signo más versátil y comunicativo del zodiaco. Regidos por Mercurio, los geminianos tienen una mente ágil, curiosa e inquieta que los lleva a interesarse en infinidad de temas. Son excelentes conversadores, ingeniosos y adaptables a cualquier situación. Su dualidad los hace capaces de ver todos los lados de una situación. Adoran aprender, compartir información y relacionarse con personas diversas. Son el alma de cualquier reunión social.',
+    rasgos:['Comunicativo','Curioso','Versátil','Inteligente','Sociable','Ingenioso'], compat:['♎','♒','♈','♌'] },
+  { n:'Cáncer',     sym:'♋', emoji:'🦀', desde:[6,21],hasta:[7,22],  elem:'Agua',   planeta:'Luna',            modal:'Cardinal',  pol:'Femenino',  color:'Blanco, plateado',   piedra:'Perla, piedra de luna',
     desc:'Cáncer es el signo más hogareño, intuitivo y protector del zodiaco. Regidos por la Luna, los cancerianos tienen una sensibilidad emocional muy profunda y una memoria excepcional. El hogar y la familia son su máxima prioridad, y harán cualquier cosa por proteger a las personas que aman. Son empáticos, cariñosos y tienen una intuición casi sobrenatural para percibir los estados de ánimo ajenos. Su naturaleza receptiva los convierte en grandes confidentes y amigos eternos.',
-    rasgos:['Empático','Protector','Intuitivo','Cariñoso','Hogareño','Sensible'],
-    compat:['♏','♓','♑','♉']
-  },
-  {
-    n:'Leo', sym:'♌', emoji:'🦁',
-    desde:[7,23], hasta:[8,22],
-    elemento:'Fuego', planeta:'Sol', modalidad:'Fijo', polaridad:'Masculino',
-    color:'Dorado, naranja', piedra:'Peridoto, topacio',
+    rasgos:['Empático','Protector','Intuitivo','Cariñoso','Hogareño','Sensible'], compat:['♏','♓','♑','♉'] },
+  { n:'Leo',        sym:'♌', emoji:'🦁', desde:[7,23],hasta:[8,22],  elem:'Fuego',  planeta:'Sol',             modal:'Fijo',      pol:'Masculino', color:'Dorado, naranja',    piedra:'Peridoto, topacio',
     desc:'Leo es el signo más carismático, generoso y dramático del zodiaco. Regidos por el Sol, los leonianos irradian una energía magnética que atrae naturalmente la atención. Son líderes creativos, apasionados y con un gran corazón. Aman el reconocimiento y brillar, pero también son increíblemente leales y protectores con quienes quieren. Tienen un talento natural para el entretenimiento, el arte y la actuación. Su entusiasmo por la vida es absolutamente contagioso.',
-    rasgos:['Carismático','Generoso','Creativo','Apasionado','Leal','Dramático'],
-    compat:['♈','♐','♊','♎']
-  },
-  {
-    n:'Virgo', sym:'♍', emoji:'👩‍🌾',
-    desde:[8,23], hasta:[9,22],
-    elemento:'Tierra', planeta:'Mercurio', modalidad:'Mutable', polaridad:'Femenino',
-    color:'Beige, verde', piedra:'Sardónice, jade',
-    desc:'Virgo es el signo más analítico, perfeccionista y servicial del zodiaco. Regidos por Mercurio, los virginianos tienen una mente ordenada y meticulosa que los convierte en expertos solucionadores de problemas. Son modestos, trabajadores y con un agudo sentido crítico. Su deseo de ayudar a los demás es genuino, aunque a veces pueden volverse demasiado exigentes consigo mismos y con quienes los rodean. Tienen un ojo clínico para detectar detalles que otros pasan por alto, lo que los hace indispensables en equipos de trabajo.',
-    rasgos:['Analítico','Perfeccionista','Servicial','Meticuloso','Modesto','Práctico'],
-    compat:['♑','♉','♋','♏']
-  },
-  {
-    n:'Libra', sym:'♎', emoji:'⚖️',
-    desde:[9,23], hasta:[10,22],
-    elemento:'Aire', planeta:'Venus', modalidad:'Cardinal', polaridad:'Masculino',
-    color:'Rosa, azul cielo', piedra:'Ópalo, zafiro',
-    desc:'Libra es el signo más diplomático, armonioso y estético del zodiaco. Regidos por Venus, los librianos tienen una profunda necesidad de equilibrio, justicia y belleza en todas las áreas de su vida. Son encantadores, sociables y con un talento natural para mediar en conflictos. Tienen buen gusto refinado y una atracción instintiva hacia el arte y la cultura. Su mayor desafío es la indecisión, ya que siempre ven todos los lados de un asunto y les cuesta tomar partido.',
-    rasgos:['Diplomático','Justo','Encantador','Sociable','Estético','Indeciso'],
-    compat:['♊','♒','♌','♐']
-  },
-  {
-    n:'Escorpio', sym:'♏', emoji:'🦂',
-    desde:[10,23], hasta:[11,21],
-    elemento:'Agua', planeta:'Plutón / Marte', modalidad:'Fijo', polaridad:'Femenino',
-    color:'Rojo oscuro, negro', piedra:'Topacio, granate',
-    desc:'Escorpio es el signo más intenso, misterioso y transformador del zodiaco. Regidos por Plutón, los escorpianos tienen una profundidad emocional sin igual y una determinación que raya en lo obsesivo cuando se proponen algo. Son perspicaces, magnéticos y con un instinto para descubrir verdades ocultas que pocas personas poseen. Su lealtad es absoluta, pero también su sentido de la justicia: pueden ser implacables con quienes los traicionan. Están asociados con la muerte, la regeneración y el renacimiento.',
-    rasgos:['Intenso','Apasionado','Leal','Perspicaz','Misterioso','Determinado'],
-    compat:['♋','♓','♑','♍']
-  },
-  {
-    n:'Sagitario', sym:'♐', emoji:'🏹',
-    desde:[11,22], hasta:[12,21],
-    elemento:'Fuego', planeta:'Júpiter', modalidad:'Mutable', polaridad:'Masculino',
-    color:'Azul, morado', piedra:'Turquesa, zircón',
-    desc:'Sagitario es el signo más aventurero, optimista y filosófico del zodiaco. Regidos por Júpiter, los sagitarianos tienen una sed insaciable de conocimiento, viajes y experiencias que amplíen su visión del mundo. Son directos, honestos y a veces demasiado francos, pero siempre con buenas intenciones. Aman la libertad por encima de todo y se rebelan contra cualquier tipo de restricción. Su energía expansiva y su entusiasmo contagioso los convierten en inspiración para quienes los rodean.',
-    rasgos:['Aventurero','Optimista','Honesto','Filosófico','Libre','Generoso'],
-    compat:['♈','♌','♎','♒']
-  }
+    rasgos:['Carismático','Generoso','Creativo','Apasionado','Leal','Dramático'], compat:['♈','♐','♊','♎'] },
+  { n:'Virgo',      sym:'♍', emoji:'👩‍🌾',desde:[8,23],hasta:[9,22],  elem:'Tierra', planeta:'Mercurio',        modal:'Mutable',   pol:'Femenino',  color:'Beige, verde',       piedra:'Sardónice, jade',
+    desc:'Virgo es el signo más analítico, perfeccionista y servicial del zodiaco. Regidos por Mercurio, los virginianos tienen una mente ordenada y meticulosa que los convierte en expertos solucionadores de problemas. Son modestos, trabajadores y con un agudo sentido crítico. Su deseo de ayudar a los demás es genuino, aunque a veces pueden volverse demasiado exigentes consigo mismos y con quienes los rodean. Tienen un ojo clínico para detectar detalles que otros pasan por alto.',
+    rasgos:['Analítico','Perfeccionista','Servicial','Meticuloso','Modesto','Práctico'], compat:['♑','♉','♋','♏'] },
+  { n:'Libra',      sym:'♎', emoji:'⚖️', desde:[9,23],hasta:[10,22], elem:'Aire',   planeta:'Venus',           modal:'Cardinal',  pol:'Masculino', color:'Rosa, azul cielo',   piedra:'Ópalo, zafiro',
+    desc:'Libra es el signo más diplomático, armonioso y estético del zodiaco. Regidos por Venus, los librianos tienen una profunda necesidad de equilibrio, justicia y belleza en todas las áreas de su vida. Son encantadores, sociables y con un talento natural para mediar en conflictos. Tienen buen gusto refinado y una atracción instintiva hacia el arte y la cultura. Su mayor desafío es la indecisión, ya que siempre ven todos los lados de un asunto.',
+    rasgos:['Diplomático','Justo','Encantador','Sociable','Estético','Indeciso'], compat:['♊','♒','♌','♐'] },
+  { n:'Escorpio',   sym:'♏', emoji:'🦂', desde:[10,23],hasta:[11,21],elem:'Agua',   planeta:'Plutón / Marte',  modal:'Fijo',      pol:'Femenino',  color:'Rojo oscuro, negro', piedra:'Topacio, granate',
+    desc:'Escorpio es el signo más intenso, misterioso y transformador del zodiaco. Regidos por Plutón, los escorpianos tienen una profundidad emocional sin igual y una determinación que raya en lo obsesivo cuando se proponen algo. Son perspicaces, magnéticos y con un instinto para descubrir verdades ocultas. Su lealtad es absoluta, pero también su sentido de la justicia: pueden ser implacables con quienes los traicionan.',
+    rasgos:['Intenso','Apasionado','Leal','Perspicaz','Misterioso','Determinado'], compat:['♋','♓','♑','♍'] },
+  { n:'Sagitario',  sym:'♐', emoji:'🏹', desde:[11,22],hasta:[12,21],elem:'Fuego',  planeta:'Júpiter',         modal:'Mutable',   pol:'Masculino', color:'Azul, morado',       piedra:'Turquesa, zircón',
+    desc:'Sagitario es el signo más aventurero, optimista y filosófico del zodiaco. Regidos por Júpiter, los sagitarianos tienen una sed insaciable de conocimiento, viajes y experiencias que amplíen su visión del mundo. Son directos, honestos y a veces demasiado francos, pero siempre con buenas intenciones. Aman la libertad por encima de todo y se rebelan contra cualquier tipo de restricción.',
+    rasgos:['Aventurero','Optimista','Honesto','Filosófico','Libre','Generoso'], compat:['♈','♌','♎','♒'] },
+  { n:'Capricornio',sym:'♑', emoji:'🐐', desde:[12,22],hasta:[1,19], elem:'Tierra', planeta:'Saturno',         modal:'Cardinal',  pol:'Femenino',  color:'Marrón, gris',       piedra:'Granate, obsidiana',
+    desc:'Capricornio es el signo más disciplinado y ambicioso del zodiaco. Nacidos bajo la influencia de Saturno, los capricornianos son personas responsables, organizadas y con una determinación de hierro para alcanzar sus metas. Su perseverancia es legendaria: si se proponen algo, lo logran, aunque les lleve años. Son leales, confiables y excelentes en posiciones de liderazgo.',
+    rasgos:['Ambicioso','Disciplinado','Responsable','Paciente','Práctico','Reservado'], compat:['♉','♍','♏','♓'] },
+  { n:'Acuario',    sym:'♒', emoji:'🏺', desde:[1,20],hasta:[2,18],  elem:'Aire',   planeta:'Urano / Saturno', modal:'Fijo',      pol:'Masculino', color:'Azul eléctrico',     piedra:'Amatista, aguamarina',
+    desc:'Acuario es el signo más original e innovador del zodiaco. Regidos por Urano, los acuarianos son visionarios, independientes y profundamente humanitarios. Aman la libertad intelectual y siempre buscan romper moldes y convenciones. Son pensadores adelantados a su tiempo, con una capacidad única para ver el mundo desde perspectivas que otros no perciben.',
+    rasgos:['Original','Independiente','Humanitario','Intelectual','Excéntrico','Visionario'], compat:['♊','♎','♈','♐'] },
+  { n:'Piscis',     sym:'♓', emoji:'🐟', desde:[2,19],hasta:[3,20],  elem:'Agua',   planeta:'Neptuno / Júpiter',modal:'Mutable',  pol:'Femenino',  color:'Azul mar, violeta',  piedra:'Piedra de luna, amatista',
+    desc:'Piscis es el signo más intuitivo, empático y soñador del zodiaco. Regidos por Neptuno, los piscianos son almas sensibles con una profunda conexión con el mundo espiritual y emocional. Tienen una imaginación desbordante y una capacidad artística innata. Son compasivos hasta el extremo, siempre dispuestos a ayudar a los demás.',
+    rasgos:['Empático','Intuitivo','Creativo','Compasivo','Soñador','Adaptable'], compat:['♋','♏','♑','♉'] }
 ];
 
-function getSigno(d) {
-  var m = d.getMonth() + 1, day = d.getDate();
-  for (var i = 0; i < SIGNOS.length; i++) {
-    var s = SIGNOS[i];
-    var [dm, dd] = s.desde, [hm, hd] = s.hasta;
-    if (dm <= hm) {
-      if ((m === dm && day >= dd) || (m === hm && day <= hd)) return s;
-    } else {
-      if ((m === dm && day >= dd) || (m === hm && day <= hd)) return s;
-    }
+// ── DESCRIPCIONES PLANETA EN SIGNO ───────────────────────────────────────
+// Índice 0=Aries … 11=Piscis
+var DESC = {
+  luna:[
+    'Emociones rápidas e intensas. Reaccionás de forma impulsiva pero te recuperás con igual velocidad. Necesitás acción y resultados inmediatos para sentirte emocionalmente bien.',
+    'Buscás seguridad y estabilidad emocional por encima de todo. Tus sentimientos son profundos y estables, pero te cuesta adaptarte a cambios inesperados.',
+    'Tus emociones son variables y necesitás estímulos constantes. Procesás los sentimientos a través del diálogo y la razón, y a veces podés parecer más frío de lo que realmente sos.',
+    'Luna en su signo regente. Sos extremadamente sensible, empático y protector. El hogar y la familia son tu refugio emocional y tu mayor fuente de seguridad.',
+    'Necesitás reconocimiento y apreciación para sentirte emocionalmente satisfecho. Sos generoso y afectuoso, y te expresás con drama y pasión.',
+    'Procesás las emociones de forma analítica y práctica. Tenés dificultad para dejarlas fluir libremente, ya que preferís analizarlas antes de expresarlas.',
+    'Necesitás armonía y equilibrio en tus relaciones para sentirte bien emocionalmente. La soledad te inquieta y buscás constantemente la paz y la justicia en tu entorno.',
+    'Emociones de una profundidad e intensidad excepcional. Amás y odiás con la misma fuerza. Tu mundo interior es rico pero complejo, y te cuesta confiar fácilmente.',
+    'Necesitás libertad emocional y nuevas experiencias para sentirte vivo. El optimismo es tu escudo y la rutina tu enemigo. Buscás el significado más allá de lo cotidiano.',
+    'Controlás y reprimís tus emociones, priorizando la responsabilidad sobre el sentimiento. Con el tiempo desarrollás una madurez emocional admirable y sólida.',
+    'Procesás las emociones desde un lugar intelectual y colectivo. Podés parecer distante emocionalmente, pero te preocupás profundamente por el bienestar de todos.',
+    'Sos una esponja emocional de tu entorno. Extremadamente empático y compasivo, a veces no sabés distinguir tus propios sentimientos de los de los demás.'
+  ],
+  ascendente:[
+    'Proyectás una energía activa, directa y valiente. Dais la impresión de ser una persona independiente, apasionada y siempre lista para liderar.',
+    'Irradiás calma, estabilidad y confiabilidad. Tenés una presencia física marcada y los demás te perciben como alguien sólido, paciente y sensual.',
+    'Proyectás curiosidad, ingenio y versatilidad. Sos comunicativo y animado, y te adaptás con facilidad a cualquier situación social.',
+    'Tu primera impresión es la de una persona cálida, protectora y sensible. Los demás sienten que pueden confiar en vos desde el primer momento.',
+    'Tenés una presencia magnética y carismática que atrae miradas. Proyectás confianza, generosidad y un brillo especial que no pasa desapercibido.',
+    'Proyectás meticulosidad, inteligencia y una actitud de servicio. Podés parecer reservado al principio, pero revelás una profunda calidez con el tiempo.',
+    'Tu primera impresión es de elegancia, encanto y diplomacia. Parecés siempre equilibrado y justo, y tenés un talento natural para hacer sentir cómodos a los demás.',
+    'Irradiás intensidad, misterio y un magnetismo poderoso. Los demás te perciben como alguien profundo, apasionado y difícil de descifrar.',
+    'Proyectás entusiasmo, optimismo y un espíritu aventurero. Los demás te perciben como alguien libre, directo y con una visión filosófica del mundo.',
+    'Proyectás seriedad, ambición y madurez. Tu primera impresión es la de una persona responsable, determinada y con metas claras.',
+    'Proyectás originalidad, independencia y un pensamiento poco convencional. Los demás te perciben como alguien inteligente, diferente y con visión de futuro.',
+    'Proyectás dulzura, misterio y una sensibilidad especial. Los demás sienten que hay algo etéreo en vos, algo difícil de definir pero muy atractivo.'
+  ],
+  mercurio:[
+    'Mente rápida, directa e impulsiva. Tomás decisiones rápido y comunicás sin filtros, a veces sin medir las consecuencias.',
+    'Pensamiento metódico y práctico. Procesás la información lentamente pero con gran profundidad. Tus ideas son sólidas y bien fundamentadas.',
+    'Mente brillante, curiosa y veloz. Sos un comunicador nato con capacidad para manejar múltiples ideas al mismo tiempo.',
+    'Pensás con el corazón y tenés una memoria excepcional. Tu comunicación es intuitiva y empática, pero a veces te cuesta ser objetivo.',
+    'Comunicás con carisma, entusiasmo y drama. Tus ideas son creativas y originales, y tenés un talento natural para capturar la atención.',
+    'Mente analítica, meticulosa y orientada al detalle. Sos excelente solucionador de problemas y te expresás con precisión.',
+    'Pensás en términos de equilibrio y justicia. Sos diplomático en tu comunicación pero podés tardar en tomar decisiones definitivas.',
+    'Mente investigadora y penetrante. Ves más allá de las apariencias y tenés una habilidad natural para descubrir verdades ocultas.',
+    'Pensamiento expansivo, filosófico y optimista. Comunicás con entusiasmo y una visión de conjunto que a veces te hace perder los detalles.',
+    'Mente práctica, estructurada y orientada a objetivos. Comunicás con seriedad y autoridad, y tus palabras tienen peso.',
+    'Mente innovadora y no convencional. Tus ideas suelen estar adelantadas a su tiempo y tenés una capacidad única para pensar diferente.',
+    'Mente intuitiva, imaginativa y soñadora. Pensás en imágenes y símbolos, y tu comunicación tiene un toque poético e impreciso.'
+  ],
+  venus:[
+    'Amás con pasión e impulsividad. Sos directo en el cortejo y necesitás estimulación constante para mantener el interés.',
+    'Amás con profundidad, lealtad y sensualidad. Buscás una relación estable y duradera, y valorás los placeres físicos y materiales.',
+    'Amás con la mente. Necesitás diversión, variedad y buena conversación en la pareja. La monotonía es tu mayor enemigo.',
+    'Amás con ternura, protección y devoción. Para vos, el amor está íntimamente ligado al hogar y la familia.',
+    'Amás con grandiosidad, generosidad y pasión. Necesitás admiración y reconocimiento en la relación, y das lo mismo a cambio.',
+    'Amás de forma práctica y discreta. Mostrás el afecto a través de actos de servicio y detalles cotidianos más que con grandes gestos.',
+    'Venus en casa. Amás con elegancia y romanticismo. Para vos, la pareja ideal es tu complemento perfecto y buscás el equilibrio en todo.',
+    'Amás con una intensidad que puede resultar abrumadora. Para vos el amor es transformación, entrega total y profundidad sin límites.',
+    'Amás con libertad y aventura. Necesitás una pareja que sea también tu compañero de exploración y que respete tu independencia.',
+    'Amás con responsabilidad y lealtad. Buscás una pareja que sea también un socio de vida con metas comunes y una visión de futuro.',
+    'Amás desde la amistad y la libertad intelectual. Necesitás una pareja que sea tu igual y que no intente limitarte.',
+    'Amás con idealismo y entrega incondicional. Sos romántico por excelencia pero debes cuidar de no perder tu identidad en la pareja.'
+  ],
+  marte:[
+    'Marte en casa. Actuás con velocidad, determinación y coraje. Tu energía es explosiva pero también se agota rápido.',
+    'Actuás lentamente pero con una persistencia increíble. Una vez en movimiento, nada te detiene. Tu fuerza es estable y duradera.',
+    'Actuás con agilidad mental, cambiando de estrategia según el momento. Tu energía es dispersa pero muy versátil.',
+    'Actuás movido por las emociones y la protección de los seres queridos. Tu fuerza es defensiva y sorprendentemente tenaz.',
+    'Actuás con grandiosidad, confianza y un deseo de brillar. Sos valiente y no te achicás ante los desafíos.',
+    'Actuás de forma metódica, eficiente y orientada al detalle. Preferís la perfección a la velocidad.',
+    'Te cuesta actuar por decisión propia. Buscás el consenso antes de avanzar, lo que puede hacerte perder oportunidades.',
+    'Marte en exaltación. Actuás con determinación, intensidad y una voluntad de hierro. Sos estratégico y tenés memoria de elefante.',
+    'Actuás con entusiasmo y optimismo. Preferís las acciones de gran escala y podés ser imprudente en tu exceso de confianza.',
+    'Marte en exaltación. Actuás con disciplina, paciencia y una orientación absoluta a los resultados. El éxito a largo plazo es tu meta.',
+    'Actuás de forma impredecible e innovadora. Tu energía está orientada al bien colectivo más que al interés personal.',
+    'Actuás de forma indirecta e intuitiva. Tu energía fluctúa y a veces te cuesta materializar tus ideas en acción concreta.'
+  ],
+  jupiter:[
+    'Expansión a través de la acción pionera y el liderazgo. Encontrás suerte cuando sos el primero en aventurarte.',
+    'Prosperidad vinculada a la paciencia, el trabajo y los bienes materiales. La abundancia llega con perseverancia.',
+    'Crecimiento a través del conocimiento, la comunicación y los contactos sociales. Las conexiones son tu mayor activo.',
+    'Expansión a través de la familia, el hogar y el mundo emocional. Prosperás cuando te sentís emocionalmente seguro.',
+    'Suerte vinculada a la creatividad, el liderazgo y el entretenimiento. Prosperás cuando permitís que tu luz brille.',
+    'Crecimiento a través del servicio, la salud y el trabajo meticuloso. La abundancia llega cuando ayudás a los demás.',
+    'Expansión a través de las relaciones y la justicia. Prosperás en entornos de colaboración, arte y equilibrio.',
+    'Suerte vinculada a la transformación y los recursos compartidos. Prosperás cuando dejás ir lo viejo para dar paso a lo nuevo.',
+    'Júpiter en casa. Sos bendecido con optimismo, sabiduría y una suerte natural que se amplifica con los viajes y el conocimiento.',
+    'Prosperidad a través de la disciplina, la carrera y la ambición. La abundancia llega como recompensa al esfuerzo sostenido.',
+    'Expansión a través de la innovación, la tecnología y los ideales humanitarios. Prosperás cuando rompes con lo establecido.',
+    'Crecimiento espiritual, artístico y compasivo. La abundancia llega cuando te conectás con tu intuición y ayudás sin condiciones.'
+  ],
+  saturno:[
+    'Desafíos relacionados con la impulsividad y la impaciencia. Tu lección es desarrollar la disciplina y pensar antes de actuar.',
+    'Restricciones vinculadas a la seguridad material y el miedo a la escasez. Tu lección es confiar en tus propias capacidades.',
+    'Dificultades con la concentración y la comunicación. Tu lección es profundizar en un tema y cultivar la coherencia.',
+    'Aprendizajes relacionados con el mundo emocional y familiar. Tu lección es establecer límites saludables y no perder tu identidad.',
+    'Desafíos con el ego y la necesidad de reconocimiento. Tu lección es brillar desde la autenticidad, no desde el orgullo.',
+    'Saturno en casa. Gran exigencia con uno mismo y con los demás. Tu lección es aceptar la imperfección y valorar el proceso.',
+    'Dificultades con las relaciones y el compromiso. Tu lección es aprender a ser auténtico en pareja sin perder el equilibrio.',
+    'Aprendizajes profundos sobre el poder, el control y la transformación. Tu lección es soltar el control y confiar en los procesos.',
+    'Restricciones a la libertad y el expansionismo. Tu lección es comprometerte con responsabilidad y no huir de las obligaciones.',
+    'Saturno en casa. Gran capacidad para la disciplina y la ambición, pero con tendencia al perfeccionismo paralizante.',
+    'Desafíos con la identidad y la necesidad de originalidad. Tu lección es equilibrar la rebeldía con la responsabilidad.',
+    'Aprendizajes espirituales y de autoconocimiento. Tu lección es poner límites a tus emociones para no perderte en los demás.'
+  ],
+  urano:[
+    'Generación de pioneros que revolucionan el concepto de identidad y autonomía personal.',
+    'Generación que transforma las estructuras económicas, la relación con la naturaleza y los valores materiales.',
+    'Generación que revoluciona la comunicación, el transporte y el intercambio de información.',
+    'Generación que transforma el concepto de hogar, familia y raíces culturales.',
+    'Generación que revoluciona la creatividad, el entretenimiento y la expresión individual.',
+    'Generación que transforma la medicina, el trabajo y los hábitos de salud de forma radical.',
+    'Generación que revoluciona las relaciones, el matrimonio y los conceptos de justicia.',
+    'Generación que transforma la sexualidad, el poder y los recursos compartidos.',
+    'Generación que revoluciona la educación, la religión y la búsqueda del significado.',
+    'Generación que transforma las estructuras de poder, la política y las instituciones.',
+    'Urano en casa. Generación altamente innovadora que busca romper con todas las convenciones sociales.',
+    'Generación que transforma la espiritualidad, el arte y la relación con lo inconsciente.'
+  ],
+  neptuno:[
+    'Generación que idealiza la valentía y la heroicidad como camino espiritual.',
+    'Generación con una relación especial con la tierra, la naturaleza y los valores materiales como fuente de inspiración.',
+    'Generación que busca lo sagrado en la información, el lenguaje y las conexiones entre las personas.',
+    'Generación con una espiritualidad profundamente ligada al mundo emocional, el hogar y la familia.',
+    'Generación que expresa lo divino a través de la creatividad, el arte y el entretenimiento.',
+    'Generación que busca la perfección espiritual a través del servicio, la salud y el trabajo cotidiano.',
+    'Generación que idealiza las relaciones perfectas, la justicia y la belleza estética como valores supremos.',
+    'Generación con una espiritualidad intensa, oscura y transformadora vinculada al poder y la muerte.',
+    'Neptuno en casa. Generación de idealistas y buscadores de sentido que transformaron la espiritualidad global.',
+    'Generación que ve en la responsabilidad, la estructura y el trabajo duro el camino hacia la trascendencia.',
+    'Generación que disuelve los límites de la identidad colectiva y busca la utopía a través de la tecnología.',
+    'Neptuno en casa. Generación de alta sensibilidad espiritual, artística y compasiva que sueña con un mundo mejor.'
+  ],
+  pluto:[
+    'Generación que transforma el concepto de identidad, el individualismo y la idea de "el héroe".',
+    'Generación que destruye y reconstruye las estructuras económicas y la relación con los recursos naturales.',
+    'Generación que transforma radicalmente los medios de comunicación, el transporte y el pensamiento colectivo.',
+    'Generación que destruye y reconstruye el concepto de familia, nación y seguridad emocional.',
+    'Generación que transforma el poder creativo, la expresión artística y el entretenimiento masivo.',
+    'Generación que destruye y reconstruye los sistemas de salud, trabajo y análisis científico.',
+    'Generación que transforma radicalmente las relaciones, el matrimonio y los sistemas de justicia.',
+    'Plutón en casa. Generación de transformación total: destruye las estructuras viejas para renacer más fuerte.',
+    'Generación que transforma la educación, la religión y la búsqueda colectiva del significado.',
+    'Generación que destruye y reconstruye las estructuras de poder político, económico e institucional.',
+    'Generación que transforma la tecnología, la ciencia y la idea de comunidad a escala global.',
+    'Generación que transforma la espiritualidad, el inconsciente colectivo y la relación con lo sagrado.'
+  ]
+};
+
+var PLANET_NAMES = {
+  luna:'Luna',mercurio:'Mercurio',venus:'Venus',marte:'Marte',
+  jupiter:'Júpiter',saturno:'Saturno',urano:'Urano',neptuno:'Neptuno',pluto:'Plutón'
+};
+var PLANET_ICONS = {
+  luna:'🌙',mercurio:'☿',venus:'♀',marte:'♂',
+  jupiter:'♃',saturno:'♄',urano:'♅',neptuno:'♆',pluto:'♇'
+};
+
+// ── CÁLCULOS ASTRONÓMICOS ────────────────────────────────────────────────
+function norm(d){ return ((d%360)+360)%360; }
+function toR(d){ return d*Math.PI/180; }
+
+function julianDay(y,m,d,h){
+  if(m<=2){y--;m+=12;}
+  var A=Math.floor(y/100), B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+h/24+B-1524.5;
+}
+
+function sunLon(T){
+  var L0=norm(280.46646+36000.76983*T);
+  var M=norm(357.52911+35999.05029*T-0.0001537*T*T);
+  var C=(1.914602-0.004817*T-0.000014*T*T)*Math.sin(toR(M))
+       +(0.019993-0.000101*T)*Math.sin(toR(2*M))
+       +0.000289*Math.sin(toR(3*M));
+  return norm(L0+C);
+}
+
+function moonLon(T){
+  var Mp=norm(134.9633964+477198.8675055*T+0.0087414*T*T);
+  var D=norm(297.8501921+445267.1114034*T-0.0018819*T*T);
+  var M=norm(357.5291092+35999.0502909*T);
+  var F=norm(93.2720950+483202.0175233*T);
+  var L=norm(218.3164477+481267.88123421*T-0.0015786*T*T);
+  var lon=L
+    +6.288774*Math.sin(toR(Mp))
+    -1.274027*Math.sin(toR(2*D-Mp))
+    +0.658314*Math.sin(toR(2*D))
+    -0.212536*Math.sin(toR(2*Mp))
+    -0.152434*Math.sin(toR(M))
+    -0.148011*Math.sin(toR(2*D-M))
+    +0.109832*Math.sin(toR(2*D-M-Mp))
+    +0.055046*Math.sin(toR(2*D+Mp))
+    +0.041688*Math.sin(toR(2*D-2*Mp));
+  return norm(lon);
+}
+
+function planetLon(T,name){
+  var table={
+    mercurio:norm(252.250906+149472.6746358*T),
+    venus:   norm(181.979801+58517.8156760*T),
+    marte:   norm(355.433275+19140.2993313*T),
+    jupiter: norm(34.351519+3034.9056606*T),
+    saturno: norm(50.077444+1222.1137943*T),
+    urano:   norm(314.055005+428.4669983*T),
+    neptuno: norm(304.348665+218.4862002*T),
+    pluto:   norm(238.928881+145.2078278*T)
+  };
+  return table[name];
+}
+
+function calcAscendente(jd, lat, lon){
+  var T=(jd-2451545.0)/36525;
+  var GMST=norm(280.46061837+360.98564736629*(jd-2451545.0)+0.000387933*T*T-T*T*T/38710000);
+  var LMST=norm(GMST+lon);
+  var RAMC=toR(LMST);
+  var latR=toR(lat);
+  var eps=toR(23.439291-0.013004*T);
+  var y=-Math.cos(RAMC);
+  var x=Math.sin(RAMC)*Math.cos(eps)+Math.tan(latR)*Math.sin(eps);
+  var asc=Math.atan2(y,x)*180/Math.PI;
+  if(Math.cos(RAMC)<0) asc+=180;
+  return norm(asc);
+}
+
+function signIdx(lon){ return Math.floor(norm(lon)/30); }
+
+// ── CALCULAR ─────────────────────────────────────────────────────────────
+function calcular(){
+  var fechaVal=document.getElementById('fecha').value;
+  if(!fechaVal){alert('Ingresá tu fecha de nacimiento');return;}
+  var horaVal=document.getElementById('hora').value;
+  var ciudadVal=document.getElementById('ciudad').value;
+
+  var parts=fechaVal.split('-');
+  var y=parseInt(parts[0]),m=parseInt(parts[1]),d=parseInt(parts[2]);
+  var h=12; // mediodía por defecto
+  var hasTime=false;
+  if(horaVal){
+    var tp=horaVal.split(':');
+    h=parseInt(tp[0])+parseInt(tp[1])/60;
+    hasTime=true;
   }
-  return SIGNOS[0];
+
+  var jd=julianDay(y,m,d,h);
+  var T=(jd-2451545.0)/36525;
+
+  // Sol
+  var solLon=sunLon(T);
+  var solIdx=signIdx(solLon);
+  var sol=SIGNOS[solIdx];
+
+  // Luna
+  var lunaLon=moonLon(T);
+  var lunaIdx=signIdx(lunaLon);
+
+  // Planetas
+  var planetas={
+    mercurio:signIdx(planetLon(T,'mercurio')),
+    venus:   signIdx(planetLon(T,'venus')),
+    marte:   signIdx(planetLon(T,'marte')),
+    jupiter: signIdx(planetLon(T,'jupiter')),
+    saturno: signIdx(planetLon(T,'saturno')),
+    urano:   signIdx(planetLon(T,'urano')),
+    neptuno: signIdx(planetLon(T,'neptuno')),
+    pluto:   signIdx(planetLon(T,'pluto'))
+  };
+
+  // Ascendente
+  var ascIdx=null;
+  if(hasTime && ciudadVal){
+    var coords=ciudadVal.split(',');
+    var lat=parseFloat(coords[0]), lon=parseFloat(coords[1]);
+    var ascLon=calcAscendente(jd,lat,lon);
+    ascIdx=signIdx(ascLon);
+  }
+
+  renderResult(sol,solIdx,lunaIdx,ascIdx,planetas,hasTime);
 }
 
-function calcular() {
-  var val = document.getElementById('fecha').value;
-  if (!val) { alert('Ingresá tu fecha de nacimiento'); return; }
-  var d = new Date(val + 'T12:00:00');
-  var s = getSigno(d);
+function renderResult(sol,solIdx,lunaIdx,ascIdx,planetas,hasTime){
+  // Signo solar
+  document.getElementById('r-sym').textContent=sol.sym;
+  document.getElementById('r-name').textContent=sol.n;
+  var MESES=['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  document.getElementById('r-dates').textContent=
+    sol.desde[1]+' de '+MESES[sol.desde[0]]+' — '+sol.hasta[1]+' de '+MESES[sol.hasta[0]];
+  document.getElementById('r-attrs').innerHTML=
+    attr('Elemento',sol.elem)+attr('Planeta',sol.planeta)+attr('Modalidad',sol.modal)+
+    attr('Polaridad',sol.pol)+attr('Color',sol.color)+attr('Piedra',sol.piedra);
+  document.getElementById('r-desc').textContent=sol.desc;
+  document.getElementById('r-traits').innerHTML=sol.rasgos.map(function(r){return '<span class="trait">'+r+'</span>';}).join('');
 
-  document.getElementById('r-symbol').textContent = s.sym;
-  document.getElementById('r-name').textContent = s.n;
-  document.getElementById('r-dates').textContent = s.n.toUpperCase() + ' · ' + formatRange(s.desde, s.hasta);
+  // Nota sin hora
+  if(!hasTime){
+    document.getElementById('incomplete-note').classList.remove('hidden');
+  } else {
+    document.getElementById('incomplete-note').classList.add('hidden');
+  }
 
-  document.getElementById('r-attrs').innerHTML =
-    attr('Elemento', s.elemento) +
-    attr('Planeta regente', s.planeta) +
-    attr('Modalidad', s.modalidad) +
-    attr('Polaridad', s.polaridad) +
-    attr('Color', s.color) +
-    attr('Piedra', s.piedra);
+  // Luminarias
+  var lum='';
+  lum+=planetRow('☀️','Sol','Signo solar',solIdx,null,null);
+  lum+=planetRow('🌙','Luna',null,lunaIdx,'luna',null);
+  if(ascIdx!==null){
+    lum+=planetRow('⬆️','Ascendente','Cómo te percibe el mundo',ascIdx,'ascendente','asc');
+  }
+  document.getElementById('planets-lum').innerHTML=lum;
 
-  document.getElementById('r-desc').textContent = s.desc;
+  // Planetas personales
+  var pers='';
+  pers+=planetRow(PLANET_ICONS.mercurio,'Mercurio','Mente y comunicación',planetas.mercurio,'mercurio',null);
+  pers+=planetRow(PLANET_ICONS.venus,   'Venus','Amor y valores',        planetas.venus,   'venus',null);
+  pers+=planetRow(PLANET_ICONS.marte,   'Marte','Energía y acción',      planetas.marte,   'marte',null);
+  document.getElementById('planets-personal').innerHTML=pers;
 
-  document.getElementById('r-traits').innerHTML =
-    s.rasgos.map(function(r){ return '<span class="trait">' + r + '</span>'; }).join('');
+  // Planetas sociales
+  var soc='';
+  soc+=planetRow(PLANET_ICONS.jupiter,'Júpiter','Expansión y suerte',   planetas.jupiter,'jupiter',null);
+  soc+=planetRow(PLANET_ICONS.saturno,'Saturno','Disciplina y lección',  planetas.saturno,'saturno',null);
+  document.getElementById('planets-social').innerHTML=soc;
 
-  document.getElementById('r-compat').innerHTML =
-    s.compat.map(function(sym){
-      var match = SIGNOS.find(function(x){ return x.sym === sym; });
-      return '<div class="compat-sign"><span>' + sym + '</span><span>' + (match ? match.n : sym) + '</span></div>';
-    }).join('');
+  // Transpersonales
+  var trans='';
+  trans+=planetRow(PLANET_ICONS.urano,  'Urano',  'Revolución generacional',planetas.urano,  'urano',null);
+  trans+=planetRow(PLANET_ICONS.neptuno,'Neptuno', 'Espiritualidad generacional',planetas.neptuno,'neptuno',null);
+  trans+=planetRow(PLANET_ICONS.pluto,  'Plutón',  'Transformación generacional',planetas.pluto,  'pluto',null);
+  document.getElementById('planets-trans').innerHTML=trans;
 
-  document.getElementById('result').style.display = 'block';
-  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+  // Compatibilidad
+  document.getElementById('r-compat').innerHTML=sol.compat.map(function(sym){
+    var match=SIGNOS.find(function(s){return s.sym===sym;});
+    return '<div class="compat-chip"><span class="csym">'+sym+'</span><span class="cname">'+(match?match.n:sym)+'</span></div>';
+  }).join('');
+
+  // Narrativa
+  renderNarrative(solIdx,lunaIdx,ascIdx,planetas);
+
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function attr(label, val) {
-  return '<div class="attr"><div class="attr-label">' + label + '</div><div class="attr-value">' + val + '</div></div>';
+function planetRow(icon,name,subtitle,idx,descKey,tag){
+  var s=SIGNOS[idx];
+  var desc=descKey&&DESC[descKey]?DESC[descKey][idx]:'';
+  var tagHtml='';
+  if(tag==='asc') tagHtml='<span class="planet-tag tag-asc">Ascendente</span>';
+  return '<div class="planet-row">'
+    +'<div class="planet-icon">'+icon+'</div>'
+    +'<div class="planet-meta">'
+    +'<div class="planet-name">'+(subtitle||name)+tagHtml+'</div>'
+    +'<div class="planet-sign">'+s.n+' <span class="sign-sym-sm">'+s.sym+'</span></div>'
+    +(desc?'<div class="planet-desc">'+desc+'</div>':'')
+    +'</div></div>';
 }
 
-var MESES = ['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-function formatRange(desde, hasta) {
-  return desde[1] + ' de ' + MESES[desde[0]] + ' — ' + hasta[1] + ' de ' + MESES[hasta[0]];
+function attr(l,v){
+  return '<div class="s-attr"><div class="s-attr-lbl">'+l+'</div><div class="s-attr-val">'+v+'</div></div>';
 }
 
-document.getElementById('fecha').addEventListener('keydown', function(e){ if(e.key==='Enter') calcular(); });
+function renderNarrative(solIdx,lunaIdx,ascIdx,planetas){
+  var sol=SIGNOS[solIdx], luna=SIGNOS[lunaIdx];
+  var text='';
+  text+='<p>Tu <strong>Sol en '+sol.n+'</strong> define tu esencia más profunda y el propósito de tu vida. '+sol.desc+'</p>';
+  text+='<p>Tu <strong>Luna en '+luna.n+'</strong> revela tu mundo emocional interno. '+DESC.luna[lunaIdx]+'</p>';
+  if(ascIdx!==null){
+    var asc=SIGNOS[ascIdx];
+    text+='<p>Tu <strong>Ascendente en '+asc.n+'</strong> es la máscara que mostrás al mundo en el primer encuentro. '+DESC.ascendente[ascIdx]+'</p>';
+  }
+  var venus=SIGNOS[planetas.venus], marte=SIGNOS[planetas.marte];
+  text+='<p>En el amor, tu <strong>Venus en '+venus.n+'</strong> dice: '+DESC.venus[planetas.venus]+' En la acción, tu <strong>Marte en '+marte.n+'</strong> define cómo perseguís tus objetivos: '+DESC.marte[planetas.marte]+'</p>';
+  var merc=SIGNOS[planetas.mercurio];
+  text+='<p>Tu <strong>Mercurio en '+merc.n+'</strong> moldea la forma en que pensás y te comunicás: '+DESC.mercurio[planetas.mercurio]+'</p>';
+  document.getElementById('r-narrative').innerHTML=text;
+}
+
+// Inicializar fecha de hoy por defecto
+document.getElementById('fecha').max=new Date().toISOString().split('T')[0];
 </script>
 </body>
 </html>

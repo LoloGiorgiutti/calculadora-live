@@ -436,6 +436,119 @@
   '.share-btn:hover{border-color:var(--hi);color:var(--hi);background:var(--hi-soft)}',
   '.share-btn.nv-copied{border-color:#16a34a !important;color:#16a34a !important}',
   '.share-wrap{max-width:520px;margin:0 auto;padding:0 20px 24px}',
+
+  /* ── THEME TOGGLE ─────────────────────────────────────────────────────────── */
+  '#theme-toggle{width:34px;height:34px;border:none;background:none;cursor:pointer;',
+  'border-radius:8px;display:flex;align-items:center;justify-content:center;',
+  'flex-shrink:0;margin-left:8px;transition:background .15s;padding:0;color:#080A12;}',
+  '#theme-toggle:hover{background:rgba(0,0,0,.06);}',
+  /* Dark-header pages (homepage, categorías): icono blanco en modo claro */
+  '#theme-toggle.on-dark{color:rgba(255,255,255,.75);}',
+  '#theme-toggle.on-dark:hover{background:rgba(255,255,255,.1);}',
+
+  /* ── DARK MODE ────────────────────────────────────────────────────────────── */
+  /* Transición suave al cambiar tema */
+  'body,header,input,select,textarea,.card,.config-card,.periods-card,',
+  '.summary-card,.cal-wrap,.section,.cat-block,.result-card,footer{',
+  'transition:background-color .2s,border-color .2s,color .2s;}',
+
+  /* Variables — cubre ambas convenciones de nombres usadas en el sitio */
+  'html[data-theme="dark"]{',
+  '--bg:#0E1525;--surface:#141929;--surface-2:#1A2038;',
+  '--ink:#E2E4F0;--ink-2:#9BA0B8;--ink-light:#8A8FA8;--ink-3:#606580;--ink-faint:#404565;',
+  '--line:#1F2438;--line-2:#1A2035;--border:#1F2438;',
+  '--accent-soft:rgba(79,107,255,.15);--hi-soft:rgba(79,107,255,.12);',
+  '--hi:#4F6BFF;',
+  '}',
+
+  /* Body */
+  'html[data-theme="dark"] body{background:#0E1525;color:#E2E4F0;}',
+
+  /* Headers claros (calculadoras) → se vuelven oscuros */
+  'html[data-theme="dark"] header{background:#0D1117 !important;border-bottom-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .logo{color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .logo span{color:#4F6BFF !important;}',
+
+  /* Theme toggle en modo oscuro → siempre claro */
+  'html[data-theme="dark"] #theme-toggle{color:rgba(255,255,255,.75);}',
+  'html[data-theme="dark"] #theme-toggle:hover{background:rgba(255,255,255,.1);}',
+
+  /* Inputs y selects */
+  'html[data-theme="dark"] input:not([type="range"]),',
+  'html[data-theme="dark"] select,',
+  'html[data-theme="dark"] textarea{',
+  'background:#0E1525 !important;color:#E2E4F0 !important;border-color:#1F2438 !important;}',
+  'html[data-theme="dark"] input::placeholder,',
+  'html[data-theme="dark"] textarea::placeholder{color:#404565 !important;}',
+  'html[data-theme="dark"] input:focus,html[data-theme="dark"] select:focus{',
+  'border-color:#4F6BFF !important;box-shadow:0 0 0 3px rgba(79,107,255,.15) !important;}',
+
+  /* Footer */
+  'html[data-theme="dark"] footer{background:#0D1117 !important;',
+  'border-top-color:#1F2438 !important;color:#404565 !important;}',
+
+  /* Superficies genéricas que usan background:#fff o var(--surface) */
+  'html[data-theme="dark"] .hero-sub-content,',
+  'html[data-theme="dark"] .main-card,',
+  'html[data-theme="dark"] .card,',
+  'html[data-theme="dark"] .config-card,',
+  'html[data-theme="dark"] .periods-card,',
+  'html[data-theme="dark"] .summary-card,',
+  'html[data-theme="dark"] .summary-item,',
+  'html[data-theme="dark"] .cal-wrap,',
+  'html[data-theme="dark"] .section,',
+  'html[data-theme="dark"] .cat-block,',
+  'html[data-theme="dark"] .result-card,',
+  'html[data-theme="dark"] .day-info,',
+  'html[data-theme="dark"] .tz-card,',
+  'html[data-theme="dark"] .clock-card:not(.fs-mode .clock-card),',
+  'html[data-theme="dark"] .stat,',
+  'html[data-theme="dark"] .sign-header,',
+  'html[data-theme="dark"] .faq-item,',
+  'html[data-theme="dark"] .related-card{',
+  'background:#141929 !important;border-color:#1F2438 !important;}',
+
+  /* Backgrounds de fila/ítem */
+  'html[data-theme="dark"] .period-row,',
+  'html[data-theme="dark"] .config-field,',
+  'html[data-theme="dark"] .attr,',
+  'html[data-theme="dark"] .di-item{background:#0E1525 !important;border-color:#1F2438 !important;}',
+
+  /* Texto secundario */
+  'html[data-theme="dark"] .period-name,html[data-theme="dark"] .period-sub,',
+  'html[data-theme="dark"] .config-label,html[data-theme="dark"] .cur-sym,',
+  'html[data-theme="dark"] .attr-value,html[data-theme="dark"] .di-val,',
+  'html[data-theme="dark"] .stat-val,html[data-theme="dark"] .sign-name{color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .period-sub,html[data-theme="dark"] .attr-label,',
+  'html[data-theme="dark"] .di-label,html[data-theme="dark"] .stat-lbl{color:#606580 !important;}',
+
+  /* Calendario */
+  'html[data-theme="dark"] .cal-head,html[data-theme="dark"] .cal-day{',
+  'border-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .cal-day{background:#141929;}',
+  'html[data-theme="dark"] .cal-day.other-month{background:#0E1525;}',
+  'html[data-theme="dark"] .cal-day:hover{background:rgba(79,107,255,.12) !important;}',
+  'html[data-theme="dark"] .cal-day .day-num{color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .cal-day.other-month .day-num{color:#1F2438 !important;}',
+
+  /* Homepage: main content (fondo blanco que se vuelve oscuro) */
+  'html[data-theme="dark"] main{background:transparent;}',
+  'html[data-theme="dark"] .cat-block{background:#141929 !important;}',
+  'html[data-theme="dark"] .cat-title{color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .cards .card{background:#1A2038 !important;border-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .cards .card:hover{background:#202840 !important;}',
+  'html[data-theme="dark"] .card-title{color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .card-desc{color:#9BA0B8 !important;}',
+  'html[data-theme="dark"] .search-pill{background:#141929 !important;border-color:#1F2438 !important;}',
+
+  /* Calc preview homepage */
+  'html[data-theme="dark"] .calc-preview{background:#141929 !important;border-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .calc-inputs{border-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .calc-head{border-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .calc-h2{color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .calc-sub{color:#9BA0B8 !important;}',
+  'html[data-theme="dark"] .mode-tab{background:#0E1525 !important;border-color:#1F2438 !important;color:#9BA0B8 !important;}',
+  'html[data-theme="dark"] .field input{background:#0E1525 !important;color:#E2E4F0 !important;}',
   ].join('');
 
   var st = document.createElement('style');
@@ -456,6 +569,38 @@
     if (pl > 12) hdr.style.paddingLeft = '12px';
     hdr.insertBefore(btn, hdr.firstChild);
   }
+
+  /* ── THEME TOGGLE ─────────────────────────────────────────── */
+  var MOON_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  var SUN_SVG  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+
+  var themeBtn = document.createElement('button');
+  themeBtn.id = 'theme-toggle';
+  themeBtn.setAttribute('aria-label', 'Cambiar tema');
+
+  // Páginas con header oscuro: homepage y categorías tienen .header-inner
+  var hasDarkHeader = !!document.querySelector('.header-inner');
+  if (hasDarkHeader) themeBtn.classList.add('on-dark');
+
+  function applyTheme(theme, save) {
+    document.documentElement.setAttribute('data-theme', theme);
+    themeBtn.innerHTML = theme === 'dark' ? SUN_SVG : MOON_SVG;
+    themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+    if (save) localStorage.setItem('clv-theme', theme);
+  }
+
+  themeBtn.addEventListener('click', function () {
+    var current = document.documentElement.getAttribute('data-theme') || 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark', true);
+  });
+
+  // Leer preferencia guardada o del sistema
+  var saved = localStorage.getItem('clv-theme');
+  var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(saved || (sysDark ? 'dark' : 'light'), false);
+
+  // Inyectar al final del header (queda a la derecha)
+  if (hdr) hdr.appendChild(themeBtn);
 
   /* ── PANEL ────────────────────────────────────────────── */
   var cur = window.location.pathname.replace(/\/$/, '') || '/';

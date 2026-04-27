@@ -312,50 +312,43 @@
 
     /* Panel */
     '#nav-panel{position:fixed;top:0;left:0;bottom:0;width:min(300px,86vw);',
-    'background:#fff;z-index:9999;display:flex;flex-direction:column;',
+    'background:#0A0E1A;z-index:9999;display:flex;flex-direction:column;',
     'transform:translateX(-100%);transition:transform .28s cubic-bezier(.32,0,.15,1);',
     'box-shadow:4px 0 40px rgba(0,0,0,.18);}',
     '#nav-panel.nv-open{transform:translateX(0);}',
 
     /* Cabecera del panel */
     '#nav-ph{display:flex;align-items:center;justify-content:space-between;',
-    'padding:0 14px 0 18px;height:58px;border-bottom:1px solid #D4D8E6;flex-shrink:0;}',
-    '.nv-logo{font-family:"DM Sans",sans-serif;font-size:16px;font-weight:700;',
-    'color:#080A12;letter-spacing:-.02em;text-decoration:none;}',
-    '.nv-logo span{color:#1A5FE8;}',
+    'padding:0 14px 0 18px;height:58px;border-bottom:1px solid #1F2438;flex-shrink:0;}',
+    '.nv-logo{font-family:"Inter",sans-serif;font-size:16px;font-weight:700;',
+    'color:#fff;letter-spacing:-.03em;text-decoration:none;}',
+    '.nv-logo span{color:#4F6BFF;}',
     '#nav-x{width:30px;height:30px;border:none;background:none;cursor:pointer;font-size:16px;',
-    'color:#60647A;border-radius:6px;display:flex;align-items:center;justify-content:center;',
-    'transition:background .12s;}#nav-x:hover{background:#F0F2F7;color:#080A12;}',
+    'color:rgba(255,255,255,.5);border-radius:6px;display:flex;align-items:center;justify-content:center;',
+    'transition:background .12s;}#nav-x:hover{background:rgba(255,255,255,.08);color:#fff;}',
 
     /* Buscador */
-    '#nav-sw{padding:10px 14px;border-bottom:1px solid #D4D8E6;flex-shrink:0;',
-    'display:flex;align-items:center;gap:8px;background:#F8F9FB;}',
-    '#nav-sw svg{flex-shrink:0;color:#B4B8CC;}',
-    '#nav-si{flex:1;border:none;background:transparent;font-family:"DM Sans",sans-serif;',
-    'font-size:14px;color:#080A12;outline:none;}',
-    '#nav-si::placeholder{color:#B4B8CC;}',
+    '#nav-sw{padding:10px 14px;border-bottom:1px solid #1F2438;flex-shrink:0;',
+    'display:flex;align-items:center;gap:8px;background:#141929;}',
+    '#nav-sw svg{flex-shrink:0;color:rgba(255,255,255,.3);}',
+    '#nav-si{flex:1;border:none;background:transparent;font-family:"Inter",sans-serif;',
+    'font-size:14px;color:#fff;outline:none;}',
+    '#nav-si::placeholder{color:rgba(255,255,255,.3);}',
 
     /* Lista */
-    '#nav-list{flex:1;overflow-y:auto;padding:6px 0 28px;}',
-    '.nvc-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;',
-    'color:#B4B8CC;padding:14px 18px 5px;}',
+    '#nav-list{flex:1;overflow-y:auto;padding:8px 0 28px;}',
+    '.nvc-title-link{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;',
+    'text-transform:uppercase;color:rgba(255,255,255,.35);padding:14px 18px 5px;',
+    'text-decoration:none;transition:color .12s;}',
+    '.nvc-title-link:hover,.nvc-title-link.nv-cat-active{color:#4F6BFF;}',
     '.nv-item{display:flex;flex-direction:column;gap:1px;padding:9px 18px;',
-    'text-decoration:none;color:#080A12;transition:background .12s;',
+    'text-decoration:none;color:rgba(255,255,255,.75);transition:background .12s;',
     'border-left:2.5px solid transparent;}',
-    '.nv-item:hover,.nv-item.nv-active{background:#EEF3FD;border-left-color:#1A5FE8;}',
-    '.nv-item-n{font-size:13px;font-weight:600;line-height:1.25;}',
-    '.nv-item-d{font-size:11px;color:#60647A;line-height:1.3;}',
-    '#nav-empty{padding:20px 18px;font-size:13px;color:#B4B8CC;display:none;}',
-    '.nv-hr{height:1px;background:#F0F2F7;margin:8px 0;}',
-    '.nv-home-link{display:flex;align-items:center;gap:8px;padding:10px 18px;',
-    'text-decoration:none;color:#60647A;font-size:13px;font-weight:500;',
-    'border-left:2.5px solid transparent;transition:background .12s;}',
-    '.nv-home-link:hover{background:#F0F2F7;color:#1A5FE8;}',
-    '.nv-cat-link{display:flex;align-items:center;gap:8px;padding:7px 18px;',
-    'text-decoration:none;color:#080A12;font-size:13px;font-weight:500;',
-    'border-left:2.5px solid transparent;transition:background .12s;}',
-    '.nv-cat-link:hover,.nv-cat-link.nv-cat-active{background:#EEF3FD;border-left-color:#1A5FE8;color:#1A5FE8;}',
-    '.nv-cat-emoji{font-size:15px;line-height:1;flex-shrink:0;}',
+    '.nv-item:hover,.nv-item.nv-active{background:rgba(79,107,255,.12);border-left-color:#4F6BFF;}',
+    '.nv-item-n{font-size:13px;font-weight:600;line-height:1.25;color:rgba(255,255,255,.9);}',
+    '.nv-item-d{font-size:11px;color:rgba(255,255,255,.4);line-height:1.3;}',
+    '#nav-empty{padding:20px 18px;font-size:13px;color:rgba(255,255,255,.3);display:none;}',
+    '.nv-hr{height:1px;background:#1F2438;margin:8px 0;}',
 
     /* Inputs con formato de miles (type cambiado de number a text por el formateador).
        Estas reglas replican el :focus y la transición que el CSS de cada página define
@@ -464,20 +457,12 @@
   var cur = window.location.pathname.replace(/\/$/, '') || '/';
 
   function buildList() {
-    var html = '<a class="nv-home-link" href="/">🏠 Todas las calculadoras</a>';
-    html += '<div class="nv-hr"></div>';
-    // ── Links de categorías ──────────────────────────────────
-    html += '<div class="nvc-title">Categorías</div>';
-    CALCS.forEach(function(cat) {
-      var catPath = '/' + cat.slug;
-      var active = (cur === catPath || cur === catPath + '/') ? ' nv-cat-active' : '';
-      html += '<a class="nv-cat-link' + active + '" href="' + catPath + '/">'
-            + '<span class="nv-cat-emoji">' + cat.cat.split(' ')[0] + '</span>'
-            + cat.label + '</a>';
-    });
-    html += '<div class="nv-hr"></div>';
+    var html = '';
     CALCS.forEach(function (cat) {
-      html += '<div class="nvc"><div class="nvc-title">' + cat.cat + '</div>';
+      var catPath = '/' + cat.slug + '/';
+      var catActive = (cur === '/' + cat.slug || cur === '/' + cat.slug + '/') ? ' nv-cat-active' : '';
+      html += '<div class="nvc">';
+      html += '<a class="nvc-title-link' + catActive + '" href="' + catPath + '">' + cat.label + '</a>';
       cat.items.forEach(function (item) {
         var slug = item.u.replace(/\/$/, '');
         var active = (cur === slug || cur === item.u) ? ' nv-active' : '';

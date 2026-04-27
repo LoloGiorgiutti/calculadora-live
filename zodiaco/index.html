@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Cuál es mi signo del zodiaco? — Calculadora.live</title>
+<meta name="description" content="Ingresá tu fecha de nacimiento y descubrí tu signo del zodiaco con descripción completa: elemento, planeta regente, personalidad, compatibilidad y más.">
+<link rel="canonical" href="https://calculadora.live/zodiaco/">
+<meta property="og:title" content="¿Cuál es mi signo del zodiaco? — Calculadora.live">
+<meta property="og:description" content="Ingresá tu fecha de nacimiento y descubrí tu signo del zodiaco con descripción completa.">
+<meta property="og:url" content="https://calculadora.live/zodiaco/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--accent:#4F6BFF;--accent-2:#7C5CFF;--accent-soft:#EEF1FF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+.logo{font-size:16px;font-weight:700;letter-spacing:-0.03em;color:var(--ink)}
+.logo span{color:var(--accent)}
+
+.hero{background:var(--dark);color:#fff;padding:36px 20px 28px;text-align:center}
+.breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:14px;letter-spacing:.03em}
+.breadcrumb a{color:rgba(255,255,255,.4)}
+.breadcrumb a:hover{color:rgba(255,255,255,.7)}
+h1{font-size:clamp(24px,5vw,36px);font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto}
+
+.main{max-width:560px;margin:0 auto;padding:28px 20px 80px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;margin-bottom:20px}
+
+.field{margin-bottom:0}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:8px}
+.field input{width:100%;padding:13px 16px;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:500;color:var(--ink);outline:none;transition:all .15s}
+.field input:focus{background:#fff;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+.btn{width:100%;margin-top:18px;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.btn:hover{opacity:.88}
+
+/* Resultado */
+#result{display:none}
+
+.sign-header{text-align:center;padding:28px 24px 20px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.sign-symbol{font-size:72px;line-height:1;margin-bottom:12px}
+.sign-name{font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:4px}
+.sign-dates{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-3);letter-spacing:.04em}
+
+.attrs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.attr{background:var(--bg);border-radius:10px;padding:14px 16px}
+.attr-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.attr-value{font-size:14px;font-weight:600;color:var(--ink)}
+
+.section-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--line)}
+
+.desc{font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:24px}
+
+.traits{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.trait{padding:6px 12px;background:var(--accent-soft);color:var(--accent);border-radius:99px;font-size:12px;font-weight:600}
+
+.compat{display:flex;gap:10px;flex-wrap:wrap}
+.compat-sign{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--bg);border-radius:10px;padding:10px 14px;min-width:60px}
+.compat-sign span:first-child{font-size:22px}
+.compat-sign span:last-child{font-size:11px;font-weight:600;color:var(--ink-3)}
+
+@media(max-width:480px){.attrs{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <a href="/" class="logo">Calculadora<span>.live</span></a>
+</header>
+
+<div class="hero">
+  <div class="breadcrumb"><a href="/">Inicio</a> / <a href="/fechas/">Fechas</a> / Signo del zodiaco</div>
+  <h1>¿Cuál es tu signo del zodiaco?</h1>
+  <p class="hero-sub">Ingresá tu fecha de nacimiento y descubrí tu signo con descripción completa</p>
+</div>
+
+<div class="main">
+  <div class="card">
+    <div class="field">
+      <label>Fecha de nacimiento</label>
+      <input type="date" id="fecha" max="">
+    </div>
+    <button class="btn" onclick="calcular()">Ver mi signo →</button>
+  </div>
+
+  <div class="card" id="result">
+    <div class="sign-header">
+      <div class="sign-symbol" id="r-symbol"></div>
+      <div class="sign-name" id="r-name"></div>
+      <div class="sign-dates" id="r-dates"></div>
+    </div>
+
+    <div class="attrs" id="r-attrs"></div>
+
+    <div class="section-title">Personalidad</div>
+    <p class="desc" id="r-desc"></p>
+
+    <div class="section-title">Rasgos principales</div>
+    <div class="traits" id="r-traits"></div>
+
+    <div class="section-title">Mayor compatibilidad</div>
+    <div class="compat" id="r-compat"></div>
+  </div>
+</div>
+
+<script src="/nav.js"></script>
+<script>
+// Fecha máx = hoy
+document.getElementById('fecha').max = new Date().toISOString().split('T')[0];
+
+var SIGNOS = [
+  {
+    n:'Capricornio', sym:'♑', emoji:'🐐',
+    desde:[12,22], hasta:[1,19],
+    elemento:'Tierra', planeta:'Saturno', modalidad:'Cardinal', polaridad:'Femenino',
+    color:'Marrón, gris', piedra:'Granate, obsidiana',
+    desc:'Capricornio es el signo más disciplinado y ambicioso del zodiaco. Nacidos bajo la influencia de Saturno, los capricornianos son personas responsables, organizadas y con una determinación de hierro para alcanzar sus metas. Tienen una mentalidad práctica y realista, y raramente se dejan llevar por emociones impulsivas. Su perseverancia es legendaria: si se proponen algo, lo logran, aunque les lleve años. Son leales, confiables y excelentes en posiciones de liderazgo y negocios.',
+    rasgos:['Ambicioso','Disciplinado','Responsable','Paciente','Práctico','Reservado'],
+    compat:['♉','♍','♏','♓']
+  },
+  {
+    n:'Acuario', sym:'♒', emoji:'🏺',
+    desde:[1,20], hasta:[2,18],
+    elemento:'Aire', planeta:'Urano / Saturno', modalidad:'Fijo', polaridad:'Masculino',
+    color:'Azul eléctrico, plateado', piedra:'Amatista, aguamarina',
+    desc:'Acuario es el signo más original e innovador del zodiaco. Regidos por Urano, los acuarianos son visionarios, independientes y profundamente humanitarios. Aman la libertad intelectual y siempre buscan romper moldes y convenciones. Son pensadores adelantados a su tiempo, con una capacidad única para ver el mundo desde perspectivas que otros no perciben. Aunque pueden parecer distantes emocionalmente, tienen una profunda preocupación por el bienestar colectivo y la justicia social.',
+    rasgos:['Original','Independiente','Humanitario','Intelectual','Excéntrico','Visionario'],
+    compat:['♊','♎','♈','♐']
+  },
+  {
+    n:'Piscis', sym:'♓', emoji:'🐟',
+    desde:[2,19], hasta:[3,20],
+    elemento:'Agua', planeta:'Neptuno / Júpiter', modalidad:'Mutable', polaridad:'Femenino',
+    color:'Azul mar, violeta', piedra:'Piedra de luna, amatista',
+    desc:'Piscis es el signo más intuitivo, empático y soñador del zodiaco. Regidos por Neptuno, los piscianos son almas sensibles con una profunda conexión con el mundo espiritual y emocional. Tienen una imaginación desbordante y una capacidad artística innata. Son compasivos hasta el extremo, siempre dispuestos a ayudar a los demás, aunque a veces esto los lleve a descuidar sus propias necesidades. Su naturaleza mística les da una visión del mundo única, llena de poesía y significado.',
+    rasgos:['Empático','Intuitivo','Creativo','Compasivo','Soñador','Adaptable'],
+    compat:['♋','♏','♑','♉']
+  },
+  {
+    n:'Aries', sym:'♈', emoji:'🐏',
+    desde:[3,21], hasta:[4,19],
+    elemento:'Fuego', planeta:'Marte', modalidad:'Cardinal', polaridad:'Masculino',
+    color:'Rojo, naranja', piedra:'Diamante, rubí',
+    desc:'Aries es el primer signo del zodiaco y uno de los más enérgicos y apasionados. Regidos por Marte, los arianos son líderes natos, valientes e impulsivos. Tienen una energía inagotable y una confianza en sí mismos que los lleva a asumir riesgos donde otros dudan. Son directos, honestos y a veces impacientes, ya que siempre quieren estar en movimiento y ver resultados rápidos. Su entusiasmo es contagioso y su coraje los convierte en pioneros en todo lo que emprenden.',
+    rasgos:['Valiente','Apasionado','Líder','Impulsivo','Enérgico','Directo'],
+    compat:['♌','♐','♊','♒']
+  },
+  {
+    n:'Tauro', sym:'♉', emoji:'🐂',
+    desde:[4,20], hasta:[5,20],
+    elemento:'Tierra', planeta:'Venus', modalidad:'Fijo', polaridad:'Femenino',
+    color:'Verde, rosa', piedra:'Esmeralda, malaquita',
+    desc:'Tauro es el signo más estable, paciente y sensual del zodiaco. Regidos por Venus, los taurinos tienen una profunda apreciación por la belleza, el confort y los placeres de la vida. Son personas confiables, perseverantes y con los pies en la tierra, que valoran la seguridad por encima de todo. Una vez que se comprometen con algo o alguien, son absolutamente leales. Su lado artístico es muy marcado, y suelen tener buen gusto para la música, la gastronomía y todo lo estético.',
+    rasgos:['Estable','Paciente','Leal','Sensual','Determinado','Práctico'],
+    compat:['♍','♑','♋','♓']
+  },
+  {
+    n:'Géminis', sym:'♊', emoji:'👯',
+    desde:[5,21], hasta:[6,20],
+    elemento:'Aire', planeta:'Mercurio', modalidad:'Mutable', polaridad:'Masculino',
+    color:'Amarillo, plateado', piedra:'Ágata, citrino',
+    desc:'Géminis es el signo más versátil y comunicativo del zodiaco. Regidos por Mercurio, los geminianos tienen una mente ágil, curiosa e inquieta que los lleva a interesarse en infinidad de temas. Son excelentes conversadores, ingeniosos y adaptables a cualquier situación. Su dualidad los hace capaces de ver todos los lados de una situación, aunque a veces esto genera indecisión. Adoran aprender, compartir información y relacionarse con personas diversas. Son el alma de cualquier reunión social.',
+    rasgos:['Comunicativo','Curioso','Versátil','Inteligente','Sociable','Ingenioso'],
+    compat:['♎','♒','♈','♌']
+  },
+  {
+    n:'Cáncer', sym:'♋', emoji:'🦀',
+    desde:[6,21], hasta:[7,22],
+    elemento:'Agua', planeta:'Luna', modalidad:'Cardinal', polaridad:'Femenino',
+    color:'Blanco, plateado', piedra:'Perla, piedra de luna',
+    desc:'Cáncer es el signo más hogareño, intuitivo y protector del zodiaco. Regidos por la Luna, los cancerianos tienen una sensibilidad emocional muy profunda y una memoria excepcional. El hogar y la familia son su máxima prioridad, y harán cualquier cosa por proteger a las personas que aman. Son empáticos, cariñosos y tienen una intuición casi sobrenatural para percibir los estados de ánimo ajenos. Su naturaleza receptiva los convierte en grandes confidentes y amigos eternos.',
+    rasgos:['Empático','Protector','Intuitivo','Cariñoso','Hogareño','Sensible'],
+    compat:['♏','♓','♑','♉']
+  },
+  {
+    n:'Leo', sym:'♌', emoji:'🦁',
+    desde:[7,23], hasta:[8,22],
+    elemento:'Fuego', planeta:'Sol', modalidad:'Fijo', polaridad:'Masculino',
+    color:'Dorado, naranja', piedra:'Peridoto, topacio',
+    desc:'Leo es el signo más carismático, generoso y dramático del zodiaco. Regidos por el Sol, los leonianos irradian una energía magnética que atrae naturalmente la atención. Son líderes creativos, apasionados y con un gran corazón. Aman el reconocimiento y brillar, pero también son increíblemente leales y protectores con quienes quieren. Tienen un talento natural para el entretenimiento, el arte y la actuación. Su entusiasmo por la vida es absolutamente contagioso.',
+    rasgos:['Carismático','Generoso','Creativo','Apasionado','Leal','Dramático'],
+    compat:['♈','♐','♊','♎']
+  },
+  {
+    n:'Virgo', sym:'♍', emoji:'👩‍🌾',
+    desde:[8,23], hasta:[9,22],
+    elemento:'Tierra', planeta:'Mercurio', modalidad:'Mutable', polaridad:'Femenino',
+    color:'Beige, verde', piedra:'Sardónice, jade',
+    desc:'Virgo es el signo más analítico, perfeccionista y servicial del zodiaco. Regidos por Mercurio, los virginianos tienen una mente ordenada y meticulosa que los convierte en expertos solucionadores de problemas. Son modestos, trabajadores y con un agudo sentido crítico. Su deseo de ayudar a los demás es genuino, aunque a veces pueden volverse demasiado exigentes consigo mismos y con quienes los rodean. Tienen un ojo clínico para detectar detalles que otros pasan por alto, lo que los hace indispensables en equipos de trabajo.',
+    rasgos:['Analítico','Perfeccionista','Servicial','Meticuloso','Modesto','Práctico'],
+    compat:['♑','♉','♋','♏']
+  },
+  {
+    n:'Libra', sym:'♎', emoji:'⚖️',
+    desde:[9,23], hasta:[10,22],
+    elemento:'Aire', planeta:'Venus', modalidad:'Cardinal', polaridad:'Masculino',
+    color:'Rosa, azul cielo', piedra:'Ópalo, zafiro',
+    desc:'Libra es el signo más diplomático, armonioso y estético del zodiaco. Regidos por Venus, los librianos tienen una profunda necesidad de equilibrio, justicia y belleza en todas las áreas de su vida. Son encantadores, sociables y con un talento natural para mediar en conflictos. Tienen buen gusto refinado y una atracción instintiva hacia el arte y la cultura. Su mayor desafío es la indecisión, ya que siempre ven todos los lados de un asunto y les cuesta tomar partido.',
+    rasgos:['Diplomático','Justo','Encantador','Sociable','Estético','Indeciso'],
+    compat:['♊','♒','♌','♐']
+  },
+  {
+    n:'Escorpio', sym:'♏', emoji:'🦂',
+    desde:[10,23], hasta:[11,21],
+    elemento:'Agua', planeta:'Plutón / Marte', modalidad:'Fijo', polaridad:'Femenino',
+    color:'Rojo oscuro, negro', piedra:'Topacio, granate',
+    desc:'Escorpio es el signo más intenso, misterioso y transformador del zodiaco. Regidos por Plutón, los escorpianos tienen una profundidad emocional sin igual y una determinación que raya en lo obsesivo cuando se proponen algo. Son perspicaces, magnéticos y con un instinto para descubrir verdades ocultas que pocas personas poseen. Su lealtad es absoluta, pero también su sentido de la justicia: pueden ser implacables con quienes los traicionan. Están asociados con la muerte, la regeneración y el renacimiento.',
+    rasgos:['Intenso','Apasionado','Leal','Perspicaz','Misterioso','Determinado'],
+    compat:['♋','♓','♑','♍']
+  },
+  {
+    n:'Sagitario', sym:'♐', emoji:'🏹',
+    desde:[11,22], hasta:[12,21],
+    elemento:'Fuego', planeta:'Júpiter', modalidad:'Mutable', polaridad:'Masculino',
+    color:'Azul, morado', piedra:'Turquesa, zircón',
+    desc:'Sagitario es el signo más aventurero, optimista y filosófico del zodiaco. Regidos por Júpiter, los sagitarianos tienen una sed insaciable de conocimiento, viajes y experiencias que amplíen su visión del mundo. Son directos, honestos y a veces demasiado francos, pero siempre con buenas intenciones. Aman la libertad por encima de todo y se rebelan contra cualquier tipo de restricción. Su energía expansiva y su entusiasmo contagioso los convierten en inspiración para quienes los rodean.',
+    rasgos:['Aventurero','Optimista','Honesto','Filosófico','Libre','Generoso'],
+    compat:['♈','♌','♎','♒']
+  }
+];
+
+function getSigno(d) {
+  var m = d.getMonth() + 1, day = d.getDate();
+  for (var i = 0; i < SIGNOS.length; i++) {
+    var s = SIGNOS[i];
+    var [dm, dd] = s.desde, [hm, hd] = s.hasta;
+    if (dm <= hm) {
+      if ((m === dm && day >= dd) || (m === hm && day <= hd)) return s;
+    } else {
+      if ((m === dm && day >= dd) || (m === hm && day <= hd)) return s;
+    }
+  }
+  return SIGNOS[0];
+}
+
+function calcular() {
+  var val = document.getElementById('fecha').value;
+  if (!val) { alert('Ingresá tu fecha de nacimiento'); return; }
+  var d = new Date(val + 'T12:00:00');
+  var s = getSigno(d);
+
+  document.getElementById('r-symbol').textContent = s.sym;
+  document.getElementById('r-name').textContent = s.n;
+  document.getElementById('r-dates').textContent = s.n.toUpperCase() + ' · ' + formatRange(s.desde, s.hasta);
+
+  document.getElementById('r-attrs').innerHTML =
+    attr('Elemento', s.elemento) +
+    attr('Planeta regente', s.planeta) +
+    attr('Modalidad', s.modalidad) +
+    attr('Polaridad', s.polaridad) +
+    attr('Color', s.color) +
+    attr('Piedra', s.piedra);
+
+  document.getElementById('r-desc').textContent = s.desc;
+
+  document.getElementById('r-traits').innerHTML =
+    s.rasgos.map(function(r){ return '<span class="trait">' + r + '</span>'; }).join('');
+
+  document.getElementById('r-compat').innerHTML =
+    s.compat.map(function(sym){
+      var match = SIGNOS.find(function(x){ return x.sym === sym; });
+      return '<div class="compat-sign"><span>' + sym + '</span><span>' + (match ? match.n : sym) + '</span></div>';
+    }).join('');
+
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function attr(label, val) {
+  return '<div class="attr"><div class="attr-label">' + label + '</div><div class="attr-value">' + val + '</div></div>';
+}
+
+var MESES = ['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function formatRange(desde, hasta) {
+  return desde[1] + ' de ' + MESES[desde[0]] + ' — ' + hasta[1] + ' de ' + MESES[hasta[0]];
+}
+
+document.getElementById('fecha').addEventListener('keydown', function(e){ if(e.key==='Enter') calcular(); });
+</script>
+</body>
+</html>

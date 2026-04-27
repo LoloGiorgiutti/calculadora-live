@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reloj en tiempo real — Hora exacta ahora — Calculadora.live</title>
+<meta name="description" content="Reloj digital en tiempo real. Mirá la hora exacta ahora mismo, con fecha completa, zona horaria y modo pantalla completa.">
+<link rel="canonical" href="https://calculadora.live/reloj/">
+<meta property="og:title" content="Reloj en tiempo real — Calculadora.live">
+<meta property="og:description" content="Reloj digital en tiempo real con fecha, zona horaria y pantalla completa.">
+<meta property="og:url" content="https://calculadora.live/reloj/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--accent:#4F6BFF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+.logo{font-size:16px;font-weight:700;letter-spacing:-0.03em;color:var(--ink)}
+.logo span{color:var(--accent)}
+
+.hero{background:var(--dark);color:#fff;padding:28px 20px 24px;text-align:center}
+.breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:14px;letter-spacing:.03em}
+.breadcrumb a{color:rgba(255,255,255,.4)}
+.breadcrumb a:hover{color:rgba(255,255,255,.7)}
+h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.55)}
+
+.main{max-width:680px;margin:0 auto;padding:32px 20px 80px}
+
+/* Reloj principal */
+.clock-card{background:var(--dark);border-radius:20px;padding:48px 32px;text-align:center;margin-bottom:20px;position:relative;overflow:hidden}
+.clock-card::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(79,107,255,.15) 0%,transparent 60%);pointer-events:none}
+
+.time-display{font-family:'JetBrains Mono',monospace;font-size:clamp(56px,12vw,96px);font-weight:700;color:#fff;letter-spacing:-0.04em;line-height:1;margin-bottom:16px;position:relative;z-index:1}
+.time-display .sep{color:var(--accent);animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.time-seconds{font-family:'JetBrains Mono',monospace;font-size:clamp(28px,5vw,48px);color:rgba(255,255,255,.4);font-weight:600;letter-spacing:-.03em}
+
+.date-display{font-size:clamp(16px,3vw,22px);color:rgba(255,255,255,.8);font-weight:500;letter-spacing:-.01em;margin-bottom:10px;position:relative;z-index:1}
+.tz-display{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(255,255,255,.35);letter-spacing:.05em;position:relative;z-index:1}
+
+.btn-fs{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);border-radius:8px;padding:8px 12px;font-size:12px;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .15s;z-index:2}
+.btn-fs:hover{background:rgba(255,255,255,.14);color:#fff}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.stat-val{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.stat-lbl{font-size:11px;color:var(--ink-3);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+
+/* Zona horaria */
+.tz-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.tz-card label{font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.tz-card select{flex:1;max-width:320px;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);background:var(--bg);outline:none;cursor:pointer}
+.tz-card select:focus{border-color:var(--accent)}
+
+/* Fullscreen mode */
+body.fs-mode header,body.fs-mode .hero,body.fs-mode .stats,body.fs-mode .tz-card,body.fs-mode h2{display:none!important}
+body.fs-mode{background:#0A0E1A}
+body.fs-mode .main{max-width:none;padding:0;display:flex;align-items:center;justify-content:center;min-height:100vh}
+body.fs-mode .clock-card{border-radius:0;width:100%;padding:60px 32px;background:none}
+body.fs-mode .time-display{font-size:clamp(80px,18vw,160px)}
+body.fs-mode .date-display{font-size:clamp(20px,4vw,36px)}
+body.fs-mode .btn-fs{top:24px;right:24px}
+
+@media(max-width:480px){.stats{grid-template-columns:1fr 1fr}.tz-card{flex-direction:column;align-items:flex-start}.tz-card select{max-width:none;width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <a href="/" class="logo">Calculadora<span>.live</span></a>
+</header>
+
+<div class="hero">
+  <div class="breadcrumb"><a href="/">Inicio</a> / <a href="/fechas/">Fechas</a> / Reloj</div>
+  <h1>Reloj en tiempo real</h1>
+  <p class="hero-sub">La hora exacta ahora mismo</p>
+</div>
+
+<div class="main">
+  <div class="clock-card" id="clock-card">
+    <button class="btn-fs" onclick="toggleFS()" id="btn-fs" title="Pantalla completa">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+      Pantalla completa
+    </button>
+    <div class="time-display">
+      <span id="hh">--</span><span class="sep">:</span><span id="mm">--</span><span class="sep" style="font-size:.6em;vertical-align:super"> </span><span class="time-seconds" id="ss">--</span>
+    </div>
+    <div class="date-display" id="fecha-display">—</div>
+    <div class="tz-display" id="tz-display">—</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val" id="s-diames">—</div><div class="stat-lbl">Día del mes</div></div>
+    <div class="stat"><div class="stat-val" id="s-semana">—</div><div class="stat-lbl">Semana del año</div></div>
+    <div class="stat"><div class="stat-val" id="s-diano">—</div><div class="stat-lbl">Día del año</div></div>
+  </div>
+
+  <div class="tz-card">
+    <label>Zona horaria</label>
+    <select id="tz-select" onchange="changeTZ()">
+      <option value="local">Mi zona horaria (local)</option>
+      <option value="America/Argentina/Buenos_Aires">Argentina (GMT-3)</option>
+      <option value="America/New_York">Nueva York (ET)</option>
+      <option value="America/Los_Angeles">Los Ángeles (PT)</option>
+      <option value="America/Chicago">Chicago (CT)</option>
+      <option value="America/Sao_Paulo">São Paulo (BRT)</option>
+      <option value="America/Santiago">Santiago (CLT)</option>
+      <option value="America/Bogota">Bogotá (COT)</option>
+      <option value="America/Lima">Lima (PET)</option>
+      <option value="America/Mexico_City">Ciudad de México (CST)</option>
+      <option value="Europe/Madrid">Madrid (CET)</option>
+      <option value="Europe/London">Londres (GMT)</option>
+      <option value="Europe/Paris">París (CET)</option>
+      <option value="Europe/Berlin">Berlín (CET)</option>
+      <option value="Asia/Tokyo">Tokio (JST)</option>
+      <option value="Asia/Shanghai">Shanghái (CST)</option>
+      <option value="Asia/Dubai">Dubái (GST)</option>
+      <option value="Australia/Sydney">Sídney (AEDT)</option>
+    </select>
+  </div>
+</div>
+
+<script src="/nav.js"></script>
+<script>
+var DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+var selectedTZ = 'local';
+var fsMode = false;
+
+function getNow() {
+  if (selectedTZ === 'local') return new Date();
+  try {
+    var str = new Date().toLocaleString('en-US', { timeZone: selectedTZ });
+    return new Date(str);
+  } catch(e) { return new Date(); }
+}
+
+function pad(n) { return String(n).padStart(2,'0'); }
+
+function weekOfYear(d) {
+  var start = new Date(d.getFullYear(), 0, 1);
+  var diff = d - start;
+  return Math.ceil((diff / 86400000 + start.getDay() + 1) / 7);
+}
+
+function dayOfYear(d) {
+  var start = new Date(d.getFullYear(), 0, 0);
+  return Math.floor((d - start) / 86400000);
+}
+
+function tick() {
+  var now = getNow();
+  document.getElementById('hh').textContent = pad(now.getHours());
+  document.getElementById('mm').textContent = pad(now.getMinutes());
+  document.getElementById('ss').textContent = pad(now.getSeconds());
+
+  document.getElementById('fecha-display').textContent =
+    DIAS[now.getDay()] + ', ' + now.getDate() + ' de ' + MESES[now.getMonth()] + ' de ' + now.getFullYear();
+
+  var tzName = selectedTZ === 'local'
+    ? Intl.DateTimeFormat().resolvedOptions().timeZone
+    : selectedTZ;
+  document.getElementById('tz-display').textContent = tzName;
+
+  document.getElementById('s-diames').textContent = pad(now.getDate());
+  document.getElementById('s-semana').textContent = weekOfYear(now);
+  document.getElementById('s-diano').textContent = dayOfYear(now);
+}
+
+function changeTZ() {
+  selectedTZ = document.getElementById('tz-select').value;
+  tick();
+}
+
+function toggleFS() {
+  fsMode = !fsMode;
+  document.body.classList.toggle('fs-mode', fsMode);
+  var btn = document.getElementById('btn-fs');
+  if (fsMode) {
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg> Salir';
+    document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+  } else {
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg> Pantalla completa';
+    document.exitFullscreen && document.exitFullscreen();
+  }
+}
+
+document.addEventListener('keydown', function(e){ if(e.key==='Escape' && fsMode) toggleFS(); });
+document.addEventListener('fullscreenchange', function(){ if(!document.fullscreenElement && fsMode) toggleFS(); });
+
+tick();
+setInterval(tick, 1000);
+</script>
+</body>
+</html>

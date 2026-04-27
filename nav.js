@@ -36,10 +36,14 @@
       { n: 'Hidratación diaria',          u: '/hidratacion',  icon:'💧', badge:true, d: '¿Cuánta agua necesitás por día?', hd:'¿Cuánta agua necesitás por día según tu peso y actividad?' },
       { n: 'Proteína diaria',             u: '/proteina',     icon:'🥩', badge:true, d: 'Gramos según tu peso, objetivo y actividad', hd:'¿Cuántos gramos de proteína necesitás según tu objetivo y actividad?' },
     ]},
-    { cat: '📅 Fechas y tiempo', slug: 'fechas', label: 'Fechas', desc: 'Edad exacta, días entre fechas, día de la semana y más.', items: [
-      { n: 'Contador de días',    u: '/dias',       icon:'🗓️', d: 'Días entre fechas, hábiles o corridos',    hd:'¿Cuántos días hay entre dos fechas? También días hábiles.' },
-      { n: 'Calculadora de edad', u: '/edad',       icon:'🎂', d: 'Edad exacta en años, meses y días',        hd:'Calculá la edad exacta en años, meses y días.' },
-      { n: '¿Qué día fue?',       u: '/dia-semana', icon:'📆', d: 'Día de la semana de cualquier fecha',      hd:'Ingresá una fecha y descubrí qué día de la semana fue o será.' },
+    { cat: '📅 Fechas y tiempo', slug: 'fechas', label: 'Fechas', desc: 'Edad exacta, días entre fechas, reloj en vivo, calendario y más.', items: [
+      { n: 'Reloj en tiempo real', u: '/reloj/',     icon:'🕐', d: 'Hora exacta ahora, con pantalla completa', hd:'Reloj digital en tiempo real con fecha, zona horaria y modo pantalla completa.' },
+      { n: 'Calendario',           u: '/calendario/',icon:'📅', d: 'Calendario mensual navegable',             hd:'Visualizá el mes actual, navegá entre meses y conocé datos de cada día.' },
+      { n: 'Un día como hoy',      u: '/hoy/',       icon:'📰', d: 'Efemérides e historia de esta fecha',      hd:'Eventos históricos, nacimientos y fallecimientos que ocurrieron en esta fecha.' },
+      { n: '¿Cuál es mi signo?',   u: '/zodiaco/',   icon:'♈', d: 'Tu signo del zodiaco completo',            hd:'Ingresá tu fecha de nacimiento y descubrí tu signo zodiacal con descripción completa.' },
+      { n: 'Contador de días',     u: '/dias/',      icon:'🗓️', d: 'Días entre fechas, hábiles o corridos',   hd:'¿Cuántos días hay entre dos fechas? También días hábiles.' },
+      { n: 'Calculadora de edad',  u: '/edad/',      icon:'🎂', d: 'Edad exacta en años, meses y días',       hd:'Calculá la edad exacta en años, meses y días.' },
+      { n: '¿Qué día fue?',        u: '/dia-semana/',icon:'📆', d: 'Día de la semana de cualquier fecha',     hd:'Ingresá una fecha y descubrí qué día de la semana fue o será.' },
     ]},
     { cat: '🔢 Matemática rápida', slug: 'matematica', label: 'Matemática', desc: 'Porcentajes, regla de tres, conversión de unidades y más.', items: [
       { n: 'Calculadora de porcentajes', u: '/porcentaje',    icon:'%',  badge:true, d: 'X% de Y, variaciones, aumentos y descuentos',    hd:'X% de Y, qué % es X de Y, variación entre dos números, aumentos y descuentos.' },

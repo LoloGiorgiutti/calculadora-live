@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendario — Calculadora.live</title>
+<meta name="description" content="Calendario mensual navegable. Visualizá el mes actual, navegá entre meses y años, y conocé datos de cada día.">
+<link rel="canonical" href="https://calculadora.live/calendario/">
+<meta property="og:title" content="Calendario — Calculadora.live">
+<meta property="og:description" content="Calendario mensual navegable con datos de cada día.">
+<meta property="og:url" content="https://calculadora.live/calendario/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--line-2:#EFF1F6;--accent:#4F6BFF;--accent-2:#7C5CFF;--accent-soft:#EEF1FF;--dark:#0A0E1A;--dark-line:#1F2438;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+.logo{font-size:16px;font-weight:700;letter-spacing:-0.03em;color:var(--ink)}
+.logo span{color:var(--accent)}
+
+.hero{background:var(--dark);color:#fff;padding:28px 20px 24px;text-align:center}
+.breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:14px;letter-spacing:.03em}
+.breadcrumb a{color:rgba(255,255,255,.4)}
+.breadcrumb a:hover{color:rgba(255,255,255,.7)}
+h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.55)}
+
+.main{max-width:620px;margin:0 auto;padding:28px 20px 80px}
+
+/* Navegación de mes */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.cal-nav-title{font-size:20px;font-weight:700;letter-spacing:-0.02em;cursor:pointer;color:var(--ink)}
+.nav-btn{width:36px;height:36px;border:1.5px solid var(--line);background:var(--surface);border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-3);transition:all .15s;font-size:16px}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.today-btn{padding:7px 14px;border:1.5px solid var(--line);background:var(--surface);border-radius:9px;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--ink-3);transition:all .15s}
+.today-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Calendario */
+.cal-wrap{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:20px}
+
+.cal-head{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--line-2)}
+.cal-head div{padding:10px 0;text-align:center;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.cal-head div:first-child{color:#E53E3E}
+
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.cal-day{min-height:64px;padding:8px 10px;border-right:1px solid var(--line-2);border-bottom:1px solid var(--line-2);cursor:pointer;transition:background .12s;display:flex;flex-direction:column;gap:3px;position:relative}
+.cal-day:nth-child(7n){border-right:none}
+.cal-day:hover{background:var(--accent-soft)}
+.cal-day.other-month .day-num{color:var(--line)}
+.cal-day.other-month{background:#FAFBFD}
+.cal-day.today{background:var(--accent-soft)}
+.cal-day.today .day-num{background:var(--accent);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.cal-day.selected{background:var(--accent-soft);outline:2px solid var(--accent);outline-offset:-2px}
+.cal-day.weekend:not(.other-month) .day-num{color:#E53E3E}
+
+.day-num{font-size:13px;font-weight:600;color:var(--ink);width:26px;height:26px;display:flex;align-items:center;justify-content:center}
+.day-week{font-size:9px;color:var(--ink-3);display:none}
+
+/* Info del día seleccionado */
+.day-info{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 24px}
+.di-title{font-size:16px;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px;color:var(--ink)}
+.di-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.di-item{background:var(--bg);border-radius:8px;padding:12px 14px}
+.di-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:3px}
+.di-val{font-size:14px;font-weight:600;color:var(--ink)}
+
+@media(max-width:480px){
+  .cal-day{min-height:44px;padding:5px 4px}
+  .cal-head div{font-size:10px;padding:8px 0}
+  .day-num{font-size:12px;width:22px;height:22px}
+  .cal-day.today .day-num{width:22px;height:22px}
+  .di-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header>
+  <a href="/" class="logo">Calculadora<span>.live</span></a>
+</header>
+
+<div class="hero">
+  <div class="breadcrumb"><a href="/">Inicio</a> / <a href="/fechas/">Fechas</a> / Calendario</div>
+  <h1>Calendario</h1>
+  <p class="hero-sub">Navegá meses y conocé datos de cada día</p>
+</div>
+
+<div class="main">
+  <div class="cal-nav">
+    <button class="nav-btn" onclick="cambiarMes(-1)">&#8249;</button>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="cal-nav-title" id="nav-title"></span>
+      <button class="today-btn" onclick="irHoy()">Hoy</button>
+    </div>
+    <button class="nav-btn" onclick="cambiarMes(1)">&#8250;</button>
+  </div>
+
+  <div class="cal-wrap">
+    <div class="cal-head">
+      <div>Dom</div><div>Lun</div><div>Mar</div>
+      <div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+
+  <div class="day-info" id="day-info" style="display:none">
+    <div class="di-title" id="di-title"></div>
+    <div class="di-grid" id="di-grid"></div>
+  </div>
+</div>
+
+<script src="/nav.js"></script>
+<script>
+var DIAS_LARGO = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+var MESES_LARGO = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+var MESES_CORTO = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+var hoy = new Date();
+var curYear = hoy.getFullYear();
+var curMonth = hoy.getMonth();
+var selectedDay = null;
+
+function isLeap(y){ return (y%4===0 && y%100!==0) || y%400===0; }
+function daysInMonth(m,y){ return [31,isLeap(y)?29:28,31,30,31,30,31,31,30,31,30,31][m]; }
+
+function weekOfYear(d){
+  var start = new Date(d.getFullYear(),0,1);
+  return Math.ceil(((d-start)/86400000+start.getDay()+1)/7);
+}
+function dayOfYear(d){
+  return Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);
+}
+
+function render(){
+  document.getElementById('nav-title').textContent = MESES_LARGO[curMonth] + ' ' + curYear;
+
+  var firstDay = new Date(curYear, curMonth, 1).getDay();
+  var dias = daysInMonth(curMonth, curYear);
+  var prevDias = daysInMonth(curMonth === 0 ? 11 : curMonth-1, curMonth===0?curYear-1:curYear);
+
+  var grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+
+  var total = Math.ceil((firstDay + dias) / 7) * 7;
+
+  for(var i=0; i<total; i++){
+    var div = document.createElement('div');
+    div.className = 'cal-day';
+
+    var d, m, y, isOther = false, isWeekend = false;
+    if(i < firstDay){
+      d = prevDias - firstDay + i + 1;
+      m = curMonth === 0 ? 11 : curMonth-1;
+      y = curMonth === 0 ? curYear-1 : curYear;
+      isOther = true;
+    } else if(i >= firstDay + dias){
+      d = i - firstDay - dias + 1;
+      m = curMonth === 11 ? 0 : curMonth+1;
+      y = curMonth === 11 ? curYear+1 : curYear;
+      isOther = true;
+    } else {
+      d = i - firstDay + 1;
+      m = curMonth;
+      y = curYear;
+    }
+
+    var dayDate = new Date(y, m, d);
+    var dow = dayDate.getDay();
+    if(dow === 0 || dow === 6) div.classList.add('weekend');
+    if(isOther) div.classList.add('other-month');
+
+    var isToday = d===hoy.getDate() && m===hoy.getMonth() && y===hoy.getFullYear() && !isOther;
+    if(isToday) div.classList.add('today');
+
+    var numEl = document.createElement('div');
+    numEl.className = 'day-num';
+    numEl.textContent = d;
+    div.appendChild(numEl);
+
+    (function(dd,mm,yy){
+      div.addEventListener('click', function(){ selectDay(dd,mm,yy); });
+    })(d,m,y);
+
+    grid.appendChild(div);
+  }
+}
+
+function selectDay(d,m,y){
+  var dayDate = new Date(y,m,d);
+  var dow = dayDate.getDay();
+  document.getElementById('di-title').textContent =
+    DIAS_LARGO[dow] + ' ' + d + ' de ' + MESES_LARGO[m] + ' de ' + y;
+
+  var doy = dayOfYear(dayDate);
+  var woy = weekOfYear(dayDate);
+  var daysLeft = 365 + (isLeap(y)?1:0) - doy;
+  var daysFrom = Math.round((dayDate - hoy) / 86400000);
+
+  document.getElementById('di-grid').innerHTML =
+    diItem('Día del año', doy) +
+    diItem('Semana del año', woy) +
+    diItem('Días restantes en el año', daysLeft) +
+    diItem('Desde hoy', daysFrom === 0 ? 'Hoy' : (daysFrom > 0 ? '+' + daysFrom + ' días' : daysFrom + ' días'));
+
+  document.getElementById('day-info').style.display = 'block';
+}
+
+function diItem(l,v){
+  return '<div class="di-item"><div class="di-label">'+l+'</div><div class="di-val">'+v+'</div></div>';
+}
+
+function cambiarMes(delta){
+  curMonth += delta;
+  if(curMonth>11){curMonth=0;curYear++;}
+  if(curMonth<0){curMonth=11;curYear--;}
+  document.getElementById('day-info').style.display='none';
+  render();
+}
+
+function irHoy(){
+  curYear = hoy.getFullYear();
+  curMonth = hoy.getMonth();
+  document.getElementById('day-info').style.display='none';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

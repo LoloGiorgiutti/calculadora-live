@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un día como hoy — Efemérides — Calculadora.live</title>
+<meta name="description" content="¿Qué pasó un día como hoy? Descubrí eventos históricos, nacimientos y fallecimientos que ocurrieron en esta fecha a lo largo de la historia.">
+<link rel="canonical" href="https://calculadora.live/hoy/">
+<meta property="og:title" content="Un día como hoy — Calculadora.live">
+<meta property="og:description" content="Eventos históricos, nacimientos y fallecimientos que ocurrieron en esta fecha a lo largo de la historia.">
+<meta property="og:url" content="https://calculadora.live/hoy/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--line-2:#EFF1F6;--accent:#4F6BFF;--accent-soft:#EEF1FF;--dark:#0A0E1A;--dark-line:#1F2438;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+.logo{font-size:16px;font-weight:700;letter-spacing:-0.03em;color:var(--ink)}
+.logo span{color:var(--accent)}
+
+.hero{background:var(--dark);color:#fff;padding:36px 20px 28px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(79,107,255,.15) 0%,transparent 60%);pointer-events:none}
+.breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:14px;letter-spacing:.03em;position:relative;z-index:1}
+.breadcrumb a{color:rgba(255,255,255,.4)}
+.breadcrumb a:hover{color:rgba(255,255,255,.7)}
+.hero-date{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent);letter-spacing:.08em;margin-bottom:10px;position:relative;z-index:1}
+h1{font-size:clamp(24px,5vw,36px);font-weight:700;letter-spacing:-0.03em;margin-bottom:8px;position:relative;z-index:1}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto;position:relative;z-index:1}
+
+.date-nav{max-width:640px;margin:0 auto;padding:20px 20px 0;display:flex;align-items:center;gap:10px}
+.date-nav input{flex:1;padding:10px 14px;border:1.5px solid var(--line);border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+.date-nav input:focus{border-color:var(--accent)}
+.date-nav button{padding:10px 16px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.date-nav button:hover{opacity:.85}
+
+.main{max-width:640px;margin:0 auto;padding:24px 20px 80px}
+
+/* Loading */
+.loading{text-align:center;padding:48px 20px;color:var(--ink-3)}
+.spinner{width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Error */
+.error-msg{text-align:center;padding:32px;background:var(--surface);border:1px solid var(--line);border-radius:16px;color:var(--ink-3);font-size:14px}
+
+/* Sección */
+.section{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:16px;overflow:hidden}
+.section-header{padding:16px 20px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;gap:10px}
+.section-icon{font-size:18px}
+.section-title-text{font-size:14px;font-weight:700;color:var(--ink)}
+.section-count{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3);margin-left:auto}
+
+.event-item{padding:14px 20px;border-bottom:1px solid var(--line-2);display:flex;gap:14px;align-items:flex-start;transition:background .12s}
+.event-item:last-child{border-bottom:none}
+.event-item:hover{background:var(--bg)}
+.event-year{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--accent);min-width:38px;padding-top:1px;flex-shrink:0}
+.event-text{font-size:13px;color:var(--ink-2);line-height:1.55}
+.event-text a{color:var(--accent);font-weight:500}
+.event-text a:hover{text-decoration:underline}
+
+.no-data{padding:24px 20px;text-align:center;color:var(--ink-3);font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <a href="/" class="logo">Calculadora<span>.live</span></a>
+</header>
+
+<div class="hero">
+  <div class="breadcrumb"><a href="/">Inicio</a> / <a href="/fechas/">Fechas</a> / Un día como hoy</div>
+  <div class="hero-date" id="hero-date"></div>
+  <h1>Un día como hoy</h1>
+  <p class="hero-sub">Eventos históricos que ocurrieron en esta fecha a lo largo de la historia</p>
+</div>
+
+<div class="date-nav">
+  <input type="date" id="date-input">
+  <button onclick="cargar()">Ver →</button>
+</div>
+
+<div class="main" id="main-content">
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Cargando eventos históricos…</p>
+  </div>
+</div>
+
+<script src="/nav.js"></script>
+<script>
+var DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+var hoy = new Date();
+var curDate = hoy;
+
+function formatHeroDate(d){
+  return DIAS[d.getDay()].toUpperCase() + ' · ' + d.getDate() + ' DE ' + MESES[d.getMonth()].toUpperCase();
+}
+
+function pad2(n){ return String(n).padStart(2,'0'); }
+
+function setHeroDate(d){
+  document.getElementById('hero-date').textContent = formatHeroDate(d);
+  document.getElementById('date-input').value = d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());
+}
+
+function cargar(){
+  var val = document.getElementById('date-input').value;
+  if(val) curDate = new Date(val+'T12:00:00');
+  setHeroDate(curDate);
+
+  var month = pad2(curDate.getMonth()+1);
+  var day = pad2(curDate.getDate());
+
+  var content = document.getElementById('main-content');
+  content.innerHTML = '<div class="loading"><div class="spinner"></div><p>Cargando eventos históricos…</p></div>';
+
+  // Wikipedia "On This Day" API — edición en español
+  var url = 'https://es.wikipedia.org/api/rest_v1/feed/onthisday/all/' + month + '/' + day;
+
+  fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(data){ renderData(data, month, day); })
+    .catch(function(){ renderFallback(); });
+}
+
+function renderData(data, month, day){
+  var content = document.getElementById('main-content');
+  content.innerHTML = '';
+
+  var sections = [
+    { key:'events',   icon:'📅', title:'Eventos históricos' },
+    { key:'births',   icon:'🎂', title:'Nacimientos' },
+    { key:'deaths',   icon:'🕊️', title:'Fallecimientos' },
+    { key:'holidays', icon:'🎉', title:'Festividades y efemérides' },
+  ];
+
+  var anyContent = false;
+
+  sections.forEach(function(sec){
+    var items = data[sec.key];
+    if(!items || items.length === 0) return;
+    anyContent = true;
+
+    // Limitar a 15 items por sección para no sobrecargar
+    var shown = items.slice(0, 15);
+
+    var html = '<div class="section">';
+    html += '<div class="section-header">';
+    html += '<span class="section-icon">'+sec.icon+'</span>';
+    html += '<span class="section-title-text">'+sec.title+'</span>';
+    html += '<span class="section-count">'+shown.length+(items.length>15?'+':'')+' entradas</span>';
+    html += '</div>';
+
+    shown.forEach(function(item){
+      var year = item.year ? item.year : '';
+      var text = item.text || '';
+      // Limpiar referencias wiki entre paréntesis muy largas
+      text = text.replace(/\s*\([^)]{80,}\)/g,'');
+
+      var link = '';
+      if(item.pages && item.pages.length > 0){
+        link = item.pages[0].content_urls && item.pages[0].content_urls.desktop
+          ? item.pages[0].content_urls.desktop.page : '';
+      }
+
+      html += '<div class="event-item">';
+      if(year) html += '<span class="event-year">'+year+'</span>';
+      html += '<span class="event-text">'+text;
+      if(link) html += ' <a href="'+link+'" target="_blank" rel="noopener">Wikipedia →</a>';
+      html += '</span></div>';
+    });
+
+    html += '</div>';
+    content.innerHTML += html;
+  });
+
+  if(!anyContent) renderFallback();
+}
+
+function renderFallback(){
+  document.getElementById('main-content').innerHTML =
+    '<div class="error-msg">No se pudieron cargar los eventos históricos para esta fecha.<br>Verificá tu conexión a internet e intentá de nuevo.</div>';
+}
+
+// Inicializar
+setHeroDate(hoy);
+cargar();
+
+// Actualizar fecha del hero al cambiar el input
+document.getElementById('date-input').addEventListener('change', function(){
+  var d = new Date(this.value+'T12:00:00');
+  if(!isNaN(d)) setHeroDate(d);
+});
+</script>
+</body>
+</html>

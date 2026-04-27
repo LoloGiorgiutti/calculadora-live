@@ -42,17 +42,17 @@
 
   /* ── HEADER ── */
   header{background:var(--dark);border-bottom:1px solid var(--dark-line);position:sticky;top:0;z-index:100}
-  .header-inner{max-width:1240px;margin:0 auto;padding:0 24px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .header-inner{max-width:1240px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 
-  .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em;flex-shrink:0}
+  .logo{font-size:16px;font-weight:700;letter-spacing:-0.03em;flex-shrink:0;margin-right:4px}
   .logo .name{color:#fff}
   .logo .dot{color:var(--accent)}
 
-  .header-nav{display:flex;gap:2px;margin-left:8px}
-  .header-nav a{padding:7px 12px;border-radius:7px;font-size:13px;color:rgba(255,255,255,.6);font-weight:500;transition:all .12s;white-space:nowrap}
+  .header-nav{display:flex;gap:2px;margin-left:0;margin-right:auto}
+  .header-nav a{padding:6px 11px;border-radius:6px;font-size:12px;color:rgba(255,255,255,.6);font-weight:500;transition:all .12s;white-space:nowrap}
   .header-nav a:hover{background:var(--dark-2);color:#fff}
 
-  .search-pill{padding:8px 14px 8px 36px;background:var(--dark-2);border:1px solid var(--dark-line);border-radius:9px;font-size:13px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:24px;cursor:pointer;position:relative;min-width:220px;justify-content:space-between;transition:all .15s;font-family:inherit}
+  .search-pill{padding:7px 12px 7px 34px;background:var(--dark-2);border:1px solid var(--dark-line);border-radius:8px;font-size:12px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:20px;cursor:pointer;position:relative;min-width:200px;justify-content:space-between;transition:all .15s;font-family:inherit}
   .search-pill::before{content:'';position:absolute;left:13px;top:50%;transform:translateY(-50%);width:14px;height:14px;opacity:.45;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23fff" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>') no-repeat center/contain}
   .search-pill:hover{border-color:rgba(255,255,255,.2)}
   .search-pill kbd{font-family:'JetBrains Mono';font-size:10px;padding:2px 6px;background:rgba(255,255,255,.06);border:1px solid var(--dark-line);border-radius:4px;color:rgba(255,255,255,.4)}

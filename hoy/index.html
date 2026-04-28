@@ -96,7 +96,7 @@ var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','
 
 var hoy = new Date();
 var curDate = hoy;
-var topPagesMap = {}; // {Article_Title: monthly_views} — cargado al iniciar
+var topPagesMap = {}; // {Article_Title: max_monthly_views} — 3 meses acumulados
 
 function formatHeroDate(d){
   return DIAS[d.getDay()].toUpperCase() + ' · ' + d.getDate() + ' DE ' + MESES[d.getMonth()].toUpperCase();
@@ -120,54 +120,60 @@ function cargar(){
   var content = document.getElementById('main-content');
   content.innerHTML = '<div class="loading"><div class="spinner"></div><p>Cargando eventos históricos…</p></div>';
 
-  // Llamada 1: Wikipedia EN — cobertura histórica completa + páginas con ID de Wikidata
+  // Llamada 1: Wikipedia EN — cobertura histórica completa
   var onUrl = 'https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/' + month + '/' + day;
 
-  // Llamada 2: Wikimedia Analytics — top 1000 artículos del mes anterior por vistas reales.
-  // Esto nos da la métrica de fama más precisa disponible (pageviews mensuales reales,
-  // no snapshots cacheados). Neymar, Steve Jobs, Dahmer → todos están en el top 1000.
+  // Llamadas 2-4: top-1000 artículos de los últimos 3 meses (en paralelo).
+  // 3 meses dan ~3000 artículos de referencia únicos, capturando figuras que
+  // pueden no estar trending este mes pero sí en los anteriores.
   var now = new Date();
-  var prev = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-  var topUrl = 'https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia.org/all-access/'
-    + prev.getFullYear() + '/' + pad2(prev.getMonth() + 1) + '/all-days';
+  var topFetches = [1, 2, 3].map(function(offset){
+    var d = new Date(now.getFullYear(), now.getMonth() - offset, 1);
+    var url = 'https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia.org/all-access/'
+      + d.getFullYear() + '/' + pad2(d.getMonth() + 1) + '/all-days';
+    return fetch(url).then(function(r){ return r.json(); }).catch(function(){ return null; });
+  });
 
-  Promise.all([
-    fetch(onUrl).then(function(r){ return r.json(); }),
-    fetch(topUrl).then(function(r){ return r.json(); }).catch(function(){ return null; })
-  ])
+  Promise.all([fetch(onUrl).then(function(r){ return r.json(); })].concat(topFetches))
   .then(function(res){
-    // Construir mapa de vistas reales: {Article_Title: views_last_month}
+    // Acumular vistas de los 3 meses: guardar el máximo mensual por artículo
     topPagesMap = {};
-    var topData = res[1];
-    if(topData && topData.items && topData.items[0] && topData.items[0].articles){
+    res.slice(1).forEach(function(topData){
+      if(!topData || !topData.items || !topData.items[0]) return;
       topData.items[0].articles.forEach(function(a){
-        topPagesMap[a.article] = a.views; // article usa guiones bajos
+        if(!topPagesMap[a.article] || a.views > topPagesMap[a.article]){
+          topPagesMap[a.article] = a.views;
+        }
       });
-    }
+    });
     renderData(res[0], month, day);
   })
   .catch(function(){ renderFallback(); });
 }
 
 function getScore(item){
-  if(!item.pages || !item.pages[0]) return 0;
-  var page = item.pages[0];
+  if(!item.pages || !item.pages.length) return 0;
 
-  // 1. Pageviews reales del mes anterior (fuente más precisa)
-  //    El título en la API de analytics usa guiones bajos
-  var normTitle = (page.title || '').replace(/ /g,'_');
-  if(normTitle && topPagesMap[normTitle]) return topPagesMap[normTitle] * 10;
+  // Revisar TODAS las páginas vinculadas al item (no solo la primera).
+  // Un evento como "fundación de la FIFA" puede tener pages[0] = artículo histórico
+  // menor y pages[1] = FIFA (millones de vistas). Tomamos el máximo.
+  var best = 0;
+  item.pages.forEach(function(page){
+    // 1. Pageviews reales de los últimos 3 meses (métrica más confiable de fama actual)
+    var normTitle = (page.title || '').replace(/ /g,'_');
+    var real = (normTitle && topPagesMap[normTitle]) ? topPagesMap[normTitle] : 0;
+    if(real > best) best = real;
 
-  // 2. Vistas cacheadas en la respuesta de onthisday (menos precisas pero disponibles)
-  if(page.views) return page.views;
+    // 2. Vistas cacheadas en la respuesta de onthisday (segundo nivel)
+    var cached = page.views || 0;
+    if(cached > best) best = cached;
+  });
 
-  // 3. Número Q de Wikidata como último recurso
-  //    Menor Q = entidad más fundamental/histórica (Einstein Q937, Jobs Q19837, anónimo Q50M+)
-  if(page.wikibase_item){
-    var q = parseInt(page.wikibase_item.replace('Q','')) || 0;
-    if(q > 0) return 1e9 / q;
-  }
-  return 0;
+  // SIN fallback de Q-number: figuras antiguas obscuras sin tráfico real
+  // quedan con score 0 y no entran en los 15 seleccionados.
+  // Las figuras antiguas FAMOSAS (Aristóteles, Beethoven, etc.) sí tienen
+  // millones de vistas en Wikipedia y aparecen por el criterio real.
+  return best;
 }
 
 function renderData(data, month, day){

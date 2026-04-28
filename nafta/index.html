@@ -149,7 +149,7 @@
 }
 </script>
 
-<link rel="icon" href="/favicon.svg" type="image/svg+xml"><rect x='8' y='8' width='54' height='74' rx='9'/><rect x='2' y='78' width='66' height='9' rx='4'/><rect x='16' y='17' width='38' height='27' rx='5' fill='white'/><path d='M62 28 L76 28 Q87 28 87 39 L87 63 Q87 73 76 73 L63 73' fill='none' stroke='%231A5FE8' stroke-width='12' stroke-linecap='round' stroke-linejoin='round'/><rect x='50' y='69' width='22' height='9' rx='4.5' transform='rotate(-12 61 73)'/></svg>">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Barlow+Condensed:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1096,7 +1096,7 @@
   header {
     background:#0A0E1A !important;
     color:#fff !important;
-    padding:36px 24px 28px !important;
+    padding:36px 24px 56px !important;
     text-align:center !important;
     position:relative !important;
     overflow:hidden !important;
@@ -1199,6 +1199,8 @@
     box-shadow:0 0 0 3px rgba(79,107,255,.12) !important;
     background:#fff !important;
   }
+  /* Peajes tiene un $ absoluto → conservar padding-left especial */
+  #input-peajes { padding-left:28px !important; }
   .select-wrapper::after { color:#4F6BFF !important; }
   label {
     font-family:'Inter',sans-serif !important;
@@ -1216,6 +1218,57 @@
   /* Botones principales */
   .btn-calc, .btn-primary, button[type="submit"] {
     font-family:'Inter',sans-serif !important;
+  }
+
+  /* Separación entre hero y primera card */
+  .container { margin-top:28px !important; }
+
+  /* Road slider — thumb y track visibles en ambos modos */
+  input[type="range"]::-webkit-slider-thumb {
+    background:#fff !important;
+    border-color:#4F6BFF !important;
+    box-shadow:0 1px 8px rgba(79,107,255,.35) !important;
+  }
+  input[type="range"]::-moz-range-thumb {
+    background:#fff !important;
+    border-color:#4F6BFF !important;
+  }
+  .road-slider-bg { background:#E4E7EE !important; }
+
+  /* Road slider en modo oscuro */
+  html[data-theme="dark"] .road-slider-bg { background:#2A3250 !important; }
+  html[data-theme="dark"] input[type="range"]::-webkit-slider-thumb {
+    background:#4F6BFF !important;
+    border-color:#6B85FF !important;
+    box-shadow:0 1px 10px rgba(79,107,255,.5) !important;
+  }
+  html[data-theme="dark"] input[type="range"]::-moz-range-thumb {
+    background:#4F6BFF !important;
+    border-color:#6B85FF !important;
+  }
+  /* Inputs y selects en modo oscuro para nafta */
+  html[data-theme="dark"] select,
+  html[data-theme="dark"] input[type="number"],
+  html[data-theme="dark"] input[type="text"] {
+    background:#0E1525 !important;
+    color:#E2E4F0 !important;
+    border-color:#1F2438 !important;
+  }
+  html[data-theme="dark"] select:focus,
+  html[data-theme="dark"] input[type="number"]:focus,
+  html[data-theme="dark"] input[type="text"]:focus {
+    border-color:#4F6BFF !important;
+    background:#141929 !important;
+  }
+  html[data-theme="dark"] .card {
+    background:#141929 !important;
+    border-color:#1F2438 !important;
+  }
+  html[data-theme="dark"] body { background:#0E1525 !important; }
+  /* Header sticky en dark mode → mismo tono que el resto del sitio */
+  html[data-theme="dark"] #site-header {
+    background:#0A0E1A !important;
+    border-bottom-color:#1F2438 !important;
   }
 </style>
 </head>

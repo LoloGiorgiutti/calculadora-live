@@ -447,23 +447,9 @@
   '#theme-toggle.on-dark:hover{background:rgba(255,255,255,.1);}',
 
   /* ── LIGHT MODE: CORRECCIÓN DE SECCIONES OSCURAS ─────────────────────────── */
-  /* Header siempre blanco en modo claro (homepage y categorías lo tenían oscuro) */
-  'html:not([data-theme="dark"]) header{background:#fff !important;border-bottom-color:#E4E7EE !important;}',
-  'html:not([data-theme="dark"]) .logo{color:#0A0E1A !important;}',
-  'html:not([data-theme="dark"]) .logo span{color:#4F6BFF !important;}',
-  'html:not([data-theme="dark"]) .header-nav a{color:rgba(10,14,26,.6) !important;}',
-  'html:not([data-theme="dark"]) .header-nav a:hover{background:rgba(79,107,255,.08) !important;color:#4F6BFF !important;}',
-  'html:not([data-theme="dark"]) .search-pill{background:#F7F8FA !important;border-color:#E4E7EE !important;color:rgba(10,14,26,.5) !important;}',
-  'html:not([data-theme="dark"]) .search-pill kbd{color:rgba(10,14,26,.35) !important;border-color:#D4D8E6 !important;background:rgba(0,0,0,.03) !important;}',
-  /* Ícono de búsqueda: era blanco (dark header) → invertir para dark-on-white */
-  'html:not([data-theme="dark"]) .search-pill::before{filter:invert(1);opacity:.4 !important;}',
-  /* Hamburger: barras oscuras en modo claro */
-  'html:not([data-theme="dark"]) #nav-toggle .nb{background:#0A0E1A !important;}',
-  'html:not([data-theme="dark"]) #nav-toggle:hover{background:rgba(0,0,0,.06) !important;}',
-  /* Toggle icon en headers que antes eran oscuros → modo claro = ícono oscuro */
-  'html:not([data-theme="dark"]) #theme-toggle.on-dark{color:#0A0E1A !important;}',
-  'html:not([data-theme="dark"]) #theme-toggle.on-dark:hover{background:rgba(0,0,0,.06) !important;}',
-  /* Hero sections: gradiente accent en modo claro en vez de negro puro */
+  /* Los headers sticky se quedan oscuros en modo claro (patrón común, OK).    */
+  /* Solo cambiamos los hero sections y el panel de resultados embebido.       */
+  /* Hero homepage y categorías → gradiente accent en vez de negro puro        */
   'html:not([data-theme="dark"]) .hero-wrap{background:linear-gradient(135deg,#3B52F5 0%,#6540EF 100%) !important;}',
   'html:not([data-theme="dark"]) .cat-hero{background:linear-gradient(135deg,#3B52F5 0%,#6540EF 100%) !important;}',
   /* Resultado de calculadora embebida en homepage */

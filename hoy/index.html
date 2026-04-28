@@ -96,6 +96,7 @@ var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','
 
 var hoy = new Date();
 var curDate = hoy;
+var topPagesMap = {}; // {Article_Title: monthly_views} — cargado al iniciar
 
 function formatHeroDate(d){
   return DIAS[d.getDay()].toUpperCase() + ' · ' + d.getDate() + ' DE ' + MESES[d.getMonth()].toUpperCase();
@@ -114,31 +115,56 @@ function cargar(){
   setHeroDate(curDate);
 
   var month = pad2(curDate.getMonth()+1);
-  var day = pad2(curDate.getDate());
+  var day   = pad2(curDate.getDate());
 
   var content = document.getElementById('main-content');
   content.innerHTML = '<div class="loading"><div class="spinner"></div><p>Cargando eventos históricos…</p></div>';
 
-  // Usamos la API de Wikipedia en inglés porque:
-  // 1. Tiene cobertura histórica completa (la versión en español está incompleta)
-  // 2. Incluye datos reales de vistas por artículo, que usamos para ordenar por relevancia
-  var url = 'https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/' + month + '/' + day;
+  // Llamada 1: Wikipedia EN — cobertura histórica completa + páginas con ID de Wikidata
+  var onUrl = 'https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/' + month + '/' + day;
 
-  fetch(url)
-    .then(function(r){ return r.json(); })
-    .then(function(data){ renderData(data, month, day); })
-    .catch(function(){ renderFallback(); });
+  // Llamada 2: Wikimedia Analytics — top 1000 artículos del mes anterior por vistas reales.
+  // Esto nos da la métrica de fama más precisa disponible (pageviews mensuales reales,
+  // no snapshots cacheados). Neymar, Steve Jobs, Dahmer → todos están en el top 1000.
+  var now = new Date();
+  var prev = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  var topUrl = 'https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia.org/all-access/'
+    + prev.getFullYear() + '/' + pad2(prev.getMonth() + 1) + '/all-days';
+
+  Promise.all([
+    fetch(onUrl).then(function(r){ return r.json(); }),
+    fetch(topUrl).then(function(r){ return r.json(); }).catch(function(){ return null; })
+  ])
+  .then(function(res){
+    // Construir mapa de vistas reales: {Article_Title: views_last_month}
+    topPagesMap = {};
+    var topData = res[1];
+    if(topData && topData.items && topData.items[0] && topData.items[0].articles){
+      topData.items[0].articles.forEach(function(a){
+        topPagesMap[a.article] = a.views; // article usa guiones bajos
+      });
+    }
+    renderData(res[0], month, day);
+  })
+  .catch(function(){ renderFallback(); });
 }
 
 function getScore(item){
-  // Vistas reales del artículo de Wikipedia (principal métrica de fama)
-  var views = (item.pages && item.pages[0] && item.pages[0].views) ? item.pages[0].views : 0;
-  if(views > 0) return views;
+  if(!item.pages || !item.pages[0]) return 0;
+  var page = item.pages[0];
 
-  // Fallback: número Q de Wikidata — menor número = entidad más fundamental/histórica
-  // (Einstein = Q937, Newton = Q935, Steve Jobs = Q19837, desconocido reciente = Q50M+)
-  if(item.pages && item.pages[0] && item.pages[0].wikibase_item){
-    var q = parseInt(item.pages[0].wikibase_item.replace('Q','')) || 0;
+  // 1. Pageviews reales del mes anterior (fuente más precisa)
+  //    El título en la API de analytics usa guiones bajos
+  var normTitle = (page.title || '').replace(/ /g,'_');
+  if(normTitle && topPagesMap[normTitle]) return topPagesMap[normTitle] * 10;
+
+  // 2. Vistas cacheadas en la respuesta de onthisday (menos precisas pero disponibles)
+  if(page.views) return page.views;
+
+  // 3. Número Q de Wikidata como último recurso
+  //    Menor Q = entidad más fundamental/histórica (Einstein Q937, Jobs Q19837, anónimo Q50M+)
+  if(page.wikibase_item){
+    var q = parseInt(page.wikibase_item.replace('Q','')) || 0;
     if(q > 0) return 1e9 / q;
   }
   return 0;

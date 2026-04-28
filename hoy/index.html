@@ -162,12 +162,13 @@ function renderData(data, month, day){
     if(!items || items.length === 0) return;
     anyContent = true;
 
-    // Ordenar por relevancia histórica (vistas de Wikipedia + Q number de Wikidata)
-    // garantiza los más famosos de la historia, no los más recientes.
+    // 1) Ordenar por relevancia para elegir los 15 más importantes
     var sortable = items.slice();
     sortable.sort(function(a, b){ return getScore(b) - getScore(a); });
-
     var shown = sortable.slice(0, 15);
+
+    // 2) Reordenar esos 15 por año ascendente (más antiguo primero)
+    shown.sort(function(a, b){ return (a.year || 0) - (b.year || 0); });
 
     var html = '<div class="section">';
     html += '<div class="section-header">';

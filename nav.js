@@ -450,10 +450,10 @@
   /* Los headers sticky se quedan oscuros en modo claro (patrón común, OK).    */
   /* Solo cambiamos los hero sections y el panel de resultados embebido.       */
   /* Hero homepage y categorías → gradiente accent en vez de negro puro        */
-  'html:not([data-theme="dark"]) .hero-wrap{background:linear-gradient(135deg,#3B52F5 0%,#6540EF 100%) !important;}',
-  'html:not([data-theme="dark"]) .cat-hero{background:linear-gradient(135deg,#3B52F5 0%,#6540EF 100%) !important;}',
+  'html:not([data-theme="dark"]) .hero-wrap{background:linear-gradient(135deg,#1A3FF0 0%,#4F6BFF 100%) !important;}',
+  'html:not([data-theme="dark"]) .cat-hero{background:linear-gradient(135deg,#1A3FF0 0%,#4F6BFF 100%) !important;}',
   /* Resultado de calculadora embebida en homepage */
-  'html:not([data-theme="dark"]) .calc-result{background:linear-gradient(135deg,#3B52F5 0%,#6540EF 100%) !important;}',
+  'html:not([data-theme="dark"]) .calc-result{background:linear-gradient(135deg,#1A3FF0 0%,#4F6BFF 100%) !important;}',
 
   /* ── DARK MODE ────────────────────────────────────────────────────────────── */
   /* Transición suave al cambiar tema */
@@ -480,7 +480,11 @@
   'html[data-theme="dark"] #site-header a{color:rgba(255,255,255,.75) !important;}',
   'html[data-theme="dark"] #site-header a span{color:#4F6BFF !important;}',
   'html[data-theme="dark"] .logo{color:#E2E4F0 !important;}',
+  /* Logo genérico: un solo <span> con ".live" → azul accent */
   'html[data-theme="dark"] .logo span{color:#4F6BFF !important;}',
+  /* Homepage usa .name y .dot — .name debe quedar blanco, no azul */
+  'html[data-theme="dark"] .logo .name{color:#fff !important;}',
+  'html[data-theme="dark"] .logo .dot{color:#4F6BFF !important;}',
 
   /* Theme toggle en modo oscuro → siempre claro */
   'html[data-theme="dark"] #theme-toggle{color:rgba(255,255,255,.75);}',

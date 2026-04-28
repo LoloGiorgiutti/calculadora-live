@@ -591,8 +591,9 @@
   themeBtn.id = 'theme-toggle';
   themeBtn.setAttribute('aria-label', 'Cambiar tema');
 
-  // Páginas con header oscuro: homepage y categorías tienen .header-inner
-  var hasDarkHeader = !!document.querySelector('.header-inner');
+  // Páginas con header oscuro: homepage/categorías tienen .header-inner,
+  // nafta usa #site-header con fondo oscuro.
+  var hasDarkHeader = !!document.querySelector('.header-inner') || !!document.querySelector('#site-header');
   if (hasDarkHeader) themeBtn.classList.add('on-dark');
 
   function applyTheme(theme, save) {

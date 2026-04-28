@@ -1236,6 +1236,8 @@
   .road-slider-bg { background:#E4E7EE !important; }
 
   /* Road slider en modo oscuro */
+  /* Forzar transparente en el input range para que no aparezca el rectángulo del browser */
+  html[data-theme="dark"] input[type="range"] { background:transparent !important; border:none !important; outline:none !important; }
   html[data-theme="dark"] .road-slider-bg { background:#2A3250 !important; }
   html[data-theme="dark"] input[type="range"]::-webkit-slider-thumb {
     background:#141929 !important;

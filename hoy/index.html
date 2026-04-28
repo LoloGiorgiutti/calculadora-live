@@ -146,8 +146,17 @@ function renderData(data, month, day){
     if(!items || items.length === 0) return;
     anyContent = true;
 
-    // Limitar a 15 items por sección para no sobrecargar
-    var shown = items.slice(0, 15);
+    // Ordenar por vistas de Wikipedia (proxy de fama/relevancia) antes de recortar.
+    // Para nacimientos y fallecimientos esto garantiza los más famosos de la historia,
+    // no los más recientes. Para eventos también prioriza los más relevantes.
+    var sortable = items.slice(); // copia para no mutar el original
+    sortable.sort(function(a, b){
+      var va = (a.pages && a.pages[0] && a.pages[0].views) ? a.pages[0].views : 0;
+      var vb = (b.pages && b.pages[0] && b.pages[0].views) ? b.pages[0].views : 0;
+      return vb - va; // descendente: más vistas primero
+    });
+
+    var shown = sortable.slice(0, 15);
 
     var html = '<div class="section">';
     html += '<div class="section-header">';

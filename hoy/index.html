@@ -119,13 +119,29 @@ function cargar(){
   var content = document.getElementById('main-content');
   content.innerHTML = '<div class="loading"><div class="spinner"></div><p>Cargando eventos históricos…</p></div>';
 
-  // Wikipedia "On This Day" API — edición en español
-  var url = 'https://es.wikipedia.org/api/rest_v1/feed/onthisday/all/' + month + '/' + day;
+  // Usamos la API de Wikipedia en inglés porque:
+  // 1. Tiene cobertura histórica completa (la versión en español está incompleta)
+  // 2. Incluye datos reales de vistas por artículo, que usamos para ordenar por relevancia
+  var url = 'https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/' + month + '/' + day;
 
   fetch(url)
     .then(function(r){ return r.json(); })
     .then(function(data){ renderData(data, month, day); })
     .catch(function(){ renderFallback(); });
+}
+
+function getScore(item){
+  // Vistas reales del artículo de Wikipedia (principal métrica de fama)
+  var views = (item.pages && item.pages[0] && item.pages[0].views) ? item.pages[0].views : 0;
+  if(views > 0) return views;
+
+  // Fallback: número Q de Wikidata — menor número = entidad más fundamental/histórica
+  // (Einstein = Q937, Newton = Q935, Steve Jobs = Q19837, desconocido reciente = Q50M+)
+  if(item.pages && item.pages[0] && item.pages[0].wikibase_item){
+    var q = parseInt(item.pages[0].wikibase_item.replace('Q','')) || 0;
+    if(q > 0) return 1e9 / q;
+  }
+  return 0;
 }
 
 function renderData(data, month, day){
@@ -146,15 +162,10 @@ function renderData(data, month, day){
     if(!items || items.length === 0) return;
     anyContent = true;
 
-    // Ordenar por vistas de Wikipedia (proxy de fama/relevancia) antes de recortar.
-    // Para nacimientos y fallecimientos esto garantiza los más famosos de la historia,
-    // no los más recientes. Para eventos también prioriza los más relevantes.
-    var sortable = items.slice(); // copia para no mutar el original
-    sortable.sort(function(a, b){
-      var va = (a.pages && a.pages[0] && a.pages[0].views) ? a.pages[0].views : 0;
-      var vb = (b.pages && b.pages[0] && b.pages[0].views) ? b.pages[0].views : 0;
-      return vb - va; // descendente: más vistas primero
-    });
+    // Ordenar por relevancia histórica (vistas de Wikipedia + Q number de Wikidata)
+    // garantiza los más famosos de la historia, no los más recientes.
+    var sortable = items.slice();
+    sortable.sort(function(a, b){ return getScore(b) - getScore(a); });
 
     var shown = sortable.slice(0, 15);
 
@@ -168,7 +179,6 @@ function renderData(data, month, day){
     shown.forEach(function(item){
       var year = item.year ? item.year : '';
       var text = item.text || '';
-      // Limpiar referencias wiki entre paréntesis muy largas
       text = text.replace(/\s*\([^)]{80,}\)/g,'');
 
       var link = '';

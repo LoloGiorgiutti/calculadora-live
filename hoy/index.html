@@ -194,13 +194,24 @@ function renderData(data, month, day){
     if(!items || items.length === 0) return;
     anyContent = true;
 
-    // 1) Ordenar por relevancia para elegir los 15 más importantes
-    var sortable = items.slice();
-    sortable.sort(function(a, b){ return getScore(b) - getScore(a); });
-    var shown = sortable.slice(0, 15);
+    var shown;
 
-    // 2) Reordenar esos 15 por año ascendente (más antiguo primero)
-    shown.sort(function(a, b){ return (a.year || 0) - (b.year || 0); });
+    if(sec.key === 'births' || sec.key === 'deaths'){
+      // PERSONAS: filtrar por fama real (pageviews) → top 15 → ordenar por año.
+      // Las vistas del artículo de una persona reflejan directamente su fama.
+      var sortable = items.slice();
+      sortable.sort(function(a, b){ return getScore(b) - getScore(a); });
+      shown = sortable.slice(0, 15);
+      shown.sort(function(a, b){ return (a.year || 0) - (b.year || 0); });
+
+    } else {
+      // EVENTOS Y FESTIVIDADES: mostrar todos en orden cronológico, sin filtro de fama.
+      // Los eventos ya están curados por Wikipedia; el artículo vinculado puede ser
+      // una página gigante genérica (ej: "United States") que distorsionaría el score.
+      // Mostramos todos para que no se pierda nada relevante (fundación FIFA, etc.).
+      shown = items.slice();
+      shown.sort(function(a, b){ return (a.year || 0) - (b.year || 0); });
+    }
 
     var html = '<div class="section">';
     html += '<div class="section-header">';

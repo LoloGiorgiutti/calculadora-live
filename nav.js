@@ -446,14 +446,55 @@
   '#theme-toggle.on-dark{color:rgba(255,255,255,.75);}',
   '#theme-toggle.on-dark:hover{background:rgba(255,255,255,.1);}',
 
-  /* ── LIGHT MODE: CORRECCIÓN DE SECCIONES OSCURAS ─────────────────────────── */
-  /* Los headers sticky se quedan oscuros en modo claro (patrón común, OK).    */
-  /* Solo cambiamos los hero sections y el panel de resultados embebido.       */
-  /* Hero homepage y categorías → gradiente accent en vez de negro puro        */
-  'html:not([data-theme="dark"]) .hero-wrap{background:linear-gradient(135deg,#1A3FF0 0%,#4F6BFF 100%) !important;}',
-  'html:not([data-theme="dark"]) .cat-hero{background:linear-gradient(135deg,#1A3FF0 0%,#4F6BFF 100%) !important;}',
-  /* Resultado de calculadora embebida en homepage */
-  'html:not([data-theme="dark"]) .calc-result{background:linear-gradient(135deg,#1A3FF0 0%,#4F6BFF 100%) !important;}',
+  /* ── LIGHT MODE: HERO SECTIONS ───────────────────────────────────────────── */
+  /* En modo claro, todos los hero/banner (que por defecto son negros)         */
+  /* se vuelven claros: fondo lavanda muy suave, textos oscuros.               */
+  /* Espejo del modo oscuro: oscuro con toque violeta ↔ claro con toque violeta */
+  'html:not([data-theme="dark"]) .hero,',
+  'html:not([data-theme="dark"]) .hero-wrap,',
+  'html:not([data-theme="dark"]) .cat-hero,',
+  'html:not([data-theme="dark"]) .calc-result{',
+  'background:linear-gradient(135deg,#F5F7FF 0%,#EDF0FF 100%) !important;',
+  'color:#0A0E1A !important;}',
+
+  /* h1 dentro del hero: era blanco, ahora oscuro */
+  'html:not([data-theme="dark"]) .hero h1,',
+  'html:not([data-theme="dark"]) .hero-wrap h1,',
+  'html:not([data-theme="dark"]) .cat-hero h1{color:#0A0E1A !important;}',
+
+  /* Subtítulo del hero */
+  'html:not([data-theme="dark"]) .hero .hero-sub,',
+  'html:not([data-theme="dark"]) .hero-wrap .hero-sub,',
+  'html:not([data-theme="dark"]) .cat-hero .hero-sub{color:#5A607A !important;}',
+
+  /* Breadcrumb: era rgba(255,255,255,.4), ahora gris oscuro suave */
+  'html:not([data-theme="dark"]) .hero .breadcrumb,',
+  'html:not([data-theme="dark"]) .hero-wrap .breadcrumb,',
+  'html:not([data-theme="dark"]) .cat-hero .breadcrumb{color:rgba(10,14,26,.45) !important;}',
+  'html:not([data-theme="dark"]) .hero .breadcrumb a,',
+  'html:not([data-theme="dark"]) .hero-wrap .breadcrumb a,',
+  'html:not([data-theme="dark"]) .cat-hero .breadcrumb a{color:rgba(10,14,26,.45) !important;}',
+  'html:not([data-theme="dark"]) .hero .breadcrumb a:hover,',
+  'html:not([data-theme="dark"]) .hero-wrap .breadcrumb a:hover,',
+  'html:not([data-theme="dark"]) .cat-hero .breadcrumb a:hover{color:#0A0E1A !important;}',
+
+  /* hero-date y textos accent dentro del hero se quedan azules (ya están bien) */
+
+  /* Elementos específicos del hero homepage (escritos con colores blancos explícitos) */
+  'html:not([data-theme="dark"]) .hero h1 .acc{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .hero h1 .muted{background:linear-gradient(135deg,rgba(10,14,26,.7) 0%,rgba(79,107,255,.5) 100%) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;}',
+  'html:not([data-theme="dark"]) .hero-lead{color:#363B4F !important;}',
+  'html:not([data-theme="dark"]) .hero-eyebrow{background:rgba(79,107,255,.08) !important;border-color:rgba(79,107,255,.2) !important;color:#363B4F !important;}',
+  'html:not([data-theme="dark"]) .btn-ghost{color:#363B4F !important;}',
+  'html:not([data-theme="dark"]) .btn-ghost:hover{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .hero-card{background:rgba(255,255,255,.7) !important;border-color:rgba(79,107,255,.15) !important;}',
+  'html:not([data-theme="dark"]) .hc-lbl{color:rgba(10,14,26,.45) !important;}',
+
+  /* Elementos de páginas de categorías (cat-hero) con colores blancos explícitos */
+  'html:not([data-theme="dark"]) .cat-hero h1{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .cat-hero-desc{color:#363B4F !important;}',
+  'html:not([data-theme="dark"]) .cat-stat-n{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .cat-stat-lbl{color:rgba(10,14,26,.45) !important;}',
 
   /* ── DARK MODE ────────────────────────────────────────────────────────────── */
   /* Transición suave al cambiar tema */

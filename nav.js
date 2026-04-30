@@ -452,9 +452,12 @@
   /* Espejo del modo oscuro: oscuro con toque violeta ↔ claro con toque violeta */
   'html:not([data-theme="dark"]) .hero,',
   'html:not([data-theme="dark"]) .hero-wrap,',
-  'html:not([data-theme="dark"]) .cat-hero,',
+  'html:not([data-theme="dark"]) .cat-hero{',
+  'background:linear-gradient(to bottom,#E8EEFF 0%,#F7F8FA 100%) !important;',
+  'color:#0A0E1A !important;}',
+  /* calc-result: gradiente lateral sutil (es un panel lateral, no vertical) */
   'html:not([data-theme="dark"]) .calc-result{',
-  'background:linear-gradient(135deg,#F5F7FF 0%,#EDF0FF 100%) !important;',
+  'background:linear-gradient(135deg,#EEF1FF 0%,#F7F8FA 100%) !important;',
   'color:#0A0E1A !important;}',
 
   /* h1 dentro del hero: era blanco, ahora oscuro */

@@ -480,6 +480,22 @@
 
   /* hero-date y textos accent dentro del hero se quedan azules (ya están bien) */
 
+  /* Cat-chips dentro del hero-card (fondo/borde/texto eran blancos sobre oscuro) */
+  'html:not([data-theme="dark"]) .cat-chip{background:rgba(79,107,255,.06) !important;border-color:rgba(79,107,255,.15) !important;}',
+  'html:not([data-theme="dark"]) .cat-chip:hover{background:rgba(79,107,255,.12) !important;border-color:rgba(79,107,255,.35) !important;}',
+  'html:not([data-theme="dark"]) .cat-chip-name{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .cat-chip-n{color:rgba(10,14,26,.45) !important;}',
+
+  /* Result cards de calculadoras viejas (background:#0C1528 o similar hardcodeado) */
+  'html:not([data-theme="dark"]) .result-card{background:linear-gradient(135deg,#F0F4FF 0%,#E8EEFF 100%) !important;border-color:rgba(79,107,255,.2) !important;}',
+  'html:not([data-theme="dark"]) .result-eyebrow{color:rgba(10,14,26,.45) !important;}',
+  'html:not([data-theme="dark"]) .result-main{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .result-sub{color:#363B4F !important;}',
+  'html:not([data-theme="dark"]) .empty-state{color:rgba(10,14,26,.3) !important;}',
+  'html:not([data-theme="dark"]) .result-rows{border-top-color:rgba(79,107,255,.15) !important;}',
+  'html:not([data-theme="dark"]) .result-row-lbl{color:rgba(10,14,26,.5) !important;}',
+  'html:not([data-theme="dark"]) .result-row-val{color:#0A0E1A !important;}',
+
   /* Elementos específicos del hero homepage (escritos con colores blancos explícitos) */
   'html:not([data-theme="dark"]) .hero h1 .acc{color:#0A0E1A !important;}',
   'html:not([data-theme="dark"]) .hero h1 .muted{background:linear-gradient(135deg,rgba(10,14,26,.7) 0%,rgba(79,107,255,.5) 100%) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;}',

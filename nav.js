@@ -480,6 +480,17 @@
 
   /* hero-date y textos accent dentro del hero se quedan azules (ya están bien) */
 
+  /* Contenido del calc-result embebido en homepage (porcentaje preview) */
+  'html:not([data-theme="dark"]) .res-lbl{color:rgba(10,14,26,.45) !important;}',
+  'html:not([data-theme="dark"]) .res-eyebrow{color:rgba(10,14,26,.5) !important;}',
+  /* res-big: de gradiente blanco → gradiente accent azul/violeta */
+  'html:not([data-theme="dark"]) .res-big{background:linear-gradient(135deg,#4F6BFF 20%,#7C5CFF 100%) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;}',
+  'html:not([data-theme="dark"]) .res-detail{color:rgba(10,14,26,.55) !important;}',
+  'html:not([data-theme="dark"]) .res-detail strong{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .res-breakdown{border-top-color:rgba(79,107,255,.15) !important;}',
+  'html:not([data-theme="dark"]) .br-row{color:rgba(10,14,26,.6) !important;border-top-color:rgba(79,107,255,.12) !important;}',
+  'html:not([data-theme="dark"]) .br-row b{color:#0A0E1A !important;}',
+
   /* Cat-chips dentro del hero-card (fondo/borde/texto eran blancos sobre oscuro) */
   'html:not([data-theme="dark"]) .cat-chip{background:rgba(79,107,255,.06) !important;border-color:rgba(79,107,255,.15) !important;}',
   'html:not([data-theme="dark"]) .cat-chip:hover{background:rgba(79,107,255,.12) !important;border-color:rgba(79,107,255,.35) !important;}',

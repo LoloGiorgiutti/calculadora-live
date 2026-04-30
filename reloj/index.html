@@ -36,8 +36,7 @@ h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-
 .clock-card::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(79,107,255,.15) 0%,transparent 60%);pointer-events:none}
 
 .time-display{font-family:'JetBrains Mono',monospace;font-size:clamp(56px,12vw,96px);font-weight:700;color:#fff;letter-spacing:-0.04em;line-height:1;margin-bottom:16px;position:relative;z-index:1}
-.time-display .sep{color:var(--accent);animation:blink 1s step-end infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.time-display .sep{color:var(--accent)}
 .time-seconds{font-family:'JetBrains Mono',monospace;font-size:clamp(28px,5vw,48px);color:rgba(255,255,255,.4);font-weight:600;letter-spacing:-.03em}
 
 .date-display{font-size:clamp(16px,3vw,22px);color:rgba(255,255,255,.8);font-weight:500;letter-spacing:-.01em;margin-bottom:10px;position:relative;z-index:1}

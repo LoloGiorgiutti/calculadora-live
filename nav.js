@@ -483,6 +483,28 @@
 
   /* hero-date y textos accent dentro del hero se quedan azules (ya están bien) */
 
+  /* Normalizar body background en páginas viejas (usaban --bg:#F0F2F7 grisázul) */
+  'html:not([data-theme="dark"]) body{background:#F7F8FA !important;}',
+
+  /* Nafta hero (usa <header class="nf-hero"> con background:#0A0E1A hardcodeado) */
+  'html:not([data-theme="dark"]) .nf-hero{background:transparent !important;color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .nf-hero h1{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .nf-hero .subtitle{color:#363B4F !important;}',
+  'html:not([data-theme="dark"]) .nf-hero .nf-breadcrumb,html:not([data-theme="dark"]) .nf-hero .nf-breadcrumb a{color:rgba(10,14,26,.45) !important;}',
+  'html:not([data-theme="dark"]) .nf-hero .logo-text{color:#4F6BFF !important;}',
+  'html:not([data-theme="dark"]) .nf-hero .logo-dot{background:#4F6BFF !important;}',
+
+  /* Reloj: clock-card oscura → claro */
+  'html:not([data-theme="dark"]) .clock-card{background:linear-gradient(135deg,#EEF1FF 0%,#F5F7FF 100%) !important;}',
+  'html:not([data-theme="dark"]) .time-display{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .time-seconds{color:rgba(10,14,26,.35) !important;}',
+  'html:not([data-theme="dark"]) .date-display{color:rgba(10,14,26,.75) !important;}',
+  'html:not([data-theme="dark"]) .tz-display{color:rgba(10,14,26,.35) !important;}',
+  'html:not([data-theme="dark"]) .btn-fs{background:rgba(79,107,255,.08) !important;border-color:rgba(79,107,255,.2) !important;color:rgba(10,14,26,.6) !important;}',
+
+  /* Conversión: cat-chip.active no debe ser pisado por la regla base */
+  'html:not([data-theme="dark"]) .cat-chip.active{background:#4F6BFF !important;border-color:#4F6BFF !important;color:#fff !important;}',
+
   /* Contenido del calc-result embebido en homepage (porcentaje preview) */
   'html:not([data-theme="dark"]) .res-lbl{color:rgba(10,14,26,.45) !important;}',
   'html:not([data-theme="dark"]) .res-eyebrow{color:rgba(10,14,26,.5) !important;}',

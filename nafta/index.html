@@ -1081,16 +1081,29 @@
 
   /* Site-header → H-contrast dark */
   #site-header {
-    background:#0A0E1A !important;
-    border-bottom:1px solid #1F2438 !important;
     height:58px !important;
     padding:0 20px !important;
   }
+  /* Modo claro: header blanco con texto oscuro */
+  html:not([data-theme="dark"]) #site-header {
+    background:#FFFFFF !important;
+    border-bottom:1px solid #E4E7EE !important;
+  }
+  html:not([data-theme="dark"]) #site-header a:first-child { color:#0A0E1A !important; }
+  /* Modo oscuro: header oscuro con texto claro */
+  html[data-theme="dark"] #site-header {
+    background:#0A0E1A !important;
+    border-bottom:1px solid #1F2438 !important;
+  }
+  html[data-theme="dark"] #site-header a:first-child { color:#E2E4F0 !important; }
   #site-header a { font-family:'Inter',sans-serif !important; text-decoration:none !important; }
-  #site-header a:first-child { font-size:16px !important; font-weight:700 !important; letter-spacing:-0.03em !important; color:#E2E4F0 !important; }
+  #site-header a:first-child { font-size:16px !important; font-weight:700 !important; letter-spacing:-0.03em !important; }
   #site-header a:first-child span { color:#4F6BFF !important; }
-  #site-header a:last-child { font-size:13px !important; color:rgba(255,255,255,.5) !important; transition:color .15s; }
-  #site-header a:last-child:hover { color:rgba(255,255,255,.8) !important; }
+  /* Botones del header (hamburguesa + toggle tema) en modo claro */
+  html:not([data-theme="dark"]) #site-header #theme-toggle { color:rgba(10,14,26,.6) !important; }
+  html:not([data-theme="dark"]) #site-header #theme-toggle:hover { background:rgba(10,14,26,.06) !important; }
+  html:not([data-theme="dark"]) #site-header #nav-toggle .nb { background:#0A0E1A !important; }
+  html:not([data-theme="dark"]) #site-header #nav-toggle:hover { background:rgba(10,14,26,.06) !important; }
 
   /* Hero (la <header> que tiene el h1 grande) → H-contrast dark */
   header {
@@ -1331,8 +1344,8 @@
 </head>
 <body>
 
-<div id="site-header" style="background:#0A0E1A;border-bottom:1px solid #1F2438;padding:0 20px;height:58px;display:flex;align-items:center;position:sticky;top:0;z-index:200">
-  <a href="/" style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#E2E4F0;text-decoration:none;letter-spacing:-0.03em">Calculadora<span style="color:#4F6BFF">.live</span></a>
+<div id="site-header" style="padding:0 20px;height:58px;display:flex;align-items:center;position:sticky;top:0;z-index:200">
+  <a href="/" style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;text-decoration:none;letter-spacing:-0.03em">Calculadora<span style="color:#4F6BFF">.live</span></a>
 </div>
 <header class="nf-hero">
   <div class="nf-breadcrumb"><a href="/">Inicio</a> / <a href="/autos/">Autos</a> / Calculadora de Nafta</div>

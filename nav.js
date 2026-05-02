@@ -532,6 +532,20 @@
   'html:not([data-theme="dark"]) .result-row-lbl{color:rgba(10,14,26,.5) !important;}',
   'html:not([data-theme="dark"]) .result-row-val{color:#0A0E1A !important;}',
 
+  /* Nafta: result-card tiene texto blanco hardcodeado → oscurecer en modo claro */
+  'html:not([data-theme="dark"]) .result-amount{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .result-currency{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .result-detail-val{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .result-detail-lbl{color:rgba(10,14,26,.5) !important;}',
+  'html:not([data-theme="dark"]) .result-empty{color:rgba(10,14,26,.4) !important;}',
+  /* Tank indicator: inline styles rgba(255,255,255,...) → override con !important */
+  'html:not([data-theme="dark"]) #tank-indicator{border-top-color:rgba(10,14,26,.1) !important;}',
+  'html:not([data-theme="dark"]) #tank-indicator span{color:rgba(10,14,26,.6) !important;}',
+  'html:not([data-theme="dark"]) #tank-sub{color:rgba(10,14,26,.45) !important;}',
+  'html:not([data-theme="dark"]) #tank-indicator>div:nth-child(2){background:rgba(10,14,26,.08) !important;}',
+  /* Peajes breakdown: inline styles rgba(255,255,255,...) → override */
+  'html:not([data-theme="dark"]) #peajes-breakdown>div{color:rgba(10,14,26,.55) !important;border-top-color:rgba(10,14,26,.1) !important;}',
+
   /* Elementos específicos del hero homepage (escritos con colores blancos explícitos) */
   'html:not([data-theme="dark"]) .hero h1 .acc{color:#0A0E1A !important;}',
   'html:not([data-theme="dark"]) .hero h1 .muted{background:linear-gradient(135deg,rgba(10,14,26,.7) 0%,rgba(79,107,255,.5) 100%) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;}',
@@ -658,7 +672,14 @@
   'html[data-theme="dark"] .calc-h2{color:#E2E4F0 !important;}',
   'html[data-theme="dark"] .calc-sub{color:#9BA0B8 !important;}',
   'html[data-theme="dark"] .mode-tab{background:#0E1525 !important;border-color:#1F2438 !important;color:#9BA0B8 !important;}',
-  'html[data-theme="dark"] .field input{background:#0E1525 !important;color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .field input:not([type="range"]){background:#0E1525 !important;color:#E2E4F0 !important;}',
+
+  /* Nafta: road slider en modo oscuro — labels, porcentajes y track legibles */
+  'html[data-theme="dark"] .road-slider-bg{background:rgba(79,107,255,.3) !important;}',
+  'html[data-theme="dark"] .road-label{color:rgba(226,228,240,.45) !important;}',
+  'html[data-theme="dark"] .road-label.active-lbl{color:#4F6BFF !important;}',
+  'html[data-theme="dark"] .road-pct{color:rgba(226,228,240,.4) !important;}',
+  'html[data-theme="dark"] .road-pct.dominant{color:#E2E4F0 !important;}',
   ].join('');
 
   var st = document.createElement('style');

@@ -1238,17 +1238,21 @@
   /* Road slider en modo oscuro */
   /* Forzar transparente en el input range para que no aparezca el rectángulo del browser */
   html[data-theme="dark"] input[type="range"] { background:transparent !important; border:none !important; outline:none !important; }
-  html[data-theme="dark"] .road-slider-bg { background:#2A3250 !important; }
+  html[data-theme="dark"] .road-slider-bg { background:rgba(79,107,255,.3) !important; }
   html[data-theme="dark"] input[type="range"]::-webkit-slider-thumb {
     background:#141929 !important;
     border-color:#4F6BFF !important;
     border-width:2px !important;
-    box-shadow:0 1px 8px rgba(79,107,255,.3) !important;
+    box-shadow:0 1px 8px rgba(79,107,255,.4) !important;
   }
   html[data-theme="dark"] input[type="range"]::-moz-range-thumb {
     background:#141929 !important;
     border-color:#4F6BFF !important;
   }
+  html[data-theme="dark"] .road-label { color:rgba(226,228,240,.45) !important; }
+  html[data-theme="dark"] .road-label.active-lbl { color:#4F6BFF !important; }
+  html[data-theme="dark"] .road-pct { color:rgba(226,228,240,.4) !important; }
+  html[data-theme="dark"] .road-pct.dominant { color:#E2E4F0 !important; }
   /* Inputs y selects en modo oscuro para nafta */
   html[data-theme="dark"] select,
   html[data-theme="dark"] input[type="number"],
@@ -1273,6 +1277,56 @@
     background:#0A0E1A !important;
     border-bottom-color:#1F2438 !important;
   }
+
+  /* ── ROAD SLIDER: forzar transparencia con selector ID (máxima especificidad) ── */
+  #slider-road,
+  html[data-theme="dark"] #slider-road {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+  }
+
+  /* ── ROAD SLIDER: track visible en dark mode ── */
+  html[data-theme="dark"] .road-slider-bg { background:rgba(255,255,255,.22) !important; }
+  html[data-theme="dark"] input[type="range"]::-webkit-slider-runnable-track {
+    height:3px !important;
+    background:rgba(255,255,255,.22) !important;
+    border-radius:99px !important;
+  }
+  html[data-theme="dark"] input[type="range"]::-moz-range-track {
+    height:3px !important;
+    background:rgba(255,255,255,.22) !important;
+    border-radius:99px !important;
+  }
+
+  /* ── RESULT CARD: texto legible en modo claro ── */
+  html:not([data-theme="dark"]) .result-card {
+    background:linear-gradient(135deg,#EEF1FF 0%,#E8EEFF 100%) !important;
+    border-top-color:#4F6BFF !important;
+  }
+  html:not([data-theme="dark"]) .result-eyebrow { color:rgba(10,14,26,.45) !important; }
+  html:not([data-theme="dark"]) .result-amount { color:#0A0E1A !important; }
+  html:not([data-theme="dark"]) .result-currency { color:#363B4F !important; }
+  html:not([data-theme="dark"]) .result-detail-val { color:#0A0E1A !important; }
+  html:not([data-theme="dark"]) .result-detail-lbl { color:rgba(10,14,26,.5) !important; }
+  html:not([data-theme="dark"]) .result-empty { color:rgba(10,14,26,.35) !important; }
+  html:not([data-theme="dark"]) .result-card::before,
+  html:not([data-theme="dark"]) .result-card::after { background:rgba(79,107,255,.06) !important; }
+
+  /* Tank indicator: colores en modo claro */
+  html:not([data-theme="dark"]) #tank-indicator { border-top-color:rgba(10,14,26,.1) !important; }
+  html:not([data-theme="dark"]) #tank-indicator span { color:rgba(10,14,26,.65) !important; }
+  html:not([data-theme="dark"]) #tank-pct-text { color:#0A0E1A !important; }
+  html:not([data-theme="dark"]) #tank-indicator>div:nth-child(2) { background:rgba(10,14,26,.08) !important; }
+  html:not([data-theme="dark"]) #tank-sub { color:rgba(10,14,26,.45) !important; }
+
+  /* Peajes breakdown: colores en modo claro */
+  html:not([data-theme="dark"]) #peajes-breakdown > div { color:rgba(10,14,26,.55) !important; border-top-color:rgba(10,14,26,.1) !important; }
 </style>
 </head>
 <body>

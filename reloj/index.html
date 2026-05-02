@@ -58,10 +58,13 @@ h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-
 .tz-card select:focus{border-color:var(--accent)}
 
 /* Fullscreen mode */
-body.fs-mode header,body.fs-mode .hero,body.fs-mode .stats,body.fs-mode .tz-card,body.fs-mode h2{display:none!important}
-body.fs-mode{background:#0A0E1A}
-body.fs-mode .main{max-width:none;padding:0;display:flex;align-items:center;justify-content:center;min-height:100vh}
-body.fs-mode .clock-card{border-radius:0;width:100%;padding:60px 32px;background:none}
+body.fs-mode header,body.fs-mode .hero,body.fs-mode .stats,body.fs-mode .tz-card,body.fs-mode h2,body.fs-mode #site-header{display:none!important}
+body.fs-mode{background:var(--dark)}
+html[data-theme="dark"] body.fs-mode{background:#0A0E1A}
+html:not([data-theme="dark"]) body.fs-mode{background:linear-gradient(135deg,#EEF1FF 0%,#F5F7FF 100%)}
+body.fs-mode .main{max-width:none;width:100vw;padding:0;display:flex;align-items:center;justify-content:center;min-height:100vh;min-height:100dvh}
+body.fs-mode .clock-card{border-radius:0;width:100vw;height:100vh;height:100dvh;padding:60px 32px;background:none!important;display:flex;flex-direction:column;align-items:center;justify-content:center}
+body.fs-mode .clock-card::before{width:140vw;height:140vh;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,rgba(79,107,255,.18) 0%,transparent 55%)}
 body.fs-mode .time-display{font-size:clamp(80px,18vw,160px)}
 body.fs-mode .date-display{font-size:clamp(20px,4vw,36px)}
 body.fs-mode .btn-fs{top:24px;right:24px}

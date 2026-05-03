@@ -1059,9 +1059,9 @@
     });
     html += '</div></div>';
 
-    // Insertar antes de las FAQs si existen, o al final del body
-    var faq = document.querySelector('.faq-section');
-    if(faq){ faq.insertAdjacentHTML('beforebegin', html); }
+    // Insertar antes del footer si existe, si no al final del body
+    var footerEl = document.querySelector('footer');
+    if(footerEl){ footerEl.insertAdjacentHTML('beforebegin', html); }
     else { document.body.insertAdjacentHTML('beforeend', html); }
   })();
 
@@ -1103,10 +1103,10 @@
     });
     html += '</div>';
 
-    // Insertar al final del body, o después del footer si existe
+    // Insertar antes del footer si existe, si no al final del body
     var footer = document.querySelector('footer');
     if(footer) {
-      footer.insertAdjacentHTML('afterend', html);
+      footer.insertAdjacentHTML('beforebegin', html);
     } else {
       document.body.insertAdjacentHTML('beforeend', html);
     }

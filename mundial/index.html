@@ -152,75 +152,76 @@
 
   /* ════════════════════════════════════════════════════════════
      THEME OVERRIDES — verde oscuro (dark) / verde césped (light)
-     Specificity (1,1,1+) para ganar a las reglas globales de nav.js
   ════════════════════════════════════════════════════════════ */
 
-  /* ── DARK MODE: reforzar el verde oscuro que ya está por diseño ── */
+  /* ── DARK MODE ── */
   html[data-theme="dark"] body { background:#09150a !important; color:#e8f0e8 !important; }
-  html[data-theme="dark"] header { background:rgba(9,21,10,.95) !important; border-bottom-color:#1e3a1e !important; }
+  html[data-theme="dark"] header { background:#09150a !important; border-bottom-color:#1e3a1e !important; }
+  html[data-theme="dark"] #site-header { background:#09150a !important; border-bottom:1px solid #1e3a1e !important; }
+  /* .live dorado en lugar de violeta */
+  html[data-theme="dark"] .logo span,
+  html[data-theme="dark"] #site-header .logo span { color:#F4C430 !important; }
   html[data-theme="dark"] .stat-card,
   html[data-theme="dark"] .sede-card,
   html[data-theme="dark"] .fechas-list,
   html[data-theme="dark"] .champs-card { background:#0f2210 !important; border-color:#1e3a1e !important; }
   html[data-theme="dark"] .cd-num { background:#142a15 !important; }
   html[data-theme="dark"] .champ-toggle { background:#142a15 !important; }
-  html[data-theme="dark"] #site-header,
-  html[data-theme="dark"] .header-inner { background:transparent !important; }
-  /* Botones del header en dark */
   html[data-theme="dark"] #nav-toggle .nb { background:#e8f0e8 !important; }
   html[data-theme="dark"] #theme-toggle { color:#e8f0e8 !important; }
   html[data-theme="dark"] #theme-toggle:hover { background:rgba(244,196,48,.12) !important; }
 
-  /* ── LIGHT MODE: paleta verde césped ── */
-  html:not([data-theme="dark"]) body { background:#E8F0E0 !important; color:#0E2410 !important; }
-  html:not([data-theme="dark"]) header { background:#DCE8CE !important; border-bottom:1px solid #C5D6B6 !important; backdrop-filter:blur(8px); }
-  html:not([data-theme="dark"]) .logo { color:#0E2410 !important; }
-  html:not([data-theme="dark"]) .logo span { color:#5A7C2E !important; }
-  html:not([data-theme="dark"]) .hero-badge { background:rgba(184,147,10,.12) !important; border-color:rgba(184,147,10,.3) !important; color:#7A6212 !important; }
-  html:not([data-theme="dark"]) .hero h1 { color:#0E2410 !important; }
-  html:not([data-theme="dark"]) .hero h1 span { color:#7A6212 !important; }
-  html:not([data-theme="dark"]) .hero-sub { color:#3F6B43 !important; }
-  html:not([data-theme="dark"]) .hero::before { background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(184,147,10,.12) 0%,transparent 70%) !important; }
-  /* Cards y boxes */
+  /* ── LIGHT MODE: verde césped real ── */
+  html:not([data-theme="dark"]) body { background:#2A6B2A !important; color:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) header { background:#2A6B2A !important; border-bottom:1px solid #3A7A3A !important; backdrop-filter:blur(8px); }
+  html:not([data-theme="dark"]) #site-header { background:#2A6B2A !important; border-bottom:1px solid #3A7A3A !important; }
+  html:not([data-theme="dark"]) .logo,
+  html:not([data-theme="dark"]) #site-header .logo { color:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) .logo span,
+  html:not([data-theme="dark"]) #site-header .logo span { color:#F4C430 !important; }
+  html:not([data-theme="dark"]) .hero-badge { background:rgba(244,196,48,.15) !important; border-color:rgba(244,196,48,.35) !important; color:#F4C430 !important; }
+  html:not([data-theme="dark"]) .hero h1 { color:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) .hero h1 span { color:#F4C430 !important; }
+  html:not([data-theme="dark"]) .hero-sub { color:#C8E8C0 !important; }
+  html:not([data-theme="dark"]) .hero::before { background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(244,196,48,.08) 0%,transparent 70%) !important; }
   html:not([data-theme="dark"]) .stat-card,
   html:not([data-theme="dark"]) .sede-card,
   html:not([data-theme="dark"]) .fechas-list,
-  html:not([data-theme="dark"]) .champs-card { background:#F1F7EA !important; border-color:#C5D6B6 !important; }
-  html:not([data-theme="dark"]) .cd-num { background:#DCE8CE !important; border-color:rgba(184,147,10,.3) !important; color:#7A6212 !important; text-shadow:0 0 18px rgba(184,147,10,.2) !important; }
-  html:not([data-theme="dark"]) .cd-sep { color:#7A9F7E !important; }
-  html:not([data-theme="dark"]) .cd-label { color:#3F6B43 !important; }
-  html:not([data-theme="dark"]) .cd-ended { color:#7A6212 !important; }
-  html:not([data-theme="dark"]) .stat-n { color:#7A6212 !important; }
-  html:not([data-theme="dark"]) .stat-l { color:#3F6B43 !important; }
-  html:not([data-theme="dark"]) .section-title { color:#7A9F7E !important; }
-  html:not([data-theme="dark"]) .section-title::after { background:#C5D6B6 !important; }
-  html:not([data-theme="dark"]) .sede-country { color:#0E2410 !important; }
-  html:not([data-theme="dark"]) .sede-cities { color:#3F6B43 !important; }
-  html:not([data-theme="dark"]) .fecha-row { border-bottom-color:#C5D6B6 !important; }
-  html:not([data-theme="dark"]) .fecha-nombre { color:#0E2410 !important; }
-  html:not([data-theme="dark"]) .fecha-date { color:#3F6B43 !important; }
-  html:not([data-theme="dark"]) .fecha-highlight .fecha-nombre { color:#7A6212 !important; }
-  html:not([data-theme="dark"]) .champ-info-label { color:#7A9F7E !important; }
-  html:not([data-theme="dark"]) .champ-info-name { color:#7A6212 !important; }
-  html:not([data-theme="dark"]) .champ-info-sub { color:#3F6B43 !important; }
-  html:not([data-theme="dark"]) .champ-toggle { background:#DCE8CE !important; color:#3F6B43 !important; border-top-color:#C5D6B6 !important; }
-  html:not([data-theme="dark"]) .champ-toggle:hover { background:#F1F7EA !important; color:#0E2410 !important; }
-  html:not([data-theme="dark"]) .champ-history { border-top-color:#C5D6B6 !important; }
-  html:not([data-theme="dark"]) .champ-row { border-bottom-color:#C5D6B6 !important; }
-  html:not([data-theme="dark"]) .champ-row-year { color:#7A9F7E !important; }
-  html:not([data-theme="dark"]) .champ-row-name { color:#0E2410 !important; }
-  html:not([data-theme="dark"]) .champ-row-sede { color:#7A9F7E !important; }
-  html:not([data-theme="dark"]) .champ-row.arg .champ-row-name { color:#7A6212 !important; }
-  html:not([data-theme="dark"]) #tz-select { background:#F1F7EA !important; color:#0E2410 !important; border-color:#C5D6B6 !important; }
-  html:not([data-theme="dark"]) #tz-select option { background:#F1F7EA !important; color:#0E2410 !important; }
-  html:not([data-theme="dark"]) .tz-row label { color:#3F6B43 !important; }
-  html:not([data-theme="dark"]) footer { color:#7A9F7E !important; border-top-color:#C5D6B6 !important; }
-  html:not([data-theme="dark"]) .scroll-hint { color:#7A9F7E !important; }
-  /* Botones del header en light */
-  html:not([data-theme="dark"]) #nav-toggle .nb { background:#0E2410 !important; }
-  html:not([data-theme="dark"]) #nav-toggle:hover { background:rgba(14,36,16,.08) !important; }
-  html:not([data-theme="dark"]) #theme-toggle { color:#0E2410 !important; }
-  html:not([data-theme="dark"]) #theme-toggle:hover { background:rgba(14,36,16,.08) !important; }
+  html:not([data-theme="dark"]) .champs-card { background:#1F5C1F !important; border-color:#3A7A3A !important; }
+  html:not([data-theme="dark"]) .cd-num { background:#1F5C1F !important; border-color:rgba(244,196,48,.35) !important; color:#F4C430 !important; text-shadow:0 0 18px rgba(244,196,48,.25) !important; }
+  html:not([data-theme="dark"]) .cd-sep { color:#8BC88B !important; }
+  html:not([data-theme="dark"]) .cd-label { color:#C8E8C0 !important; }
+  html:not([data-theme="dark"]) .cd-ended { color:#F4C430 !important; }
+  html:not([data-theme="dark"]) .stat-n { color:#F4C430 !important; }
+  html:not([data-theme="dark"]) .stat-l { color:#C8E8C0 !important; }
+  html:not([data-theme="dark"]) .section-title { color:#8BC88B !important; }
+  html:not([data-theme="dark"]) .section-title::after { background:#3A7A3A !important; }
+  html:not([data-theme="dark"]) .sede-country { color:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) .sede-cities { color:#C8E8C0 !important; }
+  html:not([data-theme="dark"]) .fecha-row { border-bottom-color:#3A7A3A !important; }
+  html:not([data-theme="dark"]) .fecha-nombre { color:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) .fecha-date { color:#C8E8C0 !important; }
+  html:not([data-theme="dark"]) .fecha-highlight .fecha-nombre { color:#F4C430 !important; }
+  html:not([data-theme="dark"]) .champ-info-label { color:#8BC88B !important; }
+  html:not([data-theme="dark"]) .champ-info-name { color:#F4C430 !important; }
+  html:not([data-theme="dark"]) .champ-info-sub { color:#C8E8C0 !important; }
+  html:not([data-theme="dark"]) .champ-toggle { background:#1F5C1F !important; color:#C8E8C0 !important; border-top-color:#3A7A3A !important; }
+  html:not([data-theme="dark"]) .champ-toggle:hover { background:#265C26 !important; color:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) .champ-history { border-top-color:#3A7A3A !important; }
+  html:not([data-theme="dark"]) .champ-row { border-bottom-color:#3A7A3A !important; }
+  html:not([data-theme="dark"]) .champ-row-year { color:#8BC88B !important; }
+  html:not([data-theme="dark"]) .champ-row-name { color:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) .champ-row-sede { color:#8BC88B !important; }
+  html:not([data-theme="dark"]) .champ-row.arg .champ-row-name { color:#F4C430 !important; }
+  html:not([data-theme="dark"]) #tz-select { background:#1F5C1F !important; color:#F0F7E8 !important; border-color:#3A7A3A !important; }
+  html:not([data-theme="dark"]) #tz-select option { background:#1F5C1F !important; color:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) .tz-row label { color:#C8E8C0 !important; }
+  html:not([data-theme="dark"]) footer { background:#1F5C1F !important; color:#8BC88B !important; border-top-color:#3A7A3A !important; }
+  html:not([data-theme="dark"]) .scroll-hint { color:#8BC88B !important; }
+  html:not([data-theme="dark"]) #nav-toggle .nb { background:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) #nav-toggle:hover { background:rgba(240,247,232,.12) !important; }
+  html:not([data-theme="dark"]) #theme-toggle { color:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) #theme-toggle:hover { background:rgba(240,247,232,.12) !important; }
 </style>
 </head>
 <body>

@@ -580,6 +580,17 @@
   /* Body */
   'html[data-theme="dark"] body{background:#0E1525;color:#E2E4F0;}',
 
+  /* ── LOGO LIGHT MODE: "Calculadora" negro, ".live" azul accent ── */
+  /* Sin esto, el <a> hereda el color de link del browser (azul/violeta) */
+  'html:not([data-theme="dark"]) .logo{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .logo span{color:#4F6BFF !important;}',
+  /* #site-header style nafta — link sin clase .logo */
+  'html:not([data-theme="dark"]) #site-header a{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) #site-header a span{color:#4F6BFF !important;}',
+  /* header genérico con link sin clase .logo (páginas viejas) */
+  'html:not([data-theme="dark"]) header a{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) header a span.live{color:#4F6BFF !important;}',
+
   /* Headers claros (calculadoras) → se vuelven oscuros */
   'html[data-theme="dark"] header{background:#0A0E1A !important;border-bottom-color:#1F2438 !important;}',
   /* Nafta usa #site-header (div) en lugar de header */
@@ -589,6 +600,9 @@
   'html[data-theme="dark"] .logo{color:#E2E4F0 !important;}',
   /* Logo genérico: un solo <span> con ".live" → azul accent */
   'html[data-theme="dark"] .logo span{color:#4F6BFF !important;}',
+  /* dark mode: header <a> sin clase .logo también claro */
+  'html[data-theme="dark"] header a{color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] header a span{color:#4F6BFF !important;}',
   /* Homepage usa .name y .dot — .name debe quedar blanco, no azul */
   'html[data-theme="dark"] .logo .name{color:#fff !important;}',
   'html[data-theme="dark"] .logo .dot{color:#4F6BFF !important;}',

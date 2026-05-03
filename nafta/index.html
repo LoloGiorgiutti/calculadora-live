@@ -1089,16 +1089,16 @@
     background:#FFFFFF !important;
     border-bottom:1px solid #E4E7EE !important;
   }
-  html:not([data-theme="dark"]) #site-header a:first-child { color:#0A0E1A !important; }
+  /* nav.js inserta el hamburger ANTES del logo, así que a:first-child ya no es el logo */
+  html:not([data-theme="dark"]) #site-header a { color:#0A0E1A !important; }
   /* Modo oscuro: header oscuro con texto claro */
   html[data-theme="dark"] #site-header {
     background:#0A0E1A !important;
     border-bottom:1px solid #1F2438 !important;
   }
-  html[data-theme="dark"] #site-header a:first-child { color:#E2E4F0 !important; }
-  #site-header a { font-family:'Inter',sans-serif !important; text-decoration:none !important; }
-  #site-header a:first-child { font-size:16px !important; font-weight:700 !important; letter-spacing:-0.03em !important; }
-  #site-header a:first-child span { color:#4F6BFF !important; }
+  html[data-theme="dark"] #site-header a { color:#E2E4F0 !important; }
+  #site-header a { font-family:'Inter',sans-serif !important; text-decoration:none !important; font-size:16px !important; font-weight:700 !important; letter-spacing:-0.03em !important; }
+  #site-header a span { color:#4F6BFF !important; }
   /* Botones del header (hamburguesa + toggle tema) en modo claro */
   html:not([data-theme="dark"]) #site-header #theme-toggle { color:rgba(10,14,26,.6) !important; }
   html:not([data-theme="dark"]) #site-header #theme-toggle:hover { background:rgba(10,14,26,.06) !important; }

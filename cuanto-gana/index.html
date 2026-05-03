@@ -42,14 +42,14 @@ h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-
 .section-label::after{content:'';flex:1;height:1px;background:var(--line)}
 
 /* Grid */
-.people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:12px}
-.person-card{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:16px 12px;cursor:pointer;transition:all .15s;text-align:center}
+.people-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.person-card{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:16px 14px;cursor:pointer;transition:all .15s;text-align:left;display:flex;flex-direction:column;gap:6px}
 .person-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 16px rgba(79,107,255,.1)}
-.person-card.selected{border-color:var(--accent);background:rgba(79,107,255,.06);box-shadow:0 4px 20px rgba(79,107,255,.15)}
-.p-flags{font-size:28px;margin-bottom:6px;line-height:1}
-.p-name{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.3}
-.p-rate{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3)}
-.p-rate strong{color:var(--accent);font-weight:700}
+.person-card.selected{border-color:var(--accent);background:rgba(79,107,255,.04);box-shadow:0 4px 20px rgba(79,107,255,.12)}
+.p-name{font-size:13px;font-weight:700;color:var(--ink);line-height:1.3;flex:1}
+.p-country{font-size:11px;color:var(--ink-3);font-weight:500}
+.p-rate{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);margin-top:2px}
+.p-ratelbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-3)}
 
 /* Ver más */
 .btn-vermás{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border:1.5px dashed var(--line);border-radius:10px;background:transparent;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--ink-3);cursor:pointer;transition:all .15s;margin-bottom:20px}
@@ -97,11 +97,14 @@ h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-
 /* Disclaimer */
 .disclaimer{font-size:11px;color:var(--ink-3);text-align:center;line-height:1.6;padding:0 8px;margin-top:4px}
 
-@media(max-width:480px){
+@media(max-width:600px){
   .people-grid{grid-template-columns:1fr 1fr}
   .mini-stats{grid-template-columns:1fr 1fr 1fr}
   .custom-row{flex-direction:column}
   .custom-field,.custom-period{width:100%}
+}
+@media(min-width:601px) and (max-width:800px){
+  .people-grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
@@ -193,48 +196,48 @@ h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-
 /* ── DATOS ──────────────────────────────────────── */
 var PERSONAS = [
   /* ── DEPORTES ── */
-  { id:'ronaldo',    cat:'deportes',    flags:'🇵🇹⚽', name:'Cristiano Ronaldo', annual:200e6,   featured:true,  note:'Al-Nassr + CR7 brand (Forbes est.)' },
-  { id:'messi',      cat:'deportes',    flags:'🇦🇷⭐', name:'Lionel Messi',      annual:135e6,   featured:true,  note:'Inter Miami + sponsors (Forbes est.)' },
-  { id:'lebron',     cat:'deportes',    flags:'🇺🇸🏀', name:'LeBron James',      annual:130e6,   featured:true,  note:'Lakers + Nike + MediaCo (Forbes)' },
-  { id:'mbappe',     cat:'deportes',    flags:'🇫🇷⚡', name:'Kylian Mbappé',     annual:110e6,   featured:false, note:'Real Madrid + sponsors (Forbes)' },
-  { id:'canelo',     cat:'deportes',    flags:'🇲🇽🥊', name:'Canelo Álvarez',    annual:90e6,    featured:false, note:'Boxeo + DAZN deal (Forbes est.)' },
-  { id:'curry',      cat:'deportes',    flags:'🇺🇸🏀', name:'Stephen Curry',     annual:80e6,    featured:false, note:'Golden State Warriors + Under Armour' },
-  { id:'neymar',     cat:'deportes',    flags:'🇧🇷⚽', name:'Neymar Jr.',        annual:70e6,    featured:false, note:'Al-Hilal + sponsors (est.)' },
-  { id:'hamilton',   cat:'deportes',    flags:'🇬🇧🏎️', name:'Lewis Hamilton',    annual:60e6,    featured:false, note:'Ferrari + sponsors (Forbes est.)' },
-  { id:'woods',      cat:'deportes',    flags:'🇺🇸⛳', name:'Tiger Woods',       annual:50e6,    featured:false, note:'Brand deals + TGL (Forbes est.)' },
-  { id:'federer',    cat:'deportes',    flags:'🇨🇭🎾', name:'Roger Federer',     annual:50e6,    featured:false, note:'Uniqlo + On Running + sponsors' },
-  { id:'haaland',    cat:'deportes',    flags:'🇳🇴⚽', name:'Erling Haaland',   annual:40e6,    featured:false, note:'Man City + sponsors (est.)' },
-  { id:'verstappen', cat:'deportes',    flags:'🇳🇱🏎️', name:'Max Verstappen',   annual:45e6,    featured:false, note:'Red Bull F1 + sponsors (Forbes)' },
-  { id:'djokovic',   cat:'deportes',    flags:'🇷🇸🎾', name:'Novak Djokovic',   annual:30e6,    featured:false, note:'Tour + sponsors (Forbes est.)' },
-  { id:'vini',       cat:'deportes',    flags:'🇧🇷⚽', name:'Vinícius Jr.',      annual:30e6,    featured:false, note:'Real Madrid + Nike deal (est.)' },
-  { id:'nadal',      cat:'deportes',    flags:'🇪🇸🎾', name:'Rafael Nadal',     annual:20e6,    featured:false, note:'Sponsors + academia (est. post-retiro)' },
+  { id:'ronaldo',    cat:'deportes',    country:'Portugal',    desc:'Fútbol',        name:'Cristiano Ronaldo', annual:200e6,    featured:true,  note:'Al-Nassr + CR7 brand (Forbes est.)' },
+  { id:'messi',      cat:'deportes',    country:'Argentina',   desc:'Fútbol',        name:'Lionel Messi',      annual:135e6,    featured:true,  note:'Inter Miami + sponsors (Forbes est.)' },
+  { id:'lebron',     cat:'deportes',    country:'EE.UU.',      desc:'Básquet',       name:'LeBron James',      annual:130e6,    featured:true,  note:'Lakers + Nike + MediaCo (Forbes)' },
+  { id:'mbappe',     cat:'deportes',    country:'Francia',     desc:'Fútbol',        name:'Kylian Mbappé',     annual:110e6,    featured:true,  note:'Real Madrid + sponsors (Forbes)' },
+  { id:'canelo',     cat:'deportes',    country:'México',      desc:'Boxeo',         name:'Canelo Álvarez',    annual:90e6,    featured:false, note:'Boxeo + DAZN deal (Forbes est.)' },
+  { id:'curry',      cat:'deportes',    country:'EE.UU.',      desc:'Básquet',       name:'Stephen Curry',     annual:80e6,    featured:false, note:'Golden State Warriors + Under Armour' },
+  { id:'neymar',     cat:'deportes',    country:'Brasil',      desc:'Fútbol',        name:'Neymar Jr.',        annual:70e6,    featured:false, note:'Al-Hilal + sponsors (est.)' },
+  { id:'hamilton',   cat:'deportes',    country:'Reino Unido', desc:'Fórmula 1',     name:'Lewis Hamilton',    annual:60e6,    featured:false, note:'Ferrari + sponsors (Forbes est.)' },
+  { id:'woods',      cat:'deportes',    country:'EE.UU.',      desc:'Golf',          name:'Tiger Woods',       annual:50e6,    featured:false, note:'Brand deals + TGL (Forbes est.)' },
+  { id:'federer',    cat:'deportes',    country:'Suiza',       desc:'Tenis',         name:'Roger Federer',     annual:50e6,    featured:false, note:'Uniqlo + On Running + sponsors' },
+  { id:'verstappen', cat:'deportes',    country:'Países Bajos',desc:'Fórmula 1',     name:'Max Verstappen',    annual:45e6,    featured:false, note:'Red Bull F1 + sponsors (Forbes)' },
+  { id:'haaland',    cat:'deportes',    country:'Noruega',     desc:'Fútbol',        name:'Erling Haaland',    annual:40e6,    featured:false, note:'Man City + sponsors (est.)' },
+  { id:'djokovic',   cat:'deportes',    country:'Serbia',      desc:'Tenis',         name:'Novak Djokovic',    annual:30e6,    featured:false, note:'Tour + sponsors (Forbes est.)' },
+  { id:'vini',       cat:'deportes',    country:'Brasil',      desc:'Fútbol',        name:'Vinícius Jr.',      annual:30e6,    featured:false, note:'Real Madrid + Nike deal (est.)' },
+  { id:'nadal',      cat:'deportes',    country:'España',      desc:'Tenis',         name:'Rafael Nadal',      annual:20e6,    featured:false, note:'Sponsors + academia (est. post-retiro)' },
 
   /* ── MÚSICA ── */
-  { id:'tswift',     cat:'musica',      flags:'🇺🇸🎤', name:'Taylor Swift',     annual:1000e6,  featured:true,  note:'Eras Tour + streaming (Bloomberg est.)' },
-  { id:'rihanna',    cat:'musica',      flags:'🇧🇧💎', name:'Rihanna',          annual:600e6,   featured:true,  note:'Fenty Beauty + música (Forbes)' },
-  { id:'jayz',       cat:'musica',      flags:'🇺🇸👑', name:'Jay-Z',            annual:150e6,   featured:false, note:'D\'Ussé + Armand de Brignac + música' },
-  { id:'beyonce',    cat:'musica',      flags:'🇺🇸🐝', name:'Beyoncé',          annual:100e6,   featured:false, note:'Renaissance Tour + negocios (est.)' },
-  { id:'badbunny',   cat:'musica',      flags:'🇵🇷🐰', name:'Bad Bunny',        annual:88e6,    featured:true,  note:'Giras + streaming (Forbes est.)' },
-  { id:'drake',      cat:'musica',      flags:'🇨🇦🎵', name:'Drake',            annual:80e6,    featured:false, note:'Streaming + shows + Champagne Papi' },
-  { id:'theweeknd',  cat:'musica',      flags:'🇨🇦🌙', name:'The Weeknd',       annual:60e6,    featured:false, note:'Giras + streaming (est.)' },
-  { id:'karolg',     cat:'musica',      flags:'🇨🇴🌸', name:'Karol G',          annual:35e6,    featured:false, note:'Mañana Será Bonito Tour (est.)' },
-  { id:'shakira',    cat:'musica',      flags:'🇨🇴🎸', name:'Shakira',          annual:45e6,    featured:false, note:'Música + sponsors (est.)' },
-  { id:'pesopluma',  cat:'musica',      flags:'🇲🇽🦅', name:'Peso Pluma',       annual:25e6,    featured:false, note:'Regional mexicano + tours (est. 2024)' },
-  { id:'maluma',     cat:'musica',      flags:'🇨🇴🌴', name:'Maluma',           annual:20e6,    featured:false, note:'Música + shows latinoamérica (est.)' },
-  { id:'jbalvin',    cat:'musica',      flags:'🇨🇴🎶', name:'J Balvin',         annual:23e6,    featured:false, note:'Streams + shows (est.)' },
-  { id:'ozuna',      cat:'musica',      flags:'🇵🇷🌊', name:'Ozuna',            annual:15e6,    featured:false, note:'Streams + shows (est.)' },
-  { id:'rauwa',      cat:'musica',      flags:'🇵🇷🎹', name:'Rauw Alejandro',   annual:12e6,    featured:false, note:'Música + shows (est.)' },
+  { id:'tswift',     cat:'musica',      country:'EE.UU.',      desc:'Pop',           name:'Taylor Swift',      annual:1000e6,  featured:true,  note:'Eras Tour + streaming (Bloomberg est.)' },
+  { id:'rihanna',    cat:'musica',      country:'Barbados',    desc:'Pop · Moda',    name:'Rihanna',           annual:600e6,   featured:true,  note:'Fenty Beauty + música (Forbes)' },
+  { id:'badbunny',   cat:'musica',      country:'Puerto Rico', desc:'Reggaetón',     name:'Bad Bunny',         annual:88e6,    featured:true,  note:'Giras + streaming (Forbes est.)' },
+  { id:'beyonce',    cat:'musica',      country:'EE.UU.',      desc:'Pop · R&B',     name:'Beyoncé',           annual:100e6,   featured:true,  note:'Renaissance Tour + negocios (est.)' },
+  { id:'jayz',       cat:'musica',      country:'EE.UU.',      desc:'Hip-Hop',       name:'Jay-Z',             annual:150e6,   featured:false, note:'D\'Ussé + Armand de Brignac + música' },
+  { id:'drake',      cat:'musica',      country:'Canadá',      desc:'Hip-Hop',       name:'Drake',             annual:80e6,    featured:false, note:'Streaming + shows + Champagne Papi' },
+  { id:'theweeknd',  cat:'musica',      country:'Canadá',      desc:'R&B',           name:'The Weeknd',        annual:60e6,    featured:false, note:'Giras + streaming (est.)' },
+  { id:'shakira',    cat:'musica',      country:'Colombia',    desc:'Pop',           name:'Shakira',           annual:45e6,    featured:false, note:'Música + sponsors (est.)' },
+  { id:'karolg',     cat:'musica',      country:'Colombia',    desc:'Reggaetón',     name:'Karol G',           annual:35e6,    featured:false, note:'Mañana Será Bonito Tour (est.)' },
+  { id:'pesopluma',  cat:'musica',      country:'México',      desc:'Regional Mex.', name:'Peso Pluma',        annual:25e6,    featured:false, note:'Regional mexicano + tours (est. 2024)' },
+  { id:'jbalvin',    cat:'musica',      country:'Colombia',    desc:'Reggaetón',     name:'J Balvin',          annual:23e6,    featured:false, note:'Streams + shows (est.)' },
+  { id:'maluma',     cat:'musica',      country:'Colombia',    desc:'Reggaetón',     name:'Maluma',            annual:20e6,    featured:false, note:'Música + shows latinoamérica (est.)' },
+  { id:'ozuna',      cat:'musica',      country:'Puerto Rico', desc:'Reggaetón',     name:'Ozuna',             annual:15e6,    featured:false, note:'Streams + shows (est.)' },
+  { id:'rauwa',      cat:'musica',      country:'Puerto Rico', desc:'R&B · Pop',     name:'Rauw Alejandro',    annual:12e6,    featured:false, note:'Música + shows (est.)' },
 
   /* ── EMPRESARIOS ── */
-  { id:'musk',       cat:'empresarios', flags:'🇺🇸🚀', name:'Elon Musk',        annual:100000e6, featured:true,  note:'Incremento patrimonial est. (Bloomberg) — Tesla, SpaceX, X' },
-  { id:'zuckerberg', cat:'empresarios', flags:'🇺🇸💻', name:'Mark Zuckerberg',  annual:30000e6,  featured:true,  note:'Incremento patrimonial est. — Meta' },
-  { id:'jensen',     cat:'empresarios', flags:'🇺🇸🤖', name:'Jensen Huang',     annual:25000e6,  featured:false, note:'Incremento patrimonial est. — Nvidia' },
-  { id:'bezos',      cat:'empresarios', flags:'🇺🇸📦', name:'Jeff Bezos',       annual:25000e6,  featured:true,  note:'Incremento patrimonial est. — Amazon, Blue Origin' },
-  { id:'arnault',    cat:'empresarios', flags:'🇫🇷👜', name:'Bernard Arnault',  annual:15000e6,  featured:false, note:'Incremento patrimonial est. — LVMH' },
-  { id:'ellison',    cat:'empresarios', flags:'🇺🇸🗄️', name:'Larry Ellison',   annual:10000e6,  featured:false, note:'Incremento patrimonial est. — Oracle' },
-  { id:'gates',      cat:'empresarios', flags:'🇺🇸🖥️', name:'Bill Gates',      annual:5000e6,   featured:false, note:'Incremento patrimonial est. — inversiones' },
-  { id:'page',       cat:'empresarios', flags:'🇺🇸🔍', name:'Larry Page',      annual:4000e6,   featured:false, note:'Incremento patrimonial est. — Alphabet/Google' },
-  { id:'buffett',    cat:'empresarios', flags:'🇺🇸🏦', name:'Warren Buffett',  annual:3000e6,   featured:false, note:'Incremento patrimonial est. — Berkshire Hathaway' },
+  { id:'musk',       cat:'empresarios', country:'EE.UU.',      desc:'Tesla · SpaceX · X', name:'Elon Musk',       annual:100000e6, featured:true,  note:'Incremento patrimonial est. (Bloomberg) — Tesla, SpaceX, X' },
+  { id:'zuckerberg', cat:'empresarios', country:'EE.UU.',      desc:'Meta',               name:'Mark Zuckerberg', annual:30000e6,  featured:true,  note:'Incremento patrimonial est. — Meta' },
+  { id:'jensen',     cat:'empresarios', country:'EE.UU.',      desc:'Nvidia',             name:'Jensen Huang',    annual:25000e6,  featured:true,  note:'Incremento patrimonial est. — Nvidia' },
+  { id:'bezos',      cat:'empresarios', country:'EE.UU.',      desc:'Amazon · Blue Origin',name:'Jeff Bezos',     annual:25000e6,  featured:true,  note:'Incremento patrimonial est. — Amazon, Blue Origin' },
+  { id:'arnault',    cat:'empresarios', country:'Francia',     desc:'LVMH',               name:'Bernard Arnault', annual:15000e6,  featured:false, note:'Incremento patrimonial est. — LVMH' },
+  { id:'ellison',    cat:'empresarios', country:'EE.UU.',      desc:'Oracle',             name:'Larry Ellison',   annual:10000e6,  featured:false, note:'Incremento patrimonial est. — Oracle' },
+  { id:'gates',      cat:'empresarios', country:'EE.UU.',      desc:'Microsoft · Fund.',  name:'Bill Gates',      annual:5000e6,   featured:false, note:'Incremento patrimonial est. — inversiones' },
+  { id:'page',       cat:'empresarios', country:'EE.UU.',      desc:'Alphabet · Google',  name:'Larry Page',      annual:4000e6,   featured:false, note:'Incremento patrimonial est. — Alphabet/Google' },
+  { id:'buffett',    cat:'empresarios', country:'EE.UU.',      desc:'Berkshire Hathaway', name:'Warren Buffett',  annual:3000e6,   featured:false, note:'Incremento patrimonial est. — Berkshire Hathaway' },
 ];
 
 /* Pre-calcular $/seg */
@@ -311,12 +314,12 @@ function renderGrid() {
 
   grid.innerHTML = '';
   list.forEach(function(p) {
-    var rateStr = '<strong>' + fmtRateShort(p.perSec) + '</strong>/seg';
     var div = document.createElement('div');
     div.className = 'person-card' + (p.id === currentId ? ' selected' : '');
-    div.innerHTML = '<div class="p-flags">' + p.flags + '</div>'
-                  + '<div class="p-name">' + p.name + '</div>'
-                  + '<div class="p-rate">' + rateStr + '</div>';
+    div.innerHTML = '<div class="p-name">' + p.name + '</div>'
+                  + '<div class="p-country">' + p.country + ' · ' + p.desc + '</div>'
+                  + '<div class="p-rate">' + fmtRateShort(p.perSec) + '</div>'
+                  + '<div class="p-ratelbl">por segundo</div>';
     div.onclick = function(){ selectPerson(p.id); };
     grid.appendChild(div);
   });
@@ -336,7 +339,7 @@ function selectPerson(id) {
   currentId    = id;
   customPerSec = null;
   var p = PERSONAS.find(function(x){ return x.id === id; });
-  document.getElementById('counter-name').textContent = p.flags + ' ' + p.name;
+  document.getElementById('counter-name').textContent = p.name + ' · ' + p.country;
   document.getElementById('counter-note').textContent = '* ' + p.note;
   startCounter(p.perSec);
   renderGrid();

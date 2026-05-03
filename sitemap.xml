@@ -268,9 +268,9 @@
   <!-- Mundial 2026 -->
   <url>
     <loc>https://calculadora.live/mundial/</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-03</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>1.0</priority>
   </url>
 
   <!-- Tests -->

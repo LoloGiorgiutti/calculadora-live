@@ -227,6 +227,22 @@
   html:not([data-theme="dark"]) body.mundial-page #nav-toggle:hover { background:rgba(240,247,232,.12) !important; }
   html:not([data-theme="dark"]) body.mundial-page #theme-toggle { color:#F0F7E8 !important; }
   html:not([data-theme="dark"]) body.mundial-page #theme-toggle:hover { background:rgba(240,247,232,.12) !important; }
+
+  /* ── FAQ: light mode ── */
+  html:not([data-theme="dark"]) body.mundial-page .faq-heading { color:#8BC88B !important; }
+  html:not([data-theme="dark"]) body.mundial-page .faq-heading::after { background:#3A7A3A !important; }
+  html:not([data-theme="dark"]) body.mundial-page .faq-item { background:#1F5C1F !important; border-color:#3A7A3A !important; }
+  html:not([data-theme="dark"]) body.mundial-page .faq-item summary { color:#F0F7E8 !important; }
+  html:not([data-theme="dark"]) body.mundial-page .faq-item[open]>summary { color:#F4C430 !important; }
+  html:not([data-theme="dark"]) body.mundial-page .faq-a { color:#C8E8C0 !important; }
+
+  /* ── FAQ: dark mode (pisa el azul #141929 de nav.js) ── */
+  html[data-theme="dark"] body.mundial-page .faq-heading { color:#4a6b4a !important; }
+  html[data-theme="dark"] body.mundial-page .faq-heading::after { background:#1e3a1e !important; }
+  html[data-theme="dark"] body.mundial-page .faq-item { background:#0f2210 !important; border-color:#1e3a1e !important; }
+  html[data-theme="dark"] body.mundial-page .faq-item summary { color:#e8f0e8 !important; }
+  html[data-theme="dark"] body.mundial-page .faq-item[open]>summary { color:#F4C430 !important; }
+  html[data-theme="dark"] body.mundial-page .faq-a { color:#9ab89a !important; }
 </style>
 </head>
 <body class="mundial-page">

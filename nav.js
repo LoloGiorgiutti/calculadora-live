@@ -308,6 +308,8 @@
     'border-radius:8px;flex-shrink:0;transition:background .15s;}',
     '#nav-toggle:hover{background:rgba(0,0,0,.06);}',
     '#nav-toggle .nb{display:block;width:18px;height:2px;background:#080A12;border-radius:1px;transition:.2s;}',
+    'html[data-theme="dark"] #nav-toggle .nb{background:#E2E4F0 !important;}',
+    'html[data-theme="dark"] #nav-toggle:hover{background:rgba(255,255,255,.08) !important;}',
 
     /* Backdrop */
     '#nav-bd{display:none;position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:9998;',

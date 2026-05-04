@@ -1211,6 +1211,71 @@
     root.innerHTML = html;
   })();
 
+  /* ── SEPARADOR DE MILES ─────────────────────────────────────
+     Muestra el valor con puntos cada 3 dígitos en todos los
+     input[type="number"]. No modifica .value → el código JS de
+     cada página sigue leyendo el número crudo sin cambios.
+     Cuando el input está enfocado, la superposición se oculta y
+     el usuario edita el número directamente.                   */
+  (function() {
+    function initFmt(inp) {
+      if (inp.dataset.nfDone || inp.type === 'hidden') return;
+      inp.dataset.nfDone = '1';
+
+      // Contenedor relativo
+      var wrap = document.createElement('span');
+      wrap.style.cssText = 'position:relative;display:block;';
+      inp.parentNode.insertBefore(wrap, inp);
+      wrap.appendChild(inp);
+
+      // Span de display superpuesto
+      var lbl = document.createElement('span');
+      lbl.setAttribute('aria-hidden', 'true');
+      lbl.style.cssText = 'position:absolute;top:0;left:0;right:0;bottom:0;'
+        + 'pointer-events:none;display:none;align-items:center;'
+        + 'white-space:nowrap;overflow:hidden;z-index:1;';
+      wrap.appendChild(lbl);
+
+      function show() {
+        var raw = inp.value;
+        var n = parseFloat(raw);
+        if (isNaN(n) || raw === '') { lbl.style.display = 'none'; inp.style.color = ''; return; }
+        var cs = window.getComputedStyle(inp);
+        lbl.style.display = 'flex';
+        lbl.style.fontFamily = cs.fontFamily;
+        lbl.style.fontSize = cs.fontSize;
+        lbl.style.fontWeight = cs.fontWeight;
+        lbl.style.letterSpacing = cs.letterSpacing;
+        lbl.style.color = cs.color;
+        lbl.style.background = cs.backgroundColor;
+        lbl.style.borderRadius = cs.borderRadius;
+        lbl.style.border = cs.border;
+        lbl.style.padding = cs.paddingTop + ' ' + cs.paddingRight + ' ' + cs.paddingBottom + ' ' + cs.paddingLeft;
+        var decimals = (raw.indexOf('.') !== -1) ? Math.min(raw.split('.')[1].length, 6) : 0;
+        lbl.textContent = n.toLocaleString('es-AR', {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: 6
+        });
+        inp.style.color = 'transparent';
+        inp.style.caretColor = 'currentColor';
+      }
+
+      function hide() {
+        lbl.style.display = 'none';
+        inp.style.color = '';
+        inp.style.caretColor = '';
+      }
+
+      inp.addEventListener('focus',  hide);
+      inp.addEventListener('blur',   show);
+      inp.addEventListener('change', function() { if (document.activeElement !== inp) show(); });
+
+      setTimeout(show, 120); // después de que el CSS propio de la página cargue
+    }
+
+    document.querySelectorAll('input[type="number"]').forEach(initFmt);
+  })();
+
   /* ── EXPONER CALCS ─────────────────────────────────────────
      index.html tiene un <script> inline (después de este archivo)
      que genera el grid del home a partir de window.__CALCS.

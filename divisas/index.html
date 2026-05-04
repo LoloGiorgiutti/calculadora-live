@@ -139,6 +139,11 @@ html[data-theme="dark"] .picker-search{background:var(--dark-2)}
 .info-card{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;font-size:13px;color:var(--ink-2);line-height:1.65}
 .info-card strong{color:var(--ink);font-weight:600}
 
+/* ── Fix: nav.js pisa .result-card con fondo claro en light mode ── */
+/* Necesitamos especificidad mayor que (0,2,1) de nav.js */
+html body.divisas-page .result-card{background:#0A0E1A !important;border:none !important;}
+html[data-theme="dark"] body.divisas-page .result-card{background:#141929 !important;}
+
 /* Loading spinner */
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.2);border-top-color:rgba(255,255,255,.8);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -152,7 +157,7 @@ html[data-theme="dark"] .picker-search{background:var(--dark-2)}
 }
 </style>
 </head>
-<body>
+<body class="divisas-page">
 
 <header>
   <a href="/" class="logo">Calculadora<span>.live</span></a>
@@ -408,12 +413,30 @@ var state = {
 
 /* ── INIT ──────────────────────────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', function() {
+  // Leer URL params para pre-selección de par
+  var params = new URLSearchParams(window.location.search);
+  var pFrom = (params.get('de') || 'ars').toUpperCase();
+  var pTo   = (params.get('a')  || 'usd').toUpperCase();
+  if (CURRENCIES.find(function(c){ return c.code === pFrom; })) state.fromCur = pFrom;
+  if (CURRENCIES.find(function(c){ return c.code === pTo;   })) state.toCur   = pTo;
+
   buildPeriodSelects();
   renderDolarTabs();
   updatePairUI();
   updateDolarPanel();
+  updatePageMeta();
   fetchLiveData();
 });
+
+function updatePageMeta() {
+  var fInfo = CURRENCIES.find(function(c){ return c.code === state.fromCur; });
+  var tInfo = CURRENCIES.find(function(c){ return c.code === state.toCur;   });
+  var fName = fInfo ? fInfo.name : state.fromCur;
+  var tName = tInfo ? tInfo.name : state.toCur;
+  document.title = 'Convertidor ' + fName + ' a ' + tName + ' — Calculadora.live';
+  history.replaceState(null, '',
+    '/divisas/?de=' + state.fromCur.toLowerCase() + '&a=' + state.toCur.toLowerCase());
+}
 
 function buildPeriodSelects() {
   var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -429,7 +452,7 @@ function buildPeriodSelects() {
   });
   ['from-year','to-year'].forEach(function(id) {
     var sel = document.getElementById(id);
-    for (var y = CUR_YEAR; y >= 2010; y--) {
+    for (var y = CUR_YEAR; y >= 2015; y--) {
       var opt = document.createElement('option');
       opt.value = y;
       opt.textContent = y;
@@ -538,36 +561,36 @@ function fetchHistorical(year, month) {
   var key = year + '-' + pad(month);
   if (state.histCache[key]) return Promise.resolve(state.histCache[key]);
 
-  // Use the 15th of the target month as representative rate
-  var dateStr = year + '-' + pad(month) + '-15';
-  var url = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@' + dateStr + '/v1/currencies/usd.json';
+  // Intentar múltiples fechas del mes en orden
+  var days = ['15', '01', '20', '28'];
+  var base = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@';
 
-  return fetch(url)
-    .then(function(r) {
-      if (!r.ok) throw new Error('not found');
-      return r.json();
-    })
-    .then(function(d) {
-      var rates = d.usd || d;
-      state.histCache[key] = rates;
-      return rates;
-    })
-    .catch(function() {
-      // Fallback: try 1st of month
-      var dateStr2 = year + '-' + pad(month) + '-01';
-      return fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@' + dateStr2 + '/v1/currencies/usd.json')
-        .then(function(r){ return r.json(); })
-        .then(function(d){
-          var rates = d.usd || d;
-          state.histCache[key] = rates;
-          return rates;
-        });
-    });
+  function tryDate(idx) {
+    if (idx >= days.length) return Promise.reject(new Error('sin datos'));
+    var dateStr = year + '-' + pad(month) + '-' + days[idx];
+    return fetch(base + dateStr + '/v1/currencies/usd.json')
+      .then(function(r) {
+        if (!r.ok) throw new Error('not found');
+        return r.json();
+      })
+      .then(function(d) {
+        var rates = d.usd || d;
+        if (!rates || typeof rates !== 'object') throw new Error('invalid');
+        state.histCache[key] = rates;
+        return rates;
+      })
+      .catch(function() { return tryDate(idx + 1); });
+  }
+
+  return tryDate(0);
 }
 
 /* ── CONVERT ───────────────────────────────────────────────────────── */
 function convert() {
-  var amount = parseFloat(document.getElementById('amount').value);
+  // Parsear amount soportando separadores de miles (ej: "100.000" o "100000")
+  var rawVal = document.getElementById('amount').value
+    .replace(/\./g, '').replace(',', '.');
+  var amount = parseFloat(rawVal);
   if (!amount || isNaN(amount) || amount < 0) {
     alert('Ingresá un monto válido.');
     return;
@@ -599,10 +622,21 @@ function convert() {
     var toRates   = results[1];
 
     if (!fromRates || !toRates) {
-      showError('No se pudieron obtener los datos de tipo de cambio.');
+      showError('Sin datos para ese período. Probá con otra fecha o moneda.');
       btn.disabled = false;
       btn.textContent = 'Convertir';
       return;
+    }
+
+    // Verificar que las monedas existan en los datos
+    var fLow = fromCur.toLowerCase(), tLow = toCur.toLowerCase();
+    if (fLow !== 'usd' && !fromRates[fLow]) {
+      showError('No hay datos históricos para ' + state.fromCur + ' en ese período.');
+      btn.disabled = false; btn.textContent = 'Convertir'; return;
+    }
+    if (tLow !== 'usd' && !toRates[tLow]) {
+      showError('No hay datos históricos para ' + state.toCur + ' en ese período.');
+      btn.disabled = false; btn.textContent = 'Convertir'; return;
     }
 
     var result, rateDisplay, typeBadge = null, updatedText = '';
@@ -660,8 +694,8 @@ function convert() {
     btn.disabled = false;
     btn.textContent = 'Convertir';
   }).catch(function(err) {
-    showError('Error al obtener el tipo de cambio. Intentá de nuevo.');
-    console.error(err);
+    showError('Sin datos para ese período. Probá con otra fecha o moneda.');
+    console.warn(err);
     btn.disabled = false;
     btn.textContent = 'Convertir';
   });
@@ -858,7 +892,7 @@ function selectCurrency(code) {
   else state.toCur = code;
   closePicker();
   updatePairUI();
-  // Clear previous result
+  updatePageMeta();
   document.getElementById('result-card').style.display = 'none';
 }
 

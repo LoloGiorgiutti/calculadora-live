@@ -632,6 +632,21 @@
   'border-color:#4F6BFF !important;box-shadow:0 0 0 3px rgba(79,107,255,.15) !important;}',
 
   /* Footer */
+  'footer.site-footer{border-top:1px solid #E4E7EE;background:#F7F8FA;padding:22px 24px;margin-top:0;font-family:Inter,sans-serif;}',
+  '.sf-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}',
+  '.sf-logo{font-size:14px;font-weight:700;letter-spacing:-.03em;color:#858AA0;text-decoration:none;}',
+  '.sf-live{color:#4F6BFF;}',
+  '.sf-links{display:flex;gap:16px;align-items:center;}',
+  '.sf-links a{font-size:12px;color:#858AA0;text-decoration:none;transition:color .15s;}',
+  '.sf-links a:hover{color:#4F6BFF;}',
+  '.sf-sep{font-size:12px;color:#C8CDD8;}',
+  '.sf-copy{font-size:12px;color:#B0B6C8;}',
+  'html[data-theme="dark"] footer.site-footer{background:#080A12 !important;border-top-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .sf-logo{color:#404565 !important;}',
+  'html[data-theme="dark"] .sf-links a{color:#404565 !important;}',
+  'html[data-theme="dark"] .sf-links a:hover{color:#4F6BFF !important;}',
+  'html[data-theme="dark"] .sf-sep{color:#252A3D !important;}',
+  'html[data-theme="dark"] .sf-copy{color:#2E3348 !important;}',
   'html[data-theme="dark"] footer{background:#0A0E1A !important;',
   'border-top-color:#1F2438 !important;color:#404565 !important;}',
 
@@ -1053,6 +1068,39 @@
     bc_sc.type = 'application/ld+json';
     bc_sc.textContent = JSON.stringify(bc);
     document.head.appendChild(bc_sc);
+  })();
+
+  /* ── FOOTER ────────────────────────────────────────────────
+     Inyecta el footer en todas las páginas. Si ya existe un
+     <footer>, lo rellena. Si no existe, lo crea al final del body. */
+  (function(){
+    var footerHTML = '<footer class="site-footer">'
+      + '<div class="sf-inner">'
+      + '<a href="/" class="sf-logo">Calculadora<span class="sf-live">.live</span></a>'
+      + '<div class="sf-links">'
+      + '<a href="/privacidad/">Privacidad</a>'
+      + '<span class="sf-sep">·</span>'
+      + '<a href="/terminos/">Términos</a>'
+      + '</div>'
+      + '<span class="sf-copy">© 2026 Calculadora.live</span>'
+      + '</div>'
+      + '</footer>';
+    var existing = document.querySelector('footer');
+    if (existing) {
+      // Replace content (keep the element as anchor for related/FAQ injection)
+      existing.className = 'site-footer';
+      existing.innerHTML = '<div class="sf-inner">'
+        + '<a href="/" class="sf-logo">Calculadora<span class="sf-live">.live</span></a>'
+        + '<div class="sf-links">'
+        + '<a href="/privacidad/">Privacidad</a>'
+        + '<span class="sf-sep">·</span>'
+        + '<a href="/terminos/">Términos</a>'
+        + '</div>'
+        + '<span class="sf-copy">© 2026 Calculadora.live</span>'
+        + '</div>';
+    } else {
+      document.body.insertAdjacentHTML('beforeend', footerHTML);
+    }
   })();
 
   /* ── CALCULADORAS RELACIONADAS ──────────────────────────────

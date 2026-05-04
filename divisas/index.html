@@ -62,10 +62,14 @@ html[data-theme="dark"] .cur-btn{background:var(--dark-2)}
 .cur-chevron{flex-shrink:0;color:var(--ink-3);width:14px;height:14px}
 
 /* Period selects */
+.period-wrap{display:flex;flex-direction:column;gap:4px}
 .period-row{display:flex;gap:6px}
 .period-sel{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:8px;padding:8px 10px;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;transition:border-color .15s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23858AA0'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
 html[data-theme="dark"] .period-sel{background-color:var(--dark-2);color:var(--ink);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555E80'/%3E%3C/svg%3E")}
 .period-sel:focus{border-color:var(--accent)}
+.mes-actual-btn{align-self:flex-start;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;color:var(--accent);background:rgba(79,107,255,.08);border:1px solid rgba(79,107,255,.2);border-radius:99px;padding:3px 9px;cursor:pointer;transition:all .15s;letter-spacing:.02em;white-space:nowrap}
+.mes-actual-btn:hover{background:rgba(79,107,255,.16);border-color:rgba(79,107,255,.4)}
+.mes-actual-btn.is-current{color:var(--ink-3);background:transparent;border-color:var(--line);cursor:default;pointer-events:none}
 
 /* Swap */
 .swap-btn{align-self:center;margin-top:22px;width:40px;height:40px;border:1.5px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink-3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:16px;font-weight:700}
@@ -199,9 +203,12 @@ html:not([data-theme="dark"]) body.divisas-page .result-card::before{display:non
           <span class="cur-name-sm" id="from-name">Peso argentino</span>
           <svg class="cur-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <div class="period-row">
-          <select class="period-sel" id="from-month" onchange="onPeriodChange()"></select>
-          <select class="period-sel" id="from-year" onchange="onPeriodChange()"></select>
+        <div class="period-wrap">
+          <div class="period-row">
+            <select class="period-sel" id="from-month" onchange="onPeriodChange();updateMesActualBtns()"></select>
+            <select class="period-sel" id="from-year" onchange="onPeriodChange();updateMesActualBtns()"></select>
+          </div>
+          <button class="mes-actual-btn" id="from-mes-actual" onclick="setCurrentPeriod('from')">Mes actual</button>
         </div>
       </div>
 
@@ -216,9 +223,12 @@ html:not([data-theme="dark"]) body.divisas-page .result-card::before{display:non
           <span class="cur-name-sm" id="to-name">Dólar estadounidense</span>
           <svg class="cur-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <div class="period-row">
-          <select class="period-sel" id="to-month" onchange="onPeriodChange()"></select>
-          <select class="period-sel" id="to-year" onchange="onPeriodChange()"></select>
+        <div class="period-wrap">
+          <div class="period-row">
+            <select class="period-sel" id="to-month" onchange="onPeriodChange();updateMesActualBtns()"></select>
+            <select class="period-sel" id="to-year" onchange="onPeriodChange();updateMesActualBtns()"></select>
+          </div>
+          <button class="mes-actual-btn" id="to-mes-actual" onclick="setCurrentPeriod('to')">Mes actual</button>
         </div>
       </div>
     </div>
@@ -432,6 +442,7 @@ window.addEventListener('DOMContentLoaded', function() {
   if (CURRENCIES.find(function(c){ return c.code === pTo;   })) state.toCur   = pTo;
 
   buildPeriodSelects();
+  updateMesActualBtns();
   renderDolarTabs();
   updatePairUI();
   updateDolarPanel();
@@ -520,6 +531,41 @@ function onPeriodChange() {
   state.toMonth   = +document.getElementById('to-month').value;
   state.toYear    = +document.getElementById('to-year').value;
   updateDolarPanel();
+}
+
+function setCurrentPeriod(side) {
+  /* Usamos new Date() en el momento del click para siempre tener el mes real */
+  var realNow = new Date();
+  var realMonth = realNow.getMonth() + 1;
+  var realYear  = realNow.getFullYear();
+
+  var prefix = side === 'from' ? 'from' : 'to';
+  var yearSel  = document.getElementById(prefix + '-year');
+  var monthSel = document.getElementById(prefix + '-month');
+
+  yearSel.value = realYear;
+  /* Reconstruir meses por si el año cambió */
+  buildMonthSel(prefix + '-month', realYear);
+  monthSel = document.getElementById(prefix + '-month');
+  monthSel.value = realMonth;
+
+  onPeriodChange();
+  updateMesActualBtns();
+}
+
+function updateMesActualBtns() {
+  var realNow   = new Date();
+  var realMonth = realNow.getMonth() + 1;
+  var realYear  = realNow.getFullYear();
+
+  ['from', 'to'].forEach(function(side) {
+    var btn   = document.getElementById(side + '-mes-actual');
+    var month = +document.getElementById(side + '-month').value;
+    var year  = +document.getElementById(side + '-year').value;
+    var isCur = (month === realMonth && year === realYear);
+    btn.classList.toggle('is-current', isCur);
+    btn.textContent = isCur ? '✓ Mes actual' : 'Mes actual';
+  });
 }
 
 function isCurrentPeriod(month, year) {
@@ -862,6 +908,7 @@ function swapCurrencies() {
   document.getElementById('to-month').value   = state.toMonth;
   document.getElementById('to-year').value    = state.toYear;
   updatePairUI();
+  updateMesActualBtns();
 }
 
 /* ── PICKER ────────────────────────────────────────────────────────── */

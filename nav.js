@@ -18,6 +18,7 @@
       { n: 'Calculadora de service', u: '/service',            icon:'🔧', d: '¿Cuándo te toca el próximo service?',        hd:'¿Cuándo te toca el service y cuánto cuesta aproximadamente?' },
     ]},
     { cat: '💰 Finanzas y economía', slug: 'finanzas', label: 'Finanzas', desc: 'Sueldo neto, préstamos, inflación, inversiones y más.', items: [
+      { n: 'Convertidor de divisas',      u: '/divisas',      icon:'💱', badge:true, d: 'Dólar blue, MEP, CCL, todas las monedas', hd:'Convertí pesos a dólares (blue, MEP, CCL, oficial) o cualquier moneda del mundo. Con historial por mes y año.' },
       { n: 'Convertidor de sueldo',      u: '/sueldo-hora',  icon:'💼', badge:true, d: 'Hora, día, semana, mes y año — convertí al instante', hd:'Convertí tu sueldo entre cualquier período. Ingresá uno y los demás se calculan solos.' },
       { n: 'Calculadora de ahorros',    u: '/ahorros',       icon:'💰', badge:true, d: '¿Cuándo llegás a tu meta de ahorro?',    hd:'Calculá en cuánto tiempo llegás a tu objetivo con aportes mensuales e intereses.' },
       { n: 'Margen de ganancia',        u: '/margen',        icon:'📊', badge:true, d: 'Precio de venta, margen y markup',       hd:'Calculá el margen de ganancia, el markup y el precio de venta de tus productos.' },
@@ -74,6 +75,13 @@
      inserta automáticamente en cada página, a menos que ya exista .faq-section.
   ─────────────────────────────────────────────────────────────────────────── */
   var FAQS = {
+    '/divisas': [
+      { q: '¿Qué es el dólar blue?', a: 'El dólar blue es el tipo de cambio del mercado paralelo informal en Argentina. Su cotización surge de la oferta y demanda fuera del sistema bancario oficial. No está regulado por el BCRA y suele cotizar por encima del dólar oficial.' },
+      { q: '¿Qué diferencia hay entre el dólar MEP y el CCL?', a: 'El dólar MEP (o dólar bolsa) se obtiene comprando bonos en pesos y vendiéndolos en dólares dentro del mercado local. El CCL (contado con liquidación) es similar pero los bonos se transfieren al exterior. El CCL suele ser levemente más alto que el MEP.' },
+      { q: '¿Por qué los datos históricos solo muestran el tipo oficial?', a: 'Los tipos de cambio alternativos (blue, MEP, CCL) no cuentan con bases de datos históricas gratuitas y accesibles por API. El tipo oficial es el único con registros históricos disponibles públicamente.' },
+      { q: '¿Con qué frecuencia se actualizan los tipos de cambio?', a: 'Los tipos de cambio actuales se actualizan varias veces al día desde dolarapi.com. Las cotizaciones históricas provienen de currency-api (open.er-api) y se actualizan una vez por día.' },
+      { q: '¿Qué significa convertir entre dos fechas distintas?', a: 'Si elegís fechas distintas para origen y destino, la calculadora convierte el monto usando el tipo de cambio del período de origen, y luego convierte el resultado usando el tipo del período de destino. Es útil para comparar el valor real de una suma a lo largo del tiempo.' },
+    ],
     '/nafta': [
       { q: '¿Cómo calculo el costo de un viaje en auto?', a: 'Dividí la distancia del viaje (km) por el consumo de tu auto (km/l) y multiplicá el resultado por el precio del combustible. Por ejemplo, 300 km ÷ 12 km/l × $1.200 = $30.000.' },
       { q: '¿Cuál es el consumo promedio de un auto?', a: 'Un auto a nafta promedio consume entre 8 y 12 litros cada 100 km en ciudad, y entre 6 y 9 litros en ruta. Los autos más modernos y los diésel suelen ser más eficientes.' },

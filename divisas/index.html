@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convertidor de divisas — Dólar blue, MEP, CCL, oficial — Calculadora.live</title>
+<meta name="description" content="Convertí entre todas las monedas del mundo. Dólar blue, MEP, CCL, oficial y más. Historial de tipo de cambio por mes y año. Se actualiza automáticamente.">
+<link rel="canonical" href="https://calculadora.live/divisas/">
+<meta property="og:title" content="Convertidor de divisas — Calculadora.live">
+<meta property="og:description" content="Convertí pesos argentinos a dólares (blue, MEP, CCL, oficial) y todas las monedas del mundo. Con historial por mes y año.">
+<meta property="og:url" content="https://calculadora.live/divisas/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--accent:#4F6BFF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;}
+html[data-theme="dark"]{--bg:#080A12;--surface:#0F1220;--ink:#E2E4F0;--ink-2:#9CA3C0;--ink-3:#555E80;--line:#1F2438;--dark:#0F1220;--dark-2:#141929;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s}
+a{color:inherit;text-decoration:none}
+button{font-family:'Inter',sans-serif}
+
+/* Header placeholder */
+header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+.logo{font-size:16px;font-weight:700;letter-spacing:-0.03em;color:var(--ink)}
+.logo span{color:var(--accent)}
+
+/* Hero */
+.hero{background:var(--dark);color:#fff;padding:32px 20px 28px;text-align:center}
+html[data-theme="dark"] .hero{background:#0A0E1A}
+.breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.35);margin-bottom:14px;letter-spacing:.03em}
+.breadcrumb a{color:rgba(255,255,255,.35)}
+.breadcrumb a:hover{color:rgba(255,255,255,.65)}
+h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.5);line-height:1.6;max-width:480px;margin:0 auto}
+
+/* Layout */
+.main{max-width:660px;margin:0 auto;padding:28px 20px 80px}
+
+/* Converter card */
+.conv-card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px;margin-bottom:16px}
+
+.field-label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+
+/* Amount */
+.amount-row{margin-bottom:20px}
+.amount-input{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s;letter-spacing:-.02em;-moz-appearance:textfield}
+.amount-input::-webkit-inner-spin-button,.amount-input::-webkit-outer-spin-button{-webkit-appearance:none}
+.amount-input:focus{border-color:var(--accent)}
+html[data-theme="dark"] .amount-input{background:var(--dark-2)}
+
+/* Pair row */
+.pair-row{display:grid;grid-template-columns:1fr 40px 1fr;gap:12px;align-items:start;margin-bottom:20px}
+.pair-side{display:flex;flex-direction:column;gap:8px}
+
+/* Currency button */
+.cur-btn{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;cursor:pointer;transition:all .15s;min-height:56px}
+html[data-theme="dark"] .cur-btn{background:var(--dark-2)}
+.cur-btn:hover{border-color:var(--accent)}
+.cur-code-badge{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--accent);background:rgba(79,107,255,.1);padding:3px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0}
+.cur-name-sm{font-size:12px;color:var(--ink-2);flex:1;line-height:1.3;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cur-chevron{flex-shrink:0;color:var(--ink-3);width:14px;height:14px}
+
+/* Period selects */
+.period-row{display:flex;gap:6px}
+.period-sel{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:8px;padding:8px 10px;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;transition:border-color .15s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23858AA0'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+html[data-theme="dark"] .period-sel{background-color:var(--dark-2);color:var(--ink);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555E80'/%3E%3C/svg%3E")}
+.period-sel:focus{border-color:var(--accent)}
+
+/* Swap */
+.swap-btn{align-self:center;margin-top:22px;width:40px;height:40px;border:1.5px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink-3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:16px;font-weight:700}
+.swap-btn:hover{border-color:var(--accent);color:var(--accent);transform:rotate(180deg)}
+
+/* Dollar type panel */
+.dolar-panel{margin-bottom:20px;display:none}
+.dolar-panel.visible{display:block}
+.dolar-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.dolar-tab{padding:6px 14px;border:1.5px solid var(--line);border-radius:99px;background:transparent;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--ink-3);cursor:pointer;transition:all .15s}
+.dolar-tab:hover{border-color:var(--accent);color:var(--accent)}
+.dolar-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.hist-note{font-size:12px;color:var(--ink-3);background:rgba(79,107,255,.06);border:1px solid rgba(79,107,255,.15);border-radius:8px;padding:8px 12px;line-height:1.5}
+
+/* Convert button */
+.convert-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;letter-spacing:.01em}
+.convert-btn:hover{opacity:.88}
+.convert-btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Result card */
+.result-card{background:var(--dark);border-radius:16px;padding:28px 24px;margin-bottom:16px;text-align:center;position:relative;overflow:hidden}
+html[data-theme="dark"] .result-card{background:var(--dark-2);border:1.5px solid var(--line)}
+.result-card::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:300px;background:radial-gradient(circle,rgba(79,107,255,.15) 0%,transparent 65%);pointer-events:none}
+.result-from-val{font-family:'JetBrains Mono',monospace;font-size:14px;color:rgba(255,255,255,.4);margin-bottom:4px;position:relative;z-index:1}
+.result-equals{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(255,255,255,.25);margin-bottom:8px;position:relative;z-index:1}
+.result-to-val{font-family:'JetBrains Mono',monospace;font-size:clamp(28px,6vw,44px);font-weight:700;color:var(--accent);letter-spacing:-.03em;line-height:1.1;margin-bottom:16px;position:relative;z-index:1;font-variant-numeric:tabular-nums}
+.result-rate{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(255,255,255,.35);margin-bottom:6px;position:relative;z-index:1}
+.result-type-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;background:rgba(79,107,255,.2);color:var(--accent);border-radius:99px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px;position:relative;z-index:1}
+.result-updated{font-size:11px;color:rgba(255,255,255,.2);position:relative;z-index:1}
+.result-hist-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;position:relative;z-index:1}
+
+/* Rate table */
+.rate-table-wrap{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+.rate-table{width:100%;border-collapse:collapse;font-size:13px}
+.rate-table th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.rate-table td{padding:10px 0;border-bottom:1px solid var(--line);vertical-align:middle}
+.rate-table tr:last-child td{border-bottom:none}
+.rate-table .tipo-name{font-weight:600;color:var(--ink)}
+.rate-table .tipo-desc{font-size:11px;color:var(--ink-3);margin-top:2px}
+.rate-table .precio{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--ink);text-align:right}
+.rate-table .precio.compra{color:var(--ink-3)}
+.tipo-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:8px;vertical-align:middle}
+.tipo-badge.blue{background:rgba(79,107,255,.1);color:var(--accent)}
+.tipo-badge.oficial{background:rgba(34,197,94,.1);color:#16a34a}
+html[data-theme="dark"] .tipo-badge.oficial{color:#4ade80}
+
+/* Picker modal */
+.picker-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;backdrop-filter:blur(2px)}
+.picker-overlay.open{display:block}
+.picker-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:201;background:var(--surface);border-radius:16px;width:min(460px,92vw);max-height:80vh;display:none;flex-direction:column;border:1.5px solid var(--line);box-shadow:0 24px 80px rgba(0,0,0,.25)}
+.picker-modal.open{display:flex}
+.picker-header{display:flex;align-items:center;gap:10px;padding:16px 16px 12px;border-bottom:1px solid var(--line)}
+.picker-search{flex:1;border:1.5px solid var(--line);border-radius:8px;padding:10px 14px;font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s}
+html[data-theme="dark"] .picker-search{background:var(--dark-2)}
+.picker-search:focus{border-color:var(--accent)}
+.picker-close-btn{width:34px;height:34px;border:1.5px solid var(--line);border-radius:8px;background:transparent;color:var(--ink-3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.picker-close-btn:hover{border-color:var(--ink-3);color:var(--ink)}
+.picker-list{overflow-y:auto;padding:8px}
+.picker-group-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:8px 10px 4px}
+.picker-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:background .1s}
+.picker-item:hover{background:rgba(79,107,255,.06)}
+.picker-item.selected{background:rgba(79,107,255,.1)}
+.picker-item .p-code{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);width:40px;flex-shrink:0}
+.picker-item .p-name{font-size:13px;color:var(--ink);font-weight:500}
+.picker-item .p-check{margin-left:auto;color:var(--accent);font-size:16px}
+.picker-empty{text-align:center;padding:24px;font-size:13px;color:var(--ink-3)}
+
+/* Info section */
+.info-card{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;font-size:13px;color:var(--ink-2);line-height:1.65}
+.info-card strong{color:var(--ink);font-weight:600}
+
+/* Loading spinner */
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.2);border-top-color:rgba(255,255,255,.8);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Responsive */
+@media(max-width:520px){
+  .pair-row{grid-template-columns:1fr 36px 1fr;gap:8px}
+  .swap-btn{width:36px;height:36px;font-size:14px}
+  .cur-name-sm{display:none}
+  .conv-card{padding:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="breadcrumb">
+    <a href="/">Inicio</a> / <a href="/finanzas/">Finanzas</a> / Convertidor de divisas
+  </div>
+  <h1>Convertidor de divisas</h1>
+  <p class="hero-sub">Tipo de cambio en tiempo real · Dólar blue, MEP, CCL, oficial · Historial por mes y año</p>
+</div>
+
+<div class="main">
+
+  <!-- Converter card -->
+  <div class="conv-card">
+
+    <!-- Amount -->
+    <label class="field-label" for="amount">Monto</label>
+    <div class="amount-row">
+      <input type="number" class="amount-input" id="amount" value="100000" min="0" step="any" inputmode="decimal" placeholder="0">
+    </div>
+
+    <!-- From / To -->
+    <div class="pair-row">
+      <!-- From -->
+      <div class="pair-side">
+        <label class="field-label">De</label>
+        <div class="cur-btn" id="from-btn" onclick="openPicker('from')" role="button" tabindex="0">
+          <span class="cur-code-badge" id="from-code">ARS</span>
+          <span class="cur-name-sm" id="from-name">Peso argentino</span>
+          <svg class="cur-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="period-row">
+          <select class="period-sel" id="from-month" onchange="onPeriodChange()"></select>
+          <select class="period-sel" id="from-year" onchange="onPeriodChange()"></select>
+        </div>
+      </div>
+
+      <!-- Swap -->
+      <button class="swap-btn" onclick="swapCurrencies()" title="Intercambiar" aria-label="Intercambiar monedas">⇄</button>
+
+      <!-- To -->
+      <div class="pair-side">
+        <label class="field-label">A</label>
+        <div class="cur-btn" id="to-btn" onclick="openPicker('to')" role="button" tabindex="0">
+          <span class="cur-code-badge" id="to-code">USD</span>
+          <span class="cur-name-sm" id="to-name">Dólar estadounidense</span>
+          <svg class="cur-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="period-row">
+          <select class="period-sel" id="to-month" onchange="onPeriodChange()"></select>
+          <select class="period-sel" id="to-year" onchange="onPeriodChange()"></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dollar type panel -->
+    <div class="dolar-panel" id="dolar-panel">
+      <label class="field-label">Tipo de dólar</label>
+      <div class="dolar-tabs" id="dolar-tabs"></div>
+      <p class="hist-note" id="hist-note" style="display:none">
+        ℹ️ Para fechas históricas solo está disponible el tipo de cambio oficial.
+      </p>
+    </div>
+
+    <!-- Convert -->
+    <button class="convert-btn" id="convert-btn" onclick="convert()">Convertir</button>
+  </div>
+
+  <!-- Result card -->
+  <div class="result-card" id="result-card" style="display:none">
+    <div class="result-from-val" id="r-from-val"></div>
+    <div class="result-equals">=</div>
+    <div class="result-to-val" id="r-to-val"></div>
+    <div class="result-type-badge" id="r-type-badge" style="display:none"></div>
+    <div class="result-rate" id="r-rate"></div>
+    <div class="result-updated" id="r-updated"></div>
+  </div>
+
+  <!-- Rate table (ARS dollar types) -->
+  <div class="rate-table-wrap" id="rate-table-wrap" style="display:none">
+    <div class="section-label">Cotizaciones del dólar hoy</div>
+    <table class="rate-table">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th style="text-align:right">Compra</th>
+          <th style="text-align:right">Venta</th>
+        </tr>
+      </thead>
+      <tbody id="rate-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Info -->
+  <div class="info-card" id="info-card">
+    <strong>¿Cómo funciona?</strong><br>
+    Seleccioná el monto, la moneda de origen y la de destino. Podés elegir el <strong>mes y año</strong> para ver tipos de cambio históricos. Cuando ambas fechas son el mes actual, se usan cotizaciones en tiempo real.<br><br>
+    Para conversiones con el <strong>peso argentino</strong>, podés elegir entre dólar oficial, blue, MEP (bolsa), CCL, mayorista, cripto y tarjeta. Para fechas históricas, solo está disponible el tipo oficial (BCRA).
+  </div>
+
+</div><!-- /.main -->
+
+<!-- Currency picker modal -->
+<div class="picker-overlay" id="picker-overlay" onclick="closePicker()"></div>
+<div class="picker-modal" id="picker-modal">
+  <div class="picker-header">
+    <input type="text" class="picker-search" id="picker-search" placeholder="Buscar moneda o código..." autocomplete="off" oninput="filterPicker(this.value)">
+    <button class="picker-close-btn" onclick="closePicker()" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="picker-list" id="picker-list"></div>
+</div>
+
+<footer></footer>
+<script src="/nav.js"></script>
+
+<script>
+/* ── CURRENCY DATA ─────────────────────────────────────────────────── */
+var CURRENCIES = [
+  // Prioritarios (América Latina y principales)
+  { code:'ARS', name:'Peso argentino', group:'América Latina' },
+  { code:'USD', name:'Dólar estadounidense', group:'Principales' },
+  { code:'EUR', name:'Euro', group:'Principales' },
+  { code:'BRL', name:'Real brasileño', group:'América Latina' },
+  { code:'CLP', name:'Peso chileno', group:'América Latina' },
+  { code:'UYU', name:'Peso uruguayo', group:'América Latina' },
+  { code:'PYG', name:'Guaraní paraguayo', group:'América Latina' },
+  { code:'BOB', name:'Boliviano', group:'América Latina' },
+  { code:'COP', name:'Peso colombiano', group:'América Latina' },
+  { code:'PEN', name:'Sol peruano', group:'América Latina' },
+  { code:'MXN', name:'Peso mexicano', group:'América Latina' },
+  { code:'VES', name:'Bolívar venezolano', group:'América Latina' },
+  { code:'GTQ', name:'Quetzal guatemalteco', group:'América Latina' },
+  { code:'HNL', name:'Lempira hondureño', group:'América Latina' },
+  { code:'CRC', name:'Colón costarricense', group:'América Latina' },
+  { code:'DOP', name:'Peso dominicano', group:'América Latina' },
+  { code:'PAB', name:'Balboa panameño', group:'América Latina' },
+  { code:'NIO', name:'Córdoba nicaragüense', group:'América Latina' },
+  // Principales
+  { code:'GBP', name:'Libra esterlina', group:'Principales' },
+  { code:'JPY', name:'Yen japonés', group:'Principales' },
+  { code:'CHF', name:'Franco suizo', group:'Principales' },
+  { code:'CAD', name:'Dólar canadiense', group:'Principales' },
+  { code:'AUD', name:'Dólar australiano', group:'Principales' },
+  { code:'CNY', name:'Yuan chino', group:'Principales' },
+  { code:'SEK', name:'Corona sueca', group:'Principales' },
+  { code:'NOK', name:'Corona noruega', group:'Principales' },
+  { code:'DKK', name:'Corona danesa', group:'Principales' },
+  { code:'NZD', name:'Dólar neozelandés', group:'Principales' },
+  { code:'SGD', name:'Dólar de Singapur', group:'Principales' },
+  { code:'HKD', name:'Dólar de Hong Kong', group:'Principales' },
+  // Europa
+  { code:'PLN', name:'Esloti polaco', group:'Europa' },
+  { code:'CZK', name:'Corona checa', group:'Europa' },
+  { code:'HUF', name:'Forinto húngaro', group:'Europa' },
+  { code:'RON', name:'Leu rumano', group:'Europa' },
+  { code:'BGN', name:'Lev búlgaro', group:'Europa' },
+  { code:'ISK', name:'Corona islandesa', group:'Europa' },
+  { code:'HRK', name:'Kuna croata', group:'Europa' },
+  { code:'RSD', name:'Dinar serbio', group:'Europa' },
+  { code:'UAH', name:'Grivna ucraniana', group:'Europa' },
+  { code:'ALL', name:'Lek albanés', group:'Europa' },
+  { code:'MKD', name:'Denar macedonio', group:'Europa' },
+  { code:'BAM', name:'Marco de Bosnia', group:'Europa' },
+  // Asia
+  { code:'INR', name:'Rupia india', group:'Asia' },
+  { code:'KRW', name:'Won surcoreano', group:'Asia' },
+  { code:'TWD', name:'Dólar taiwanés', group:'Asia' },
+  { code:'THB', name:'Baht tailandés', group:'Asia' },
+  { code:'MYR', name:'Ringgit malayo', group:'Asia' },
+  { code:'IDR', name:'Rupia indonesia', group:'Asia' },
+  { code:'PHP', name:'Peso filipino', group:'Asia' },
+  { code:'VND', name:'Dong vietnamita', group:'Asia' },
+  { code:'PKR', name:'Rupia pakistaní', group:'Asia' },
+  { code:'BDT', name:'Taka bangladesí', group:'Asia' },
+  { code:'LKR', name:'Rupia de Sri Lanka', group:'Asia' },
+  { code:'NPR', name:'Rupia nepalesa', group:'Asia' },
+  { code:'KZT', name:'Tenge kazajo', group:'Asia' },
+  { code:'AZN', name:'Manat azerbaiyano', group:'Asia' },
+  { code:'GEL', name:'Lari georgiano', group:'Asia' },
+  { code:'AMD', name:'Dram armenio', group:'Asia' },
+  { code:'UZS', name:'Som uzbeko', group:'Asia' },
+  { code:'MNT', name:'Tugrik mongol', group:'Asia' },
+  { code:'MMK', name:'Kyat birmano', group:'Asia' },
+  { code:'KHR', name:'Riel camboyano', group:'Asia' },
+  { code:'MVR', name:'Rufiyaa maldiva', group:'Asia' },
+  // Medio Oriente
+  { code:'AED', name:'Dírham de EAU', group:'Medio Oriente' },
+  { code:'SAR', name:'Riyal saudí', group:'Medio Oriente' },
+  { code:'ILS', name:'Séquel israelí', group:'Medio Oriente' },
+  { code:'QAR', name:'Riyal catarí', group:'Medio Oriente' },
+  { code:'KWD', name:'Dinar kuwaití', group:'Medio Oriente' },
+  { code:'BHD', name:'Dinar bareiní', group:'Medio Oriente' },
+  { code:'OMR', name:'Rial omaní', group:'Medio Oriente' },
+  { code:'JOD', name:'Dinar jordano', group:'Medio Oriente' },
+  { code:'TRY', name:'Lira turca', group:'Medio Oriente' },
+  // África
+  { code:'ZAR', name:'Rand sudafricano', group:'África' },
+  { code:'EGP', name:'Libra egipcia', group:'África' },
+  { code:'NGN', name:'Naira nigeriana', group:'África' },
+  { code:'GHS', name:'Cedi ghanés', group:'África' },
+  { code:'KES', name:'Chelín keniano', group:'África' },
+  { code:'MAD', name:'Dírham marroquí', group:'África' },
+  { code:'DZD', name:'Dinar argelino', group:'África' },
+  { code:'TND', name:'Dinar tunecino', group:'África' },
+  { code:'ETB', name:'Birr etíope', group:'África' },
+  { code:'UGX', name:'Chelín ugandés', group:'África' },
+  { code:'TZS', name:'Chelín tanzano', group:'África' },
+  { code:'XOF', name:'Franco CFA BCEAO', group:'África' },
+  { code:'XAF', name:'Franco CFA BEAC', group:'África' },
+  // Oceanía
+  { code:'FJD', name:'Dólar fiyiano', group:'Oceanía' },
+  { code:'PGK', name:'Kina de Papúa Nueva Guinea', group:'Oceanía' },
+  // Cripto (precios indicativos vía API)
+  { code:'BTC', name:'Bitcoin', group:'Cripto' },
+  { code:'ETH', name:'Ethereum', group:'Cripto' },
+  // Rublo ruso
+  { code:'RUB', name:'Rublo ruso', group:'Europa' },
+];
+
+var DOLAR_TIPOS = [
+  { key:'oficial',  label:'Oficial',  desc:'Tipo de cambio oficial BCRA' },
+  { key:'blue',     label:'Blue',     desc:'Mercado paralelo informal' },
+  { key:'bolsa',    label:'MEP',      desc:'Dólar bolsa (bonos)' },
+  { key:'contadoconliqui', label:'CCL', desc:'Contado con liquidación' },
+  { key:'mayorista',label:'Mayorista',desc:'Sector exportador/importador' },
+  { key:'cripto',   label:'Cripto',   desc:'Tipo de cambio via crypto' },
+  { key:'tarjeta',  label:'Tarjeta',  desc:'Tipo de cambio para compras en el exterior' },
+];
+
+/* ── STATE ─────────────────────────────────────────────────────────── */
+var now = new Date();
+var CUR_MONTH = now.getMonth() + 1; // 1-12
+var CUR_YEAR = now.getFullYear();
+
+var state = {
+  fromCur: 'ARS',
+  toCur: 'USD',
+  fromMonth: CUR_MONTH,
+  fromYear: CUR_YEAR,
+  toMonth: CUR_MONTH,
+  toYear: CUR_YEAR,
+  dolarType: 'blue',
+  pickerTarget: null,
+  // data
+  liveRates: null,     // USD-based rates from currency-api (latest)
+  dolares: null,       // from dolarapi.com
+  histCache: {},       // 'YYYY-MM' => USD-based rates
+  loading: false,
+};
+
+/* ── INIT ──────────────────────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', function() {
+  buildPeriodSelects();
+  renderDolarTabs();
+  updatePairUI();
+  updateDolarPanel();
+  fetchLiveData();
+});
+
+function buildPeriodSelects() {
+  var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  ['from-month','to-month'].forEach(function(id) {
+    var sel = document.getElementById(id);
+    for (var m = 1; m <= 12; m++) {
+      var opt = document.createElement('option');
+      opt.value = m;
+      opt.textContent = months[m-1].substring(0,3);
+      if (m === CUR_MONTH) opt.selected = true;
+      sel.appendChild(opt);
+    }
+  });
+  ['from-year','to-year'].forEach(function(id) {
+    var sel = document.getElementById(id);
+    for (var y = CUR_YEAR; y >= 2010; y--) {
+      var opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      if (y === CUR_YEAR) opt.selected = true;
+      sel.appendChild(opt);
+    }
+  });
+}
+
+function renderDolarTabs() {
+  var el = document.getElementById('dolar-tabs');
+  el.innerHTML = '';
+  DOLAR_TIPOS.forEach(function(t) {
+    var btn = document.createElement('button');
+    btn.className = 'dolar-tab' + (t.key === state.dolarType ? ' active' : '');
+    btn.textContent = t.label;
+    btn.title = t.desc;
+    btn.onclick = function() {
+      state.dolarType = t.key;
+      document.querySelectorAll('.dolar-tab').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+    };
+    el.appendChild(btn);
+  });
+}
+
+/* ── PERIOD CHANGE ─────────────────────────────────────────────────── */
+function onPeriodChange() {
+  state.fromMonth = +document.getElementById('from-month').value;
+  state.fromYear  = +document.getElementById('from-year').value;
+  state.toMonth   = +document.getElementById('to-month').value;
+  state.toYear    = +document.getElementById('to-year').value;
+  updateDolarPanel();
+}
+
+function isCurrentPeriod(month, year) {
+  return month === CUR_MONTH && year === CUR_YEAR;
+}
+
+function updateDolarPanel() {
+  var panel = document.getElementById('dolar-panel');
+  var note  = document.getElementById('hist-note');
+  var arsInvolved = (state.fromCur === 'ARS' || state.toCur === 'ARS');
+  var usdInvolved = (state.fromCur === 'USD' || state.toCur === 'USD');
+
+  if (arsInvolved && usdInvolved) {
+    panel.classList.add('visible');
+    var fromCurrent = isCurrentPeriod(state.fromMonth, state.fromYear);
+    var toCurrent   = isCurrentPeriod(state.toMonth, state.toYear);
+    // For historical periods, only official is available
+    if (!fromCurrent || !toCurrent) {
+      note.style.display = '';
+      // force oficial selection
+      state.dolarType = 'oficial';
+      document.querySelectorAll('.dolar-tab').forEach(function(b, i) {
+        b.classList.toggle('active', DOLAR_TIPOS[i].key === 'oficial');
+        b.disabled = DOLAR_TIPOS[i].key !== 'oficial';
+        b.style.opacity = DOLAR_TIPOS[i].key !== 'oficial' ? '0.4' : '';
+        b.style.cursor  = DOLAR_TIPOS[i].key !== 'oficial' ? 'not-allowed' : '';
+      });
+    } else {
+      note.style.display = 'none';
+      document.querySelectorAll('.dolar-tab').forEach(function(b) {
+        b.disabled = false;
+        b.style.opacity = '';
+        b.style.cursor  = '';
+      });
+    }
+  } else {
+    panel.classList.remove('visible');
+  }
+}
+
+/* ── FETCH LIVE DATA ───────────────────────────────────────────────── */
+function fetchLiveData() {
+  var btn = document.getElementById('convert-btn');
+  btn.disabled = true;
+  btn.textContent = 'Cargando...';
+
+  var p1 = fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      state.liveRates = d.usd || d;
+      // cache current period
+      var key = CUR_YEAR + '-' + pad(CUR_MONTH);
+      state.histCache[key] = state.liveRates;
+    })
+    .catch(function(){ console.warn('currency-api unavailable'); });
+
+  var p2 = fetch('https://dolarapi.com/v1/dolares')
+    .then(function(r){ return r.json(); })
+    .then(function(d){ state.dolares = d; })
+    .catch(function(){ state.dolares = null; });
+
+  Promise.all([p1, p2]).then(function() {
+    btn.disabled = false;
+    btn.textContent = 'Convertir';
+    // Auto-convert on load if default pair
+    if (state.liveRates) convert();
+    if (state.dolares) renderRateTable();
+  });
+}
+
+/* ── FETCH HISTORICAL ──────────────────────────────────────────────── */
+function fetchHistorical(year, month) {
+  var key = year + '-' + pad(month);
+  if (state.histCache[key]) return Promise.resolve(state.histCache[key]);
+
+  // Use the 15th of the target month as representative rate
+  var dateStr = year + '-' + pad(month) + '-15';
+  var url = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@' + dateStr + '/v1/currencies/usd.json';
+
+  return fetch(url)
+    .then(function(r) {
+      if (!r.ok) throw new Error('not found');
+      return r.json();
+    })
+    .then(function(d) {
+      var rates = d.usd || d;
+      state.histCache[key] = rates;
+      return rates;
+    })
+    .catch(function() {
+      // Fallback: try 1st of month
+      var dateStr2 = year + '-' + pad(month) + '-01';
+      return fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@' + dateStr2 + '/v1/currencies/usd.json')
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          var rates = d.usd || d;
+          state.histCache[key] = rates;
+          return rates;
+        });
+    });
+}
+
+/* ── CONVERT ───────────────────────────────────────────────────────── */
+function convert() {
+  var amount = parseFloat(document.getElementById('amount').value);
+  if (!amount || isNaN(amount) || amount < 0) {
+    alert('Ingresá un monto válido.');
+    return;
+  }
+
+  // Read current period state
+  onPeriodChange();
+
+  var fromCur = state.fromCur.toLowerCase();
+  var toCur   = state.toCur.toLowerCase();
+
+  var fromCurrentPeriod = isCurrentPeriod(state.fromMonth, state.fromYear);
+  var toCurrentPeriod   = isCurrentPeriod(state.toMonth, state.toYear);
+
+  var btn = document.getElementById('convert-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Convirtiendo...';
+
+  // Check if we need to use dolarapi for ARS↔USD
+  var usesDolar = (state.fromCur === 'ARS' && state.toCur === 'USD' || state.fromCur === 'USD' && state.toCur === 'ARS')
+                  && fromCurrentPeriod && toCurrentPeriod;
+
+  // Fetch both periods' rates
+  var p1 = fromCurrentPeriod ? Promise.resolve(state.liveRates) : fetchHistorical(state.fromYear, state.fromMonth);
+  var p2 = toCurrentPeriod   ? Promise.resolve(state.liveRates) : fetchHistorical(state.toYear,   state.toMonth);
+
+  Promise.all([p1, p2]).then(function(results) {
+    var fromRates = results[0];
+    var toRates   = results[1];
+
+    if (!fromRates || !toRates) {
+      showError('No se pudieron obtener los datos de tipo de cambio.');
+      btn.disabled = false;
+      btn.textContent = 'Convertir';
+      return;
+    }
+
+    var result, rateDisplay, typeBadge = null, updatedText = '';
+
+    if (usesDolar && state.dolares && state.dolarType !== 'oficial') {
+      // Use dolarapi.com rate
+      var dolarData = state.dolares.find(function(d) { return d.casa === state.dolarType; });
+      if (!dolarData) {
+        dolarData = state.dolares.find(function(d) { return d.casa === 'blue'; });
+      }
+      if (dolarData) {
+        var venta  = dolarData.venta  || 0;
+        var compra = dolarData.compra || venta;
+        var mid    = (compra + venta) / 2;
+        if (state.fromCur === 'ARS') {
+          result = amount / venta;
+          rateDisplay = '1 USD = $' + fmtNum(venta, 2) + ' ARS (venta)';
+        } else {
+          result = amount * compra;
+          rateDisplay = '1 USD = $' + fmtNum(compra, 2) + ' ARS (compra)';
+        }
+        var tipo = DOLAR_TIPOS.find(function(t){ return t.key === state.dolarType; });
+        typeBadge = tipo ? 'Dólar ' + tipo.label : '';
+        // updated timestamp
+        if (dolarData.fechaActualizacion) {
+          var d = new Date(dolarData.fechaActualizacion);
+          updatedText = 'Actualizado ' + formatRelative(d);
+        }
+      } else {
+        // Fallback to currency-api
+        result = calcFromRates(amount, fromCur, toCur, fromRates, toRates);
+        rateDisplay = buildRateDisplay(fromRates, toRates, fromCur, toCur);
+      }
+    } else {
+      // Use currency-api rates
+      result = calcFromRates(amount, fromCur, toCur, fromRates, toRates);
+      rateDisplay = buildRateDisplay(fromRates, toRates, fromCur, toCur);
+      if (fromCurrentPeriod && toCurrentPeriod) {
+        if (fromRates['_date']) updatedText = 'Cotización del ' + fromRates['_date'];
+        else updatedText = 'Cotización oficial (BCRA) vía currency-api';
+        if (usesDolar) typeBadge = 'Dólar Oficial';
+      } else {
+        var fromLabel = MONTHS_ES[state.fromMonth-1] + ' ' + state.fromYear;
+        var toLabel   = MONTHS_ES[state.toMonth-1]   + ' ' + state.toYear;
+        if (state.fromMonth === state.toMonth && state.fromYear === state.toYear) {
+          updatedText = 'Tipo de cambio histórico: ' + fromLabel;
+        } else {
+          updatedText = fromLabel + ' → ' + toLabel + ' (tipo oficial)';
+        }
+        if (usesDolar) typeBadge = 'Dólar Oficial (histórico)';
+      }
+    }
+
+    showResult(amount, state.fromCur, result, state.toCur, rateDisplay, typeBadge, updatedText);
+    btn.disabled = false;
+    btn.textContent = 'Convertir';
+  }).catch(function(err) {
+    showError('Error al obtener el tipo de cambio. Intentá de nuevo.');
+    console.error(err);
+    btn.disabled = false;
+    btn.textContent = 'Convertir';
+  });
+}
+
+var MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+function calcFromRates(amount, fromCur, toCur, fromRates, toRates) {
+  // All rates are relative to 1 USD
+  // fromRates[X] = how many X per 1 USD
+  if (fromCur === 'usd' && toCur === 'usd') return amount;
+
+  var fromRate = fromRates[fromCur]; // how many fromCur per 1 USD
+  var toRate   = toRates[toCur];    // how many toCur per 1 USD (at toRates date)
+
+  if (!fromRate || !toRate) return null;
+
+  // amount [fromCur] → USD → toCur
+  // USD amount = amount / fromRate
+  // toCur amount = USD amount * toRate
+  return (amount / fromRate) * toRate;
+}
+
+function buildRateDisplay(fromRates, toRates, fromCur, toCur) {
+  var fromRate = fromRates[fromCur];
+  var toRate   = toRates[toCur];
+  if (!fromRate || !toRate) return '';
+
+  var rate = toRate / fromRate; // how many toCur per 1 fromCur
+  var fromCode = fromCur.toUpperCase();
+  var toCode   = toCur.toUpperCase();
+
+  if (rate >= 1) {
+    return '1 ' + fromCode + ' = ' + fmtNum(rate, rate >= 100 ? 2 : 4) + ' ' + toCode;
+  } else {
+    return '1 ' + toCode + ' = ' + fmtNum(1/rate, (1/rate) >= 100 ? 2 : 4) + ' ' + fromCode;
+  }
+}
+
+/* ── UI UPDATE ─────────────────────────────────────────────────────── */
+function showResult(amount, fromCur, result, toCur, rate, badge, updated) {
+  var card = document.getElementById('result-card');
+  card.style.display = '';
+
+  document.getElementById('r-from-val').textContent = fmtAmount(amount, fromCur) + ' ' + fromCur;
+  document.getElementById('r-to-val').textContent = result != null
+    ? fmtAmount(result, toCur) + ' ' + toCur
+    : '— (sin datos)';
+
+  var badgeEl = document.getElementById('r-type-badge');
+  if (badge) {
+    badgeEl.textContent = badge;
+    badgeEl.style.display = '';
+  } else {
+    badgeEl.style.display = 'none';
+  }
+
+  document.getElementById('r-rate').textContent = rate || '';
+  document.getElementById('r-updated').textContent = updated || '';
+}
+
+function showError(msg) {
+  var card = document.getElementById('result-card');
+  card.style.display = '';
+  document.getElementById('r-from-val').textContent = '';
+  document.getElementById('r-to-val').textContent = '⚠ ' + msg;
+  document.getElementById('r-type-badge').style.display = 'none';
+  document.getElementById('r-rate').textContent = '';
+  document.getElementById('r-updated').textContent = '';
+}
+
+function renderRateTable() {
+  if (!state.dolares) return;
+  var tbody = document.getElementById('rate-tbody');
+  tbody.innerHTML = '';
+
+  var arsUsdInvolved = (state.fromCur === 'ARS' || state.toCur === 'ARS');
+  var wrap = document.getElementById('rate-table-wrap');
+
+  if (!arsUsdInvolved && !(state.fromCur === 'ARS' || state.toCur === 'ARS')) {
+    wrap.style.display = 'none';
+    return;
+  }
+
+  state.dolares.forEach(function(d) {
+    if (!d.venta && !d.compra) return;
+    var tr = document.createElement('tr');
+    var tipo = DOLAR_TIPOS.find(function(t){ return t.key === d.casa; });
+    var label = tipo ? tipo.label : (d.nombre || d.casa);
+    var badge = d.casa === 'blue' ? '<span class="tipo-badge blue">Paralelo</span>'
+              : d.casa === 'oficial' ? '<span class="tipo-badge oficial">Oficial</span>'
+              : '';
+    tr.innerHTML = '<td><div class="tipo-name">' + label + badge + '</div>'
+      + (tipo ? '<div class="tipo-desc">' + tipo.desc + '</div>' : '')
+      + '</td>'
+      + '<td class="precio compra">' + (d.compra ? '$' + fmtNum(d.compra, 2) : '—') + '</td>'
+      + '<td class="precio">' + (d.venta ? '$' + fmtNum(d.venta, 2) : '—') + '</td>';
+    tbody.appendChild(tr);
+  });
+
+  if (tbody.childElementCount > 0) {
+    wrap.style.display = '';
+  }
+}
+
+function updatePairUI() {
+  var fromInfo = CURRENCIES.find(function(c){ return c.code === state.fromCur; });
+  var toInfo   = CURRENCIES.find(function(c){ return c.code === state.toCur; });
+  document.getElementById('from-code').textContent = state.fromCur;
+  document.getElementById('from-name').textContent = fromInfo ? fromInfo.name : state.fromCur;
+  document.getElementById('to-code').textContent   = state.toCur;
+  document.getElementById('to-name').textContent   = toInfo ? toInfo.name : state.toCur;
+  updateDolarPanel();
+
+  // Show/hide rate table
+  var arsUsd = (state.fromCur === 'ARS' || state.toCur === 'ARS');
+  if (arsUsd && state.dolares) renderRateTable();
+  else document.getElementById('rate-table-wrap').style.display = 'none';
+}
+
+/* ── SWAP ──────────────────────────────────────────────────────────── */
+function swapCurrencies() {
+  var tmp = state.fromCur;
+  state.fromCur = state.toCur;
+  state.toCur   = tmp;
+  // Also swap periods
+  var tmpM = state.fromMonth, tmpY = state.fromYear;
+  state.fromMonth = state.toMonth; state.fromYear = state.toYear;
+  state.toMonth = tmpM; state.toYear = tmpY;
+  document.getElementById('from-month').value = state.fromMonth;
+  document.getElementById('from-year').value  = state.fromYear;
+  document.getElementById('to-month').value   = state.toMonth;
+  document.getElementById('to-year').value    = state.toYear;
+  updatePairUI();
+}
+
+/* ── PICKER ────────────────────────────────────────────────────────── */
+function openPicker(target) {
+  state.pickerTarget = target;
+  document.getElementById('picker-overlay').classList.add('open');
+  document.getElementById('picker-modal').classList.add('open');
+  var search = document.getElementById('picker-search');
+  search.value = '';
+  renderPickerList('');
+  setTimeout(function(){ search.focus(); }, 100);
+}
+
+function closePicker() {
+  document.getElementById('picker-overlay').classList.remove('open');
+  document.getElementById('picker-modal').classList.remove('open');
+  state.pickerTarget = null;
+}
+
+function filterPicker(q) {
+  renderPickerList(q.trim().toLowerCase());
+}
+
+function renderPickerList(q) {
+  var list = document.getElementById('picker-list');
+  var selected = state.pickerTarget === 'from' ? state.fromCur : state.toCur;
+
+  var filtered = q
+    ? CURRENCIES.filter(function(c){
+        return c.code.toLowerCase().includes(q) || c.name.toLowerCase().includes(q);
+      })
+    : CURRENCIES;
+
+  if (!filtered.length) {
+    list.innerHTML = '<div class="picker-empty">Sin resultados para "' + q + '"</div>';
+    return;
+  }
+
+  var html = '';
+  var lastGroup = null;
+
+  filtered.forEach(function(c) {
+    if (!q && c.group !== lastGroup) {
+      html += '<div class="picker-group-label">' + c.group + '</div>';
+      lastGroup = c.group;
+    }
+    var isSel = c.code === selected;
+    html += '<div class="picker-item' + (isSel ? ' selected' : '') + '" onclick="selectCurrency(\'' + c.code + '\')">'
+      + '<span class="p-code">' + c.code + '</span>'
+      + '<span class="p-name">' + c.name + '</span>'
+      + (isSel ? '<span class="p-check">✓</span>' : '')
+      + '</div>';
+  });
+
+  list.innerHTML = html;
+}
+
+function selectCurrency(code) {
+  if (state.pickerTarget === 'from') state.fromCur = code;
+  else state.toCur = code;
+  closePicker();
+  updatePairUI();
+  // Clear previous result
+  document.getElementById('result-card').style.display = 'none';
+}
+
+/* ── FORMATTERS ────────────────────────────────────────────────────── */
+function fmtNum(n, dec) {
+  if (n == null) return '—';
+  return n.toLocaleString('es-AR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+
+function fmtAmount(n, cur) {
+  if (n == null) return '—';
+  var dec = 2;
+  // Currencies with 0 decimals
+  var zeroDecCurs = ['JPY','KRW','IDR','VND','CLP','PYG','UGX','TZS','XOF','XAF','KHR','MMK','UZS','MNT','IRR','LAK'];
+  if (zeroDecCurs.indexOf(cur) !== -1) dec = 0;
+  // Very large or very small numbers
+  if (n < 0.001 && n > 0) dec = 8;
+  else if (n < 0.01) dec = 6;
+  else if (n < 1) dec = 4;
+  else if (n > 1000000) dec = 0;
+  return n.toLocaleString('es-AR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+
+function formatRelative(d) {
+  var diff = Date.now() - d.getTime();
+  var mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'hace un momento';
+  if (mins < 60) return 'hace ' + mins + ' min';
+  var hrs = Math.floor(mins / 60);
+  if (hrs < 24) return 'hace ' + hrs + ' h';
+  return d.toLocaleDateString('es-AR');
+}
+
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+/* ── KEYBOARD ACCESSIBILITY ────────────────────────────────────────── */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closePicker();
+});
+</script>
+
+</body>
+</html>

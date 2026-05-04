@@ -139,10 +139,17 @@ html[data-theme="dark"] .picker-search{background:var(--dark-2)}
 .info-card{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;font-size:13px;color:var(--ink-2);line-height:1.65}
 .info-card strong{color:var(--ink);font-weight:600}
 
-/* ── Fix: nav.js pisa .result-card con fondo claro en light mode ── */
-/* Necesitamos especificidad mayor que (0,2,1) de nav.js */
-html body.divisas-page .result-card{background:#0A0E1A !important;border:none !important;}
-html[data-theme="dark"] body.divisas-page .result-card{background:#141929 !important;}
+/* ── Result card: textos legibles en modo claro ───────────────────
+   nav.js pone fondo celeste claro en .result-card (light mode).
+   Los textos blancos quedan invisibles → los hacemos oscuros.
+   En dark mode nav.js ya pone fondo #141929 y los blancos se ven. */
+html:not([data-theme="dark"]) body.divisas-page .result-from-val{color:rgba(10,14,26,.55) !important;}
+html:not([data-theme="dark"]) body.divisas-page .result-equals{color:rgba(10,14,26,.3) !important;}
+html:not([data-theme="dark"]) body.divisas-page .result-rate{color:rgba(10,14,26,.5) !important;}
+html:not([data-theme="dark"]) body.divisas-page .result-updated{color:rgba(10,14,26,.35) !important;}
+html:not([data-theme="dark"]) body.divisas-page .result-hist-label{color:rgba(10,14,26,.4) !important;}
+/* Ocultar el glow azul (se ve raro sobre fondo claro) */
+html:not([data-theme="dark"]) body.divisas-page .result-card::before{display:none !important;}
 
 /* Loading spinner */
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.2);border-top-color:rgba(255,255,255,.8);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
@@ -258,7 +265,8 @@ html[data-theme="dark"] body.divisas-page .result-card{background:#141929 !impor
   <div class="info-card" id="info-card">
     <strong>¿Cómo funciona?</strong><br>
     Seleccioná el monto, la moneda de origen y la de destino. Podés elegir el <strong>mes y año</strong> para ver tipos de cambio históricos. Cuando ambas fechas son el mes actual, se usan cotizaciones en tiempo real.<br><br>
-    Para conversiones con el <strong>peso argentino</strong>, podés elegir entre dólar oficial, blue, MEP (bolsa), CCL, mayorista, cripto y tarjeta. Para fechas históricas, solo está disponible el tipo oficial (BCRA).
+    Para conversiones con el <strong>peso argentino</strong>, podés elegir entre dólar oficial, blue, MEP, CCL, mayorista, cripto y tarjeta. Para fechas históricas solo está disponible el tipo oficial (BCRA).<br><br>
+    <span style="color:var(--ink-3);font-size:12px">📅 Los datos históricos están disponibles desde enero de 2023 según la cobertura de la API.</span>
   </div>
 
 </div><!-- /.main -->
@@ -393,7 +401,10 @@ var DOLAR_TIPOS = [
 /* ── STATE ─────────────────────────────────────────────────────────── */
 var now = new Date();
 var CUR_MONTH = now.getMonth() + 1; // 1-12
-var CUR_YEAR = now.getFullYear();
+var CUR_YEAR  = now.getFullYear();
+/* La API (fawazahmed0/currency-api vía jsDelivr) tiene datos desde: */
+var API_MIN_YEAR  = 2023;
+var API_MIN_MONTH = 1; // Enero 2023
 
 var state = {
   fromCur: 'ARS',
@@ -438,28 +449,51 @@ function updatePageMeta() {
     '/divisas/?de=' + state.fromCur.toLowerCase() + '&a=' + state.toCur.toLowerCase());
 }
 
+var MONTHS_NAMES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
 function buildPeriodSelects() {
-  var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  ['from-month','to-month'].forEach(function(id) {
-    var sel = document.getElementById(id);
-    for (var m = 1; m <= 12; m++) {
-      var opt = document.createElement('option');
-      opt.value = m;
-      opt.textContent = months[m-1].substring(0,3);
-      if (m === CUR_MONTH) opt.selected = true;
-      sel.appendChild(opt);
-    }
+  buildYearSel('from-year', 'from-month');
+  buildYearSel('to-year',   'to-month');
+  buildMonthSel('from-month', +document.getElementById('from-year').value);
+  buildMonthSel('to-month',   +document.getElementById('to-year').value);
+
+  /* Cuando cambia el año → reconstruir los meses válidos */
+  document.getElementById('from-year').addEventListener('change', function() {
+    buildMonthSel('from-month', +this.value);
+    onPeriodChange();
   });
-  ['from-year','to-year'].forEach(function(id) {
-    var sel = document.getElementById(id);
-    for (var y = CUR_YEAR; y >= 2015; y--) {
-      var opt = document.createElement('option');
-      opt.value = y;
-      opt.textContent = y;
-      if (y === CUR_YEAR) opt.selected = true;
-      sel.appendChild(opt);
-    }
+  document.getElementById('to-year').addEventListener('change', function() {
+    buildMonthSel('to-month', +this.value);
+    onPeriodChange();
   });
+}
+
+function buildYearSel(yearId, monthId) {
+  var sel = document.getElementById(yearId);
+  sel.innerHTML = '';
+  for (var y = CUR_YEAR; y >= API_MIN_YEAR; y--) {
+    var opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    if (y === CUR_YEAR) opt.selected = true;
+    sel.appendChild(opt);
+  }
+}
+
+function buildMonthSel(monthId, forYear) {
+  var sel = document.getElementById(monthId);
+  var prevMonth = +sel.value || CUR_MONTH;
+  sel.innerHTML = '';
+  var minM = (forYear === API_MIN_YEAR) ? API_MIN_MONTH : 1;
+  var maxM = (forYear === CUR_YEAR)     ? CUR_MONTH     : 12;
+  for (var m = minM; m <= maxM; m++) {
+    var opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = MONTHS_NAMES[m-1].substring(0, 3);
+    /* Mantener mes previo si sigue siendo válido, sino el más reciente */
+    if (m === Math.min(Math.max(prevMonth, minM), maxM)) opt.selected = true;
+    sel.appendChild(opt);
+  }
 }
 
 function renderDolarTabs() {
@@ -679,8 +713,8 @@ function convert() {
         else updatedText = 'Cotización oficial (BCRA) vía currency-api';
         if (usesDolar) typeBadge = 'Dólar Oficial';
       } else {
-        var fromLabel = MONTHS_ES[state.fromMonth-1] + ' ' + state.fromYear;
-        var toLabel   = MONTHS_ES[state.toMonth-1]   + ' ' + state.toYear;
+        var fromLabel = MONTHS_NAMES[state.fromMonth-1] + ' ' + state.fromYear;
+        var toLabel   = MONTHS_NAMES[state.toMonth-1]   + ' ' + state.toYear;
         if (state.fromMonth === state.toMonth && state.fromYear === state.toYear) {
           updatedText = 'Tipo de cambio histórico: ' + fromLabel;
         } else {
@@ -700,8 +734,6 @@ function convert() {
     btn.textContent = 'Convertir';
   });
 }
-
-var MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
 function calcFromRates(amount, fromCur, toCur, fromRates, toRates) {
   // All rates are relative to 1 USD

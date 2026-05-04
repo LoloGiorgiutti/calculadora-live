@@ -1211,66 +1211,91 @@
     root.innerHTML = html;
   })();
 
-  /* ── SEPARADOR DE MILES ─────────────────────────────────────
-     Muestra el valor con puntos cada 3 dígitos en todos los
-     input[type="number"]. No modifica .value → el código JS de
-     cada página sigue leyendo el número crudo sin cambios.
-     Cuando el input está enfocado, la superposición se oculta y
-     el usuario edita el número directamente.                   */
+  /* ── SEPARADOR DE MILES EN TIEMPO REAL ──────────────────────
+     Convierte input[type="number"] a type="text" con formateo
+     en tiempo real (dots cada 3 dígitos mientras el usuario tipea).
+     Usa Object.defineProperty para que .value siga devolviendo el
+     número crudo → todo el código JS existente sigue funcionando
+     sin cambios (parseFloat, comparaciones, asignaciones, etc.)   */
   (function() {
+    /* Descriptor nativo guardado ANTES de cualquier override */
+    var _proto = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+
+    /* "100000.5" → "100.000,5" */
+    function toDisplay(raw) {
+      var parts = String(raw).split('.');
+      var intFmt = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      return parts.length > 1 ? intFmt + ',' + parts[1] : intFmt;
+    }
+
+    /* "100.000,5" → "100000.5" (JS decimal) */
+    function toRaw(display) {
+      return display.replace(/\./g, '').replace(',', '.');
+    }
+
     function initFmt(inp) {
-      if (inp.dataset.nfDone || inp.type === 'hidden') return;
+      var skip = ['hidden','range','checkbox','radio','file','submit','button','reset','image','color','date','month','week','time','datetime-local'];
+      if (inp.dataset.nfDone || skip.indexOf(inp.type) !== -1) return;
       inp.dataset.nfDone = '1';
 
-      // Contenedor relativo
-      var wrap = document.createElement('span');
-      wrap.style.cssText = 'position:relative;display:block;';
-      inp.parentNode.insertBefore(wrap, inp);
-      wrap.appendChild(inp);
+      /* Cambiar a text con teclado numérico */
+      inp.type = 'text';
+      if (!inp.getAttribute('inputmode')) inp.setAttribute('inputmode', 'decimal');
 
-      // Span de display superpuesto
-      var lbl = document.createElement('span');
-      lbl.setAttribute('aria-hidden', 'true');
-      lbl.style.cssText = 'position:absolute;top:0;left:0;right:0;bottom:0;'
-        + 'pointer-events:none;display:none;align-items:center;'
-        + 'white-space:nowrap;overflow:hidden;z-index:1;';
-      wrap.appendChild(lbl);
+      /* Override .value en la instancia (no en el prototipo).
+         proto.get/set acceden al slot interno nativo, sin recursar. */
+      Object.defineProperty(inp, 'value', {
+        get: function() {
+          return toRaw(_proto.get.call(inp));
+        },
+        set: function(v) {
+          var s = (v === null || v === undefined) ? '' : String(v);
+          var n = parseFloat(toRaw(s));
+          if (s === '' || s === '-') {
+            _proto.set.call(inp, s);
+          } else if (!isNaN(n)) {
+            _proto.set.call(inp, toDisplay(s.replace(/\./g, '').replace(',', '.')));
+          } else {
+            _proto.set.call(inp, s);
+          }
+        },
+        configurable: true
+      });
 
-      function show() {
-        var raw = inp.value;
-        var n = parseFloat(raw);
-        if (isNaN(n) || raw === '') { lbl.style.display = 'none'; inp.style.color = ''; return; }
-        var cs = window.getComputedStyle(inp);
-        lbl.style.display = 'flex';
-        lbl.style.fontFamily = cs.fontFamily;
-        lbl.style.fontSize = cs.fontSize;
-        lbl.style.fontWeight = cs.fontWeight;
-        lbl.style.letterSpacing = cs.letterSpacing;
-        lbl.style.color = cs.color;
-        lbl.style.background = cs.backgroundColor;
-        lbl.style.borderRadius = cs.borderRadius;
-        lbl.style.border = cs.border;
-        lbl.style.padding = cs.paddingTop + ' ' + cs.paddingRight + ' ' + cs.paddingBottom + ' ' + cs.paddingLeft;
-        var decimals = (raw.indexOf('.') !== -1) ? Math.min(raw.split('.')[1].length, 6) : 0;
-        lbl.textContent = n.toLocaleString('es-AR', {
-          minimumFractionDigits: decimals,
-          maximumFractionDigits: 6
-        });
-        inp.style.color = 'transparent';
-        inp.style.caretColor = 'currentColor';
+      /* Formatear valor inicial */
+      var initRaw = toRaw(_proto.get.call(inp));
+      var initN = parseFloat(initRaw);
+      if (!isNaN(initN) && initRaw !== '') {
+        _proto.set.call(inp, toDisplay(initRaw));
       }
 
-      function hide() {
-        lbl.style.display = 'none';
-        inp.style.color = '';
-        inp.style.caretColor = '';
-      }
+      /* Formateo en tiempo real con corrección de cursor */
+      inp.addEventListener('input', function() {
+        var cur = _proto.get.call(inp);
+        var pos = inp.selectionStart || 0;
 
-      inp.addEventListener('focus',  hide);
-      inp.addEventListener('blur',   show);
-      inp.addEventListener('change', function() { if (document.activeElement !== inp) show(); });
+        /* Contar dígitos antes del cursor (ignora puntos de formato) */
+        var digBefore = cur.substring(0, pos).replace(/[^\d]/g, '').length;
 
-      setTimeout(show, 120); // después de que el CSS propio de la página cargue
+        /* Limpiar: solo dígitos y coma decimal */
+        var cleaned = cur.replace(/[^\d,]/g, '');
+        var parts   = cleaned.split(',');
+        var intPart = parts[0].substring(0, 15);
+        var decPart = parts.length > 1 ? ',' + parts[1].substring(0, 6) : '';
+        var fmt     = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + decPart;
+
+        _proto.set.call(inp, fmt);
+
+        /* Restaurar cursor: encontrar posición tras los mismos dígitos */
+        var newPos = fmt.length, dCnt = 0;
+        for (var i = 0; i < fmt.length; i++) {
+          if (/\d/.test(fmt[i])) {
+            dCnt++;
+            if (dCnt === digBefore) { newPos = i + 1; break; }
+          }
+        }
+        try { inp.setSelectionRange(newPos, newPos); } catch (e) {}
+      });
     }
 
     document.querySelectorAll('input[type="number"]').forEach(initFmt);

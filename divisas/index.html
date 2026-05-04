@@ -276,7 +276,7 @@ html:not([data-theme="dark"]) body.divisas-page .result-card::before{display:non
     <strong>¿Cómo funciona?</strong><br>
     Seleccioná el monto, la moneda de origen y la de destino. Podés elegir el <strong>mes y año</strong> para ver tipos de cambio históricos. Cuando ambas fechas son el mes actual, se usan cotizaciones en tiempo real.<br><br>
     Para conversiones con el <strong>peso argentino</strong>, podés elegir entre dólar oficial, blue, MEP, CCL, mayorista, cripto y tarjeta. Para fechas históricas solo está disponible el tipo oficial (BCRA).<br><br>
-    <span style="color:var(--ink-3);font-size:12px">📅 Los datos históricos están disponibles desde enero de 2023 según la cobertura de la API.</span>
+    <span style="color:var(--ink-3);font-size:12px">📅 <strong>Historial desde 1999:</strong> EUR, GBP, JPY, BRL, ARS y BTC tienen datos desde enero de 1999 (BTC desde julio de 2010). Desde enero de 2023 en adelante, se usan cotizaciones en tiempo real vía API. Los datos históricos son promedios mensuales aproximados.</span>
   </div>
 
 </div><!-- /.main -->
@@ -293,6 +293,7 @@ html:not([data-theme="dark"]) body.divisas-page .result-card::before{display:non
 
 <footer></footer>
 <script src="/nav.js"></script>
+<script src="rates-hist.js"></script>
 
 <script>
 /* ── CURRENCY DATA ─────────────────────────────────────────────────── */
@@ -415,6 +416,9 @@ var CUR_YEAR  = now.getFullYear();
 /* La API (fawazahmed0/currency-api vía jsDelivr) tiene datos desde: */
 var API_MIN_YEAR  = 2023;
 var API_MIN_MONTH = 1; // Enero 2023
+/* Base de datos estática (rates-hist.js) cubre desde: */
+var HIST_MIN_YEAR  = 1999;
+var HIST_MIN_MONTH = 1;
 
 var state = {
   fromCur: 'ARS',
@@ -482,7 +486,7 @@ function buildPeriodSelects() {
 function buildYearSel(yearId, monthId) {
   var sel = document.getElementById(yearId);
   sel.innerHTML = '';
-  for (var y = CUR_YEAR; y >= API_MIN_YEAR; y--) {
+  for (var y = CUR_YEAR; y >= HIST_MIN_YEAR; y--) {
     var opt = document.createElement('option');
     opt.value = y;
     opt.textContent = y;
@@ -495,8 +499,8 @@ function buildMonthSel(monthId, forYear) {
   var sel = document.getElementById(monthId);
   var prevMonth = +sel.value || CUR_MONTH;
   sel.innerHTML = '';
-  var minM = (forYear === API_MIN_YEAR) ? API_MIN_MONTH : 1;
-  var maxM = (forYear === CUR_YEAR)     ? CUR_MONTH     : 12;
+  var minM = (forYear === HIST_MIN_YEAR) ? HIST_MIN_MONTH : 1;
+  var maxM = (forYear === CUR_YEAR)      ? CUR_MONTH      : 12;
   for (var m = minM; m <= maxM; m++) {
     var opt = document.createElement('option');
     opt.value = m;
@@ -637,16 +641,56 @@ function fetchLiveData() {
 }
 
 /* ── FETCH HISTORICAL ──────────────────────────────────────────────── */
+function getStaticRates(year, month) {
+  /* Busca en HIST_RATES (base de datos estática 1999-2022).
+     Si no hay entrada exacta para ese mes, busca el mes anterior más cercano. */
+  if (typeof HIST_RATES === 'undefined') return null;
+  var key = year + '-' + pad(month);
+  var entry = HIST_RATES[key];
+  if (!entry) {
+    /* Intenta meses cercanos dentro del mismo año */
+    for (var delta = 1; delta <= 3; delta++) {
+      var m2 = month - delta;
+      if (m2 >= 1) { entry = HIST_RATES[year + '-' + pad(m2)]; if (entry) break; }
+      var m3 = month + delta;
+      if (m3 <= 12) { entry = HIST_RATES[year + '-' + pad(m3)]; if (entry) break; }
+    }
+  }
+  if (!entry) return null;
+  /* Construir objeto en formato compatible con currency-api */
+  var rates = { usd: 1 };
+  ['eur','gbp','jpy','brl','ars','btc'].forEach(function(c) {
+    if (entry[c] != null) rates[c] = entry[c];
+  });
+  rates._source = 'static';
+  return rates;
+}
+
 function fetchHistorical(year, month) {
   var key = year + '-' + pad(month);
   if (state.histCache[key]) return Promise.resolve(state.histCache[key]);
+
+  /* Para fechas anteriores a la API → usar base de datos estática */
+  if (year < API_MIN_YEAR) {
+    var staticRates = getStaticRates(year, month);
+    if (staticRates) {
+      state.histCache[key] = staticRates;
+      return Promise.resolve(staticRates);
+    }
+    return Promise.reject(new Error('sin datos históricos para ese período'));
+  }
 
   // Intentar múltiples fechas del mes en orden
   var days = ['15', '01', '20', '28'];
   var base = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@';
 
   function tryDate(idx) {
-    if (idx >= days.length) return Promise.reject(new Error('sin datos'));
+    if (idx >= days.length) {
+      /* Último fallback: intentar con la DB estática si existe */
+      var fb = getStaticRates(year, month);
+      if (fb) { state.histCache[key] = fb; return Promise.resolve(fb); }
+      return Promise.reject(new Error('sin datos'));
+    }
     var dateStr = year + '-' + pad(month) + '-' + days[idx];
     return fetch(base + dateStr + '/v1/currencies/usd.json')
       .then(function(r) {
@@ -761,10 +805,13 @@ function convert() {
       } else {
         var fromLabel = MONTHS_NAMES[state.fromMonth-1] + ' ' + state.fromYear;
         var toLabel   = MONTHS_NAMES[state.toMonth-1]   + ' ' + state.toYear;
+        var fromStatic = fromRates && fromRates._source === 'static';
+        var toStatic   = toRates   && toRates._source   === 'static';
+        var sourceNote = (fromStatic || toStatic) ? ' · datos históricos aproximados' : ' · tipo oficial';
         if (state.fromMonth === state.toMonth && state.fromYear === state.toYear) {
-          updatedText = 'Tipo de cambio histórico: ' + fromLabel;
+          updatedText = 'Promedio mensual: ' + fromLabel + sourceNote;
         } else {
-          updatedText = fromLabel + ' → ' + toLabel + ' (tipo oficial)';
+          updatedText = fromLabel + ' → ' + toLabel + sourceNote;
         }
         if (usesDolar) typeBadge = 'Dólar Oficial (histórico)';
       }

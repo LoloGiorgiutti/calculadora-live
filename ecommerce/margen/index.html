@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Margen Ecommerce — ML, Tienda Nube, Shopify</title>
+<meta name="description" content="Calculá tu margen real incluyendo comisiones de plataforma (Mercado Libre, Tienda Nube, Shopify), costo de envío, pasarela de pago e inversión en ads.">
+<link rel="canonical" href="https://calculadora.live/ecommerce/margen/">
+<meta property="og:title" content="Calculadora de Margen Ecommerce — ML, Tienda Nube, Shopify">
+<meta property="og:description" content="Margen real con comisiones, envío, pasarela y ads. Semáforo de rentabilidad en tiempo real.">
+<meta property="og:url" content="https://calculadora.live/ecommerce/margen/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;
+    --line:#E4E7EE;--accent:#4F6BFF;--accent-soft:#EEF1FF;
+    --dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;
+    --green:#16a34a;--green-soft:#dcfce7;--red:#dc2626;--red-soft:#fee2e2;
+    --yellow:#d97706;--yellow-soft:#fef3c7;
+  }
+  html[data-theme="dark"]{
+    --bg:#080A12;--surface:#0F1220;--ink:#E2E4F0;--ink-2:#9CA3C0;--ink-3:#555E80;--line:#1F2438;
+    --green-soft:rgba(22,163,74,.15);--red-soft:rgba(220,38,38,.15);--yellow-soft:rgba(217,119,6,.15);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  header{background:var(--dark);border-bottom:1px solid var(--dark-line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 24px}
+  .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em;color:#fff}
+  .logo span{color:var(--accent)}
+
+  .hero{background:var(--dark);color:#fff;padding:40px 0 80px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-100px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(79,107,255,.1) 0%,transparent 60%);pointer-events:none}
+  .hero-inner{max-width:940px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+  .breadcrumb{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:24px}
+  .breadcrumb a{color:rgba(255,255,255,.4);transition:color .12s}
+  .breadcrumb a:hover{color:rgba(255,255,255,.7)}
+  .breadcrumb .sep{opacity:.3}
+  .breadcrumb .curr{color:rgba(255,255,255,.7)}
+  .hero h1{font-size:36px;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .hero p{font-size:15px;color:rgba(255,255,255,.55);line-height:1.6}
+
+  .page{max-width:940px;margin:-44px auto 0;padding:0 24px 80px;position:relative;z-index:2;display:grid;grid-template-columns:380px 1fr;gap:20px;align-items:start}
+
+  /* Inputs card */
+  .inputs-card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px}
+  .card-title{font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;margin-bottom:18px}
+
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .field:last-child{margin-bottom:0}
+  .field label{font-size:12px;font-weight:600;color:var(--ink-2);font-family:'JetBrains Mono',monospace}
+  .field-row{display:flex;gap:8px;align-items:stretch}
+  .input-wrap{position:relative;display:flex;align-items:stretch;flex:1}
+  .input-wrap input{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px;font-weight:500;font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s;min-width:0}
+  .input-wrap input:focus{border-color:var(--accent)}
+  .input-suffix{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ink-3);pointer-events:none}
+  .input-wrap.has-suffix input{padding-right:36px}
+  .cur-select,.plat-select{border:1.5px solid var(--line);border-radius:10px;background:var(--bg);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);padding:0 10px;cursor:pointer;outline:none;transition:border-color .15s}
+  .cur-select:focus,.plat-select:focus{border-color:var(--accent)}
+  .plat-select{font-size:12px;width:100%;padding:10px 12px}
+
+  .toggle-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .toggle-label{font-size:11px;color:var(--ink-3);font-family:'JetBrains Mono',monospace}
+  .toggle-btn{padding:3px 10px;border:1.5px solid var(--line);border-radius:6px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:600;background:var(--bg);color:var(--ink-3);cursor:pointer;transition:all .12s}
+  .toggle-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  /* Result card */
+  .result-card{background:var(--dark-2);border:1.5px solid var(--dark-line);border-radius:16px;padding:24px;color:#fff}
+  .res-header{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-line);display:flex;justify-content:space-between;align-items:center}
+  .res-precio-label{font-size:11px;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.35);margin-bottom:4px}
+  .res-precio-val{font-size:22px;font-weight:700;letter-spacing:-0.03em}
+
+  .semaforo{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace}
+  .semaforo.green{background:rgba(22,163,74,.2);color:#4ade80}
+  .semaforo.yellow{background:rgba(217,119,6,.2);color:#fbbf24}
+  .semaforo.red{background:rgba(220,38,38,.2);color:#f87171}
+  .semaforo-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+  .desglose-title{font-size:11px;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  .desglose-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .desglose-row:last-child{border-bottom:none}
+  .desglose-name{font-size:13px;color:rgba(255,255,255,.6)}
+  .desglose-val{font-size:13px;font-family:'JetBrains Mono',monospace;font-weight:600;color:rgba(255,255,255,.85)}
+  .desglose-val.neg{color:#f87171}
+
+  .margenes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;padding-top:20px;border-top:1px solid var(--dark-line)}
+  .margen-block{background:rgba(255,255,255,.04);border-radius:12px;padding:14px}
+  .margen-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+  .margen-val{font-size:28px;font-weight:700;letter-spacing:-0.03em}
+  .margen-val.green{color:#4ade80}
+  .margen-val.yellow{color:#fbbf24}
+  .margen-val.red{color:#f87171}
+  .margen-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;font-family:'JetBrains Mono',monospace}
+
+  .extras-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  .extra-block{background:rgba(255,255,255,.04);border-radius:12px;padding:14px}
+  .extra-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+  .extra-val{font-size:18px;font-weight:700;letter-spacing:-0.02em;color:rgba(255,255,255,.9)}
+  .be-roas-block{margin-top:12px;background:rgba(79,107,255,.12);border:1px solid rgba(79,107,255,.25);border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center}
+  .be-roas-block.hidden{display:none}
+  .be-roas-label{font-size:12px;color:rgba(255,255,255,.5);font-family:'JetBrains Mono',monospace}
+  .be-roas-val{font-size:20px;font-weight:700;letter-spacing:-0.03em;color:var(--accent)}
+
+  html[data-theme="dark"] .input-wrap input{background:var(--dark-2);border-color:var(--line);color:var(--ink)}
+  html[data-theme="dark"] .cur-select,.plat-select{background:var(--dark-2);border-color:var(--line)}
+
+  @media(max-width:860px){
+    .page{grid-template-columns:1fr;gap:16px}
+    .hero h1{font-size:26px}
+    .hero-inner,.page{padding-left:16px;padding-right:16px}
+    .margenes-grid,.extras-row{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo">Calculadora<span>.live</span></a>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a>
+      <span class="sep">/</span>
+      <a href="/ecommerce/">Ecommerce</a>
+      <span class="sep">/</span>
+      <span class="curr">Margen de Ecommerce</span>
+    </div>
+    <h1>💰 Margen de Ecommerce</h1>
+    <p>Calculá tu margen real incluyendo comisiones de plataforma, envío, pasarela de pago e inversión publicitaria. En tiempo real.</p>
+  </div>
+</section>
+
+<div class="page">
+
+  <!-- INPUTS -->
+  <div class="inputs-card">
+    <div class="card-title">Datos de la venta</div>
+
+    <!-- Precio de venta -->
+    <div class="field">
+      <label>Precio de venta</label>
+      <div class="field-row">
+        <div class="input-wrap">
+          <input type="number" id="precio" inputmode="decimal" placeholder="0" min="0" step="any" oninput="calcMargen()">
+        </div>
+        <select class="cur-select" id="cur" onchange="calcMargen()">
+          <option>ARS</option><option>USD</option><option>EUR</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Costo del producto -->
+    <div class="field">
+      <label>Costo del producto</label>
+      <div class="toggle-row">
+        <button class="toggle-btn active" id="btn-costo-monto" onclick="setCostoMode('monto')">$ Monto</button>
+        <button class="toggle-btn" id="btn-costo-pct" onclick="setCostoMode('pct')">% Porcentaje</button>
+      </div>
+      <div class="input-wrap has-suffix" id="wrap-costo">
+        <input type="number" id="costo" inputmode="decimal" placeholder="0" min="0" step="any" oninput="calcMargen()">
+        <span class="input-suffix" id="suffix-costo"></span>
+      </div>
+    </div>
+
+    <!-- Plataforma -->
+    <div class="field">
+      <label>Plataforma de venta</label>
+      <select class="plat-select" id="plataforma" onchange="onPlatChange()">
+        <option value="13">Mercado Libre (13%)</option>
+        <option value="3">Tienda Nube (3%)</option>
+        <option value="2">Shopify (2%)</option>
+        <option value="0">WooCommerce (0%)</option>
+        <option value="custom">Personalizado</option>
+      </select>
+    </div>
+    <div class="field" id="field-plat-custom" style="display:none">
+      <label>Comisión personalizada</label>
+      <div class="input-wrap has-suffix">
+        <input type="number" id="plat-custom" inputmode="decimal" placeholder="0" min="0" max="100" step="any" oninput="calcMargen()">
+        <span class="input-suffix">%</span>
+      </div>
+    </div>
+
+    <!-- Envío -->
+    <div class="field">
+      <label>Costo de envío al cliente</label>
+      <div class="input-wrap">
+        <input type="number" id="envio" inputmode="decimal" placeholder="0" min="0" step="any" oninput="calcMargen()">
+      </div>
+    </div>
+
+    <!-- Pasarela -->
+    <div class="field">
+      <label>Comisión pasarela de pago</label>
+      <div class="input-wrap has-suffix">
+        <input type="number" id="pasarela" inputmode="decimal" placeholder="3" value="3" min="0" max="100" step="any" oninput="calcMargen()">
+        <span class="input-suffix">%</span>
+      </div>
+    </div>
+
+    <!-- Ads -->
+    <div class="field">
+      <label>Inversión en ads (por venta)</label>
+      <div class="input-wrap">
+        <input type="number" id="ads" inputmode="decimal" placeholder="0" min="0" step="any" oninput="calcMargen()">
+      </div>
+    </div>
+
+    <!-- Otros -->
+    <div class="field">
+      <label>Otros costos</label>
+      <div class="input-wrap has-suffix">
+        <input type="number" id="otros" inputmode="decimal" placeholder="0" min="0" max="100" step="any" oninput="calcMargen()">
+        <span class="input-suffix">%</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESULTADO -->
+  <div class="result-card">
+    <div class="res-header">
+      <div>
+        <div class="res-precio-label">Precio de venta</div>
+        <div class="res-precio-val" id="r-precio">—</div>
+      </div>
+      <div class="semaforo green hidden" id="semaforo">
+        <span class="semaforo-dot"></span>
+        <span id="semaforo-txt">—</span>
+      </div>
+    </div>
+
+    <div class="desglose-title">Desglose de costos</div>
+    <div class="desglose-row">
+      <span class="desglose-name">Costo del producto</span>
+      <span class="desglose-val neg" id="r-costo">—</span>
+    </div>
+    <div class="desglose-row">
+      <span class="desglose-name">Comisión plataforma</span>
+      <span class="desglose-val neg" id="r-plataforma">—</span>
+    </div>
+    <div class="desglose-row">
+      <span class="desglose-name">Costo de envío</span>
+      <span class="desglose-val neg" id="r-envio">—</span>
+    </div>
+    <div class="desglose-row">
+      <span class="desglose-name">Comisión pasarela</span>
+      <span class="desglose-val neg" id="r-pasarela">—</span>
+    </div>
+    <div class="desglose-row" id="row-ads">
+      <span class="desglose-name">Inversión ads</span>
+      <span class="desglose-val neg" id="r-ads">—</span>
+    </div>
+    <div class="desglose-row" id="row-otros">
+      <span class="desglose-name">Otros costos</span>
+      <span class="desglose-val neg" id="r-otros">—</span>
+    </div>
+
+    <div class="margenes-grid">
+      <div class="margen-block">
+        <div class="margen-label">Margen bruto</div>
+        <div class="margen-val" id="r-mb">—</div>
+        <div class="margen-sub" id="r-gb">Ganancia bruta: —</div>
+      </div>
+      <div class="margen-block">
+        <div class="margen-label">Margen neto</div>
+        <div class="margen-val" id="r-mn">—</div>
+        <div class="margen-sub" id="r-gn">Ganancia neta: —</div>
+      </div>
+    </div>
+
+    <div class="extras-row">
+      <div class="extra-block">
+        <div class="extra-label">Markup</div>
+        <div class="extra-val" id="r-markup">—</div>
+      </div>
+      <div class="extra-block">
+        <div class="extra-label">Ganancia nominal</div>
+        <div class="extra-val" id="r-ganancia">—</div>
+      </div>
+    </div>
+
+    <div class="be-roas-block hidden" id="be-roas-block">
+      <div>
+        <div class="be-roas-label">BE ROAS (mínimo para rentabilidad)</div>
+      </div>
+      <div class="be-roas-val" id="r-be-roas">—</div>
+    </div>
+  </div>
+
+</div>
+
+<footer></footer>
+<script src="/nav.js"></script>
+<script>
+var costoMode = 'monto'; // 'monto' o 'pct'
+
+function setCostoMode(m) {
+  costoMode = m;
+  document.getElementById('btn-costo-monto').classList.toggle('active', m==='monto');
+  document.getElementById('btn-costo-pct').classList.toggle('active', m==='pct');
+  document.getElementById('suffix-costo').textContent = m==='pct' ? '%' : '';
+  document.getElementById('wrap-costo').classList.toggle('has-suffix', m==='pct');
+  document.getElementById('costo').placeholder = m==='pct' ? '40' : '0';
+  calcMargen();
+}
+
+function onPlatChange() {
+  var v = document.getElementById('plataforma').value;
+  document.getElementById('field-plat-custom').style.display = v==='custom' ? '' : 'none';
+  calcMargen();
+}
+
+function getNum(id, def) {
+  var v = parseFloat(document.getElementById(id).value);
+  return isNaN(v) ? (def !== undefined ? def : 0) : v;
+}
+
+function fmt(v, cur) {
+  if (!isFinite(v)) return '—';
+  return cur + ' ' + v.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+function fmtPct(v) {
+  if (!isFinite(v)) return '—';
+  return v.toLocaleString('es-AR', {minimumFractionDigits:1, maximumFractionDigits:1}) + '%';
+}
+
+function colorMargen(v) {
+  if (v > 30) return 'green';
+  if (v > 15) return 'yellow';
+  return 'red';
+}
+
+function calcMargen() {
+  var cur = document.getElementById('cur').value;
+  var precio = getNum('precio');
+  var platVal = document.getElementById('plataforma').value;
+  var platPct = platVal === 'custom' ? getNum('plat-custom') : parseFloat(platVal);
+  var pasarelaPct = getNum('pasarela', 3);
+  var envio = getNum('envio');
+  var ads = getNum('ads');
+  var otrosPct = getNum('otros');
+
+  // Costo producto
+  var costoProducto;
+  if (costoMode === 'pct') {
+    var costoPct = getNum('costo-pct', 0) || getNum('costo', 0);
+    costoProducto = precio * (costoPct / 100);
+  } else {
+    costoProducto = getNum('costo');
+  }
+
+  var costoPlatforma = precio * (platPct / 100);
+  var costoPasarela = precio * (pasarelaPct / 100);
+  var costoOtros = precio * (otrosPct / 100);
+
+  var gananciaBruta = precio - costoProducto;
+  var gananciaNeta = precio - costoProducto - costoPlatforma - envio - costoPasarela - ads - costoOtros;
+  var margenBruto = precio > 0 ? (gananciaBruta / precio) * 100 : 0;
+  var margenNeto = precio > 0 ? (gananciaNeta / precio) * 100 : 0;
+  var markup = costoProducto > 0 ? (gananciaBruta / costoProducto) * 100 : 0;
+  var gananciaNetaSinAds = gananciaNeta + ads;
+  var beRoas = gananciaNetaSinAds > 0 ? precio / gananciaNetaSinAds : 0;
+
+  // Mostrar
+  document.getElementById('r-precio').textContent = precio > 0 ? fmt(precio, cur) : '—';
+  document.getElementById('r-costo').textContent = precio > 0 ? '−' + fmt(costoProducto, cur) : '—';
+  document.getElementById('r-plataforma').textContent = precio > 0 ? '−' + fmt(costoPlatforma, cur) : '—';
+  document.getElementById('r-envio').textContent = precio > 0 ? '−' + fmt(envio, cur) : '—';
+  document.getElementById('r-pasarela').textContent = precio > 0 ? '−' + fmt(costoPasarela, cur) : '—';
+  document.getElementById('r-ads').textContent = precio > 0 ? '−' + fmt(ads, cur) : '—';
+  document.getElementById('r-otros').textContent = precio > 0 ? '−' + fmt(costoOtros, cur) : '—';
+
+  var mbEl = document.getElementById('r-mb');
+  var mnEl = document.getElementById('r-mn');
+  mbEl.textContent = precio > 0 ? fmtPct(margenBruto) : '—';
+  mnEl.textContent = precio > 0 ? fmtPct(margenNeto) : '—';
+  mbEl.className = 'margen-val ' + colorMargen(margenBruto);
+  mnEl.className = 'margen-val ' + colorMargen(margenNeto);
+
+  document.getElementById('r-gb').textContent = 'Ganancia bruta: ' + (precio > 0 ? fmt(gananciaBruta, cur) : '—');
+  document.getElementById('r-gn').textContent = 'Ganancia neta: ' + (precio > 0 ? fmt(gananciaNeta, cur) : '—');
+  document.getElementById('r-markup').textContent = costoProducto > 0 ? fmtPct(markup) : '—';
+  document.getElementById('r-ganancia').textContent = precio > 0 ? fmt(gananciaNeta, cur) : '—';
+
+  // Semáforo
+  var sem = document.getElementById('semaforo');
+  var semTxt = document.getElementById('semaforo-txt');
+  if (precio > 0) {
+    sem.classList.remove('hidden');
+    var col = colorMargen(margenNeto);
+    sem.className = 'semaforo ' + col;
+    semTxt.textContent = col==='green' ? 'Rentable' : col==='yellow' ? 'Margen bajo' : 'Pérdida';
+  } else {
+    sem.classList.add('hidden');
+  }
+
+  // BE ROAS
+  var beBlock = document.getElementById('be-roas-block');
+  if (ads > 0 && precio > 0) {
+    beBlock.classList.remove('hidden');
+    document.getElementById('r-be-roas').textContent = beRoas > 0 ? beRoas.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:2}) + 'x' : '—';
+  } else {
+    beBlock.classList.add('hidden');
+  }
+}
+
+// Inicializar
+setCostoMode('monto');
+calcMargen();
+</script>
+</body>
+</html>

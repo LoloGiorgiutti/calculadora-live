@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyección de Negocio Ecommerce — Calculadora.live</title>
+<meta name="description" content="Proyectá la facturación y ganancias de tu negocio a 6, 12 o 24 meses. Escenarios optimista, neutro y pesimista. Gráfico SVG en tiempo real.">
+<link rel="canonical" href="https://calculadora.live/ecommerce/proyeccion/">
+<meta property="og:title" content="Proyección de Negocio Ecommerce — Calculadora.live">
+<meta property="og:description" content="Tres escenarios de crecimiento con gráfico mes a mes. Proyectá facturación y ganancia sin necesidad de Excel.">
+<meta property="og:url" content="https://calculadora.live/ecommerce/proyeccion/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;
+    --line:#E4E7EE;--accent:#4F6BFF;--accent-soft:#EEF1FF;
+    --dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;
+    --green:#16a34a;--red:#dc2626;--yellow:#d97706;
+  }
+  html[data-theme="dark"]{
+    --bg:#080A12;--surface:#0F1220;--ink:#E2E4F0;--ink-2:#9CA3C0;--ink-3:#555E80;--line:#1F2438;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  header{background:var(--dark);border-bottom:1px solid var(--dark-line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 24px}
+  .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em;color:#fff}
+  .logo span{color:var(--accent)}
+
+  .hero{background:var(--dark);color:#fff;padding:40px 0 80px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-100px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(79,107,255,.1) 0%,transparent 60%);pointer-events:none}
+  .hero-inner{max-width:1040px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+  .breadcrumb{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:24px}
+  .breadcrumb a{color:rgba(255,255,255,.4);transition:color .12s}
+  .breadcrumb a:hover{color:rgba(255,255,255,.7)}
+  .breadcrumb .sep{opacity:.3}
+  .breadcrumb .curr{color:rgba(255,255,255,.7)}
+  .hero h1{font-size:36px;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .hero p{font-size:15px;color:rgba(255,255,255,.55);line-height:1.6}
+
+  .page{max-width:1040px;margin:-44px auto 0;padding:0 24px 80px;position:relative;z-index:2}
+
+  /* Top row: inputs + escenario */
+  .top-row{display:grid;grid-template-columns:320px 1fr;gap:16px;margin-bottom:16px;align-items:start}
+
+  /* Inputs */
+  .inputs-card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:20px}
+  .card-title{font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;margin-bottom:14px}
+  .field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+  .field:last-child{margin-bottom:0}
+  .field label{font-size:11px;font-weight:600;color:var(--ink-3);font-family:'JetBrains Mono',monospace}
+  .field-row{display:flex;gap:6px}
+  .input-wrap{position:relative;display:flex;align-items:stretch;flex:1}
+  .input-wrap input{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14px;font-weight:500;font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s;min-width:0}
+  .input-wrap input:focus{border-color:var(--accent)}
+  .input-suffix{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ink-3);pointer-events:none}
+  .input-wrap.has-suffix input{padding-right:32px}
+  .cur-select{border:1.5px solid var(--line);border-radius:10px;background:var(--bg);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);padding:0 8px;cursor:pointer;outline:none}
+
+  /* Escenario + controles */
+  .esc-card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:20px}
+  .esc-tabs{display:flex;gap:8px;margin-bottom:14px}
+  .esc-tab{flex:1;padding:10px 8px;border:1.5px solid var(--line);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center;font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink-3)}
+  .esc-tab.active{border-color:var(--accent);color:#fff}
+  .esc-tab.pesimista.active{background:#dc2626;border-color:#dc2626}
+  .esc-tab.neutro.active{background:#d97706;border-color:#d97706}
+  .esc-tab.optimista.active{background:#16a34a;border-color:#16a34a}
+  .ritmo-title{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ink-3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+  .ritmo-btns{display:flex;gap:6px;margin-bottom:14px}
+  .ritmo-btn{flex:1;padding:8px;border:1.5px solid var(--line);border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center;font-family:'JetBrains Mono',monospace;background:var(--bg);color:var(--ink-3)}
+  .ritmo-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .horizonte-row{display:flex;align-items:center;gap:10px}
+  .horizonte-label{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ink-3);font-weight:600}
+  .hz-select{border:1.5px solid var(--line);border-radius:8px;background:var(--bg);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--accent);padding:6px 10px;cursor:pointer;outline:none}
+  .tasa-display{margin-top:12px;padding:10px 14px;background:var(--accent-soft);border-radius:10px;font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600}
+
+  /* Gráfico */
+  .chart-card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+  .chart-title{font-size:13px;font-weight:600;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+  .chart-legend{display:flex;gap:14px;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ink-3)}
+  .legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+  #svg-chart{width:100%;height:260px;display:block}
+
+  /* KPI cards */
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+  .kpi-card{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:16px}
+  .kpi-label{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+  .kpi-val{font-size:20px;font-weight:700;letter-spacing:-0.03em;color:var(--accent)}
+  .kpi-sub{font-size:11px;color:var(--ink-3);margin-top:3px;font-family:'JetBrains Mono',monospace}
+
+  /* Tabla */
+  .tabla-card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;overflow:hidden}
+  .tabla-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);cursor:pointer}
+  .tabla-header-txt{font-size:13px;font-weight:600}
+  .tabla-toggle{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--accent)}
+  .tabla-body{display:none}
+  .tabla-body.open{display:block}
+  table{width:100%;border-collapse:collapse}
+  th{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;padding:10px 16px;text-align:left;border-bottom:1px solid var(--line);background:var(--bg)}
+  td{font-size:13px;padding:10px 16px;border-bottom:1px solid var(--line)}
+  tr:last-child td{border-bottom:none}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .pos{color:var(--green)}
+  .neg{color:var(--red)}
+
+  html[data-theme="dark"] .input-wrap input{background:var(--dark-2);border-color:var(--line);color:var(--ink)}
+  html[data-theme="dark"] .esc-tab,.ritmo-btn{background:var(--dark-2)}
+  html[data-theme="dark"] .tasa-display{background:rgba(79,107,255,.12)}
+  html[data-theme="dark"] th{background:var(--dark-2)}
+
+  @media(max-width:900px){
+    .top-row{grid-template-columns:1fr}
+    .kpi-row{grid-template-columns:1fr 1fr}
+    .hero h1{font-size:26px}
+    .hero-inner,.page{padding-left:16px;padding-right:16px}
+    #svg-chart{height:200px}
+  }
+  @media(max-width:480px){
+    .kpi-row{grid-template-columns:1fr 1fr}
+    .esc-tabs{flex-direction:column}
+    .ritmo-btns{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo">Calculadora<span>.live</span></a>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a>
+      <span class="sep">/</span>
+      <a href="/ecommerce/">Ecommerce</a>
+      <span class="sep">/</span>
+      <span class="curr">Proyección de negocio</span>
+    </div>
+    <h1>📈 Proyección de negocio</h1>
+    <p>Proyectá facturación y ganancias a 6, 12 o 24 meses con tres escenarios y gráfico SVG en tiempo real. Sin librerías externas.</p>
+  </div>
+</section>
+
+<div class="page">
+
+  <div class="top-row">
+    <!-- INPUTS -->
+    <div class="inputs-card">
+      <div class="card-title">Situación actual</div>
+      <div class="field">
+        <label>Facturación mensual actual</label>
+        <div class="field-row">
+          <div class="input-wrap">
+            <input type="number" id="facturacion" inputmode="decimal" placeholder="0" min="0" step="any" oninput="calcProyeccion()">
+          </div>
+          <select class="cur-select" id="cur" onchange="calcProyeccion()">
+            <option>ARS</option><option>USD</option><option>EUR</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Margen neto actual</label>
+        <div class="input-wrap has-suffix">
+          <input type="number" id="margen" inputmode="decimal" placeholder="20" min="0" max="100" step="any" oninput="calcProyeccion()">
+          <span class="input-suffix">%</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Inversión mensual en ads</label>
+        <div class="input-wrap">
+          <input type="number" id="inv-ads" inputmode="decimal" placeholder="0" min="0" step="any" oninput="calcProyeccion()">
+        </div>
+      </div>
+      <div class="field">
+        <label>ROAS actual</label>
+        <div class="input-wrap">
+          <input type="number" id="roas" inputmode="decimal" placeholder="4.5" min="0" step="any" oninput="calcProyeccion()">
+        </div>
+      </div>
+    </div>
+
+    <!-- ESCENARIO + CONTROLES -->
+    <div class="esc-card">
+      <div class="card-title">Escenario de crecimiento</div>
+      <div class="esc-tabs">
+        <button class="esc-tab pesimista" id="etab-pesimista" onclick="setEscenario('pesimista')">📉 Pesimista</button>
+        <button class="esc-tab neutro active" id="etab-neutro" onclick="setEscenario('neutro')">➡️ Neutro</button>
+        <button class="esc-tab optimista" id="etab-optimista" onclick="setEscenario('optimista')">📈 Optimista</button>
+      </div>
+      <div class="ritmo-title">Intensidad</div>
+      <div class="ritmo-btns">
+        <button class="ritmo-btn" id="rbtn-desacelerar" onclick="setRitmo('desacelerar')">Desacelerar</button>
+        <button class="ritmo-btn active" id="rbtn-mantener" onclick="setRitmo('mantener')">Mantener ritmo</button>
+        <button class="ritmo-btn" id="rbtn-acelerar" onclick="setRitmo('acelerar')">Acelerar</button>
+      </div>
+      <div class="horizonte-row">
+        <span class="horizonte-label">Horizonte:</span>
+        <select class="hz-select" id="horizonte" onchange="calcProyeccion()">
+          <option value="6">6 meses</option>
+          <option value="12" selected>12 meses</option>
+          <option value="24">24 meses</option>
+        </select>
+      </div>
+      <div class="tasa-display" id="tasa-display">Tasa mensual: — %</div>
+    </div>
+  </div>
+
+  <!-- GRÁFICO SVG -->
+  <div class="chart-card">
+    <div class="chart-title">
+      <span>Facturación proyectada</span>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:var(--accent)"></span>Facturación</span>
+        <span><span class="legend-dot" style="background:#16a34a"></span>Ganancia</span>
+      </div>
+    </div>
+    <svg id="svg-chart" viewBox="0 0 800 260" preserveAspectRatio="none"></svg>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">Facturación acumulada</div>
+      <div class="kpi-val" id="k-fact-acum">—</div>
+      <div class="kpi-sub" id="k-fact-acum-sub">en todo el período</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Ganancia acumulada</div>
+      <div class="kpi-val" id="k-gan-acum">—</div>
+      <div class="kpi-sub">con el margen actual</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Facturación último mes</div>
+      <div class="kpi-val" id="k-fact-last">—</div>
+      <div class="kpi-sub" id="k-last-mes">mes final</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Ganancia último mes</div>
+      <div class="kpi-val" id="k-gan-last">—</div>
+      <div class="kpi-sub">mes final</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Crecimiento total</div>
+      <div class="kpi-val" id="k-crecim">—</div>
+      <div class="kpi-sub">vs. mes inicial</div>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="tabla-card">
+    <div class="tabla-header" onclick="toggleTabla()">
+      <span class="tabla-header-txt">Detalle mes a mes</span>
+      <span class="tabla-toggle" id="tabla-toggle-txt">▼ Ver tabla</span>
+    </div>
+    <div class="tabla-body" id="tabla-body">
+      <table>
+        <thead>
+          <tr>
+            <th>Mes</th>
+            <th>Facturación</th>
+            <th>Ganancia</th>
+            <th>Crecimiento</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-rows"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<footer></footer>
+<script src="/nav.js"></script>
+<script>
+var escenario = 'neutro';
+var ritmo = 'mantener';
+
+// Rangos: [min, mid, max] % mensual
+var RANGOS = {
+  pesimista: [-2, 0.5, 3],
+  neutro:    [3, 5.5, 8],
+  optimista: [8, 14, 20]
+};
+
+function getTasa() {
+  var r = RANGOS[escenario];
+  if (ritmo === 'desacelerar') return r[0];
+  if (ritmo === 'mantener') return r[1];
+  return r[2]; // acelerar
+}
+
+function setEscenario(e) {
+  escenario = e;
+  ['pesimista','neutro','optimista'].forEach(function(x){
+    document.getElementById('etab-'+x).classList.toggle('active', x===e);
+  });
+  calcProyeccion();
+}
+
+function setRitmo(r) {
+  ritmo = r;
+  ['desacelerar','mantener','acelerar'].forEach(function(x){
+    document.getElementById('rbtn-'+x).classList.toggle('active', x===r);
+  });
+  calcProyeccion();
+}
+
+function toggleTabla() {
+  var body = document.getElementById('tabla-body');
+  var txt = document.getElementById('tabla-toggle-txt');
+  var open = body.classList.toggle('open');
+  txt.textContent = open ? '▲ Ocultar tabla' : '▼ Ver tabla';
+}
+
+function getNum(id, def) {
+  var v = parseFloat(document.getElementById(id).value);
+  return isNaN(v) ? (def !== undefined ? def : 0) : v;
+}
+
+function abrev(v) {
+  if (v >= 1e9) return (v/1e9).toLocaleString('es-AR',{maximumFractionDigits:1}) + 'B';
+  if (v >= 1e6) return (v/1e6).toLocaleString('es-AR',{maximumFractionDigits:1}) + 'M';
+  if (v >= 1e3) return (v/1e3).toLocaleString('es-AR',{maximumFractionDigits:0}) + 'K';
+  return v.toLocaleString('es-AR',{maximumFractionDigits:0});
+}
+
+function fmt2(v) {
+  return v.toLocaleString('es-AR',{minimumFractionDigits:0,maximumFractionDigits:0});
+}
+
+function calcProyeccion() {
+  var factBase = getNum('facturacion');
+  var margenPct = getNum('margen', 20);
+  var horizonte = parseInt(document.getElementById('horizonte').value);
+  var cur = document.getElementById('cur').value;
+  var tasa = getTasa();
+
+  document.getElementById('tasa-display').textContent = 'Tasa mensual: ' + tasa.toLocaleString('es-AR',{minimumFractionDigits:1,maximumFractionDigits:1}) + '% (' + escenario + ' · ' + ritmo + ')';
+
+  if (!factBase) {
+    // Limpiar gráfico
+    document.getElementById('svg-chart').innerHTML = '<text x="400" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#858AA0">Ingresá la facturación mensual para ver la proyección</text>';
+    return;
+  }
+
+  // Calcular series
+  var factSerie = [];
+  var ganSerie = [];
+  var f = factBase;
+  for (var i = 1; i <= horizonte; i++) {
+    f = f * (1 + tasa / 100);
+    factSerie.push(f);
+    ganSerie.push(f * margenPct / 100);
+  }
+
+  // Totales
+  var factAcum = factSerie.reduce(function(a,b){return a+b;}, 0);
+  var ganAcum = ganSerie.reduce(function(a,b){return a+b;}, 0);
+  var factLast = factSerie[factSerie.length - 1];
+  var ganLast = ganSerie[ganSerie.length - 1];
+  var crecim = factBase > 0 ? ((factLast - factBase) / factBase) * 100 : 0;
+
+  document.getElementById('k-fact-acum').textContent = cur + ' ' + abrev(factAcum);
+  document.getElementById('k-gan-acum').textContent = cur + ' ' + abrev(ganAcum);
+  document.getElementById('k-fact-last').textContent = cur + ' ' + abrev(factLast);
+  document.getElementById('k-gan-last').textContent = cur + ' ' + abrev(ganLast);
+  var crecimEl = document.getElementById('k-crecim');
+  crecimEl.textContent = (crecim >= 0 ? '+' : '') + crecim.toLocaleString('es-AR',{minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+  crecimEl.style.color = crecim >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('k-last-mes').textContent = 'mes ' + horizonte;
+
+  // Tabla
+  var rows = '';
+  var prevF = factBase;
+  for (var j = 0; j < factSerie.length; j++) {
+    var fc = factSerie[j];
+    var gc = ganSerie[j];
+    var delta = prevF > 0 ? ((fc - prevF) / prevF) * 100 : 0;
+    var deltaStr = (delta >= 0 ? '+' : '') + delta.toLocaleString('es-AR',{minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+    var deltaCls = delta >= 0 ? 'pos' : 'neg';
+    rows += '<tr>'
+      + '<td>Mes ' + (j+1) + '</td>'
+      + '<td class="mono">' + cur + ' ' + fmt2(fc) + '</td>'
+      + '<td class="mono">' + cur + ' ' + fmt2(gc) + '</td>'
+      + '<td class="mono ' + deltaCls + '">' + deltaStr + '</td>'
+      + '</tr>';
+    prevF = fc;
+  }
+  document.getElementById('tabla-rows').innerHTML = rows;
+
+  // SVG
+  drawChart(factSerie, ganSerie, cur);
+}
+
+function drawChart(factSerie, ganSerie, cur) {
+  var W = 800, H = 260;
+  var padL = 62, padR = 20, padT = 20, padB = 36;
+  var chartW = W - padL - padR;
+  var chartH = H - padT - padB;
+  var n = factSerie.length;
+
+  var maxVal = Math.max.apply(null, factSerie.concat(ganSerie));
+  if (maxVal <= 0) return;
+  maxVal = maxVal * 1.1;
+
+  function xPos(i) { return padL + (i / (n - 1 || 1)) * chartW; }
+  function yPos(v) { return padT + chartH - (v / maxVal) * chartH; }
+
+  // Y axis ticks
+  var yTicks = 4;
+  var yLines = '';
+  var yLabels = '';
+  for (var k = 0; k <= yTicks; k++) {
+    var yv = (maxVal / yTicks) * k;
+    var yp = yPos(yv);
+    yLines += '<line x1="' + padL + '" y1="' + yp + '" x2="' + (W-padR) + '" y2="' + yp + '" stroke="#E4E7EE" stroke-width="1"/>';
+    yLabels += '<text x="' + (padL-6) + '" y="' + (yp+4) + '" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#858AA0">' + abrev(yv) + '</text>';
+  }
+
+  // X axis labels
+  var xLabels = '';
+  var step = n <= 12 ? 1 : Math.ceil(n / 12);
+  for (var i = 0; i < n; i++) {
+    if (i % step !== 0 && i !== n-1) continue;
+    var xp = xPos(i);
+    xLabels += '<text x="' + xp + '" y="' + (H - 6) + '" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#858AA0">M' + (i+1) + '</text>';
+  }
+
+  // Facturación path + area
+  var factPoints = factSerie.map(function(v,i){ return xPos(i) + ',' + yPos(v); });
+  var factPath = 'M ' + factPoints.join(' L ');
+  var factArea = factPath + ' L ' + xPos(n-1) + ',' + (padT+chartH) + ' L ' + padL + ',' + (padT+chartH) + ' Z';
+
+  // Ganancia path + area
+  var ganPoints = ganSerie.map(function(v,i){ return xPos(i) + ',' + yPos(v); });
+  var ganPath = 'M ' + ganPoints.join(' L ');
+  var ganArea = ganPath + ' L ' + xPos(n-1) + ',' + (padT+chartH) + ' L ' + padL + ',' + (padT+chartH) + ' Z';
+
+  var svg = ''
+    + '<defs>'
+    + '<linearGradient id="gf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4F6BFF" stop-opacity="0.2"/><stop offset="100%" stop-color="#4F6BFF" stop-opacity="0.01"/></linearGradient>'
+    + '<linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#16a34a" stop-opacity="0.2"/><stop offset="100%" stop-color="#16a34a" stop-opacity="0.01"/></linearGradient>'
+    + '</defs>'
+    + yLines + yLabels + xLabels
+    + '<path d="' + factArea + '" fill="url(#gf)"/>'
+    + '<path d="' + ganArea + '" fill="url(#gg)"/>'
+    + '<path d="' + factPath + '" fill="none" stroke="#4F6BFF" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>'
+    + '<path d="' + ganPath + '" fill="none" stroke="#16a34a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+
+  // Puntos finales
+  var lastFx = xPos(n-1), lastFy = yPos(factSerie[n-1]);
+  var lastGx = xPos(n-1), lastGy = yPos(ganSerie[n-1]);
+  svg += '<circle cx="' + lastFx + '" cy="' + lastFy + '" r="4" fill="#4F6BFF"/>';
+  svg += '<circle cx="' + lastGx + '" cy="' + lastGy + '" r="3.5" fill="#16a34a"/>';
+
+  document.getElementById('svg-chart').innerHTML = svg;
+}
+
+// Init
+calcProyeccion();
+</script>
+</body>
+</html>

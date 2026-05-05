@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KPIs de Ecommerce — ROAS, CAC, LTV, Margen — Calculadora.live</title>
+<meta name="description" content="Calculá ROAS real, BE ROAS, CAC, LTV, margen neto y más. Tres niveles de detalle: básico, completo y total. En tiempo real.">
+<link rel="canonical" href="https://calculadora.live/ecommerce/kpis/">
+<meta property="og:title" content="KPIs de Ecommerce — ROAS, CAC, LTV, Margen">
+<meta property="og:description" content="Calculá ROAS real, BE ROAS, CAC, LTV y margen neto. Tres niveles de detalle, en tiempo real.">
+<meta property="og:url" content="https://calculadora.live/ecommerce/kpis/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;
+    --line:#E4E7EE;--accent:#4F6BFF;--accent-soft:#EEF1FF;
+    --dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;
+    --green:#16a34a;--green-soft:#dcfce7;--red:#dc2626;--red-soft:#fee2e2;
+    --yellow:#d97706;--yellow-soft:#fef3c7;
+  }
+  html[data-theme="dark"]{
+    --bg:#080A12;--surface:#0F1220;--ink:#E2E4F0;--ink-2:#9CA3C0;--ink-3:#555E80;--line:#1F2438;
+    --green-soft:rgba(22,163,74,.15);--red-soft:rgba(220,38,38,.15);--yellow-soft:rgba(217,119,6,.15);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  header{background:var(--dark);border-bottom:1px solid var(--dark-line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 24px}
+  .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em;color:#fff}
+  .logo span{color:var(--accent)}
+
+  .hero{background:var(--dark);color:#fff;padding:40px 0 80px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-100px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(79,107,255,.1) 0%,transparent 60%);pointer-events:none}
+  .hero-inner{max-width:960px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+  .breadcrumb{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:24px}
+  .breadcrumb a{color:rgba(255,255,255,.4);transition:color .12s}
+  .breadcrumb a:hover{color:rgba(255,255,255,.7)}
+  .breadcrumb .sep{opacity:.3}
+  .breadcrumb .curr{color:rgba(255,255,255,.7)}
+  .hero h1{font-size:36px;font-weight:700;letter-spacing:-0.03em;margin-bottom:10px}
+  .hero p{font-size:15px;color:rgba(255,255,255,.55);line-height:1.6}
+
+  .page{max-width:960px;margin:-44px auto 0;padding:0 24px 80px;position:relative;z-index:2;display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+
+  /* Panel izquierdo */
+  .left-panel{}
+
+  /* Level tabs */
+  .level-tabs{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+  .level-tab{padding:12px 16px;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;font-size:13px;font-weight:600;color:var(--ink-3);cursor:pointer;transition:all .15s;text-align:left;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:10px}
+  .level-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .level-tab:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+  .level-tab-badge{font-size:10px;font-family:'JetBrains Mono',monospace;padding:2px 6px;border-radius:4px;background:rgba(255,255,255,.2);margin-left:auto}
+  .level-tab:not(.active) .level-tab-badge{background:var(--accent-soft);color:var(--accent)}
+
+  /* Card inputs */
+  .card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:20px;margin-bottom:12px}
+  .card-title{font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;margin-bottom:14px}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+  .field:last-child{margin-bottom:0}
+  .field label{font-size:12px;font-weight:600;color:var(--ink-2);font-family:'JetBrains Mono',monospace}
+  .input-wrap{position:relative;display:flex;align-items:stretch}
+  .input-wrap input{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px;font-weight:500;font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s;min-width:0}
+  .input-wrap input:focus{border-color:var(--accent)}
+  .input-suffix{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ink-3);pointer-events:none}
+  .input-wrap.has-suffix input{padding-right:36px}
+  .input-prefix{display:flex;align-items:center;background:var(--line);border:1.5px solid var(--line);border-right:none;border-radius:10px 0 0 10px;padding:0 10px;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ink-3);flex-shrink:0}
+  .input-wrap.has-prefix input{border-radius:0 10px 10px 0}
+  .cur-select{border:1.5px solid var(--line);border-radius:0 10px 10px 0;border-left:none;background:var(--bg);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);padding:0 8px;cursor:pointer;outline:none}
+  .input-wrap.with-select input{border-radius:10px 0 0 10px}
+
+  /* Right panel */
+  .right-panel{}
+  .kpi-group{margin-bottom:16px}
+  .group-title{font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;font-family:'JetBrains Mono',monospace;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+  .group-title::after{content:'';flex:1;height:1px;background:var(--line)}
+  .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .kpi-card{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:16px;transition:all .15s}
+  .kpi-card.hidden{display:none}
+  .kpi-name{font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;font-family:'JetBrains Mono',monospace;margin-bottom:8px}
+  .kpi-value{font-size:26px;font-weight:700;letter-spacing:-0.03em;color:var(--accent);margin-bottom:4px}
+  .kpi-value.good{color:var(--green)}
+  .kpi-value.bad{color:var(--red)}
+  .kpi-desc{font-size:11px;color:var(--ink-3);line-height:1.5}
+  .kpi-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:700;padding:3px 8px;border-radius:6px;margin-top:6px}
+  .kpi-badge.green{background:var(--green-soft);color:var(--green)}
+  .kpi-badge.red{background:var(--red-soft);color:var(--red)}
+  .kpi-badge.yellow{background:var(--yellow-soft);color:var(--yellow)}
+
+  html[data-theme="dark"] .input-wrap input{background:var(--dark-2);border-color:var(--line);color:var(--ink)}
+  html[data-theme="dark"] .input-prefix{background:var(--dark-line);border-color:var(--dark-line)}
+  html[data-theme="dark"] .cur-select{background:var(--dark-2);border-color:var(--line)}
+
+  @media(max-width:860px){
+    .page{grid-template-columns:1fr;gap:16px}
+    .hero h1{font-size:26px}
+    .kpi-grid{grid-template-columns:1fr 1fr}
+    .hero-inner,.page{padding-left:16px;padding-right:16px}
+  }
+  @media(max-width:480px){
+    .kpi-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo">Calculadora<span>.live</span></a>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a>
+      <span class="sep">/</span>
+      <a href="/ecommerce/">Ecommerce</a>
+      <span class="sep">/</span>
+      <span class="curr">KPIs de Ecommerce</span>
+    </div>
+    <h1>📊 KPIs de Ecommerce</h1>
+    <p>ROAS real, BE ROAS, CAC, LTV y más. Elegí el nivel de detalle y obtené todos tus KPIs en tiempo real.</p>
+  </div>
+</section>
+
+<div class="page">
+
+  <!-- PANEL IZQUIERDO -->
+  <div class="left-panel">
+
+    <!-- Selector nivel -->
+    <div class="level-tabs">
+      <button class="level-tab active" id="ltab-basico" onclick="setLevel('basico')">
+        📊 Básico
+        <span class="level-tab-badge">4 KPIs</span>
+      </button>
+      <button class="level-tab" id="ltab-completo" onclick="setLevel('completo')">
+        📈 Completo
+        <span class="level-tab-badge">9 KPIs</span>
+      </button>
+      <button class="level-tab" id="ltab-total" onclick="setLevel('total')">
+        🔭 Total
+        <span class="level-tab-badge">13 KPIs</span>
+      </button>
+    </div>
+
+    <!-- Inputs básicos -->
+    <div class="card">
+      <div class="card-title">Nivel básico</div>
+
+      <div class="field">
+        <label>Inversión en ads</label>
+        <div class="input-wrap with-select">
+          <input type="number" id="inversion" inputmode="decimal" placeholder="0" min="0" step="any" oninput="calcAll()">
+          <select class="cur-select" id="cur-inv" onchange="calcAll()"><option>ARS</option><option>USD</option><option>EUR</option></select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Ingresos generados por ads</label>
+        <div class="input-wrap with-select">
+          <input type="number" id="ingresos" inputmode="decimal" placeholder="0" min="0" step="any" oninput="calcAll()">
+          <select class="cur-select" id="cur-ing" onchange="calcAll()"><option>ARS</option><option>USD</option><option>EUR</option></select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Costo del producto (% del precio de venta)</label>
+        <div class="input-wrap has-suffix">
+          <input type="number" id="costo-pct" inputmode="decimal" placeholder="40" min="0" max="100" step="any" oninput="calcAll()">
+          <span class="input-suffix">%</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Precio de venta promedio</label>
+        <div class="input-wrap with-select">
+          <input type="number" id="precio-venta" inputmode="decimal" placeholder="0" min="0" step="any" oninput="calcAll()">
+          <select class="cur-select" id="cur-pv" onchange="calcAll()"><option>ARS</option><option>USD</option><option>EUR</option></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inputs completo -->
+    <div class="card" id="card-completo" style="display:none">
+      <div class="card-title">Nivel completo</div>
+
+      <div class="field">
+        <label>Visitas / Sesiones</label>
+        <div class="input-wrap">
+          <input type="number" id="visitas" inputmode="numeric" placeholder="0" min="0" step="1" oninput="calcAll()">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Cantidad de órdenes</label>
+        <div class="input-wrap">
+          <input type="number" id="ordenes" inputmode="numeric" placeholder="0" min="0" step="1" oninput="calcAll()">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Costo operativo</label>
+        <div class="input-wrap has-suffix">
+          <input type="number" id="costo-op-pct" inputmode="decimal" placeholder="10" min="0" max="100" step="any" oninput="calcAll()">
+          <span class="input-suffix">%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inputs total -->
+    <div class="card" id="card-total" style="display:none">
+      <div class="card-title">Nivel total</div>
+
+      <div class="field">
+        <label>Tasa de devoluciones</label>
+        <div class="input-wrap has-suffix">
+          <input type="number" id="dev-pct" inputmode="decimal" placeholder="2" min="0" max="100" step="any" oninput="calcAll()">
+          <span class="input-suffix">%</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Compras por cliente por año (frecuencia)</label>
+        <div class="input-wrap">
+          <input type="number" id="frecuencia" inputmode="decimal" placeholder="2" min="0" step="any" oninput="calcAll()">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Vida del cliente (meses)</label>
+        <div class="input-wrap">
+          <input type="number" id="vida-meses" inputmode="numeric" placeholder="24" min="0" step="1" oninput="calcAll()">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PANEL DERECHO: KPIs -->
+  <div class="right-panel" id="kpi-panel">
+
+    <!-- Grupo: Rentabilidad -->
+    <div class="kpi-group">
+      <div class="group-title">Rentabilidad</div>
+      <div class="kpi-grid">
+        <div class="kpi-card" id="k-roas">
+          <div class="kpi-name">ROAS Real</div>
+          <div class="kpi-value" id="v-roas">—</div>
+          <div class="kpi-desc">Ingresos por cada peso invertido en ads</div>
+        </div>
+        <div class="kpi-card" id="k-be-roas">
+          <div class="kpi-name">BE ROAS</div>
+          <div class="kpi-value" id="v-be-roas">—</div>
+          <div class="kpi-desc">Mínimo ROAS para no perder dinero</div>
+        </div>
+        <div class="kpi-card" id="k-rentable" style="grid-column:1/-1">
+          <div class="kpi-name">¿Es rentable?</div>
+          <div class="kpi-value" id="v-rentable">—</div>
+          <div class="kpi-desc" id="desc-rentable">Comparando ROAS real vs BE ROAS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupo: Margen -->
+    <div class="kpi-group">
+      <div class="group-title">Margen</div>
+      <div class="kpi-grid">
+        <div class="kpi-card" id="k-margen-bruto">
+          <div class="kpi-name">Margen bruto</div>
+          <div class="kpi-value" id="v-margen-bruto">—</div>
+          <div class="kpi-desc">Ganancia sobre precio de venta, sin descontar operación</div>
+        </div>
+        <div class="kpi-card hidden" id="k-margen-neto">
+          <div class="kpi-name">Margen neto</div>
+          <div class="kpi-value" id="v-margen-neto">—</div>
+          <div class="kpi-desc">Margen bruto menos costos operativos</div>
+        </div>
+        <div class="kpi-card hidden" id="k-be-roas-neto">
+          <div class="kpi-name">BE ROAS neto</div>
+          <div class="kpi-value" id="v-be-roas-neto">—</div>
+          <div class="kpi-desc">ROAS mínimo con costos operativos incluidos</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupo: Conversión -->
+    <div class="kpi-group hidden" id="g-conversion">
+      <div class="group-title">Conversión</div>
+      <div class="kpi-grid">
+        <div class="kpi-card" id="k-cvr">
+          <div class="kpi-name">Tasa de conversión</div>
+          <div class="kpi-value" id="v-cvr">—</div>
+          <div class="kpi-desc">Órdenes sobre visitas totales</div>
+        </div>
+        <div class="kpi-card" id="k-cac">
+          <div class="kpi-name">CAC</div>
+          <div class="kpi-value" id="v-cac">—</div>
+          <div class="kpi-desc">Costo de adquisición por cliente</div>
+        </div>
+        <div class="kpi-card" id="k-ticket">
+          <div class="kpi-name">Ticket promedio</div>
+          <div class="kpi-value" id="v-ticket">—</div>
+          <div class="kpi-desc">Ingresos dividido cantidad de órdenes</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupo: Valor de cliente -->
+    <div class="kpi-group hidden" id="g-valor">
+      <div class="group-title">Valor de cliente</div>
+      <div class="kpi-grid">
+        <div class="kpi-card" id="k-roas-neto">
+          <div class="kpi-name">ROAS neto real</div>
+          <div class="kpi-value" id="v-roas-neto">—</div>
+          <div class="kpi-desc">ROAS ajustado por devoluciones</div>
+        </div>
+        <div class="kpi-card" id="k-ltv">
+          <div class="kpi-name">LTV</div>
+          <div class="kpi-value" id="v-ltv">—</div>
+          <div class="kpi-desc">Valor de vida del cliente</div>
+        </div>
+        <div class="kpi-card" id="k-ltvcac">
+          <div class="kpi-name">LTV / CAC</div>
+          <div class="kpi-value" id="v-ltvcac">—</div>
+          <div class="kpi-desc">Bueno si supera 3x. Ideal por encima de 5x</div>
+        </div>
+        <div class="kpi-card" id="k-mer">
+          <div class="kpi-name">MER</div>
+          <div class="kpi-value" id="v-mer">—</div>
+          <div class="kpi-desc">Marketing Efficiency Ratio: ingresos totales / inversión</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer></footer>
+<script src="/nav.js"></script>
+<script>
+var level = 'basico';
+
+function setLevel(l) {
+  level = l;
+  ['basico','completo','total'].forEach(function(x){
+    document.getElementById('ltab-'+x).classList.toggle('active', x===l);
+  });
+  document.getElementById('card-completo').style.display = (l==='completo'||l==='total') ? '' : 'none';
+  document.getElementById('card-total').style.display = l==='total' ? '' : 'none';
+
+  // Grupos
+  document.getElementById('g-conversion').classList.toggle('hidden', l==='basico');
+  document.getElementById('g-valor').classList.toggle('hidden', l!=='total');
+
+  // KPIs extra
+  document.getElementById('k-margen-neto').classList.toggle('hidden', l==='basico');
+  document.getElementById('k-be-roas-neto').classList.toggle('hidden', l==='basico');
+
+  calcAll();
+}
+
+function getNum(id, def) {
+  var v = parseFloat(document.getElementById(id).value);
+  return isNaN(v) ? (def !== undefined ? def : 0) : v;
+}
+
+function fmt(v, dec) {
+  if (!isFinite(v)) return '—';
+  return v.toLocaleString('es-AR', {minimumFractionDigits:dec||0, maximumFractionDigits:dec||2});
+}
+
+function fmtX(v) {
+  if (!isFinite(v) || v <= 0) return '—';
+  return v.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:2}) + 'x';
+}
+
+function fmtPct(v) {
+  if (!isFinite(v)) return '—';
+  return v.toLocaleString('es-AR', {minimumFractionDigits:1, maximumFractionDigits:1}) + '%';
+}
+
+function setKpi(id, val, cls) {
+  var el = document.getElementById(id);
+  el.textContent = val;
+  el.className = 'kpi-value' + (cls ? ' '+cls : '');
+}
+
+function calcAll() {
+  var inv = getNum('inversion');
+  var ing = getNum('ingresos');
+  var costoPct = getNum('costo-pct', 0);
+  var precioVenta = getNum('precio-venta');
+  var cur = document.getElementById('cur-inv').value;
+
+  // Básico
+  var roas = inv > 0 ? ing / inv : 0;
+  var margenBruto = 100 - costoPct;
+  var beRoas = margenBruto > 0 ? 100 / margenBruto : 0;
+  var rentable = roas > 0 && beRoas > 0;
+  var esRentable = roas >= beRoas;
+
+  setKpi('v-roas', inv > 0 && ing > 0 ? fmtX(roas) : '—');
+  setKpi('v-be-roas', beRoas > 0 ? fmtX(beRoas) : '—');
+  setKpi('v-margen-bruto', costoPct > 0 ? fmtPct(margenBruto) : '—', margenBruto > 30 ? 'good' : margenBruto > 15 ? '' : 'bad');
+
+  if (rentable) {
+    var rentVal = esRentable ? '✓ Sí, es rentable' : '✗ No es rentable';
+    setKpi('v-rentable', rentVal, esRentable ? 'good' : 'bad');
+    document.getElementById('desc-rentable').textContent = esRentable
+      ? 'ROAS real (' + fmtX(roas) + ') supera al BE ROAS (' + fmtX(beRoas) + ')'
+      : 'ROAS real (' + fmtX(roas) + ') está por debajo del BE ROAS (' + fmtX(beRoas) + ')';
+  } else {
+    setKpi('v-rentable', '—');
+    document.getElementById('desc-rentable').textContent = 'Completá inversión, ingresos y costo del producto';
+  }
+
+  if (level === 'basico') return;
+
+  // Completo
+  var visitas = getNum('visitas');
+  var ordenes = getNum('ordenes');
+  var costoOpPct = getNum('costo-op-pct', 0);
+
+  var cvr = visitas > 0 && ordenes > 0 ? (ordenes / visitas) * 100 : 0;
+  var cac = ordenes > 0 && inv > 0 ? inv / ordenes : 0;
+  var ticket = ordenes > 0 && ing > 0 ? ing / ordenes : 0;
+  var margenNeto = margenBruto - costoOpPct;
+  var beRoasNeto = margenNeto > 0 ? 100 / margenNeto : 0;
+
+  setKpi('v-cvr', visitas > 0 && ordenes > 0 ? fmtPct(cvr) : '—');
+  setKpi('v-cac', cac > 0 ? cur + ' ' + fmt(cac) : '—');
+  setKpi('v-ticket', ticket > 0 ? cur + ' ' + fmt(ticket) : '—');
+  setKpi('v-margen-neto', costoOpPct > 0 ? fmtPct(margenNeto) : '—', margenNeto > 20 ? 'good' : margenNeto > 8 ? '' : 'bad');
+  setKpi('v-be-roas-neto', beRoasNeto > 0 ? fmtX(beRoasNeto) : '—');
+
+  if (level !== 'total') return;
+
+  // Total
+  var devPct = getNum('dev-pct', 0);
+  var frecuencia = getNum('frecuencia', 1);
+  var vidaMeses = getNum('vida-meses', 12);
+
+  var roasNetoReal = inv > 0 && ing > 0 ? (ing * (1 - devPct/100)) / inv : 0;
+  var ltv = ticket > 0 ? ticket * frecuencia * (vidaMeses / 12) : 0;
+  var ltvCac = cac > 0 && ltv > 0 ? ltv / cac : 0;
+  var mer = inv > 0 && ing > 0 ? ing / inv : 0;
+
+  setKpi('v-roas-neto', roasNetoReal > 0 ? fmtX(roasNetoReal) : '—');
+  setKpi('v-ltv', ltv > 0 ? cur + ' ' + fmt(ltv) : '—');
+  setKpi('v-ltvcac', ltvCac > 0 ? fmtX(ltvCac) : '—', ltvCac >= 5 ? 'good' : ltvCac >= 3 ? '' : (ltvCac > 0 ? 'bad' : ''));
+  setKpi('v-mer', mer > 0 ? fmtX(mer) : '—');
+}
+
+calcAll();
+</script>
+</body>
+</html>

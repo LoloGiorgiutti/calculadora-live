@@ -17,6 +17,12 @@
       { n: 'Calculadora de patente', u: '/patente',            icon:'📋', d: 'Impuesto automotor por provincia',           hd:'Calculá cuánto pagás de patente según la provincia y el valor del auto.' },
       { n: 'Calculadora de service', u: '/service',            icon:'🔧', d: '¿Cuándo te toca el próximo service?',        hd:'¿Cuándo te toca el service y cuánto cuesta aproximadamente?' },
     ]},
+    { cat: '🛒 Ecommerce', slug: 'ecommerce', label: 'Ecommerce', desc: 'Herramientas para vendedores online: envíos desde China, KPIs, márgenes y proyecciones.', items: [
+      { n: 'Envío desde China',      u: '/ecommerce/envio-china', icon:'📦', badge:true, d: 'Aéreo y marítimo — peso volumétrico y m³',          hd:'Calculá el costo de importar desde China. Peso volumétrico para aéreo, contenedores para marítimo.' },
+      { n: 'KPIs de Ecommerce',      u: '/ecommerce/kpis',        icon:'📊', badge:true, d: 'ROAS, BE ROAS, CAC, LTV, conversión y más',          hd:'Ingresá tus datos y obtené todos los KPIs clave: ROAS real, BE ROAS, CAC, LTV y margen neto.' },
+      { n: 'Margen de Ecommerce',    u: '/ecommerce/margen',      icon:'💰', badge:true, d: 'Con comisiones, envío, pasarela y ads',               hd:'Calculá tu margen real descontando comisiones de plataforma, envío, pasarela e inversión publicitaria.' },
+      { n: 'Proyección de negocio',  u: '/ecommerce/proyeccion',  icon:'📈', badge:true, d: 'Escenarios optimista, neutro y pesimista',            hd:'Proyectá facturación y ganancias a 6, 12 o 24 meses con tres escenarios y gráfico mes a mes.' },
+    ]},
     { cat: '💰 Finanzas y economía', slug: 'finanzas', label: 'Finanzas', desc: 'Sueldo neto, préstamos, inflación, inversiones y más.', items: [
       { n: 'Convertidor de divisas',      u: '/divisas',      icon:'💱', badge:true, d: 'Dólar blue, MEP, CCL, todas las monedas', hd:'Convertí pesos a dólares (blue, MEP, CCL, oficial) o cualquier moneda del mundo. Con historial por mes y año.' },
       { n: 'Convertidor de sueldo',      u: '/sueldo-hora',  icon:'💼', badge:true, d: 'Hora, día, semana, mes y año — convertí al instante', hd:'Convertí tu sueldo entre cualquier período. Ingresá uno y los demás se calculan solos.' },

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de DCA Crypto — Precio Promedio de Compra | Calculadora.live</title>
+<meta name="description" content="Calculá tu precio promedio de compra acumulando distintas compras de Bitcoin, Ethereum u otras crypto. Estrategia DCA paso a paso.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/crypto-dca/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F7F8FA;--surface:#FFFFFF;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--accent:#4F6BFF;--accent-soft:#EEF1FF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;--radius:16px;--radius-sm:10px}
+  html[data-theme="dark"]{--bg:#080A12;--surface:#0F1220;--ink:#E2E4F0;--ink-2:#9CA3C0;--ink-3:#555E80;--line:#1F2438}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  header{background:var(--dark);border-bottom:1px solid var(--dark-line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+  .header-inner{flex:1;display:flex;align-items:center;padding-left:10px}
+  .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em;color:#fff}.logo span{color:var(--accent)}
+  .page-hero{background:var(--dark);padding:36px 0 72px;position:relative;overflow:hidden}
+  .page-hero::before{content:'';position:absolute;top:-80px;right:-40px;width:500px;height:500px;background:radial-gradient(circle,rgba(79,107,255,.1) 0%,transparent 60%);pointer-events:none}
+  .hero-inner{max-width:820px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+  .breadcrumb{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:20px}
+  .breadcrumb a{color:rgba(255,255,255,.4)}.breadcrumb a:hover{color:rgba(255,255,255,.7)}
+  .breadcrumb .sep{opacity:.3}.breadcrumb .curr{color:rgba(255,255,255,.65)}
+  .hero-inner h1{font-size:34px;font-weight:800;letter-spacing:-0.03em;color:#fff;margin-bottom:8px}
+  .hero-inner p{font-size:15px;color:rgba(255,255,255,.55);line-height:1.6}
+  main{max-width:820px;margin:-40px auto 0;padding:0 24px 80px;position:relative;z-index:2}
+  .card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+  .card-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px;font-family:'JetBrains Mono',monospace}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+  .field label{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+  .input-wrap{position:relative}
+  .input-suffix{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--ink-3);pointer-events:none}
+  .field select,.field input[type=number],.field input[type=text]{width:100%;padding:11px 50px 11px 14px;border:1.5px solid var(--line);border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  .field select:focus,.field input[type=number]:focus,.field input[type=text]:focus{border-color:var(--accent)}
+  html[data-theme="dark"] .field select,html[data-theme="dark"] .field input[type=number],html[data-theme="dark"] .field input[type=text]{background:var(--dark-2);border-color:var(--dark-line);color:var(--ink)}
+
+  /* Purchases table */
+  .purch-header{display:grid;grid-template-columns:140px 1fr 1fr 1fr 28px;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+  .purch-row{display:grid;grid-template-columns:140px 1fr 1fr 1fr 28px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+  .purch-row:last-child{border-bottom:none}
+  .purch-row input{padding:8px 10px;border:1.5px solid var(--line);border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);background:var(--surface);outline:none;width:100%;transition:border-color .15s}
+  html[data-theme="dark"] .purch-row input{background:var(--dark-2);border-color:var(--dark-line);color:var(--ink)}
+  .purch-row input:focus{border-color:var(--accent)}
+  .purch-crypto{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink-3);text-align:right}
+  .del-btn{background:none;border:none;cursor:pointer;color:var(--ink-3);font-size:18px;line-height:1;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:color .15s}
+  .del-btn:hover{color:#DC2626}
+
+  .btn{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:11px 18px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s}
+  .btn:hover{opacity:.88}
+  .btn-ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+  .btn-ghost:hover{background:var(--accent-soft)}
+
+  /* Result */
+  .result-card{background:var(--dark);border-radius:var(--radius);padding:28px;margin-bottom:16px;border-top:3px solid var(--accent);transition:border-color .3s}
+  .result-card.profit{border-top-color:#16A34A}
+  .result-card.loss{border-top-color:#DC2626}
+  .result-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px}
+  .result-main{font-size:48px;font-weight:800;color:#fff;letter-spacing:-0.04em;line-height:1;margin-bottom:4px}
+  .result-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:20px}
+  .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;border-top:1px solid rgba(255,255,255,.1);padding-top:18px;margin-bottom:16px}
+  .stat-box{background:rgba(255,255,255,.05);border-radius:10px;padding:14px}
+  .stat-val{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:600;color:#fff;letter-spacing:-0.02em}
+  .stat-val.positive{color:#86EFAC}
+  .stat-val.negative{color:#FCA5A5}
+  .stat-lbl{font-size:11px;color:rgba(255,255,255,.4);margin-top:3px}
+  .breakeven-bar{background:rgba(255,255,255,.05);border-radius:10px;padding:14px 16px;font-size:13px;color:rgba(255,255,255,.5)}
+  .breakeven-bar strong{color:#fff}
+
+  /* Summary table */
+  .sum-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  .sum-table th{text-align:left;padding:9px 12px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line)}
+  .sum-table td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ink)}
+  .sum-table tr:last-child td{border-bottom:none}
+  .sum-table td:not(:first-child){font-family:'JetBrains Mono',monospace;font-size:13px}
+  .sum-table .pl-pos{color:#16A34A;font-weight:700}
+  .sum-table .pl-neg{color:#DC2626;font-weight:700}
+
+  .info-box{background:var(--accent-soft);border:1.5px solid rgba(79,107,255,.2);border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:var(--ink-2);line-height:1.6}
+  html[data-theme="dark"] .info-box{background:rgba(79,107,255,.1);color:var(--ink-2)}
+  .info-box strong{color:var(--ink)}
+  html[data-theme="dark"] .info-box strong{color:var(--ink)}
+
+  footer{text-align:center;padding:32px 0;color:var(--ink-3);font-size:13px}
+  footer a{color:var(--ink-3)}
+  @media(max-width:700px){.purch-header,.purch-row{grid-template-columns:120px 1fr 1fr 28px}.purch-header :nth-child(4),.purch-row .purch-crypto{display:none}.result-main{font-size:36px}.hero-inner h1{font-size:28px}}
+  @media(max-width:500px){.form-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">Calculadora<span>.live</span></a>
+  </div>
+</header>
+<section class="page-hero">
+  <div class="hero-inner">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a><span class="sep">/</span>
+      <a href="/crypto/">Crypto</a><span class="sep">/</span>
+      <span class="curr">DCA calculator</span>
+    </div>
+    <h1>📈 DCA crypto</h1>
+    <p>Registrá tus compras y calculá tu precio promedio de entrada. Ideal para estrategia de Dollar Cost Averaging.</p>
+  </div>
+</section>
+<main>
+  <div class="card">
+    <div class="card-title">Configuración</div>
+    <div class="form-row">
+      <div class="field">
+        <label>Criptomoneda</label>
+        <select id="sel-crypto" onchange="calcular()">
+          <option>Bitcoin (BTC)</option>
+          <option>Ethereum (ETH)</option>
+          <option>Solana (SOL)</option>
+          <option>BNB</option>
+          <option>XRP</option>
+          <option>Otra</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Precio actual de mercado (USD)</label>
+        <div class="input-wrap">
+          <input type="number" id="inp-actual" placeholder="97.000" oninput="calcular()">
+          <span class="input-suffix">USD</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label>Tipo de cambio USD/ARS</label>
+        <div class="input-wrap">
+          <input type="number" id="inp-tc" value="1350" oninput="calcular()">
+          <span class="input-suffix">$/USD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="card-title" style="margin-bottom:0">Mis compras</div>
+      <button class="btn" onclick="addRow()" style="padding:8px 14px;font-size:13px">+ Agregar compra</button>
+    </div>
+    <div class="purch-header">
+      <div>Fecha</div>
+      <div>Precio compra (USD)</div>
+      <div>Inversión (USD)</div>
+      <div>Crypto obtenida</div>
+      <div></div>
+    </div>
+    <div id="purchases-list"></div>
+  </div>
+
+  <div class="result-card" id="result-card">
+    <div class="result-eyebrow">Precio promedio de compra</div>
+    <div class="result-main" id="r-avg">—</div>
+    <div class="result-sub" id="r-sub"></div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-val" id="r-invertido">—</div><div class="stat-lbl">Total invertido</div></div>
+      <div class="stat-box"><div class="stat-val" id="r-valor">—</div><div class="stat-lbl">Valor actual</div></div>
+      <div class="stat-box"><div class="stat-val" id="r-pl" class="">—</div><div class="stat-lbl">Ganancia / Pérdida</div></div>
+      <div class="stat-box"><div class="stat-val" id="r-rend" class="">—</div><div class="stat-lbl">Rendimiento</div></div>
+    </div>
+    <div class="breakeven-bar" id="r-breakeven"></div>
+  </div>
+
+  <div class="card" id="summary-card" style="display:none">
+    <div class="card-title">Detalle por compra</div>
+    <div style="overflow-x:auto">
+      <table class="sum-table">
+        <thead>
+          <tr><th>Fecha</th><th>Precio compra</th><th>Inversión</th><th>Crypto</th><th>Valor actual</th><th>P&amp;L</th></tr>
+        </thead>
+        <tbody id="sum-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>¿Qué es el DCA?</strong> El Dollar Cost Averaging consiste en invertir una cantidad periódica sin importar el precio actual. Al promediar las compras en distintos momentos, reducís el impacto de la volatilidad y construís tu posición de forma progresiva.
+  </div>
+</main>
+<footer>
+  <a href="/privacidad/">Privacidad</a> · <a href="/terminos/">Términos</a>
+</footer>
+<script>
+var purchases = [];
+var uidCnt = 0;
+
+function addRow(fecha, precio, inversion) {
+  uidCnt++;
+  purchases.push({ id: uidCnt, fecha: fecha || '', precio: precio || '', inversion: inversion || '' });
+  renderPurchases();
+  calcular();
+}
+
+function delRow(id) {
+  purchases = purchases.filter(function(p) { return p.id !== id; });
+  renderPurchases();
+  calcular();
+}
+
+function renderPurchases() {
+  var list = document.getElementById('purchases-list');
+  list.innerHTML = purchases.map(function(p) {
+    var crypto = '';
+    if (p.precio && p.inversion) {
+      crypto = (parseFloat(p.inversion) / parseFloat(p.precio)).toLocaleString('es-AR', {maximumFractionDigits:8});
+    }
+    return '<div class="purch-row">' +
+      '<input type="text" placeholder="Ej: Enero 2024" value="' + escHtml(p.fecha) + '" oninput="setF(' + p.id + ',\'fecha\',this.value)">' +
+      '<input type="number" placeholder="30.000" value="' + escHtml(p.precio) + '" oninput="setF(' + p.id + ',\'precio\',this.value);calcular()">' +
+      '<input type="number" placeholder="100" value="' + escHtml(p.inversion) + '" oninput="setF(' + p.id + ',\'inversion\',this.value);calcular()">' +
+      '<div class="purch-crypto" id="pc-' + p.id + '">' + (crypto || '—') + '</div>' +
+      '<button class="del-btn" onclick="delRow(' + p.id + ')">×</button>' +
+    '</div>';
+  }).join('');
+}
+
+function escHtml(s) { return String(s).replace(/"/g,'&quot;'); }
+
+function setF(id, key, val) {
+  var p = purchases.find(function(x){return x.id===id;});
+  if (p) { p[key] = val; }
+  // Update crypto display
+  if (p && p.precio && p.inversion) {
+    var el = document.getElementById('pc-' + id);
+    if (el) el.textContent = (parseFloat(p.inversion) / parseFloat(p.precio)).toLocaleString('es-AR',{maximumFractionDigits:8});
+  }
+}
+
+function fmt(n, dec) {
+  return n.toLocaleString('es-AR', {minimumFractionDigits:dec||0,maximumFractionDigits:dec||0});
+}
+
+function calcular() {
+  var actual = parseFloat(document.getElementById('inp-actual').value) || 0;
+  var tc = parseFloat(document.getElementById('inp-tc').value) || 1350;
+
+  var totalInv = 0, totalCrypto = 0;
+  var validRows = [];
+  purchases.forEach(function(p) {
+    var pr = parseFloat(p.precio) || 0;
+    var inv = parseFloat(p.inversion) || 0;
+    if (pr > 0 && inv > 0) {
+      var crypto = inv / pr;
+      totalInv += inv;
+      totalCrypto += crypto;
+      validRows.push({ fecha: p.fecha, precio: pr, inversion: inv, crypto: crypto });
+    }
+  });
+
+  if (validRows.length === 0) {
+    document.getElementById('result-card').style.border = '';
+    return;
+  }
+
+  var avgPrice = totalInv / totalCrypto;
+  var valorActual = actual > 0 ? totalCrypto * actual : 0;
+  var pl = actual > 0 ? valorActual - totalInv : 0;
+  var rend = actual > 0 ? (pl / totalInv) * 100 : 0;
+  var isProfit = pl > 0;
+  var isLoss = pl < 0;
+
+  document.getElementById('result-card').className = 'result-card ' + (actual > 0 ? (isProfit ? 'profit' : isLoss ? 'loss' : '') : '');
+  document.getElementById('r-avg').textContent = 'USD ' + fmt(avgPrice, 2);
+  document.getElementById('r-sub').textContent =
+    fmt(totalCrypto, 8) + ' crypto acumulada · ' + validRows.length + ' compra' + (validRows.length !== 1 ? 's' : '');
+
+  document.getElementById('r-invertido').textContent = 'USD ' + fmt(totalInv, 2);
+  document.getElementById('r-valor').textContent = actual > 0 ? 'USD ' + fmt(valorActual, 2) : '—';
+
+  var plEl = document.getElementById('r-pl');
+  plEl.textContent = actual > 0 ? (pl >= 0 ? '+' : '') + 'USD ' + fmt(pl, 2) : '—';
+  plEl.className = 'stat-val' + (actual > 0 ? (isProfit ? ' positive' : isLoss ? ' negative' : '') : '');
+
+  var rendEl = document.getElementById('r-rend');
+  rendEl.textContent = actual > 0 ? (rend >= 0 ? '+' : '') + fmt(rend, 2) + '%' : '—';
+  rendEl.className = 'stat-val' + (actual > 0 ? (isProfit ? ' positive' : isLoss ? ' negative' : '') : '');
+
+  if (actual > 0) {
+    var diff = ((actual - avgPrice) / avgPrice) * 100;
+    document.getElementById('r-breakeven').innerHTML =
+      'Break-even: <strong>USD ' + fmt(avgPrice, 2) + '</strong>. El precio actual está ' +
+      (diff >= 0 ? '<strong style="color:#86EFAC">+' : '<strong style="color:#FCA5A5">') + fmt(diff, 2) + '%</strong> ' +
+      (diff >= 0 ? 'por encima.' : 'por debajo.');
+  } else {
+    document.getElementById('r-breakeven').textContent = 'Ingresá el precio actual para ver tu P&L.';
+  }
+
+  // Summary table
+  if (validRows.length > 0) {
+    document.getElementById('summary-card').style.display = 'block';
+    var tbody = document.getElementById('sum-body');
+    tbody.innerHTML = validRows.map(function(r) {
+      var va = actual > 0 ? r.crypto * actual : null;
+      var rpl = va !== null ? va - r.inversion : null;
+      return '<tr>' +
+        '<td>' + (r.fecha || '—') + '</td>' +
+        '<td>USD ' + fmt(r.precio, 2) + '</td>' +
+        '<td>USD ' + fmt(r.inversion, 2) + '</td>' +
+        '<td>' + fmt(r.crypto, 8) + '</td>' +
+        '<td>' + (va !== null ? 'USD ' + fmt(va, 2) : '—') + '</td>' +
+        '<td class="' + (rpl !== null ? (rpl >= 0 ? 'pl-pos' : 'pl-neg') : '') + '">' +
+          (rpl !== null ? (rpl >= 0 ? '+' : '') + 'USD ' + fmt(rpl, 2) : '—') + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+}
+
+// Pre-load with 3 example rows
+addRow('Enero 2024', '42000', '100');
+addRow('Julio 2024', '58000', '100');
+addRow('Enero 2025', '95000', '100');
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

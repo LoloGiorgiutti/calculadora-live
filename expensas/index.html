@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Expensas — División por Coeficiente | Calculadora.live</title>
+<meta name="description" content="Dividí el total de expensas del edificio entre las unidades según su coeficiente de participación. Resultado instantáneo.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/expensas/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F7F8FA;--surface:#FFFFFF;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--accent:#4F6BFF;--accent-soft:#EEF1FF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;--radius:16px;--radius-sm:10px}
+  html[data-theme="dark"]{--bg:#080A12;--surface:#0F1220;--ink:#E2E4F0;--ink-2:#9CA3C0;--ink-3:#555E80;--line:#1F2438}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  header{background:var(--dark);border-bottom:1px solid var(--dark-line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+  .header-inner{flex:1;display:flex;align-items:center;padding-left:10px}
+  .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em;color:#fff}.logo span{color:var(--accent)}
+  .page-hero{background:var(--dark);padding:36px 0 72px;position:relative;overflow:hidden}
+  .page-hero::before{content:'';position:absolute;top:-80px;right:-40px;width:500px;height:500px;background:radial-gradient(circle,rgba(79,107,255,.1) 0%,transparent 60%);pointer-events:none}
+  .hero-inner{max-width:680px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+  .breadcrumb{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:20px}
+  .breadcrumb a{color:rgba(255,255,255,.4)}.breadcrumb a:hover{color:rgba(255,255,255,.7)}
+  .breadcrumb .sep{opacity:.3}.breadcrumb .curr{color:rgba(255,255,255,.65)}
+  .hero-inner h1{font-size:34px;font-weight:800;letter-spacing:-0.03em;color:#fff;margin-bottom:8px}
+  .hero-inner p{font-size:15px;color:rgba(255,255,255,.55);line-height:1.6}
+  main{max-width:680px;margin:-40px auto 0;padding:0 24px 80px;position:relative;z-index:2}
+  .card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+  .card-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:18px;font-family:'JetBrains Mono',monospace}
+  .field label{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+  .input-wrap{position:relative}
+  .input-prefix{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--ink-3);pointer-events:none;z-index:1}
+  .input-suffix{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--ink-3);pointer-events:none}
+  .field input[type=number],.field input[type=text]{width:100%;padding:11px 40px 11px 32px;border:1.5px solid var(--line);border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:16px;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  .field input.no-prefix{padding-left:14px}
+  .field input[type=number]:focus,.field input[type=text]:focus{border-color:var(--accent)}
+  html[data-theme="dark"] .field input[type=number],html[data-theme="dark"] .field input[type=text]{background:var(--dark-2);border-color:var(--dark-line);color:var(--ink)}
+
+  /* Progress bar */
+  .prog-wrap{margin:16px 0}
+  .prog-label{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);margin-bottom:6px}
+  .prog-label span:last-child{font-weight:700}
+  .prog-track{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+  .prog-fill{height:100%;border-radius:99px;transition:width .3s,background .3s}
+  .warn{font-size:12px;font-weight:600;margin-top:8px;padding:8px 12px;border-radius:8px}
+  .warn-under{background:#FEF3C7;color:#92400E}
+  .warn-over{background:#FEE2E2;color:#991B1B}
+  html[data-theme="dark"] .warn-under{background:rgba(217,119,6,.15);color:#FCD34D}
+  html[data-theme="dark"] .warn-over{background:rgba(220,38,38,.15);color:#FCA5A5}
+
+  /* Units list */
+  .units-header{display:grid;grid-template-columns:1fr 100px 120px 32px;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+  .unit-row{display:grid;grid-template-columns:1fr 100px 120px 32px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+  .unit-row:last-child{border-bottom:none}
+  .unit-row input{padding:7px 10px;border:1.5px solid var(--line);border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);background:var(--surface);outline:none;width:100%;transition:border-color .15s}
+  html[data-theme="dark"] .unit-row input{background:var(--dark-2);border-color:var(--dark-line);color:var(--ink)}
+  .unit-row input:focus{border-color:var(--accent)}
+  .unit-monto{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:var(--ink);text-align:right}
+  .del-btn{background:none;border:none;cursor:pointer;color:var(--ink-3);font-size:18px;line-height:1;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:color .15s}
+  .del-btn:hover{color:#DC2626}
+
+  .btn{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:11px 20px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s}
+  .btn:hover{opacity:.88}
+  .btn-ghost{background:transparent;color:var(--ink-3);border:1.5px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* Result */
+  .result-table{width:100%;border-collapse:collapse}
+  .result-table th{text-align:left;padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border-bottom:2px solid var(--line)}
+  .result-table td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:14px}
+  .result-table tr:last-child td{border-bottom:none;font-weight:700;color:var(--ink)}
+  .result-table td:not(:first-child){font-family:'JetBrains Mono',monospace}
+  .result-table .monto-col{font-size:15px;font-weight:700;color:var(--accent)}
+
+  footer{text-align:center;padding:32px 0;color:var(--ink-3);font-size:13px}
+  footer a{color:var(--ink-3)}
+  @media(max-width:500px){.units-header,.unit-row{grid-template-columns:1fr 80px 32px}.units-header :nth-child(3),.unit-row .unit-monto{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">Calculadora<span>.live</span></a>
+  </div>
+</header>
+<section class="page-hero">
+  <div class="hero-inner">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a><span class="sep">/</span>
+      <a href="/hogar/">Hogar y propiedades</a><span class="sep">/</span>
+      <span class="curr">División de expensas</span>
+    </div>
+    <h1>🏢 Calculadora de expensas</h1>
+    <p>Ingresá el total del consorcio y los coeficientes de cada unidad para calcular lo que le toca a cada propietario.</p>
+  </div>
+</section>
+<main>
+  <div class="card">
+    <div class="card-title">Total de expensas del mes</div>
+    <div class="field">
+      <div class="input-wrap">
+        <span class="input-prefix">$</span>
+        <input type="number" id="inp-total" class="field" placeholder="500.000" value="" oninput="calcular()" style="width:100%;padding:13px 14px 13px 32px;border:1.5px solid var(--line);border-radius:var(--radius-sm);font-size:18px;font-weight:700;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s;font-family:'Inter',sans-serif">
+        <span class="input-suffix">$</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="card-title" style="margin-bottom:0">Unidades del edificio</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost" onclick="resetEjemplo()" style="padding:7px 12px;font-size:12px">Ejemplo</button>
+        <button class="btn" onclick="addUnit()" style="padding:7px 12px;font-size:12px">+ Agregar unidad</button>
+      </div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label">
+        <span>Coeficientes asignados</span>
+        <span id="prog-pct-label">0%</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0;background:var(--accent)"></div></div>
+      <div id="prog-warn"></div>
+    </div>
+
+    <div class="units-header">
+      <div>Unidad</div>
+      <div style="text-align:center">Coef. (%)</div>
+      <div style="text-align:right">Expensa ($)</div>
+      <div></div>
+    </div>
+    <div id="units-list"></div>
+  </div>
+
+  <div class="card" id="result-card" style="display:none">
+    <div class="card-title">Resultado — Expensas por unidad</div>
+    <table class="result-table">
+      <thead>
+        <tr><th>Unidad</th><th>Coef.</th><th>Expensa a pagar</th></tr>
+      </thead>
+      <tbody id="result-body"></tbody>
+      <tfoot>
+        <tr><td>Total</td><td id="r-total-coef"></td><td id="r-total-monto" class="monto-col"></td></tr>
+      </tfoot>
+    </table>
+    <div style="margin-top:14px;font-size:12px;color:var(--ink-3)">💡 Podés copiar esta tabla para enviarla a los propietarios.</div>
+  </div>
+</main>
+<footer>
+  <a href="/privacidad/">Privacidad</a> · <a href="/terminos/">Términos</a>
+</footer>
+<script>
+var units = [];
+var uidCnt = 0;
+
+function addUnit(name, coef) {
+  uidCnt++;
+  units.push({ id: uidCnt, name: name || '', coef: coef || '' });
+  renderUnits();
+  calcular();
+}
+
+function delUnit(id) {
+  units = units.filter(function(u) { return u.id !== id; });
+  renderUnits();
+  calcular();
+}
+
+function resetEjemplo() {
+  units = [];
+  uidCnt = 0;
+  var ejemplos = [
+    {name:'PB A', coef:'8'},
+    {name:'PB B', coef:'8'},
+    {name:'1°A', coef:'12'},
+    {name:'1°B', coef:'12'},
+    {name:'2°A', coef:'11'},
+    {name:'2°B', coef:'11'},
+    {name:'3°A', coef:'10'},
+    {name:'3°B', coef:'10'},
+    {name:'4°A', coef:'9'},
+    {name:'4°B', coef:'9'},
+  ];
+  ejemplos.forEach(function(e) {
+    uidCnt++;
+    units.push({id:uidCnt, name:e.name, coef:e.coef});
+  });
+  renderUnits();
+  if (!document.getElementById('inp-total').value) {
+    document.getElementById('inp-total').value = '500000';
+  }
+  calcular();
+}
+
+function renderUnits() {
+  var list = document.getElementById('units-list');
+  list.innerHTML = units.map(function(u) {
+    return '<div class="unit-row" id="row-' + u.id + '">' +
+      '<input type="text" placeholder="Ej: 1°A" value="' + escHtml(u.name) + '" oninput="setName(' + u.id + ',this.value)">' +
+      '<input type="number" placeholder="10" min="0" max="100" step="0.01" value="' + escHtml(u.coef) + '" oninput="setCoef(' + u.id + ',this.value)" style="text-align:center">' +
+      '<div class="unit-monto" id="um-' + u.id + '">—</div>' +
+      '<button class="del-btn" onclick="delUnit(' + u.id + ')">×</button>' +
+    '</div>';
+  }).join('');
+}
+
+function escHtml(s) { return String(s).replace(/"/g,'&quot;'); }
+
+function setName(id, v) {
+  var u = units.find(function(x){return x.id===id;});
+  if (u) u.name = v;
+  calcular();
+}
+function setCoef(id, v) {
+  var u = units.find(function(x){return x.id===id;});
+  if (u) u.coef = v;
+  calcular();
+}
+
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('es-AR');
+}
+
+function calcular() {
+  var total = parseFloat(document.getElementById('inp-total').value) || 0;
+  var sumCoef = 0;
+  units.forEach(function(u) { sumCoef += parseFloat(u.coef) || 0; });
+  var pct = Math.min(100, sumCoef);
+  var fill = document.getElementById('prog-fill');
+  fill.style.width = pct + '%';
+  fill.style.background = pct > 100 ? '#DC2626' : pct >= 99.9 ? '#16A34A' : '#F59E0B';
+  document.getElementById('prog-pct-label').textContent = sumCoef.toFixed(2) + '%';
+
+  var warn = document.getElementById('prog-warn');
+  if (sumCoef > 100.01) {
+    warn.innerHTML = '<div class="warn warn-over">⚠ Los coeficientes exceden el 100% en ' + (sumCoef - 100).toFixed(2) + '%</div>';
+  } else if (sumCoef < 99.9 && units.length > 0) {
+    warn.innerHTML = '<div class="warn warn-under">ℹ Falta asignar el ' + (100 - sumCoef).toFixed(2) + '% restante</div>';
+  } else {
+    warn.innerHTML = '';
+  }
+
+  // Per unit amounts
+  units.forEach(function(u) {
+    var el = document.getElementById('um-' + u.id);
+    if (el) {
+      var coef = parseFloat(u.coef) || 0;
+      var monto = total * coef / 100;
+      el.textContent = total > 0 ? fmt(monto) : '—';
+    }
+  });
+
+  // Result table
+  var resultCard = document.getElementById('result-card');
+  if (total > 0 && units.length > 0) {
+    resultCard.style.display = 'block';
+    var tbody = document.getElementById('result-body');
+    tbody.innerHTML = units.map(function(u) {
+      var coef = parseFloat(u.coef) || 0;
+      var monto = total * coef / 100;
+      return '<tr>' +
+        '<td>' + (u.name || '—') + '</td>' +
+        '<td>' + coef.toFixed(2) + '%</td>' +
+        '<td style="font-family:\'JetBrains Mono\',monospace;font-size:15px;font-weight:700;color:var(--accent)">' + fmt(monto) + '</td>' +
+      '</tr>';
+    }).join('');
+    document.getElementById('r-total-coef').textContent = sumCoef.toFixed(2) + '%';
+    document.getElementById('r-total-monto').textContent = fmt(total * Math.min(sumCoef, 100) / 100);
+  } else {
+    resultCard.style.display = 'none';
+  }
+}
+
+// Start with example
+resetEjemplo();
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

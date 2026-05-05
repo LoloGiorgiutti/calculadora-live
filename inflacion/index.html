@@ -216,8 +216,12 @@
    2017-2026: variación mensual real INDEC (IPC Nacional)
 ═══════════════════════════════════════════════════════════════ */
 var MESES_FULL=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-var MIN_YEAR=1992, MAX_YEAR=2026;
-// Último mes con dato real confirmado por INDEC:
+var MIN_YEAR=1992;
+// MAX_YEAR y MES_ACTUAL se calculan dinámicamente para no quedar obsoletos.
+// Cuando haya datos de un año nuevo en MENSUAL, el selector ya lo incluirá solo.
+var _hoy=new Date();
+var MAX_YEAR=Math.max(2026,_hoy.getFullYear());
+// Último mes con dato real confirmado por INDEC (actualizar al publicar nuevos datos):
 var MES_ACTUAL={y:2026,m:4};
 
 var ANUAL={

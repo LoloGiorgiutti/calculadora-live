@@ -1399,4 +1399,99 @@
     }
   })();
 
+  /* ── WIDGET DE FEEDBACK ─────────────────────────────────────
+     Inyecta una sección de sugerencias al final de cada
+     calculadora. Se omite en home, categorías y páginas legales.
+     Para recibir los mensajes, cambiá FEEDBACK_EMAIL por tu
+     dirección de correo real.                                  */
+  (function () {
+    var FEEDBACK_EMAIL = 'hola@calculadora.live'; // ← cambiá por tu email
+    var path = window.location.pathname.replace(/\/+$/, '') || '/';
+    var skipPaths = [
+      '/', '/hogar', '/legal', '/crypto', '/ecommerce',
+      '/autos', '/finanzas', '/salud', '/fechas', '/matematica',
+      '/generadores', '/vida-numeros', '/mundial-2026', '/tests',
+      '/privacidad', '/terminos'
+    ];
+    if (skipPaths.indexOf(path) !== -1) return;
+    if (document.querySelector('.fb-section')) return;
+
+    function inject() {
+      if (document.querySelector('.fb-section')) return;
+
+      var s = document.createElement('style');
+      s.textContent = [
+        '.fb-section{font-family:Inter,sans-serif;max-width:860px;margin:0 auto;padding:0 24px 24px;}',
+        '.fb-box{background:var(--surface,#fff);border:1.5px solid var(--line,#E4E7EE);border-radius:16px;padding:22px 24px;}',
+        'html[data-theme="dark"] .fb-box{background:var(--surface,#0F1220) !important;border-color:var(--line,#1F2438) !important;}',
+        '.fb-title{font-size:14px;font-weight:700;color:var(--ink,#0A0E1A);margin-bottom:3px;letter-spacing:-0.01em;}',
+        'html[data-theme="dark"] .fb-title{color:var(--ink,#E2E4F0);}',
+        '.fb-sub{font-size:13px;color:var(--ink-3,#858AA0);margin-bottom:14px;line-height:1.5;}',
+        '.fb-reactions{display:flex;gap:8px;flex-wrap:wrap;}',
+        '.fb-r{border:1.5px solid var(--line,#E4E7EE);background:transparent;border-radius:99px;padding:7px 14px;font-size:13px;font-weight:500;cursor:pointer;color:var(--ink-2,#363B4F);transition:all .15s;font-family:inherit;line-height:1;}',
+        'html[data-theme="dark"] .fb-r{border-color:var(--line,#1F2438);color:var(--ink-2,#9CA3C0);}',
+        '.fb-r:hover{border-color:rgba(79,107,255,.6);color:#4F6BFF;}',
+        '.fb-r.fbactive{border-color:#4F6BFF;background:#EEF1FF;color:#4F6BFF;font-weight:600;}',
+        'html[data-theme="dark"] .fb-r.fbactive{background:rgba(79,107,255,.15);}',
+        '.fb-ta-wrap{margin-top:12px;}',
+        '.fb-ta{width:100%;padding:11px 14px;border:1.5px solid var(--line,#E4E7EE);border-radius:10px;font-family:inherit;font-size:14px;color:var(--ink,#0A0E1A);background:var(--surface,#fff);resize:vertical;min-height:76px;outline:none;transition:border-color .15s;box-sizing:border-box;}',
+        'html[data-theme="dark"] .fb-ta{background:var(--dark-2,#141929) !important;border-color:var(--dark-line,#1F2438) !important;color:var(--ink,#E2E4F0) !important;}',
+        '.fb-ta:focus{border-color:#4F6BFF;}',
+        '.fb-actions{display:flex;justify-content:flex-end;margin-top:10px;}',
+        '.fb-send{background:#4F6BFF;color:#fff;border:none;border-radius:10px;padding:9px 20px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s;line-height:1;}',
+        '.fb-send:hover{opacity:.85;}',
+        '.fb-ok{font-size:13px;color:var(--ink-3,#858AA0);margin-top:12px;display:flex;align-items:center;gap:6px;}',
+      ].join('');
+      document.head.appendChild(s);
+
+      var sec = document.createElement('section');
+      sec.className = 'fb-section';
+      sec.setAttribute('aria-label', 'Sugerencias');
+      sec.innerHTML =
+        '<div class="fb-box">' +
+          '<div class="fb-title">💡 ¿Algo para mejorar?</div>' +
+          '<div class="fb-sub">¿Le falta algo a esta calculadora? ¿Tenés una idea? Cada sugerencia nos ayuda a mejorar.</div>' +
+          '<div class="fb-reactions" id="fb-reactions">' +
+            '<button class="fb-r" onclick="fbPick(this)">🤩 Me encanta</button>' +
+            '<button class="fb-r" onclick="fbPick(this)">💡 Le agregaría algo</button>' +
+            '<button class="fb-r" onclick="fbPick(this)">🐛 Algo no funciona</button>' +
+            '<button class="fb-r" onclick="fbPick(this)">❓ Tengo una pregunta</button>' +
+          '</div>' +
+          '<div class="fb-ta-wrap" id="fb-ta-wrap" style="display:none">' +
+            '<textarea class="fb-ta" id="fb-ta" placeholder="Contanos qué le agregarías o qué no funciona. ¡Cada sugerencia cuenta!" rows="3"></textarea>' +
+            '<div class="fb-actions"><button class="fb-send" onclick="fbSend()">Enviar sugerencia →</button></div>' +
+          '</div>' +
+          '<div id="fb-ok" style="display:none" class="fb-ok">✅ ¡Gracias! Tu sugerencia nos ayuda a mejorar.</div>' +
+        '</div>';
+
+      var ref = document.querySelector('.faq-section') ||
+                document.querySelector('.related-section') ||
+                document.querySelector('footer');
+      if (ref) { ref.parentNode.insertBefore(sec, ref); }
+      else { document.body.appendChild(sec); }
+
+      window.fbPick = function (btn) {
+        document.querySelectorAll('.fb-r').forEach(function (b) { b.classList.remove('fbactive'); });
+        btn.classList.add('fbactive');
+        document.getElementById('fb-ta-wrap').style.display = '';
+        document.getElementById('fb-ta').focus();
+      };
+      window.fbSend = function () {
+        var reaction = (document.querySelector('.fb-r.fbactive') || {}).textContent || '';
+        var msg = (document.getElementById('fb-ta').value || '').trim();
+        var subj = 'Sugerencia: ' + document.title;
+        var body = 'Tipo: ' + reaction + '\n\n' + (msg || '(sin mensaje)') + '\n\nPágina: ' + window.location.href;
+        window.location.href = 'mailto:' + FEEDBACK_EMAIL +
+          '?subject=' + encodeURIComponent(subj) +
+          '&body=' + encodeURIComponent(body);
+        document.getElementById('fb-ta-wrap').style.display = 'none';
+        document.getElementById('fb-ok').style.display = '';
+      };
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', inject);
+    } else { inject(); }
+  })();
+
 })();

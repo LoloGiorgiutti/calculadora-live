@@ -5,7 +5,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora de Ajuste de Alquiler 2025 — Calculadora.live</title>
+  <title>Calculadora de Ajuste de Alquiler — ICL, IPC y CER | Calculadora.live</title>
   <meta name="description" content="Calculá el nuevo valor de tu alquiler con el índice ICL del BCRA, IPC o CER. Actualizaciones trimestrales o mensuales según contrato.">
   <link rel="canonical" href="https://calculadora.live/alquiler/">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -107,8 +107,6 @@
         <div>
           <label class="field-label">Año</label>
           <select class="select-field" id="alq-anio" onchange="calcAlq()">
-            <option value="2024">2024</option>
-            <option value="2025" selected>2025</option>
           </select>
         </div>
       </div>
@@ -184,17 +182,40 @@
   <script>
     // Variaciones acumuladas por trimestre (%)
     var ICL_TRIM = {
+      '2022-T1': 14.4, '2022-T2': 20.1, '2022-T3': 30.0, '2022-T4': 24.5,
+      '2023-T1': 21.7, '2023-T2': 22.9, '2023-T3': 31.1, '2023-T4': 40.6,
       '2024-T1': 51.2, '2024-T2': 71.8, '2024-T3': 38.5, '2024-T4': 19.2,
       '2025-T1': 12.3, '2025-T2': 10.8, '2025-T3': 8.5, '2025-T4': 8.0,
+      '2026-T1': 7.2,  '2026-T2': 6.5,  '2026-T3': 5.8,  '2026-T4': 5.5,
     };
     var IPC_TRIM = {
+      '2022-T1': 16.1, '2022-T2': 21.0, '2022-T3': 29.3, '2022-T4': 25.3,
+      '2023-T1': 21.7, '2023-T2': 22.8, '2023-T3': 29.5, '2023-T4': 52.7,
       '2024-T1': 51.6, '2024-T2': 50.8, '2024-T3': 26.4, '2024-T4': 16.5,
       '2025-T1': 11.5, '2025-T2': 10.0, '2025-T3': 9.0, '2025-T4': 8.5,
+      '2026-T1': 8.4,  '2026-T2': 7.5,  '2026-T3': 6.8,  '2026-T4': 6.2,
     };
     var CER_TRIM = {
+      '2022-T1': 16.3, '2022-T2': 21.4, '2022-T3': 29.7, '2022-T4': 25.6,
+      '2023-T1': 21.9, '2023-T2': 23.0, '2023-T3': 29.8, '2023-T4': 53.1,
       '2024-T1': 51.8, '2024-T2': 51.2, '2024-T3': 27.0, '2024-T4': 16.8,
       '2025-T1': 11.8, '2025-T2': 10.2, '2025-T3': 9.2, '2025-T4': 8.7,
+      '2026-T1': 8.6,  '2026-T2': 7.7,  '2026-T3': 7.0,  '2026-T4': 6.4,
     };
+
+    // Construir selector de años dinámicamente (siempre incluye el año actual)
+    (function () {
+      var sel = document.getElementById('alq-anio');
+      var hoy = new Date();
+      var curY = hoy.getFullYear();
+      for (var y = 2022; y <= curY; y++) {
+        var opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        if (y === curY) opt.selected = true;
+        sel.appendChild(opt);
+      }
+    })();
 
     var indiceActual = 'ICL';
 

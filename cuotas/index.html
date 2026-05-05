@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Cuotas con Tarjeta — Calculadora.live</title>
+  <meta name="description" content="Calculá cuánto pagás de cuota, el total con intereses y el CFT. Cuotas sin interés vs cuotas con interés. TNA, TEA y costo real de financiarse con tarjeta.">
+  <link rel="canonical" href="https://calculadora.live/cuotas/">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--accent:#4F6BFF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438}
+    html[data-theme="dark"]{--bg:#080A12;--surface:#0F1220;--ink:#E2E4F0;--ink-2:#9CA3C0;--ink-3:#555E80;--line:#1F2438}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+    header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+    .logo{font-size:16px;font-weight:700;letter-spacing:-0.03em;color:var(--ink);text-decoration:none}
+    .logo span{color:var(--accent)}
+    .hero{background:var(--dark);color:#fff;padding:32px 20px 28px;text-align:center}
+    html[data-theme="dark"] .hero{background:#0A0E1A}
+    .breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.35);margin-bottom:14px;letter-spacing:.03em}
+    .breadcrumb a{color:rgba(255,255,255,.35);text-decoration:none}
+    h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}
+    .hero-sub{font-size:14px;color:rgba(255,255,255,.5);max-width:480px;margin:0 auto}
+    .main{max-width:660px;margin:0 auto;padding:28px 20px 80px}
+    .card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px;margin-bottom:16px}
+    .field-label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+    .input-field{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s}
+    html[data-theme="dark"] .input-field{background:var(--dark-2)}
+    .input-field:focus{border-color:var(--accent)}
+    .select-field{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;transition:border-color .15s;appearance:none}
+    html[data-theme="dark"] .select-field{background:var(--dark-2)}
+    .select-field:focus{border-color:var(--accent)}
+    .btn-primary{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;font-family:'Inter',sans-serif}
+    .btn-primary:hover{opacity:.88}
+    .result-dark{background:var(--dark);border-radius:16px;padding:28px 24px;margin-bottom:16px;color:#fff}
+    html[data-theme="dark"] .result-dark{background:var(--dark-2);border:1.5px solid var(--line)}
+    .result-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px}
+    .result-big{font-family:'JetBrains Mono',monospace;font-size:clamp(28px,6vw,42px);font-weight:700;color:var(--accent);letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
+    .result-sub{font-size:13px;color:rgba(255,255,255,.4)}
+    .info-card{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;font-size:13px;color:var(--ink-2);line-height:1.65}
+    .info-card strong{color:var(--ink);font-weight:600}
+    .section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+    .section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+    .stat-box{background:rgba(255,255,255,.06);border-radius:10px;padding:14px}
+    .stat-val{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+    .stat-lbl{font-size:11px;color:rgba(255,255,255,.4)}
+    .badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;letter-spacing:.04em}
+    .badge-blue{background:rgba(79,107,255,.15);color:#4f6bff}
+    .badge-green{background:rgba(34,197,94,.15);color:#22c55e}
+    .badge-red{background:rgba(239,68,68,.15);color:#ef4444}
+    .input-wrap{position:relative}
+    .input-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:600;color:var(--ink-3);pointer-events:none}
+    .input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:600;color:var(--ink-3);pointer-events:none}
+    .input-field.has-prefix{padding-left:32px}
+    .input-field.has-suffix{padding-right:44px}
+    /* Tabs */
+    .tabs{display:flex;gap:8px;margin-bottom:20px}
+    .tab-btn{flex:1;padding:10px 16px;border:1.5px solid var(--line);border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--ink-3);transition:all .15s}
+    .tab-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+    /* Table */
+    .tbl-wrap{overflow-x:auto;margin-top:12px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{text-align:left;padding:8px 10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border-bottom:1.5px solid var(--line)}
+    td{padding:9px 10px;border-bottom:1px solid var(--line);color:var(--ink-2);font-family:'JetBrains Mono',monospace;font-size:12px}
+    tr:last-child td{border-bottom:none}
+    tr.highlight-row td{color:var(--accent);font-weight:700;background:rgba(79,107,255,.06)}
+    tr.best-row td{color:var(--accent);font-weight:700}
+    /* Amortization */
+    .amort-wrap{max-height:280px;overflow-y:auto;border-radius:10px;border:1.5px solid var(--line)}
+    .amort-wrap table th{position:sticky;top:0;background:var(--surface)}
+    /* Details */
+    details summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--accent);margin-bottom:8px;list-style:none;display:flex;align-items:center;gap:6px}
+    details summary::before{content:'▶';font-size:10px;transition:transform .2s}
+    details[open] summary::before{transform:rotate(90deg)}
+    @media(max-width:520px){.grid-2{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr}}
+    footer{text-align:center;padding:20px;font-size:12px;color:var(--ink-3)}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">Calculadora<span>.live</span></a>
+  </header>
+  <div class="hero">
+    <div class="breadcrumb"><a href="/">Inicio</a> / <a href="/finanzas/">Finanzas</a> / Cuotas</div>
+    <h1>Calculadora de Cuotas con Tarjeta</h1>
+    <p class="hero-sub">Cuánto pagás de cuota, total con intereses, TNA, TEA y CFT</p>
+  </div>
+  <div class="main">
+
+    <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="setModo('sin')" id="tab-sin">Sin interés</button>
+        <button class="tab-btn" onclick="setModo('con')" id="tab-con">Con interés</button>
+      </div>
+
+      <!-- SIN INTERÉS -->
+      <div id="modo-sin">
+        <div class="grid-2">
+          <div>
+            <label class="field-label">Precio del producto</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input class="input-field has-prefix" type="number" id="sin-precio" placeholder="50000" min="0" oninput="calcSin()">
+            </div>
+          </div>
+          <div>
+            <label class="field-label">N° de cuotas</label>
+            <select class="select-field" id="sin-cuotas" onchange="calcSin()">
+              <option value="1">1 cuota</option>
+              <option value="3">3 cuotas</option>
+              <option value="6" selected>6 cuotas</option>
+              <option value="12">12 cuotas</option>
+              <option value="18">18 cuotas</option>
+              <option value="24">24 cuotas</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- CON INTERÉS -->
+      <div id="modo-con" style="display:none">
+        <div style="margin-bottom:12px">
+          <label class="field-label">Precio del producto</label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input class="input-field has-prefix" type="number" id="con-precio" placeholder="50000" min="0" oninput="calcCon()">
+          </div>
+        </div>
+        <div class="grid-2" style="margin-bottom:12px">
+          <div>
+            <label class="field-label">N° de cuotas</label>
+            <select class="select-field" id="con-cuotas" onchange="calcCon()">
+              <option value="1">1 cuota</option>
+              <option value="3">3 cuotas</option>
+              <option value="6">6 cuotas</option>
+              <option value="12" selected>12 cuotas</option>
+              <option value="18">18 cuotas</option>
+              <option value="24">24 cuotas</option>
+              <option value="36">36 cuotas</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">TNA (%)</label>
+            <div class="input-wrap">
+              <input class="input-field has-suffix" type="number" id="con-tna" value="180" min="0" max="999" oninput="calcCon()">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">Gastos administrativos (%)</label>
+          <div class="input-wrap">
+            <input class="input-field has-suffix" type="number" id="con-gastos" value="0" min="0" max="50" oninput="calcCon()">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTADOS SIN INTERÉS -->
+    <div id="res-sin" style="display:none">
+      <div class="result-dark">
+        <div class="result-label">Cuota mensual</div>
+        <div class="result-big" id="sin-cuota-val">—</div>
+        <div class="result-sub" id="sin-detalle">—</div>
+        <div class="stat-grid">
+          <div class="stat-box">
+            <div class="stat-val" id="sin-total-val">—</div>
+            <div class="stat-lbl">Total a pagar</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" style="color:#22c55e">$0</div>
+            <div class="stat-lbl">Intereses totales</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTADOS CON INTERÉS -->
+    <div id="res-con" style="display:none">
+      <div class="result-dark">
+        <div class="result-label">Cuota mensual</div>
+        <div class="result-big" id="con-cuota-val">—</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px" id="con-badges"></div>
+        <div class="stat-grid">
+          <div class="stat-box">
+            <div class="stat-val" id="con-total-val">—</div>
+            <div class="stat-lbl">Total a pagar</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" style="color:#ef4444" id="con-intereses-val">—</div>
+            <div class="stat-lbl">Intereses totales</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amortización -->
+      <div class="card">
+        <details>
+          <summary>Ver tabla de amortización</summary>
+          <div class="amort-wrap" style="margin-top:10px">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mes</th>
+                  <th>Cuota</th>
+                  <th>Capital</th>
+                  <th>Interés</th>
+                  <th>Saldo</th>
+                </tr>
+              </thead>
+              <tbody id="amort-body"></tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+
+      <!-- Comparativa plazos -->
+      <div class="card">
+        <div class="section-label">Comparativa por plazo</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cuotas</th>
+                <th>Cuota mensual</th>
+                <th>Total</th>
+                <th>Intereses</th>
+              </tr>
+            </thead>
+            <tbody id="comp-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="info-card">
+      <strong>TNA, TEA y CFT — ¿qué es cada uno?</strong><br><br>
+      <strong>TNA</strong> (Tasa Nominal Anual): La tasa "de catálogo". No considera la capitalización mensual.<br><br>
+      <strong>TEA</strong> (Tasa Efectiva Anual): Lo que realmente pagás al año, incluyendo el efecto del interés compuesto mensual. Siempre es mayor que la TNA.<br><br>
+      <strong>CFT</strong> (Costo Financiero Total): Incluye TNA + gastos administrativos, seguros y comisiones. Es el costo real de financiarse. Por ley, los bancos deben informarlo en toda publicidad crediticia.
+    </div>
+  </div>
+  <footer>© 2025 Calculadora.live</footer>
+  <script src="/nav.js"></script>
+  <script>
+    var modo = 'sin';
+
+    function setModo(m) {
+      modo = m;
+      document.getElementById('tab-sin').classList.toggle('active', m === 'sin');
+      document.getElementById('tab-con').classList.toggle('active', m === 'con');
+      document.getElementById('modo-sin').style.display = m === 'sin' ? '' : 'none';
+      document.getElementById('modo-con').style.display = m === 'con' ? '' : 'none';
+      document.getElementById('res-sin').style.display = 'none';
+      document.getElementById('res-con').style.display = 'none';
+      if (m === 'sin') calcSin();
+      else calcCon();
+    }
+
+    function fmt(n) {
+      if (!isFinite(n) || isNaN(n)) return '—';
+      return '$' + n.toLocaleString('es-AR', {minimumFractionDigits: 0, maximumFractionDigits: 2});
+    }
+    function fmtN(n, dec) {
+      return n.toLocaleString('es-AR', {minimumFractionDigits: dec||0, maximumFractionDigits: dec||2});
+    }
+
+    function calcSin() {
+      var precio = parseFloat(document.getElementById('sin-precio').value);
+      var n = parseInt(document.getElementById('sin-cuotas').value);
+      if (!precio || precio <= 0) { document.getElementById('res-sin').style.display = 'none'; return; }
+      var cuota = precio / n;
+      document.getElementById('sin-cuota-val').textContent = fmt(cuota);
+      document.getElementById('sin-detalle').textContent = n + ' cuota' + (n > 1 ? 's' : '') + ' iguales · Sin recargo';
+      document.getElementById('sin-total-val').textContent = fmt(precio);
+      document.getElementById('res-sin').style.display = '';
+    }
+
+    function calcCon() {
+      var precio = parseFloat(document.getElementById('con-precio').value);
+      var n = parseInt(document.getElementById('con-cuotas').value);
+      var tna = parseFloat(document.getElementById('con-tna').value);
+      var gastos = parseFloat(document.getElementById('con-gastos').value) || 0;
+      if (!precio || precio <= 0 || !tna || tna <= 0) { document.getElementById('res-con').style.display = 'none'; return; }
+
+      var tm = tna / 100 / 12;
+      var cuota = tm === 0 ? precio / n : precio * (tm * Math.pow(1 + tm, n)) / (Math.pow(1 + tm, n) - 1);
+      var total = cuota * n;
+      var intereses = total - precio;
+      var tea = (Math.pow(1 + tm, 12) - 1) * 100;
+
+      // CFT con gastos
+      var precio_con_gastos = precio * (1 + gastos / 100);
+      var tm_cft = tna / 100 / 12;
+      var cuota_cft = tm_cft === 0 ? precio_con_gastos / n : precio_con_gastos * (tm_cft * Math.pow(1 + tm_cft, n)) / (Math.pow(1 + tm_cft, n) - 1);
+      var total_cft = cuota_cft * n;
+      var cft_aprox = ((total_cft / precio - 1) / (n / 12)) * 100;
+
+      document.getElementById('con-cuota-val').textContent = fmt(cuota);
+      document.getElementById('con-total-val').textContent = fmt(total);
+      document.getElementById('con-intereses-val').textContent = fmt(intereses);
+
+      var badgesEl = document.getElementById('con-badges');
+      badgesEl.innerHTML =
+        '<span class="badge badge-blue">TNA ' + fmtN(tna, 1) + '%</span>' +
+        '<span class="badge badge-blue">TEA ' + fmtN(tea, 1) + '%</span>' +
+        (gastos > 0 ? '<span class="badge" style="background:rgba(245,158,11,.15);color:#f59e0b">CFT ≈ ' + fmtN(cft_aprox, 1) + '%</span>' : '');
+
+      // Amortización
+      var body = document.getElementById('amort-body');
+      body.innerHTML = '';
+      var saldo = precio;
+      var meses = Math.min(n, 48);
+      for (var i = 1; i <= meses; i++) {
+        var interes_mes = saldo * tm;
+        var capital_mes = cuota - interes_mes;
+        saldo -= capital_mes;
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + i + '</td><td>' + fmt(cuota) + '</td><td>' + fmt(capital_mes) + '</td><td>' + fmt(interes_mes) + '</td><td>' + fmt(Math.max(0, saldo)) + '</td>';
+        body.appendChild(tr);
+      }
+
+      // Comparativa
+      var plazos = [1, 3, 6, 12, 18, 24];
+      var compBody = document.getElementById('comp-body');
+      compBody.innerHTML = '';
+      plazos.forEach(function(p) {
+        var c = tm === 0 ? precio / p : precio * (tm * Math.pow(1 + tm, p)) / (Math.pow(1 + tm, p) - 1);
+        var t = c * p;
+        var intr = t - precio;
+        var tr = document.createElement('tr');
+        if (p === n) tr.className = 'highlight-row';
+        tr.innerHTML = '<td>' + p + '</td><td>' + fmt(c) + '</td><td>' + fmt(t) + '</td><td>' + fmt(intr) + '</td>';
+        compBody.appendChild(tr);
+      });
+
+      document.getElementById('res-con').style.display = '';
+    }
+
+    calcSin();
+  </script>
+</body>
+</html>

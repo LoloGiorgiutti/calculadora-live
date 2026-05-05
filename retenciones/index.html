@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Retenciones AFIP/ARCA 2025 — Calculadora.live</title>
+  <meta name="description" content="Calculá las retenciones e impuestos que se descuentan de tus operaciones: IVA, Ingresos Brutos, Ganancias y más. Para autónomos y monotributistas.">
+  <link rel="canonical" href="https://calculadora.live/retenciones/">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--accent:#4F6BFF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438}
+    html[data-theme="dark"]{--bg:#080A12;--surface:#0F1220;--ink:#E2E4F0;--ink-2:#9CA3C0;--ink-3:#555E80;--line:#1F2438}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+    header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+    .logo{font-size:16px;font-weight:700;letter-spacing:-0.03em;color:var(--ink);text-decoration:none}
+    .logo span{color:var(--accent)}
+    .hero{background:var(--dark);color:#fff;padding:32px 20px 28px;text-align:center}
+    html[data-theme="dark"] .hero{background:#0A0E1A}
+    .breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.35);margin-bottom:14px;letter-spacing:.03em}
+    .breadcrumb a{color:rgba(255,255,255,.35);text-decoration:none}
+    h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}
+    .hero-sub{font-size:14px;color:rgba(255,255,255,.5);max-width:480px;margin:0 auto}
+    .main{max-width:660px;margin:0 auto;padding:28px 20px 80px}
+    .card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px;margin-bottom:16px}
+    .field-label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+    .input-field{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s}
+    html[data-theme="dark"] .input-field{background:var(--dark-2)}
+    .input-field:focus{border-color:var(--accent)}
+    .select-field{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;transition:border-color .15s;appearance:none}
+    html[data-theme="dark"] .select-field{background:var(--dark-2)}
+    .select-field:focus{border-color:var(--accent)}
+    .result-dark{background:var(--dark);border-radius:16px;padding:28px 24px;margin-bottom:16px;color:#fff}
+    html[data-theme="dark"] .result-dark{background:var(--dark-2);border:1.5px solid var(--line)}
+    .result-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px}
+    .result-big{font-family:'JetBrains Mono',monospace;font-size:clamp(28px,6vw,42px);font-weight:700;color:var(--accent);letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
+    .result-sub{font-size:13px;color:rgba(255,255,255,.4)}
+    .info-card{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;font-size:13px;color:var(--ink-2);line-height:1.65}
+    .info-card strong{color:var(--ink);font-weight:600}
+    .section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+    .section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+    .stat-box{background:rgba(255,255,255,.06);border-radius:10px;padding:14px}
+    .stat-val{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+    .stat-lbl{font-size:11px;color:rgba(255,255,255,.4)}
+    .badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;letter-spacing:.04em}
+    .badge-yellow{background:rgba(245,158,11,.15);color:#f59e0b}
+    .badge-green{background:rgba(34,197,94,.15);color:#22c55e}
+    .input-wrap{position:relative}
+    .input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:600;color:var(--ink-3);pointer-events:none}
+    .input-field.has-prefix{padding-left:32px}
+    /* Toggle */
+    .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line)}
+    .toggle-lbl{font-size:13px;font-weight:600;color:var(--ink-2)}
+    .toggle-switch{position:relative;width:42px;height:24px;cursor:pointer}
+    .toggle-switch input{opacity:0;width:0;height:0}
+    .toggle-track{position:absolute;inset:0;background:#ccc;border-radius:99px;transition:.2s}
+    .toggle-switch input:checked + .toggle-track{background:var(--accent)}
+    .toggle-track::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s}
+    .toggle-switch input:checked + .toggle-track::after{left:21px}
+    /* Radio */
+    .radio-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+    .radio-tab{flex:1;position:relative;min-width:120px}
+    .radio-tab input{position:absolute;opacity:0;width:0;height:0}
+    .radio-tab label{display:block;padding:10px 8px;border:1.5px solid var(--line);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;color:var(--ink-3);text-align:center;transition:all .15s}
+    .radio-tab input:checked + label{background:var(--accent);border-color:var(--accent);color:#fff}
+    /* Table */
+    .tbl-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{text-align:left;padding:9px 10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border-bottom:1.5px solid var(--line)}
+    th:nth-child(2),th:nth-child(3){text-align:right}
+    td{padding:10px 10px;border-bottom:1px solid var(--line);color:var(--ink-2);font-size:13px}
+    td:nth-child(2),td:nth-child(3){font-family:'JetBrains Mono',monospace;text-align:right;font-size:12px}
+    tr.total-row td{font-weight:700;color:var(--ink);border-top:2px solid var(--line);border-bottom:none}
+    tr.neto-row td{color:var(--accent);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:14px}
+    @media(max-width:520px){.grid-2{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr}}
+    footer{text-align:center;padding:20px;font-size:12px;color:var(--ink-3)}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">Calculadora<span>.live</span></a>
+  </header>
+  <div class="hero">
+    <div class="breadcrumb"><a href="/">Inicio</a> / <a href="/finanzas/">Finanzas</a> / Retenciones</div>
+    <h1>Calculadora de Retenciones — AFIP y ARCA</h1>
+    <p class="hero-sub">IIBB, Ganancias y retenciones impositivas sobre tus operaciones</p>
+  </div>
+  <div class="main">
+
+    <div class="card">
+      <div style="margin-bottom:14px">
+        <label class="field-label">Tipo de contribuyente</label>
+        <div class="radio-tabs">
+          <div class="radio-tab">
+            <input type="radio" name="contrib" id="c-mono" value="monotributista" checked onchange="calcRet()">
+            <label for="c-mono">Monotributista</label>
+          </div>
+          <div class="radio-tab">
+            <input type="radio" name="contrib" id="c-ri" value="ri" onchange="calcRet()">
+            <label for="c-ri">Resp. Inscripto</label>
+          </div>
+          <div class="radio-tab">
+            <input type="radio" name="contrib" id="c-cf" value="cf" onchange="calcRet()">
+            <label for="c-cf">Consumidor Final</label>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:14px">
+        <label class="field-label">Tipo de operación</label>
+        <div class="radio-tabs">
+          <div class="radio-tab">
+            <input type="radio" name="operacion" id="o-s" value="servicios" checked onchange="calcRet()">
+            <label for="o-s">Servicios</label>
+          </div>
+          <div class="radio-tab">
+            <input type="radio" name="operacion" id="o-b" value="bienes" onchange="calcRet()">
+            <label for="o-b">Venta de bienes</label>
+          </div>
+          <div class="radio-tab">
+            <input type="radio" name="operacion" id="o-c" value="compra" onchange="calcRet()">
+            <label for="o-c">Compra</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:14px">
+        <div>
+          <label class="field-label">Monto de la operación</label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input class="input-field has-prefix" type="number" id="ret-monto" placeholder="100000" min="0" oninput="calcRet()" style="font-family:'JetBrains Mono',monospace">
+          </div>
+        </div>
+        <div>
+          <label class="field-label">Provincia</label>
+          <select class="select-field" id="ret-prov" onchange="calcRet()">
+            <option value="Buenos Aires">Buenos Aires</option>
+            <option value="CABA">CABA</option>
+            <option value="Córdoba">Córdoba</option>
+            <option value="Santa Fe">Santa Fe</option>
+            <option value="Mendoza">Mendoza</option>
+            <option value="Tucumán">Tucumán</option>
+            <option value="Entre Ríos">Entre Ríos</option>
+            <option value="Salta">Salta</option>
+            <option value="Neuquén">Neuquén</option>
+            <option value="Río Negro">Río Negro</option>
+            <option value="Chaco">Chaco</option>
+            <option value="Misiones">Misiones</option>
+            <option value="Corrientes">Corrientes</option>
+            <option value="Santiago del Estero">Santiago del Estero</option>
+            <option value="San Juan">San Juan</option>
+            <option value="Jujuy">Jujuy</option>
+            <option value="San Luis">San Luis</option>
+            <option value="La Pampa">La Pampa</option>
+            <option value="Catamarca">Catamarca</option>
+            <option value="Formosa">Formosa</option>
+            <option value="La Rioja">La Rioja</option>
+            <option value="Chubut">Chubut</option>
+            <option value="Santa Cruz">Santa Cruz</option>
+            <option value="Tierra del Fuego">Tierra del Fuego</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="toggle-row">
+        <span class="toggle-lbl">¿Tiene constancia de exclusión de retenciones?</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="ret-exclusion" onchange="calcRet()">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+    </div>
+
+    <div id="res-ret" style="display:none">
+      <div class="result-dark">
+        <div class="result-label">Monto neto a cobrar</div>
+        <div class="result-big" id="ret-neto">—</div>
+        <div class="result-sub" id="ret-sub">—</div>
+        <div class="stat-grid">
+          <div class="stat-box">
+            <div class="stat-val" id="ret-total-ret">—</div>
+            <div class="stat-lbl">Total retenciones</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="ret-pct-total">—</div>
+            <div class="stat-lbl">% sobre operación</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-label">Desglose</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Concepto</th><th>Tasa</th><th>Monto</th></tr>
+            </thead>
+            <tbody id="ret-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="exclusion-msg" style="display:none" class="info-card">
+      <span class="badge badge-green">Excluido</span> El contribuyente tiene constancia de exclusión de retenciones vigente. No se practican retenciones en esta operación. Verificá la vigencia de la constancia antes de cada operación.
+    </div>
+
+    <div class="info-card">
+      <strong>Tasas de referencia.</strong> Las retenciones exactas dependen de tu actividad específica, si operás bajo Convenio Multilateral y tu situación particular ante cada organismo.<br><br>
+      <strong>Monotributistas:</strong> No corresponde retención de Ganancias ni de IVA como vendedor. Sin embargo, podés sufrir retenciones de IIBB según la provincia del agente de retención.<br><br>
+      <strong>Responsables Inscriptos:</strong> Están sujetos a retención de IVA (si el comprador es agente de retención) y retención de Ganancias según la actividad.
+    </div>
+  </div>
+  <footer>© 2025 Calculadora.live</footer>
+  <script src="/nav.js"></script>
+  <script>
+    var IIBB = {
+      'Buenos Aires':     { bienes:1.5, servicios:3.5 },
+      'CABA':             { bienes:1.0, servicios:2.0 },
+      'Córdoba':          { bienes:1.0, servicios:2.0 },
+      'Santa Fe':         { bienes:1.5, servicios:3.0 },
+      'Mendoza':          { bienes:1.0, servicios:2.5 },
+      'Tucumán':          { bienes:1.5, servicios:2.5 },
+      'Entre Ríos':       { bienes:1.0, servicios:2.0 },
+      'Salta':            { bienes:1.5, servicios:3.0 },
+      'Neuquén':          { bienes:1.0, servicios:2.0 },
+      'Río Negro':        { bienes:1.0, servicios:2.5 },
+      'Chaco':            { bienes:1.5, servicios:3.0 },
+      'Misiones':         { bienes:1.5, servicios:3.0 },
+      'Corrientes':       { bienes:1.0, servicios:2.0 },
+      'Santiago del Estero': { bienes:2.0, servicios:3.5 },
+      'San Juan':         { bienes:1.5, servicios:2.5 },
+      'Jujuy':            { bienes:1.5, servicios:2.5 },
+      'San Luis':         { bienes:1.0, servicios:2.0 },
+      'La Pampa':         { bienes:1.0, servicios:2.0 },
+      'Catamarca':        { bienes:1.5, servicios:3.0 },
+      'Formosa':          { bienes:2.0, servicios:3.5 },
+      'La Rioja':         { bienes:1.5, servicios:3.0 },
+      'Chubut':           { bienes:1.0, servicios:2.0 },
+      'Santa Cruz':       { bienes:1.5, servicios:2.5 },
+      'Tierra del Fuego': { bienes:1.0, servicios:1.5 },
+    };
+
+    function fmt(n) {
+      return '$' + n.toLocaleString('es-AR', {minimumFractionDigits:0, maximumFractionDigits:2});
+    }
+    function fmtPct(n) {
+      return n.toLocaleString('es-AR', {minimumFractionDigits:1, maximumFractionDigits:2}) + '%';
+    }
+
+    function calcRet() {
+      var exclusion = document.getElementById('ret-exclusion').checked;
+      document.getElementById('exclusion-msg').style.display = exclusion ? '' : 'none';
+
+      var monto = parseFloat(document.getElementById('ret-monto').value);
+      if (!monto || monto <= 0) { document.getElementById('res-ret').style.display = 'none'; return; }
+
+      var contrib = document.querySelector('input[name="contrib"]:checked').value;
+      var operacion = document.querySelector('input[name="operacion"]:checked').value;
+      var prov = document.getElementById('ret-prov').value;
+
+      if (exclusion) { document.getElementById('res-ret').style.display = 'none'; return; }
+
+      var monto_base = contrib === 'ri' ? monto / 1.21 : monto;
+      var tipoIIBB = operacion === 'bienes' || operacion === 'compra' ? 'bienes' : 'servicios';
+      var tasaIIBB = IIBB[prov] ? IIBB[prov][tipoIIBB] : 1.5;
+
+      // Ganancias: solo RI
+      var tasaGanancias = 0;
+      if (contrib === 'ri') {
+        tasaGanancias = operacion === 'servicios' ? 6 : 3;
+      }
+
+      var ret_iibb = monto * (tasaIIBB / 100);
+      var ret_ganancias = contrib === 'ri' ? monto_base * (tasaGanancias / 100) : 0;
+      var total_ret = ret_iibb + ret_ganancias;
+      var neto = monto - total_ret;
+      var pct_total = (total_ret / monto) * 100;
+
+      // Para RI: retención IVA si vende a RI (simplificado)
+      var ret_iva = 0;
+      var ret_iva_tasa = 0;
+      if (contrib === 'ri' && operacion !== 'compra') {
+        ret_iva_tasa = 10.5;
+        ret_iva = monto_base * (ret_iva_tasa / 100);
+        total_ret += ret_iva;
+        neto = monto - total_ret;
+        pct_total = (total_ret / monto) * 100;
+      }
+
+      document.getElementById('ret-neto').textContent = fmt(neto);
+      document.getElementById('ret-sub').textContent = contrib.toUpperCase() + ' · ' + prov + ' · ' + (operacion === 'bienes' ? 'Venta bienes' : operacion === 'servicios' ? 'Servicios' : 'Compra');
+      document.getElementById('ret-total-ret').textContent = fmt(total_ret);
+      document.getElementById('ret-pct-total').textContent = fmtPct(pct_total);
+
+      var rows = [];
+      rows.push({ label: 'Retención IIBB — ' + prov, tasa: fmtPct(tasaIIBB), monto: ret_iibb });
+      if (ret_ganancias > 0) rows.push({ label: 'Retención Ganancias (Res. 830 AFIP)', tasa: fmtPct(tasaGanancias), monto: ret_ganancias });
+      if (ret_iva > 0) rows.push({ label: 'Retención IVA (RG 2854 AFIP)', tasa: fmtPct(ret_iva_tasa), monto: ret_iva });
+      rows.push({ label: 'Total retenciones', tasa: '', monto: total_ret, bold: true });
+      rows.push({ label: 'Monto neto a cobrar', tasa: '', monto: neto, neto: true });
+
+      var body = document.getElementById('ret-body');
+      body.innerHTML = '';
+      rows.forEach(function(r) {
+        var tr = document.createElement('tr');
+        if (r.bold) tr.className = 'total-row';
+        if (r.neto) tr.className = 'neto-row';
+        tr.innerHTML = '<td>' + (r.bold || r.neto ? '<strong>' + r.label + '</strong>' : r.label) + '</td><td>' + (r.tasa || '—') + '</td><td>' + fmt(r.monto) + '</td>';
+        body.appendChild(tr);
+      });
+
+      document.getElementById('res-ret').style.display = '';
+    }
+  </script>
+</body>
+</html>

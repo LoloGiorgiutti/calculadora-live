@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Indemnización Laboral Argentina — Calculadora.live</title>
+  <meta name="description" content="Calculá tu indemnización por despido sin causa, preaviso, integración del mes, vacaciones proporcionales y SAC. Liquidación laboral completa según ley argentina.">
+  <link rel="canonical" href="https://calculadora.live/indemnizacion/">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#F7F8FA;--surface:#fff;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;--line:#E4E7EE;--accent:#4F6BFF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438}
+    html[data-theme="dark"]{--bg:#080A12;--surface:#0F1220;--ink:#E2E4F0;--ink-2:#9CA3C0;--ink-3:#555E80;--line:#1F2438}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+    header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+    .logo{font-size:16px;font-weight:700;letter-spacing:-0.03em;color:var(--ink);text-decoration:none}
+    .logo span{color:var(--accent)}
+    .hero{background:var(--dark);color:#fff;padding:32px 20px 28px;text-align:center}
+    html[data-theme="dark"] .hero{background:#0A0E1A}
+    .breadcrumb{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.35);margin-bottom:14px;letter-spacing:.03em}
+    .breadcrumb a{color:rgba(255,255,255,.35);text-decoration:none}
+    h1{font-size:clamp(22px,4vw,30px);font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}
+    .hero-sub{font-size:14px;color:rgba(255,255,255,.5);max-width:480px;margin:0 auto}
+    .main{max-width:660px;margin:0 auto;padding:28px 20px 80px}
+    .card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px;margin-bottom:16px}
+    .field-label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+    .input-field{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s}
+    html[data-theme="dark"] .input-field{background:var(--dark-2)}
+    .input-field:focus{border-color:var(--accent)}
+    .select-field{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;transition:border-color .15s;appearance:none}
+    html[data-theme="dark"] .select-field{background:var(--dark-2)}
+    .select-field:focus{border-color:var(--accent)}
+    .result-dark{background:var(--dark);border-radius:16px;padding:28px 24px;margin-bottom:16px;color:#fff}
+    html[data-theme="dark"] .result-dark{background:var(--dark-2);border:1.5px solid var(--line)}
+    .result-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px}
+    .result-big{font-family:'JetBrains Mono',monospace;font-size:clamp(28px,6vw,42px);font-weight:700;color:var(--accent);letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
+    .result-sub{font-size:13px;color:rgba(255,255,255,.4)}
+    .info-card{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;font-size:13px;color:var(--ink-2);line-height:1.65}
+    .info-card strong{color:var(--ink);font-weight:600}
+    .section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+    .section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;letter-spacing:.04em}
+    .badge-yellow{background:rgba(245,158,11,.15);color:#f59e0b}
+    .badge-red{background:rgba(239,68,68,.15);color:#ef4444}
+    .input-wrap{position:relative}
+    .input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:600;color:var(--ink-3);pointer-events:none}
+    .input-field.has-prefix{padding-left:32px}
+    /* Tabs */
+    .tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+    .tab-btn{flex:1;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--ink-3);transition:all .15s;white-space:nowrap;min-width:100px}
+    .tab-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+    /* Toggle */
+    .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line);margin-top:8px}
+    .toggle-lbl{font-size:13px;font-weight:600;color:var(--ink-2)}
+    .toggle-switch{position:relative;width:42px;height:24px;cursor:pointer}
+    .toggle-switch input{opacity:0;width:0;height:0}
+    .toggle-track{position:absolute;inset:0;background:#ccc;border-radius:99px;transition:.2s}
+    .toggle-switch input:checked + .toggle-track{background:var(--accent)}
+    .toggle-track::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s}
+    .toggle-switch input:checked + .toggle-track::after{left:21px}
+    /* Table */
+    .tbl-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{text-align:left;padding:8px 10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border-bottom:1.5px solid var(--line)}
+    th:last-child{text-align:right}
+    td{padding:10px 10px;border-bottom:1px solid var(--line);color:var(--ink-2);font-size:13px}
+    td:last-child{font-family:'JetBrains Mono',monospace;text-align:right;font-size:12px}
+    tr:last-child td{border-bottom:none;font-weight:700;color:var(--ink)}
+    .nc{color:var(--ink-3);font-style:italic}
+    @media(max-width:520px){.grid-2{grid-template-columns:1fr}}
+    footer{text-align:center;padding:20px;font-size:12px;color:var(--ink-3)}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">Calculadora<span>.live</span></a>
+  </header>
+  <div class="hero">
+    <div class="breadcrumb"><a href="/">Inicio</a> / <a href="/finanzas/">Finanzas</a> / Indemnización</div>
+    <h1>Calculadora de Indemnización Laboral</h1>
+    <p class="hero-sub">Despido, renuncia y liquidación final según Ley de Contrato de Trabajo</p>
+  </div>
+  <div class="main">
+
+    <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="setSituacion('despido')" id="tab-despido">Despido sin causa</button>
+        <button class="tab-btn" onclick="setSituacion('renuncia')" id="tab-renuncia">Renuncia</button>
+        <button class="tab-btn" onclick="setSituacion('causa')" id="tab-causa">Despido con causa</button>
+      </div>
+
+      <div style="margin-bottom:14px">
+        <label class="field-label">Mejor remuneración normal y habitual</label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input class="input-field has-prefix" type="number" id="ind-sueldo" placeholder="500000" min="0" oninput="calcInd()" style="font-family:'JetBrains Mono',monospace">
+        </div>
+        <div style="font-size:11px;color:var(--ink-3);margin-top:4px">La mayor remuneración percibida en los últimos 6 meses</div>
+      </div>
+
+      <div id="bloque-antiguedad">
+        <div class="grid-2" style="margin-bottom:14px">
+          <div>
+            <label class="field-label">Años de antigüedad</label>
+            <input class="input-field" type="number" id="ind-anos" placeholder="3" min="0" max="50" oninput="calcInd()">
+          </div>
+          <div>
+            <label class="field-label">Meses adicionales</label>
+            <select class="select-field" id="ind-meses" onchange="calcInd()">
+              <option value="0">0 meses</option>
+              <option value="1">1 mes</option>
+              <option value="2">2 meses</option>
+              <option value="3">3 meses</option>
+              <option value="4">4 meses</option>
+              <option value="5">5 meses</option>
+              <option value="6">6 meses</option>
+              <option value="7">7 meses</option>
+              <option value="8">8 meses</option>
+              <option value="9">9 meses</option>
+              <option value="10">10 meses</option>
+              <option value="11">11 meses</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="bloque-despido">
+        <div class="toggle-row">
+          <span class="toggle-lbl">¿El despido fue antes del último día del mes?</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="ind-incompleto" onchange="toggleDiasRestantes(); calcInd()">
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+        <div id="dias-rest-wrap" style="display:none;margin-top:12px">
+          <label class="field-label">Días restantes del mes al momento del despido</label>
+          <input class="input-field" type="number" id="ind-dias-rest" placeholder="10" min="1" max="30" oninput="calcInd()">
+        </div>
+      </div>
+    </div>
+
+    <div id="res-ind" style="display:none">
+      <div class="result-dark">
+        <div class="result-label">Total liquidación</div>
+        <div class="result-big" id="ind-total">—</div>
+        <div class="result-sub" id="ind-situacion-sub">—</div>
+      </div>
+
+      <div class="card">
+        <div class="section-label">Desglose de la liquidación</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Concepto</th><th>Monto</th></tr>
+            </thead>
+            <tbody id="ind-desglose-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <span class="badge badge-yellow">Orientativo</span><br><br>
+      <strong>Esta calculadora es orientativa.</strong> Para calcular tu liquidación exacta, consultá con un abogado laboral. Los montos no incluyen posibles multas por falta de registro, falta de entrega de recibo de sueldo o falta de depósito de aportes a obra social.<br><br>
+      <strong>Art. 245 LCT:</strong> Indemnización por antigüedad = 1 mes de sueldo por año (o fracción mayor a 3 meses), sin superar el equivalente a 1 año de salario. Existen topes según convenio colectivo aplicable.<br>
+      <strong>Art. 231 LCT:</strong> Preaviso: 15 días (período de prueba), 1 mes (hasta 5 años), 2 meses (más de 5 años).
+    </div>
+  </div>
+  <footer>© 2025 Calculadora.live</footer>
+  <script src="/nav.js"></script>
+  <script>
+    var situacion = 'despido';
+
+    function setSituacion(s) {
+      situacion = s;
+      ['despido','renuncia','causa'].forEach(function(k) {
+        document.getElementById('tab-' + k).classList.toggle('active', k === s);
+      });
+      document.getElementById('bloque-despido').style.display = s === 'despido' ? '' : 'none';
+      calcInd();
+    }
+
+    function toggleDiasRestantes() {
+      var checked = document.getElementById('ind-incompleto').checked;
+      document.getElementById('dias-rest-wrap').style.display = checked ? '' : 'none';
+    }
+
+    function fmt(n) {
+      if (!isFinite(n) || isNaN(n) || n === 0) return '$0';
+      return '$' + n.toLocaleString('es-AR', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    }
+
+    function calcInd() {
+      var sueldo = parseFloat(document.getElementById('ind-sueldo').value);
+      var anos = parseFloat(document.getElementById('ind-anos').value) || 0;
+      var meses = parseInt(document.getElementById('ind-meses').value) || 0;
+      if (!sueldo || sueldo <= 0) { document.getElementById('res-ind').style.display = 'none'; return; }
+
+      var antiguedad = anos + meses / 12;
+      var hoy = new Date();
+      var mesDespido = hoy.getMonth() + 1;
+
+      // Vacaciones según antigüedad
+      var dias_vac;
+      if (antiguedad < 5) dias_vac = 14;
+      else if (antiguedad < 10) dias_vac = 21;
+      else if (antiguedad < 20) dias_vac = 28;
+      else dias_vac = 35;
+
+      var vac_prop = (sueldo / 30) * Math.round(dias_vac * mesDespido / 12);
+
+      // SAC proporcional
+      var mesEnSemestre = mesDespido <= 6 ? mesDespido : mesDespido - 6;
+      var sac_prop = sueldo / 2 * (mesEnSemestre / 6);
+
+      var indem = 0, preaviso = 0, integracion = 0;
+      var indem_label = '', preaviso_label = '', integ_label = '';
+
+      if (situacion === 'despido') {
+        // Indemnización art. 245
+        var periodos = Math.max(1, Math.ceil(antiguedad));
+        if (antiguedad < 0.25) periodos = 1; // período de prueba: 1 mes igual
+        indem = sueldo * periodos;
+
+        // Preaviso
+        var preaviso_meses;
+        if (antiguedad < 0.25) preaviso_meses = 0.5; // 15 días
+        else if (antiguedad < 5) preaviso_meses = 1;
+        else preaviso_meses = 2;
+        preaviso = sueldo * preaviso_meses;
+
+        // Integración mes de despido
+        var incompleto = document.getElementById('ind-incompleto').checked;
+        if (incompleto) {
+          var diasRest = parseInt(document.getElementById('ind-dias-rest').value) || 0;
+          integracion = sueldo * (diasRest / 30);
+        }
+
+        indem_label = 'Indemnización por antigüedad (Art. 245 LCT)';
+        preaviso_label = 'Preaviso (Art. 231 LCT)' + (preaviso_meses === 0.5 ? ' — 15 días' : preaviso_meses === 1 ? ' — 1 mes' : ' — 2 meses');
+        integ_label = 'Integración del mes de despido';
+      }
+
+      var total = indem + preaviso + integracion + vac_prop + sac_prop;
+
+      // Desglose
+      var conceptos = [];
+      if (situacion === 'despido') {
+        conceptos.push({ label: indem_label, monto: indem, aplica: true });
+        conceptos.push({ label: preaviso_label, monto: preaviso, aplica: true });
+        var incompleto = document.getElementById('ind-incompleto').checked;
+        conceptos.push({ label: integ_label, monto: integracion, aplica: incompleto });
+      } else {
+        conceptos.push({ label: 'Indemnización por antigüedad (Art. 245)', monto: 0, aplica: false });
+        conceptos.push({ label: 'Preaviso', monto: 0, aplica: false });
+        conceptos.push({ label: 'Integración del mes', monto: 0, aplica: false });
+      }
+      conceptos.push({ label: 'Vacaciones proporcionales', monto: vac_prop, aplica: true });
+      conceptos.push({ label: 'SAC proporcional (aguinaldo)', monto: sac_prop, aplica: true });
+
+      var body = document.getElementById('ind-desglose-body');
+      body.innerHTML = '';
+      conceptos.forEach(function(c) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + c.label + '</td><td class="' + (!c.aplica ? 'nc' : '') + '">' + (!c.aplica ? 'No corresponde' : fmt(c.monto)) + '</td>';
+        body.appendChild(tr);
+      });
+      // Total
+      var trTotal = document.createElement('tr');
+      trTotal.innerHTML = '<td><strong>TOTAL</strong></td><td><strong>' + fmt(total) + '</strong></td>';
+      body.appendChild(trTotal);
+
+      document.getElementById('ind-total').textContent = fmt(total);
+      var subs = { despido: 'Despido sin causa — Art. 245 LCT', renuncia: 'Renuncia voluntaria', causa: 'Despido con justa causa' };
+      document.getElementById('ind-situacion-sub').textContent = subs[situacion];
+      document.getElementById('res-ind').style.display = '';
+    }
+
+    // Init
+    document.getElementById('bloque-despido').style.display = '';
+  </script>
+</body>
+</html>

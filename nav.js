@@ -1612,4 +1612,45 @@
     } else { inject(); }
   })();
 
+  /* ── AUTO OG / TWITTER TAGS ──────────────────────────────────────────────────
+     Inyecta automáticamente las etiquetas Open Graph y Twitter Card faltantes
+     en páginas que no las tienen hardcodeadas. Googlebot renderiza JS,
+     por lo que las ve correctamente. ──────────────────────────────────────── */
+  (function () {
+    function addMeta(attrs) {
+      var m = document.createElement('meta');
+      Object.keys(attrs).forEach(function (k) { m.setAttribute(k, attrs[k]); });
+      document.head.appendChild(m);
+    }
+    function run() {
+      var title   = document.title || '';
+      var descEl  = document.querySelector('meta[name="description"]');
+      var desc    = descEl ? (descEl.getAttribute('content') || '') : '';
+      var canonEl = document.querySelector('link[rel="canonical"]');
+      var url     = canonEl ? (canonEl.getAttribute('href') || window.location.href) : window.location.href;
+
+      if (!document.querySelector('meta[property="og:title"]'))
+        addMeta({ property: 'og:title', content: title });
+      if (!document.querySelector('meta[property="og:description"]'))
+        addMeta({ property: 'og:description', content: desc });
+      if (!document.querySelector('meta[property="og:url"]'))
+        addMeta({ property: 'og:url', content: url });
+      if (!document.querySelector('meta[property="og:type"]'))
+        addMeta({ property: 'og:type', content: 'website' });
+      if (!document.querySelector('meta[property="og:site_name"]'))
+        addMeta({ property: 'og:site_name', content: 'Calculadora.live' });
+      if (!document.querySelector('meta[name="twitter:card"]'))
+        addMeta({ name: 'twitter:card', content: 'summary_large_image' });
+      if (!document.querySelector('meta[name="twitter:title"]'))
+        addMeta({ name: 'twitter:title', content: title });
+      if (!document.querySelector('meta[name="twitter:description"]'))
+        addMeta({ name: 'twitter:description', content: desc });
+      if (!document.querySelector('meta[name="twitter:site"]'))
+        addMeta({ name: 'twitter:site', content: '@calculadoralive' });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', run);
+    } else { run(); }
+  })();
+
 })();

@@ -810,14 +810,14 @@
   '.sf-links a:hover{color:#4F6BFF;}',
   '.sf-sep{font-size:12px;color:#C8CDD8;}',
   '.sf-copy{font-size:12px;color:#B0B6C8;}',
-  'html[data-theme="dark"] footer.site-footer{background:#080A12 !important;border-top-color:#1F2438 !important;}',
-  'html[data-theme="dark"] .sf-logo{color:#404565 !important;}',
-  'html[data-theme="dark"] .sf-links a{color:#404565 !important;}',
+  'html[data-theme="dark"] footer.site-footer{background:#0E1525 !important;border-top-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .sf-logo{color:#5A6285 !important;}',
+  'html[data-theme="dark"] .sf-links a{color:#5A6285 !important;}',
   'html[data-theme="dark"] .sf-links a:hover{color:#4F6BFF !important;}',
-  'html[data-theme="dark"] .sf-sep{color:#252A3D !important;}',
-  'html[data-theme="dark"] .sf-copy{color:#2E3348 !important;}',
-  'html[data-theme="dark"] footer{background:#0A0E1A !important;',
-  'border-top-color:#1F2438 !important;color:#404565 !important;}',
+  'html[data-theme="dark"] .sf-sep{color:#3A4060 !important;}',
+  'html[data-theme="dark"] .sf-copy{color:#404565 !important;}',
+  'html[data-theme="dark"] footer{background:#0E1525 !important;',
+  'border-top-color:#1F2438 !important;color:#5A6285 !important;}',
 
   /* Superficies genéricas que usan background:#fff o var(--surface) */
   'html[data-theme="dark"] .hero-sub-content,',
@@ -1243,30 +1243,25 @@
      Inyecta el footer en todas las páginas. Si ya existe un
      <footer>, lo rellena. Si no existe, lo crea al final del body. */
   (function(){
-    var footerHTML = '<footer class="site-footer">'
-      + '<div class="sf-inner">'
-      + '<a href="/" class="sf-logo">Calculadora<span class="sf-live">.live</span></a>'
-      + '<div class="sf-links">'
+    var sfLinks = '<div class="sf-links">'
+      + '<a href="/todas/">Todas</a>'
+      + '<span class="sf-sep">·</span>'
+      + '<a href="/rankings/">Rankings</a>'
+      + '<span class="sf-sep">·</span>'
       + '<a href="/privacidad/">Privacidad</a>'
       + '<span class="sf-sep">·</span>'
       + '<a href="/terminos/">Términos</a>'
-      + '</div>'
+      + '</div>';
+    var sfInner = '<div class="sf-inner">'
+      + '<a href="/" class="sf-logo">Calculadora<span class="sf-live">.live</span></a>'
+      + sfLinks
       + '<span class="sf-copy">© 2026 Calculadora.live</span>'
-      + '</div>'
-      + '</footer>';
+      + '</div>';
+    var footerHTML = '<footer class="site-footer">' + sfInner + '</footer>';
     var existing = document.querySelector('footer');
     if (existing) {
-      // Replace content (keep the element as anchor for related/FAQ injection)
       existing.className = 'site-footer';
-      existing.innerHTML = '<div class="sf-inner">'
-        + '<a href="/" class="sf-logo">Calculadora<span class="sf-live">.live</span></a>'
-        + '<div class="sf-links">'
-        + '<a href="/privacidad/">Privacidad</a>'
-        + '<span class="sf-sep">·</span>'
-        + '<a href="/terminos/">Términos</a>'
-        + '</div>'
-        + '<span class="sf-copy">© 2026 Calculadora.live</span>'
-        + '</div>';
+      existing.innerHTML = sfInner;
     } else {
       document.body.insertAdjacentHTML('beforeend', footerHTML);
     }

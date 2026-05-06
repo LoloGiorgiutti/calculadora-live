@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadoras Más Usadas en Argentina — Calculadora.live</title>
+<meta name="description" content="Las calculadoras más usadas por los argentinos: dólar, inflación, sueldo neto, IMC, nafta, aguinaldo y más. Ranking actualizado con las herramientas más útiles de 2026.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/rankings/">
+<meta property="og:title" content="Calculadoras Más Usadas en Argentina — Calculadora.live">
+<meta property="og:description" content="Las calculadoras más usadas por los argentinos: dólar, inflación, sueldo neto, IMC, nafta, aguinaldo y más. Ranking actualizado 2026.">
+<meta property="og:url" content="https://calculadora.live/rankings/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F8FA;--surface:#FFFFFF;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;
+    --line:#E4E7EE;--line-2:#EFF1F6;--accent:#4F6BFF;--accent-2:#7C5CFF;
+    --accent-soft:#EEF1FF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;
+    --gold:#F59E0B;--silver:#94A3B8;--bronze:#B45309;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;letter-spacing:-0.011em}
+  a{color:inherit;text-decoration:none}
+
+  /* HEADER */
+  header{background:var(--dark);border-bottom:1px solid var(--dark-line);position:sticky;top:0;z-index:100;display:flex;align-items:center;height:58px;padding:0 20px}
+  .header-inner{flex:1;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-left:10px;min-width:0}
+  .logo{font-size:17px;font-weight:700;letter-spacing:-0.03em;flex-shrink:0}
+  .logo .name{color:#fff}
+  .logo .dot{color:var(--accent)}
+  .header-nav{display:flex;gap:2px;margin-left:8px}
+  .header-nav a{padding:7px 12px;border-radius:7px;font-size:13px;color:rgba(255,255,255,.6);font-weight:500;transition:all .12s;white-space:nowrap}
+  .header-nav a:hover,.header-nav a.active{background:rgba(255,255,255,.08);color:#fff}
+  .search-pill{padding:8px 14px 8px 36px;background:var(--dark-2);border:1px solid var(--dark-line);border-radius:9px;font-size:13px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:24px;cursor:pointer;position:relative;min-width:220px;justify-content:space-between;transition:all .15s;font-family:inherit}
+  .search-pill::before{content:'';position:absolute;left:13px;top:50%;transform:translateY(-50%);width:14px;height:14px;opacity:.45;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23fff" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>') no-repeat center/contain}
+  .search-pill kbd{font-family:'JetBrains Mono';font-size:10px;padding:2px 6px;background:rgba(255,255,255,.06);border:1px solid var(--dark-line);border-radius:4px;color:rgba(255,255,255,.4)}
+
+  /* HERO */
+  .hero{background:var(--dark);color:#fff;padding:48px 0 96px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-120px;right:-60px;width:600px;height:600px;background:radial-gradient(circle,rgba(79,107,255,.12) 0%,transparent 55%);pointer-events:none}
+  .hero-inner{max-width:1240px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
+  .breadcrumb{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:28px}
+  .breadcrumb a{color:rgba(255,255,255,.4);transition:color .12s}
+  .breadcrumb a:hover{color:rgba(255,255,255,.75)}
+  .breadcrumb .curr{color:rgba(255,255,255,.65)}
+  .hero-content{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .hero-label{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}
+  .hero-label-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+  .hero h1{font-size:52px;font-weight:700;line-height:1.04;letter-spacing:-0.035em;margin-bottom:14px;color:#fff}
+  .hero-desc{font-size:17px;color:rgba(255,255,255,.6);line-height:1.6;max-width:520px}
+  .hero-stats{display:flex;gap:32px;flex-shrink:0}
+  .stat-n{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:600;color:#fff;letter-spacing:-0.03em;line-height:1}
+  .stat-lbl{font-size:12px;color:rgba(255,255,255,.4);margin-top:4px;font-family:'JetBrains Mono',monospace}
+
+  /* MAIN */
+  main{max-width:1240px;margin:-48px auto 0;padding:0 32px 80px;position:relative;z-index:2}
+
+  /* Section headers */
+  .section-head{display:flex;align-items:center;gap:16px;margin-bottom:20px;margin-top:48px}
+  .section-head:first-child{margin-top:0}
+  .section-title{font-size:20px;font-weight:700;letter-spacing:-0.02em}
+  .section-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3);font-weight:500}
+  .section-line{flex:1;height:1px;background:var(--line)}
+
+  /* TOP 10 ranking list */
+  .ranking-list{display:flex;flex-direction:column;gap:10px;margin-bottom:0}
+  .rank-item{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:18px 20px;display:flex;align-items:center;gap:16px;transition:all .18s;position:relative;overflow:hidden}
+  .rank-item:hover{border-color:var(--accent);transform:translateX(3px);box-shadow:0 4px 20px rgba(79,107,255,.08)}
+  .rank-item.top1{border-color:rgba(245,158,11,.35);background:linear-gradient(135deg,#fffbeb 0%,#fff 60%)}
+  .rank-item.top2{border-color:rgba(148,163,184,.35);background:linear-gradient(135deg,#f8fafc 0%,#fff 60%)}
+  .rank-item.top3{border-color:rgba(180,83,9,.25);background:linear-gradient(135deg,#fff7ed 0%,#fff 60%)}
+  .rank-num{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;width:44px;text-align:center;flex-shrink:0;line-height:1}
+  .rank-num.gold{color:var(--gold)}
+  .rank-num.silver{color:var(--silver)}
+  .rank-num.bronze{color:var(--bronze)}
+  .rank-num.rest{color:var(--ink-3);font-size:18px}
+  .rank-icon{font-size:28px;width:40px;text-align:center;flex-shrink:0}
+  .rank-body{flex:1;min-width:0}
+  .rank-name{font-size:16px;font-weight:600;letter-spacing:-0.015em;margin-bottom:3px}
+  .rank-desc{font-size:12px;color:var(--ink-3);line-height:1.45}
+  .rank-cat{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);background:var(--accent-soft);padding:3px 8px;border-radius:5px;white-space:nowrap;flex-shrink:0}
+  .rank-arrow{font-size:14px;color:var(--ink-3);flex-shrink:0;transition:all .18s}
+  .rank-item:hover .rank-arrow{color:var(--accent);transform:translateX(3px)}
+
+  /* Category cards grid */
+  .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .cat-block{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:0}
+  .cat-block-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line-2)}
+  .cat-block-icon{font-size:22px}
+  .cat-block-name{font-size:14px;font-weight:700;letter-spacing:-0.01em}
+  .cat-block-links{display:flex;flex-direction:column;gap:8px}
+  .cat-link{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;transition:background .12s;font-size:13px;color:var(--ink-2)}
+  .cat-link:hover{background:var(--line-2)}
+  .cat-link-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+  .cat-link-n{font-weight:500;flex:1}
+  .cat-link-arr{font-size:11px;color:var(--ink-3)}
+  .cat-link:hover .cat-link-arr{color:var(--accent)}
+
+  /* New section */
+  .new-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .new-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;transition:all .15s;display:flex;flex-direction:column;gap:6px}
+  .new-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(79,107,255,.08)}
+  .new-badge{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;background:rgba(79,107,255,.12);color:var(--accent);padding:2px 7px;border-radius:4px;width:fit-content}
+  .new-icon{font-size:22px}
+  .new-name{font-size:13px;font-weight:600;letter-spacing:-0.01em}
+  .new-desc{font-size:11px;color:var(--ink-3);line-height:1.45}
+
+  /* Content block */
+  .content-block{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px 32px;margin-top:48px}
+  .content-block h2{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
+  .content-block h3{font-size:16px;font-weight:600;letter-spacing:-0.01em;margin-top:20px;margin-bottom:8px}
+  .content-block p{font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:10px}
+  .content-block ul{font-size:14px;color:var(--ink-2);line-height:1.7;padding-left:20px}
+  .content-block ul li{margin-bottom:6px}
+
+  /* FOOTER */
+  footer{max-width:1240px;margin:0 auto;padding:40px 32px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);font-family:'JetBrains Mono',monospace}
+  footer a{color:inherit}
+  footer a:hover{color:var(--ink)}
+
+  @media(max-width:1024px){
+    .header-nav,.search-pill{display:none}
+    .hero h1{font-size:38px}
+    .cat-grid{grid-template-columns:repeat(2,1fr)}
+    .new-grid{grid-template-columns:repeat(2,1fr)}
+    .hero-content{flex-direction:column;gap:24px;align-items:flex-start}
+  }
+  @media(max-width:600px){
+    .hero-inner,main{padding-left:16px;padding-right:16px}
+    .cat-grid{grid-template-columns:1fr}
+    .new-grid{grid-template-columns:1fr 1fr}
+    footer{flex-direction:column;gap:12px}
+    .rank-cat{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo"><span class="name">Calculadora</span><span class="dot">.live</span></a>
+    <nav class="header-nav" id="desktop-nav"></nav>
+    <div class="search-pill" onclick="document.getElementById('nav-toggle')?.click()">
+      <span>Buscar calculadora…</span><kbd>⌘K</kbd>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a>
+      <span>/</span>
+      <span class="curr">Rankings</span>
+    </div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-label"><span class="hero-label-dot"></span>Ranking 2026</div>
+        <h1>Las más usadas</h1>
+        <p class="hero-desc">Las calculadoras más buscadas por los argentinos. Dólar, inflación, sueldo, salud y más — todo gratis.</p>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-n" id="total-count">—</div>
+          <div class="stat-lbl">calculadoras</div>
+        </div>
+        <div>
+          <div class="stat-n">100%</div>
+          <div class="stat-lbl">gratuitas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <!-- TOP 10 -->
+  <div class="section-head">
+    <div>
+      <div class="section-title">🏆 Top 10 generales</div>
+      <div class="section-sub">Las más buscadas en Argentina</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="ranking-list">
+    <a class="rank-item top1" href="/divisas/">
+      <div class="rank-num gold">1</div>
+      <div class="rank-icon">💱</div>
+      <div class="rank-body">
+        <div class="rank-name">Convertidor de Divisas</div>
+        <div class="rank-desc">Dólar blue, MEP, CCL y oficial en tiempo real. La más consultada de Argentina.</div>
+      </div>
+      <div class="rank-cat">Finanzas</div>
+      <div class="rank-arrow">→</div>
+    </a>
+    <a class="rank-item top2" href="/inflacion/">
+      <div class="rank-num silver">2</div>
+      <div class="rank-icon">📊</div>
+      <div class="rank-body">
+        <div class="rank-name">Calculadora de Inflación</div>
+        <div class="rank-desc">Actualizá cualquier precio desde 1992 por IPC, dólar blue o UVA.</div>
+      </div>
+      <div class="rank-cat">Finanzas</div>
+      <div class="rank-arrow">→</div>
+    </a>
+    <a class="rank-item top3" href="/sueldo-neto/">
+      <div class="rank-num bronze">3</div>
+      <div class="rank-icon">💼</div>
+      <div class="rank-body">
+        <div class="rank-name">Calculadora de Sueldo Neto</div>
+        <div class="rank-desc">Cuánto te depositan: descuentos ANSES, PAMI y retención de ganancias.</div>
+      </div>
+      <div class="rank-cat">Finanzas</div>
+      <div class="rank-arrow">→</div>
+    </a>
+    <a class="rank-item" href="/imc/">
+      <div class="rank-num rest">4</div>
+      <div class="rank-icon">⚖️</div>
+      <div class="rank-body">
+        <div class="rank-name">Calculadora de IMC</div>
+        <div class="rank-desc">Índice de masa corporal con interpretación y peso ideal según la OMS.</div>
+      </div>
+      <div class="rank-cat">Salud</div>
+      <div class="rank-arrow">→</div>
+    </a>
+    <a class="rank-item" href="/nafta/">
+      <div class="rank-num rest">5</div>
+      <div class="rank-icon">⛽</div>
+      <div class="rank-body">
+        <div class="rank-name">Calculadora de Nafta</div>
+        <div class="rank-desc">¿Cuánto cuesta el viaje? Regular, premium, diesel y GNC actualizados.</div>
+      </div>
+      <div class="rank-cat">Autos</div>
+      <div class="rank-arrow">→</div>
+    </a>
+    <a class="rank-item" href="/porcentaje/">
+      <div class="rank-num rest">6</div>
+      <div class="rank-icon">%</div>
+      <div class="rank-body">
+        <div class="rank-name">Calculadora de Porcentajes</div>
+        <div class="rank-desc">X% de Y, variaciones, aumentos y descuentos. La más simple y completa.</div>
+      </div>
+      <div class="rank-cat">Matemática</div>
+      <div class="rank-arrow">→</div>
+    </a>
+    <a class="rank-item" href="/aguinaldo/">
+      <div class="rank-num rest">7</div>
+      <div class="rank-icon">🎁</div>
+      <div class="rank-body">
+        <div class="rank-name">Calculadora de Aguinaldo</div>
+        <div class="rank-desc">Calculá tu SAC del 1° o 2° semestre al instante, con o sin extras.</div>
+      </div>
+      <div class="rank-cat">Finanzas</div>
+      <div class="rank-arrow">→</div>
+    </a>
+    <a class="rank-item" href="/plazo-fijo/">
+      <div class="rank-num rest">8</div>
+      <div class="rank-icon">🏦</div>
+      <div class="rank-body">
+        <div class="rank-name">Simulador de Plazo Fijo</div>
+        <div class="rank-desc">Ganancia neta, TEA y comparativa de rendimiento entre distintos plazos.</div>
+      </div>
+      <div class="rank-cat">Finanzas</div>
+      <div class="rank-arrow">→</div>
+    </a>
+    <a class="rank-item" href="/indemnizacion/">
+      <div class="rank-num rest">9</div>
+      <div class="rank-icon">⚖️</div>
+      <div class="rank-body">
+        <div class="rank-name">Calculadora de Indemnización</div>
+        <div class="rank-desc">Despido sin causa, preaviso, vacaciones proporcionales y SAC.</div>
+      </div>
+      <div class="rank-cat">Legal</div>
+      <div class="rank-arrow">→</div>
+    </a>
+    <a class="rank-item" href="/bmr/">
+      <div class="rank-num rest">10</div>
+      <div class="rank-icon">🔥</div>
+      <div class="rank-body">
+        <div class="rank-name">Calorías Diarias (BMR/TDEE)</div>
+        <div class="rank-desc">Metabolismo basal y gasto total según tu peso, altura y actividad.</div>
+      </div>
+      <div class="rank-cat">Salud</div>
+      <div class="rank-arrow">→</div>
+    </a>
+  </div>
+
+  <!-- POR CATEGORÍA -->
+  <div class="section-head">
+    <div>
+      <div class="section-title">📂 Mejores por categoría</div>
+      <div class="section-sub">Las favoritas en cada área</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="cat-grid">
+    <div class="cat-block">
+      <div class="cat-block-head">
+        <div class="cat-block-icon">💰</div>
+        <div class="cat-block-name">Finanzas</div>
+      </div>
+      <div class="cat-block-links">
+        <a class="cat-link" href="/divisas/"><span class="cat-link-icon">💱</span><span class="cat-link-n">Convertidor de divisas</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/inflacion/"><span class="cat-link-icon">📊</span><span class="cat-link-n">Calculadora de inflación</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/sueldo-neto/"><span class="cat-link-icon">💼</span><span class="cat-link-n">Sueldo neto</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/plazo-fijo/"><span class="cat-link-icon">🏦</span><span class="cat-link-n">Simulador plazo fijo</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/prestamo/"><span class="cat-link-icon">💳</span><span class="cat-link-n">Calculadora de préstamo</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/interes-compuesto/"><span class="cat-link-icon">📈</span><span class="cat-link-n">Interés compuesto</span><span class="cat-link-arr">→</span></a>
+      </div>
+    </div>
+    <div class="cat-block">
+      <div class="cat-block-head">
+        <div class="cat-block-icon">💪</div>
+        <div class="cat-block-name">Salud</div>
+      </div>
+      <div class="cat-block-links">
+        <a class="cat-link" href="/imc/"><span class="cat-link-icon">⚖️</span><span class="cat-link-n">Calculadora de IMC</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/bmr/"><span class="cat-link-icon">🔥</span><span class="cat-link-n">Calorías diarias (TDEE)</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/proteina/"><span class="cat-link-icon">🥩</span><span class="cat-link-n">Proteína diaria</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/hidratacion/"><span class="cat-link-icon">💧</span><span class="cat-link-n">Hidratación diaria</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/perdida-peso/"><span class="cat-link-icon">📉</span><span class="cat-link-n">Pérdida de peso</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/1rm/"><span class="cat-link-icon">🏋️</span><span class="cat-link-n">Repetición máxima (1RM)</span><span class="cat-link-arr">→</span></a>
+      </div>
+    </div>
+    <div class="cat-block">
+      <div class="cat-block-head">
+        <div class="cat-block-icon">⚖️</div>
+        <div class="cat-block-name">Legal y laboral</div>
+      </div>
+      <div class="cat-block-links">
+        <a class="cat-link" href="/indemnizacion/"><span class="cat-link-icon">⚖️</span><span class="cat-link-n">Indemnización laboral</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/liquidacion/"><span class="cat-link-icon">📋</span><span class="cat-link-n">Liquidación de haberes</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/aguinaldo/"><span class="cat-link-icon">🎁</span><span class="cat-link-n">Aguinaldo (SAC)</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/monotributo/"><span class="cat-link-icon">📋</span><span class="cat-link-n">Categoría monotributo</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/retenciones/"><span class="cat-link-icon">🧾</span><span class="cat-link-n">Retenciones AFIP/ARCA</span><span class="cat-link-arr">→</span></a>
+      </div>
+    </div>
+    <div class="cat-block">
+      <div class="cat-block-head">
+        <div class="cat-block-icon">🚗</div>
+        <div class="cat-block-name">Autos</div>
+      </div>
+      <div class="cat-block-links">
+        <a class="cat-link" href="/nafta/"><span class="cat-link-icon">⛽</span><span class="cat-link-n">Calculadora de nafta</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/patente/"><span class="cat-link-icon">📋</span><span class="cat-link-n">Calculadora de patente</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/service/"><span class="cat-link-icon">🔧</span><span class="cat-link-n">Calculadora de service</span><span class="cat-link-arr">→</span></a>
+      </div>
+    </div>
+    <div class="cat-block">
+      <div class="cat-block-head">
+        <div class="cat-block-icon">📅</div>
+        <div class="cat-block-name">Fechas y tiempo</div>
+      </div>
+      <div class="cat-block-links">
+        <a class="cat-link" href="/edad/"><span class="cat-link-icon">🎂</span><span class="cat-link-n">Calculadora de edad</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/dias/"><span class="cat-link-icon">🗓️</span><span class="cat-link-n">Días entre fechas</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/dia-semana/"><span class="cat-link-icon">📆</span><span class="cat-link-n">¿Qué día de la semana fue?</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/calendario/"><span class="cat-link-icon">📅</span><span class="cat-link-n">Calendario 2026</span><span class="cat-link-arr">→</span></a>
+      </div>
+    </div>
+    <div class="cat-block">
+      <div class="cat-block-head">
+        <div class="cat-block-icon">🔢</div>
+        <div class="cat-block-name">Matemática</div>
+      </div>
+      <div class="cat-block-links">
+        <a class="cat-link" href="/porcentaje/"><span class="cat-link-icon">%</span><span class="cat-link-n">Calculadora de porcentajes</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/regla-de-tres/"><span class="cat-link-icon">📐</span><span class="cat-link-n">Regla de tres</span><span class="cat-link-arr">→</span></a>
+        <a class="cat-link" href="/conversion/"><span class="cat-link-icon">🔄</span><span class="cat-link-n">Conversión de unidades</span><span class="cat-link-arr">→</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOVEDADES -->
+  <div class="section-head">
+    <div>
+      <div class="section-title">✨ Incorporadas en 2025–2026</div>
+      <div class="section-sub">Las más recientes del sitio</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="new-grid">
+    <a class="new-card" href="/ecommerce/kpis/">
+      <div class="new-badge">Nuevo</div>
+      <div class="new-icon">📊</div>
+      <div class="new-name">KPIs de Ecommerce</div>
+      <div class="new-desc">ROAS, CAC, LTV, margen neto y más en un solo lugar.</div>
+    </a>
+    <a class="new-card" href="/divisas/">
+      <div class="new-badge">Nuevo</div>
+      <div class="new-icon">💱</div>
+      <div class="new-name">Convertidor de Divisas</div>
+      <div class="new-desc">Blue, MEP, CCL y oficial en tiempo real con historial.</div>
+    </a>
+    <a class="new-card" href="/reforma/">
+      <div class="new-badge">Nuevo</div>
+      <div class="new-icon">🔨</div>
+      <div class="new-name">Calculadora de Reforma</div>
+      <div class="new-desc">Presupuestá tu obra ítem por ítem: pintura, pisos, electricidad.</div>
+    </a>
+    <a class="new-card" href="/hipoteca/">
+      <div class="new-badge">Nuevo</div>
+      <div class="new-icon">🏦</div>
+      <div class="new-name">Hipoteca UVA</div>
+      <div class="new-desc">Simulá la cuota de tu crédito hipotecario UVA o tasa fija.</div>
+    </a>
+    <a class="new-card" href="/poder-adquisitivo/">
+      <div class="new-badge">Nuevo</div>
+      <div class="new-icon">📉</div>
+      <div class="new-name">Poder Adquisitivo</div>
+      <div class="new-desc">¿Cuánto valía tu plata antes? Ajustá por inflación histórica.</div>
+    </a>
+    <a class="new-card" href="/crypto-pl/">
+      <div class="new-badge">Nuevo</div>
+      <div class="new-icon">📊</div>
+      <div class="new-name">P&amp;L Crypto</div>
+      <div class="new-desc">Ganancia o pérdida en una operación con criptomonedas.</div>
+    </a>
+    <a class="new-card" href="/liquidacion/">
+      <div class="new-badge">Nuevo</div>
+      <div class="new-icon">📋</div>
+      <div class="new-name">Liquidación de Haberes</div>
+      <div class="new-desc">Sueldo neto con antigüedad, horas extra y SAC proporcional.</div>
+    </a>
+    <a class="new-card" href="/mundial/">
+      <div class="new-badge">Nuevo</div>
+      <div class="new-icon">🏆</div>
+      <div class="new-name">¿Cuánto falta el Mundial?</div>
+      <div class="new-desc">Cuenta regresiva en tiempo real hasta el Mundial 2026.</div>
+    </a>
+  </div>
+
+  <!-- SEO CONTENT -->
+  <div class="content-block">
+    <h2>¿Por qué estas son las calculadoras más usadas en Argentina?</h2>
+    <p>Argentina tiene una economía con características únicas: múltiples tipos de cambio, inflación constante, un mercado laboral con regulaciones específicas y una cultura financiera donde el dólar juega un rol central. Por eso, las herramientas más buscadas reflejan esa realidad cotidiana.</p>
+
+    <h3>El dólar y la inflación, siempre primeros</h3>
+    <p>El <a href="/divisas/">convertidor de divisas</a> y la <a href="/inflacion/">calculadora de inflación</a> encabezan el ranking porque son necesidades diarias para millones de argentinos. Saber cuánto vale el dólar blue hoy, o cuánto costaba algo hace un año ajustado por el IPC, son consultas que se repiten sin importar el contexto económico.</p>
+
+    <h3>Sueldo y trabajo, el corazón de la economía personal</h3>
+    <p>La <a href="/sueldo-neto/">calculadora de sueldo neto</a>, el <a href="/aguinaldo/">aguinaldo</a> y la <a href="/indemnizacion/">indemnización laboral</a> son esenciales porque el sistema impositivo y laboral argentino es complejo. Descuentos del ANSES, PAMI, retención de ganancias de cuarta categoría, SAC proporcional: hay muchas variables que afectan lo que realmente percibís.</p>
+
+    <h3>Salud: IMC y calorías, las más buscadas globalmente</h3>
+    <p>La <a href="/imc/">calculadora de IMC</a> y la de <a href="/bmr/">calorías diarias (BMR/TDEE)</a> son herramientas universales que mantienen una demanda constante. Son el primer paso para cualquier persona que quiere cuidar su alimentación o ponerse en forma.</p>
+
+    <h3>Autos: nafta y patente, gastos inevitables</h3>
+    <p>Con el precio del combustible actualizándose frecuentemente, la <a href="/nafta/">calculadora de nafta</a> se convierte en una herramienta de consulta semanal para cualquier conductor. Lo mismo con la <a href="/patente/">patente</a>, cuyo monto varía por provincia y modelo.</p>
+
+    <h3>¿Cómo se actualiza este ranking?</h3>
+    <p>Este ranking se actualiza periódicamente para reflejar las tendencias de búsqueda y las necesidades de los usuarios. Las incorporaciones recientes (como las calculadoras de ecommerce, crypto y hogar) irán subiendo posiciones a medida que más personas las descubran y usen.</p>
+  </div>
+
+</main>
+
+<footer>
+  <div>© 2026 Calculadora.live</div>
+  <div><a href="/rankings/">Rankings</a> &nbsp;·&nbsp; <a href="/privacidad/">Privacidad</a> &nbsp;·&nbsp; <a href="/terminos/">Términos</a></div>
+</footer>
+
+<script src="/nav.js"></script>
+<script>
+(function(){
+  if(!window.__CALCS) return;
+  var total = window.__CALCS.reduce(function(s,c){ return s + c.items.length; }, 0);
+  var el = document.getElementById('total-count');
+  if(el) el.textContent = total;
+
+  var navEl = document.getElementById('desktop-nav');
+  if(navEl){
+    var navSlugs = ['finanzas','salud','autos','fechas','matematica'];
+    navEl.innerHTML = window.__CALCS
+      .filter(function(c){ return navSlugs.indexOf(c.slug)!==-1; })
+      .map(function(c){ return '<a href="/'+c.slug+'/">'+c.label+'</a>'; })
+      .join('');
+  }
+})();
+</script>
+</body>
+</html>

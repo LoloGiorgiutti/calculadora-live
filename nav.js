@@ -87,6 +87,28 @@
     { cat: '⚽ Mundial 2026', slug: 'mundial-2026', label: 'Mundial 2026', desc: 'Cuenta regresiva y herramientas sobre la Copa del Mundo 2026.', items: [
       { n: '¿Cuánto falta para el Mundial?', u: '/mundial/', icon:'🏆', badge:true, d: 'Cuenta regresiva en tiempo real', hd:'Cuenta regresiva en tiempo real hasta el partido inaugural del Mundial 2026 en México.' },
     ]},
+    { cat: '⏱️ Cuentas Regresivas', slug: 'countdowns', label: 'Contadores', desc: 'Contadores en tiempo real para los eventos que importan: feriados, festivales, Navidad, Black Friday y más.', items: [
+      { n: 'Contadores — hub',               u: '/countdowns/',              icon:'⏱️', badge:true, d: 'Todos los contadores en un lugar',         hd:'Días, horas, minutos y segundos para los eventos que importan. Actualizados en tiempo real.' },
+      { n: '¿Cuánto falta para Navidad?',    u: '/countdowns/navidad/',      icon:'🎄', badge:true, d: '25 de diciembre',                          hd:'Cuenta regresiva en tiempo real hasta el 25 de diciembre.' },
+      { n: 'Año Nuevo',                      u: '/countdowns/ano-nuevo/',    icon:'🎊', badge:true, d: '1° de enero',                              hd:'¿Cuánto falta para el próximo 1° de enero?' },
+      { n: 'Próximo feriado',                u: '/countdowns/feriado/',      icon:'🗓️', badge:true, d: 'Próximo feriado en Argentina',             hd:'Cuenta regresiva hasta el próximo feriado nacional argentino.' },
+      { n: 'Fin de semana',                  u: '/countdowns/fin-de-semana/',icon:'🏖️', badge:true, d: '¿Cuánto falta para el sábado?',            hd:'El contador más esperado de la semana. ¿Cuánto falta para el fin de semana?' },
+      { n: 'Black Friday',                   u: '/countdowns/black-friday/', icon:'🛍️', badge:true, d: '4to viernes de noviembre',                 hd:'Cuenta regresiva hasta el Black Friday. El día de los grandes descuentos.' },
+      { n: 'Hot Sale Argentina',             u: '/countdowns/hot-sale/',     icon:'🔥', badge:true, d: 'Evento de descuentos online',               hd:'¿Cuánto falta para el Hot Sale? El evento de e-commerce más grande de Argentina.' },
+      { n: 'Cyber Monday',                   u: '/countdowns/cyber-monday/', icon:'💻', badge:true, d: 'Lunes tras el Black Friday',                hd:'Cuenta regresiva hasta el Cyber Monday. Ofertas digitales.' },
+      { n: 'Próxima carrera F1',             u: '/countdowns/f1/',           icon:'🏎️', badge:true, d: 'Fórmula 1',                               hd:'¿Cuánto falta para la próxima carrera de Fórmula 1?' },
+      { n: 'Final Champions League',         u: '/countdowns/final-champions/',icon:'⚽',badge:true, d: 'Final UEFA Champions',                    hd:'Cuenta regresiva hasta la final de la Champions League.' },
+      { n: 'Super Bowl',                     u: '/countdowns/superbowl/',    icon:'🏈', badge:true, d: 'Final de la NFL',                          hd:'¿Cuánto falta para el Super Bowl? La final más vista del planeta.' },
+      { n: 'Premios Oscar',                  u: '/countdowns/oscars/',       icon:'🏆', badge:true, d: 'Academia de Artes y Ciencias',             hd:'La noche más importante del cine. ¿Cuánto falta para los Oscar?' },
+      { n: 'GTA VI',                         u: '/countdowns/gta6/',         icon:'🎮', badge:true, d: 'Lanzamiento Rockstar Games',               hd:'¿Cuándo sale GTA VI? Cuenta regresiva hasta el juego más esperado.' },
+      { n: 'Próximo iPhone',                 u: '/countdowns/iphone/',       icon:'📱', badge:true, d: 'Próxima presentación de Apple',            hd:'¿Cuándo presenta Apple el nuevo iPhone? Estimación basada en años anteriores.' },
+      { n: 'Lollapalooza Argentina',         u: '/countdowns/lollapalooza/', icon:'🎸', badge:true, d: 'Festival de música',                       hd:'¿Cuánto falta para el Lollapalooza Argentina?' },
+      { n: 'Día del Padre',                  u: '/countdowns/dia-padre/',    icon:'👨', badge:true, d: '3er domingo de junio',                     hd:'¿Cuánto falta para el Día del Padre en Argentina?' },
+      { n: 'Día de la Madre',                u: '/countdowns/dia-madre/',    icon:'👩', badge:true, d: '3er domingo de octubre',                   hd:'¿Cuánto falta para el Día de la Madre en Argentina?' },
+      { n: 'Halloween',                      u: '/countdowns/halloween/',    icon:'🎃', badge:true, d: '31 de octubre',                            hd:'¿Cuánto falta para Halloween? La noche de brujas.' },
+      { n: 'San Valentín',                   u: '/countdowns/san-valentin/', icon:'❤️', badge:true, d: '14 de febrero',                            hd:'¿Cuánto falta para San Valentín? El día de los enamorados.' },
+      { n: 'Juegos Olímpicos 2028',          u: '/countdowns/olimpicos/',    icon:'🥇', badge:true, d: 'Los Ángeles 2028',                          hd:'Cuenta regresiva hasta los Juegos Olímpicos de Los Ángeles 2028.' },
+    ]},
     { cat: '🎮 Tests y juegos', slug: 'tests', label: 'Tests y juegos', desc: 'Ponete a prueba: velocidad de reacción, CPS test, prueba de teclado y más.', items: [
       { n: 'Test de velocidad de reacción', u: '/reaccion/',  icon:'⚡', badge:true, d: '¿Cuánto tardás en reaccionar?',           hd:'Medí tu tiempo de reacción en milisegundos. ¿Tenés reflejos de gato?' },
       { n: 'CPS Test',                      u: '/cps/',       icon:'🖱️', badge:true, d: 'Clicks por segundo en 5, 10 o 30 seg',    hd:'¿Cuántos clicks por segundo podés hacer? Elegí el tiempo y descubrilo.' },
@@ -910,6 +932,29 @@
   'html[data-theme="dark"] .road-label.active-lbl{color:#4F6BFF !important;}',
   'html[data-theme="dark"] .road-pct{color:rgba(226,228,240,.4) !important;}',
   'html[data-theme="dark"] .road-pct.dominant{color:#E2E4F0 !important;}',
+
+  /* ── COUNTDOWNS: dark mode overrides ──────────────────────────────────── */
+  /* .cd-hero is always dark regardless of theme — no overrides needed.     */
+  /* Only surface cards below the hero need dark mode treatment.             */
+  'html[data-theme="dark"] .cd-note-card{background:#141929 !important;border-color:#1F2438 !important;color:#9BA0B8 !important;}',
+  'html[data-theme="dark"] .cd-back-link{color:#606580 !important;}',
+  'html[data-theme="dark"] .cd-back-link:hover{color:#4F6BFF !important;}',
+  /* Hub cards */
+  'html[data-theme="dark"] .cd-card{background:#141929 !important;border-color:#1F2438 !important;color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .cd-card:hover{border-color:#4F6BFF !important;}',
+  'html[data-theme="dark"] .cd-card-name{color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .cd-card-days{color:#4F6BFF !important;}',
+  'html[data-theme="dark"] .cd-card-days-lbl{color:#606580 !important;}',
+  'html[data-theme="dark"] .cd-card-unknown{color:#404565 !important;}',
+  /* Hub section headers */
+  'html[data-theme="dark"] .cd-section-hdr{color:#404565 !important;}',
+  'html[data-theme="dark"] .cd-section-hdr::after{background:#1F2438 !important;}',
+  /* Admin cards */
+  'html[data-theme="dark"] .cd-admin-card{background:#141929 !important;border-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .cd-admin-config{background:#141929 !important;border-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .cd-admin-section-title{color:#404565 !important;}',
+  'html[data-theme="dark"] .cd-admin-section-title::after{background:#1F2438 !important;}',
+  'html[data-theme="dark"] .cd-admin-sub{color:#9BA0B8 !important;}',
   ].join('');
 
   var st = document.createElement('style');

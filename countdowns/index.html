@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9523976383161076" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuentas Regresivas — Calculadora.live</title>
+<meta name="description" content="Contadores en tiempo real para todos los eventos que importan: fechas patrias, feriados, Navidad, Black Friday, F1, Champions, y mucho más.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://calculadora.live/countdowns/">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/countdowns/countdown.css">
+<style>
+  :root{--bg:#F7F8FA;--surface:#FFF;--ink:#080A12;--ink-light:#60647A;--ink-faint:#B4B8CC;--hi:#1A5FE8;--hi-soft:#EEF3FD;--border:#D4D8E6;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="cd-hub-hero">
+  <div class="cd-hub-eyebrow">⏱ Contadores en vivo</div>
+  <h1 class="cd-hub-title">Cuentas Regresivas</h1>
+  <p class="cd-hub-sub">Días, horas, minutos y segundos para los eventos que importan. Actualizados en tiempo real.</p>
+</div>
+
+<div class="cd-hub-body" id="hub-body">
+  <!-- Cards injected by JS -->
+  <div style="text-align:center;padding:40px;color:var(--ink-faint);font-size:14px;">Cargando contadores…</div>
+</div>
+
+<script src="/countdowns/countdown-engine.js"></script>
+<script>
+/* ── EVENTS LIST ──────────────────────────────────────────────────── */
+var SECTIONS = [
+  {
+    label: '🚀 Lanzamientos',
+    events: [
+      { slug:'gta6',    name:'GTA VI',             emoji:'🎮', type:'variable', url:'/countdowns/gta6/',    desc:'El juego más esperado.' },
+      { slug:'iphone',  name:'Próximo iPhone',      emoji:'📱', type:'variable', url:'/countdowns/iphone/', desc:'Nuevo iPhone de Apple.' },
+    ]
+  },
+  {
+    label: '🌤 Tiempo',
+    events: [
+      { slug:'fin-de-semana',  name:'El Fin de Semana',    emoji:'🏖️', type:'auto', url:'/countdowns/fin-de-semana/', desc:'Próximo sábado.' },
+      { slug:'ano-que-viene',  name:'El Año que Viene',    emoji:'🎉', type:'auto', url:'/countdowns/ano-que-viene/', desc:'Próximo 1° de enero.' },
+      { slug:'feriado',        name:'Próximo Feriado',     emoji:'🗓️', type:'auto', url:'/countdowns/feriado/',       desc:'Feriado nacional.' },
+      { slug:'luna-llena',     name:'Próxima Luna Llena',  emoji:'🌕', type:'auto', url:'/countdowns/luna-llena/',    desc:'Próxima luna llena.' },
+      { slug:'eclipse',        name:'Próximo Eclipse',     emoji:'🌑', type:'variable', url:'/countdowns/eclipse/',   desc:'Eclipse solar total.' },
+    ]
+  },
+  {
+    label: '🎤 Eventos',
+    events: [
+      { slug:'mundial', name:'Mundial 2026', emoji:'🏆', type:'_ext', url:'/mundial/', desc:'Copa del Mundo.' },
+      { slug:'superbowl',      name:'Super Bowl',              emoji:'🏈', type:'auto',     url:'/countdowns/superbowl/',      desc:'Final de la NFL.' },
+      { slug:'oscars',         name:'Premios Oscar',           emoji:'🏆', type:'auto',     url:'/countdowns/oscars/',         desc:'La noche del cine.' },
+      { slug:'grammys',        name:'Premios Grammy',          emoji:'🎵', type:'variable', url:'/countdowns/grammys/',        desc:'La noche de la música.' },
+      { slug:'met-gala',       name:'Met Gala',                emoji:'👗', type:'auto',     url:'/countdowns/met-gala/',       desc:'La gala más fashion.' },
+      { slug:'lollapalooza',   name:'Lollapalooza',            emoji:'🎸', type:'variable', url:'/countdowns/lollapalooza/',   desc:'El festival más grande.' },
+      { slug:'cosquin-rock',   name:'Cosquín Rock',            emoji:'🤘', type:'variable', url:'/countdowns/cosquin-rock/',   desc:'Festival de rock argentino.' },
+      { slug:'bafweek',        name:'BA Fashion Week',         emoji:'👠', type:'variable', url:'/countdowns/bafweek/',        desc:'Moda porteña.' },
+      { slug:'nyfw',           name:'NYFW',                    emoji:'🗽', type:'variable', url:'/countdowns/nyfw/',           desc:'New York Fashion Week.' },
+      { slug:'milan-fw',       name:'Milán Fashion Week',      emoji:'🇮🇹', type:'variable', url:'/countdowns/milan-fw/',      desc:'Moda italiana.' },
+      { slug:'paris-fw',       name:'París Fashion Week',      emoji:'🗼', type:'variable', url:'/countdowns/paris-fw/',       desc:'Moda francesa.' },
+      { slug:'miami-fw',       name:'Miami Fashion Week',      emoji:'🌴', type:'variable', url:'/countdowns/miami-fw/',       desc:'Moda en Miami.' },
+      { slug:'f1',             name:'Próxima Carrera F1',      emoji:'🏎️', type:'variable', url:'/countdowns/f1/',            desc:'Fórmula 1.' },
+      { slug:'le-mans',        name:'24hs Le Mans',            emoji:'🏁', type:'variable', url:'/countdowns/le-mans/',        desc:'Carrera de resistencia.' },
+      { slug:'olimpicos',      name:'Olímpicos LA 2028',       emoji:'🥇', type:'auto',     url:'/countdowns/olimpicos/',      desc:'Juegos Olímpicos 2028.' },
+      { slug:'final-champions',name:'Final Champions',         emoji:'⚽', type:'variable', url:'/countdowns/final-champions/',desc:'Final UEFA Champions.' },
+      { slug:'final-nba',      name:'Finales NBA',             emoji:'🏀', type:'variable', url:'/countdowns/final-nba/',      desc:'Final de la NBA.' },
+      { slug:'copa-libertadores',name:'Final Libertadores',   emoji:'🏆', type:'variable', url:'/countdowns/copa-libertadores/',desc:'Copa Libertadores.' },
+    ]
+  },
+  {
+    label: '🇦🇷 Argentina',
+    events: [
+      { slug:'fecha-patria',     name:'Próxima Fecha Patria',    emoji:'🇦🇷', type:'auto', url:'/countdowns/fecha-patria/',     desc:'Próxima fecha patria.' },
+      { slug:'elecciones',       name:'Elecciones 2027',         emoji:'🗳️', type:'auto', url:'/countdowns/elecciones/',       desc:'Elecciones presidenciales.' },
+      { slug:'nuevo-presidente', name:'Nuevo Presidente',        emoji:'🤝', type:'auto', url:'/countdowns/nuevo-presidente/', desc:'Asunción presidencial.' },
+    ]
+  },
+  {
+    label: '🛍️ Descuentos',
+    events: [
+      { slug:'hot-sale',     name:'Hot Sale',      emoji:'🔥', type:'variable', url:'/countdowns/hot-sale/',     desc:'Hot Sale Argentina.' },
+      { slug:'black-friday', name:'Black Friday',  emoji:'🛍️', type:'auto',    url:'/countdowns/black-friday/', desc:'4to viernes de noviembre.' },
+      { slug:'cyber-monday', name:'Cyber Monday',  emoji:'💻', type:'auto',    url:'/countdowns/cyber-monday/', desc:'Lunes tras el Black Friday.' },
+    ]
+  },
+  {
+    label: '🎄 Días Festivos',
+    events: [
+      { slug:'navidad',     name:'Navidad',        emoji:'🎄', type:'auto', url:'/countdowns/navidad/',     desc:'25 de diciembre.' },
+      { slug:'ano-nuevo',   name:'Año Nuevo',      emoji:'🎊', type:'auto', url:'/countdowns/ano-nuevo/',   desc:'1° de enero.' },
+      { slug:'reyes',       name:'Reyes Magos',    emoji:'⭐', type:'auto', url:'/countdowns/reyes/',       desc:'6 de enero.' },
+      { slug:'san-valentin',name:'San Valentín',   emoji:'❤️', type:'auto', url:'/countdowns/san-valentin/',desc:'14 de febrero.' },
+      { slug:'dia-padre',   name:'Día del Padre',  emoji:'👨', type:'auto', url:'/countdowns/dia-padre/',   desc:'3er domingo de junio.' },
+      { slug:'dia-madre',   name:'Día de la Madre',emoji:'👩', type:'auto', url:'/countdowns/dia-madre/',   desc:'3er domingo de octubre.' },
+      { slug:'dia-nino',    name:'Día del Niño',   emoji:'🧒', type:'auto', url:'/countdowns/dia-nino/',    desc:'2do domingo de agosto.' },
+      { slug:'halloween',   name:'Halloween',      emoji:'🎃', type:'auto', url:'/countdowns/halloween/',   desc:'31 de octubre.' },
+    ]
+  },
+];
+
+/* ── MUNDIAL special case: compute days to Jun 11 2026 ─────── */
+function mundialDays() {
+  var target = new Date('2026-06-11T20:00:00-06:00'); /* Mexico City kick-off */
+  var diff = target - new Date();
+  if (diff < 0) return { state: 'past' };
+  return { state: 'future', days: Math.ceil(diff / 86400000) };
+}
+
+/* ── CARD RENDERER ───────────────────────────────────────────── */
+function cardHTML(ev, cardData) {
+  var daysHtml;
+  if (cardData.state === 'unknown') {
+    daysHtml = '<div class="cd-card-unknown">📅 Por confirmar</div>';
+  } else if (cardData.state === 'past') {
+    daysHtml = '<div class="cd-card-past">✓ Ya ocurrió</div>';
+  } else if (cardData.state === 'today') {
+    daysHtml = '<div class="cd-card-today">¡Hoy!</div>';
+  } else {
+    daysHtml = '<div class="cd-card-days">' + cardData.days + '</div>'
+             + '<div class="cd-card-days-lbl">' + (cardData.days === 1 ? 'día' : 'días') + '</div>';
+  }
+  var extBadge = ev.type === '_ext' ? '<span class="cd-card-ext">↗</span>' : '';
+  return '<a href="' + ev.url + '" class="cd-card">'
+    + extBadge
+    + '<div class="cd-card-emoji">' + ev.emoji + '</div>'
+    + '<div class="cd-card-name">' + ev.name + '</div>'
+    + daysHtml
+    + '</a>';
+}
+
+/* ── BUILD HUB ───────────────────────────────────────────────── */
+function buildHub(allCardData) {
+  var html = '';
+  SECTIONS.forEach(function(section) {
+    html += '<div class="cd-section-hdr">' + section.label + '</div>';
+    html += '<div class="cd-cards">';
+    section.events.forEach(function(ev) {
+      var cardData = allCardData[ev.slug] || { state: 'unknown' };
+      html += cardHTML(ev, cardData);
+    });
+    html += '</div>';
+  });
+  document.getElementById('hub-body').innerHTML = html;
+}
+
+/* ── LOAD ALL CARD DATA ──────────────────────────────────────── */
+(function() {
+  var allEvents = [];
+  SECTIONS.forEach(function(s) { allEvents = allEvents.concat(s.events); });
+
+  var results = {};
+  var pending = 0;
+
+  /* Mundial special */
+  results['mundial'] = mundialDays();
+
+  allEvents.forEach(function(ev) {
+    if (ev.type === '_ext') return; /* mundial handled above */
+    pending++;
+    CountdownEngine.getCardData(ev, function(data) {
+      results[ev.slug] = data;
+      pending--;
+      if (pending === 0) buildHub(results);
+    });
+  });
+
+  if (pending === 0) buildHub(results);
+})();
+</script>
+<script src="/nav.js"></script>
+</body>
+</html>

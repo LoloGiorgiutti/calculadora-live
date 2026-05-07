@@ -760,26 +760,11 @@
   'html[data-theme="dark"] body{background:#0E1525;color:#E2E4F0;}',
 
   /* ── HEADER UNIFICADO: mismas proporciones en todas las páginas ── */
-  'header,#site-header{height:58px !important;box-sizing:border-box !important;}',
+  /* Excluir .nf-hero (hero section de nafta) para no colapsar su alto */
+  'header:not(.nf-hero),#site-header{height:58px !important;box-sizing:border-box !important;}',
   '.logo{font-size:16px !important;font-weight:700 !important;letter-spacing:-0.03em !important;flex-shrink:0 !important;text-decoration:none !important;white-space:nowrap !important;}',
-  /* Nav inyectado (páginas internas): flex:1 para empujar el search a la derecha */
-  '.nv-hdr-nav{display:flex !important;gap:2px !important;flex:1 !important;margin:0 8px !important;align-items:center !important;}',
-  '.nv-hdr-nav a{padding:6px 10px !important;border-radius:6px !important;font-size:12px !important;font-weight:500 !important;transition:all .12s !important;white-space:nowrap !important;text-decoration:none !important;color:rgba(255,255,255,.6) !important;}',
-  '.nv-hdr-nav a:hover{background:rgba(255,255,255,.08) !important;color:#fff !important;}',
-  /* Search pill inyectado (páginas internas) */
-  '.nv-srch{display:flex !important;align-items:center !important;gap:10px !important;padding:7px 12px !important;border-radius:8px !important;font-size:12px !important;font-family:inherit !important;cursor:pointer !important;flex-shrink:0 !important;transition:all .15s !important;background:rgba(255,255,255,.06) !important;border:1px solid rgba(255,255,255,.1) !important;color:rgba(255,255,255,.4) !important;}',
-  '.nv-srch-ico{opacity:.45;flex-shrink:0;display:block !important;}',
-  '.nv-srch kbd{font-family:"JetBrains Mono",monospace !important;font-size:10px !important;padding:2px 5px !important;background:rgba(255,255,255,.06) !important;border:1px solid rgba(255,255,255,.12) !important;border-radius:4px !important;color:rgba(255,255,255,.35) !important;white-space:nowrap !important;}',
-  /* Light mode — nav inyectado */
-  'html:not([data-theme="dark"]) .nv-hdr-nav a{color:rgba(10,14,26,.55) !important;}',
-  'html:not([data-theme="dark"]) .nv-hdr-nav a:hover{background:#F0F2F7 !important;color:#0A0E1A !important;}',
-  'html:not([data-theme="dark"]) .nv-srch{background:#F0F2F7 !important;border-color:#E4E7EE !important;color:rgba(10,14,26,.4) !important;}',
-  'html:not([data-theme="dark"]) .nv-srch-ico{color:rgba(10,14,26,.45) !important;opacity:1 !important;}',
-  'html:not([data-theme="dark"]) .nv-srch kbd{background:rgba(10,14,26,.04) !important;border-color:#D8DCE8 !important;color:rgba(10,14,26,.3) !important;}',
-  /* Dark mode input prefix ($) visible */
+  /* Dark mode: input prefix ($) visible en fondo oscuro */
   'html[data-theme="dark"] .input-prefix{color:rgba(226,228,240,.4) !important;}',
-  /* Responsive: ocultar nav + search en mobile */
-  '@media(max-width:768px){.nv-hdr-nav,.nv-srch{display:none !important;}}',
 
   /* ── HEADER LIGHT MODE: fondo blanco, textos oscuros (todas las páginas) ── */
   'html:not([data-theme="dark"]) header{background:#FFFFFF !important;border-bottom-color:#E4E7EE !important;}',
@@ -944,45 +929,6 @@
     var pl = parseInt(window.getComputedStyle(hdr).paddingLeft) || 24;
     if (pl > 12) hdr.style.paddingLeft = '12px';
     hdr.insertBefore(btn, hdr.firstChild);
-  }
-
-  /* ── NAV LINKS + SEARCH PILL (páginas sin .header-nav) ──────── */
-  // Si el header no tiene nav de categorías (páginas de calculadoras), se inyecta
-  // el mismo nav que tiene la homepage para que todos los headers sean idénticos.
-  if (hdr && !hdr.querySelector('.header-nav, .nv-hdr-nav')) {
-    var mainSlugs = ['finanzas', 'salud', 'autos', 'fechas', 'matematica'];
-    var slugToLabel = {};
-    CALCS.forEach(function(cat) { slugToLabel[cat.slug] = cat.label; });
-
-    var hNav = document.createElement('nav');
-    hNav.className = 'nv-hdr-nav';
-    mainSlugs.forEach(function(slug) {
-      if (!slugToLabel[slug]) return;
-      var a = document.createElement('a');
-      a.href = '/' + slug + '/';
-      a.textContent = slugToLabel[slug];
-      // Marcar sección activa
-      var cur2 = window.location.pathname;
-      if (cur2 === '/' + slug + '/' || cur2.indexOf('/' + slug + '/') === 0) {
-        a.style.color = '#4F6BFF';
-        a.style.fontWeight = '600';
-      }
-      hNav.appendChild(a);
-    });
-
-    var srch = document.createElement('button');
-    srch.className = 'nv-srch';
-    srch.type = 'button';
-    srch.setAttribute('aria-label', 'Buscar calculadora');
-    srch.innerHTML =
-      '<svg class="nv-srch-ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'
-      + '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'
-      + '<span>Buscar calculadora…</span>'
-      + '<kbd>⌘K</kbd>';
-    srch.addEventListener('click', function() { open(); });
-
-    hdr.appendChild(hNav);
-    hdr.appendChild(srch);
   }
 
   /* ── THEME TOGGLE ─────────────────────────────────────────── */

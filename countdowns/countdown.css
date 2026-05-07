@@ -3,6 +3,28 @@
    Calculadora.live · 2026
 ═══════════════════════════════════════════════════════════════ */
 
+/* ─── HEADER BASE ───────────────────────────────────────────── */
+header {
+  background: var(--surface, #FFF);
+  border-bottom: 1px solid var(--border, #D4D8E6);
+  padding: 0 24px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink, #080A12);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  flex: 1;
+}
+.logo span { color: var(--hi, #1A5FE8); }
+
 /* ─── PAGE WRAPPER ─────────────────────────────────────────── */
 .cd-page { min-height: 100vh; }
 

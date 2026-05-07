@@ -23,9 +23,7 @@
   .card{background:var(--surface);border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid var(--border)}
   .field{margin-bottom:18px}.field:last-child{margin-bottom:0}
   label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);margin-bottom:8px}
-  .input-wrap{position:relative}
-  .input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:15px;pointer-events:none;font-weight:500}
-  input[type=number]{width:100%;padding:13px 14px 13px 30px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
+  input[type=number]{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;color:var(--ink);background:var(--surface);outline:none;transition:border-color .15s}
   input[type=number]:focus{border-color:var(--hi)}
   select{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--surface);outline:none;cursor:pointer;transition:border-color .15s}
   select:focus{border-color:var(--hi)}
@@ -88,11 +86,8 @@
       </select>
     </div>
     <div class="field">
-      <label>Valor fiscal / valuación del vehículo</label>
-      <div class="input-wrap">
-        <span class="input-prefix">$</span>
-        <input type="number" id="valor" placeholder="5.000.000" min="0" step="100000" oninput="calcular()">
-      </div>
+      <label>Valor fiscal / valuación del vehículo ($)</label>
+      <input type="number" id="valor" data-miles placeholder="Ej: 5.000.000" min="0" step="100000" oninput="calcular()">
     </div>
   </div>
 

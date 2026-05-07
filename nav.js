@@ -1140,6 +1140,12 @@
 
     function applyAll() {
       document.querySelectorAll('input[type=number]').forEach(function (inp) {
+        // Detección 1: atributo data-miles o data-currency → formato sin prefix visible
+        if (inp.hasAttribute('data-miles') || inp.hasAttribute('data-currency')) {
+          patch(inp);
+          return;
+        }
+        // Detección 2: input-wrap con prefix $ o suffix km (compatibilidad)
         var wrap = inp.closest('.input-wrap');
         if (!wrap) return;
         var prefix = wrap.querySelector('.input-prefix');

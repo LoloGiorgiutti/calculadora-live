@@ -84,10 +84,8 @@
       { n: 'Tu vida en números',         u: '/vida/',        icon:'🤯', badge:true, d: 'Latidos, pestañeos, pasos y más en tiempo real', hd:'Latidos, pestañeos, pasos y más — algunos contadores en tiempo real.' },
       { n: '¿Cuánto gana por segundo?',  u: '/cuanto-gana/', icon:'💸', badge:true, d: 'Messi, Taylor Swift, Elon Musk en tiempo real', hd:'Mirá cuánto ganan por segundo los famosos más ricos del mundo. Con contador en vivo y comparativa.' },
     ]},
-    { cat: '⚽ Mundial 2026', slug: 'mundial-2026', label: 'Mundial 2026', desc: 'Cuenta regresiva y herramientas sobre la Copa del Mundo 2026.', items: [
-      { n: '¿Cuánto falta para el Mundial?', u: '/mundial/', icon:'🏆', badge:true, d: 'Cuenta regresiva en tiempo real', hd:'Cuenta regresiva en tiempo real hasta el partido inaugural del Mundial 2026 en México.' },
-    ]},
     { cat: '⏱️ Cuentas Regresivas', slug: 'countdowns', label: 'Contadores', desc: 'Contadores en tiempo real para los eventos que importan: feriados, festivales, Navidad, Black Friday y más.', items: [
+      { n: '¿Cuánto falta para el Mundial?', u: '/mundial/', icon:'🏆', badge:true, d: 'Cuenta regresiva en tiempo real', hd:'Cuenta regresiva en tiempo real hasta el partido inaugural del Mundial 2026 en México.' },
       { n: 'Contadores — hub',               u: '/countdowns/',              icon:'⏱️', badge:true, d: 'Todos los contadores en un lugar',         hd:'Días, horas, minutos y segundos para los eventos que importan. Actualizados en tiempo real.' },
       { n: '¿Cuánto falta para Navidad?',    u: '/countdowns/navidad/',      icon:'🎄', badge:true, d: '25 de diciembre',                          hd:'Cuenta regresiva en tiempo real hasta el 25 de diciembre.' },
       { n: 'Año Nuevo',                      u: '/countdowns/ano-nuevo/',    icon:'🎊', badge:true, d: '1° de enero',                              hd:'¿Cuánto falta para el próximo 1° de enero?' },
@@ -1594,7 +1592,7 @@
   (function() {
     var path = window.location.pathname.replace(/\/$/, '') || '/';
     var skip = ['/', '/autos', '/finanzas', '/salud', '/fechas', '/matematica',
-                '/generadores', '/vida-numeros', '/mundial-2026', '/tests',
+                '/generadores', '/vida-numeros', '/countdowns', '/tests',
                 '/privacidad', '/terminos'];
     if (skip.indexOf(path) !== -1) return;
 
@@ -1626,7 +1624,7 @@
     var skipPaths = [
       '/', '/hogar', '/legal', '/crypto', '/ecommerce',
       '/autos', '/finanzas', '/salud', '/fechas', '/matematica',
-      '/generadores', '/vida-numeros', '/mundial-2026', '/tests',
+      '/generadores', '/vida-numeros', '/countdowns', '/tests',
       '/privacidad', '/terminos'
     ];
     if (skipPaths.indexOf(path) !== -1) return;

@@ -2,8 +2,8 @@
   "updated": "2026-05-07",
   "events": {
     "gta6": {
-      "date": null,
-      "note": "Rockstar Games no ha confirmado una fecha oficial. Se actualizará cuando haya novedades."
+      "date": "2026-05-26T00:00:00-05:00",
+      "note": "Fecha de lanzamiento oficial confirmada por Rockstar Games: 26 de mayo de 2026."
     },
     "iphone": {
       "date": "2026-09-09T10:00:00-07:00",
@@ -15,7 +15,7 @@
     },
     "lollapalooza": {
       "date": null,
-      "note": "Las fechas del Lollapalooza Argentina 2027 aún no fueron anunciadas."
+      "note": "Las fechas del Lollapalooza Argentina 2027 aún no fueron anunciadas. Se realiza en el Hipódromo de San Isidro."
     },
     "cosquin-rock": {
       "date": null,

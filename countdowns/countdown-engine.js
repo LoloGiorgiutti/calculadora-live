@@ -291,16 +291,18 @@
     var subtitle = (extra && extra.subtitle) || '';
     var cdSection = buildCountdownSection(targetDate, isPast, isUnknown, note);
 
+    /* Category border color derived from accent */
+    var border = cc.soft.replace(/[\d.]+\)$/, '.3)');
+
     return [
       '<div class="cd-page">',
-      '  <div class="cd-hero" style="--cat-accent:' + cc.accent + ';--cat-soft:' + cc.soft + ';--cat-glow:' + cc.glow + ';--cat-border:' + cc.soft.replace('.13)', '.3)').replace('.14)', '.3)') + '">',
+      '  <div class="cd-hero" style="--cat-accent:' + cc.accent + ';--cat-soft:' + cc.soft + ';--cat-glow:' + cc.glow + ';--cat-border:' + border + '">',
       '    <div class="cd-breadcrumb">',
-      '      <a href="/">Inicio</a><span class="sep"> › </span>',
-      '      <a href="/countdowns/">Contadores</a><span class="sep"> › </span>',
+      '      <a href="/">Inicio</a> <span>›</span>',
+      '      <a href="/countdowns/">Contadores</a> <span>›</span>',
       '      <span>' + config.category + '</span>',
       '    </div>',
-      '    <div class="cd-badge">' + config.category + '</div>',
-      '    <div class="cd-emoji">' + config.emoji + '</div>',
+      '    <div class="cd-badge"><span class="cd-badge-ico">' + config.emoji + '</span>' + config.category + '</div>',
       '    <h1 class="cd-title">' + config.name + '</h1>',
       subtitle ? '    <div class="cd-subtitle">' + subtitle + '</div>' : '',
       '    <p class="cd-desc">' + config.description + '</p>',

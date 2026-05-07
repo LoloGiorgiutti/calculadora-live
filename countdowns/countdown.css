@@ -412,6 +412,55 @@ header {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   ARTICLE + FAQ SECTION
+═══════════════════════════════════════════════════════════════ */
+.cd-article {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+.cd-article-body {
+  font-size: 15px;
+  color: var(--ink-light, #60647A);
+  line-height: 1.75;
+  margin-bottom: 40px;
+  border-left: 3px solid var(--border, #D4D8E6);
+  padding-left: 16px;
+}
+
+/* FAQ */
+.cd-faq { }
+
+.cd-faq-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--ink, #080A12);
+  margin-bottom: 16px;
+}
+
+.cd-faq-item {
+  border-top: 1px solid var(--border, #D4D8E6);
+  padding: 18px 0;
+}
+.cd-faq-item:last-child { border-bottom: 1px solid var(--border, #D4D8E6); }
+
+.cd-faq-q {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink, #080A12);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.cd-faq-a {
+  font-size: 14px;
+  color: var(--ink-light, #60647A);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    ADMIN PAGE
 ═══════════════════════════════════════════════════════════════ */
 .cd-admin-page {

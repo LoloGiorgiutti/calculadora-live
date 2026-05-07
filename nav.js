@@ -937,6 +937,12 @@
   'html[data-theme="dark"] .cd-note-card{background:#141929 !important;border-color:#1F2438 !important;color:#9BA0B8 !important;}',
   'html[data-theme="dark"] .cd-back-link{color:#606580 !important;}',
   'html[data-theme="dark"] .cd-back-link:hover{color:#4F6BFF !important;}',
+  /* Article + FAQ dark mode */
+  'html[data-theme="dark"] .cd-article-body{color:#9BA0B8 !important;border-left-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .cd-faq-title{color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .cd-faq-item{border-top-color:#1F2438 !important;border-bottom-color:#1F2438 !important;}',
+  'html[data-theme="dark"] .cd-faq-q{color:#E2E4F0 !important;}',
+  'html[data-theme="dark"] .cd-faq-a{color:#9BA0B8 !important;}',
   /* Hub cards */
   'html[data-theme="dark"] .cd-card{background:#141929 !important;border-color:#1F2438 !important;color:#E2E4F0 !important;}',
   'html[data-theme="dark"] .cd-card:hover{border-color:#4F6BFF !important;}',

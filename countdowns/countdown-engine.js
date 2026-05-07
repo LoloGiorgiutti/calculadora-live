@@ -294,6 +294,27 @@
     /* Category border color derived from accent */
     var border = cc.soft.replace(/[\d.]+\)$/, '.3)');
 
+    /* ── Optional article + FAQ section ── */
+    var articleHTML = '';
+    if (config.content || (config.faqs && config.faqs.length)) {
+      articleHTML += '<div class="cd-article">';
+      if (config.content) {
+        articleHTML += '<p class="cd-article-body">' + config.content + '</p>';
+      }
+      if (config.faqs && config.faqs.length) {
+        articleHTML += '<div class="cd-faq">';
+        articleHTML += '<h2 class="cd-faq-title">Preguntas frecuentes</h2>';
+        config.faqs.forEach(function (faq) {
+          articleHTML += '<div class="cd-faq-item">';
+          articleHTML += '<h3 class="cd-faq-q">' + faq.q + '</h3>';
+          articleHTML += '<p class="cd-faq-a">' + faq.a + '</p>';
+          articleHTML += '</div>';
+        });
+        articleHTML += '</div>';
+      }
+      articleHTML += '</div>';
+    }
+
     return [
       '<div class="cd-page">',
       '  <div class="cd-hero" style="--cat-accent:' + cc.accent + ';--cat-soft:' + cc.soft + ';--cat-glow:' + cc.glow + ';--cat-border:' + border + '">',
@@ -312,6 +333,7 @@
       note && !isUnknown ? '    <div class="cd-note-card">ℹ️ ' + note + '</div>' : '',
       '    <a href="/countdowns/" class="cd-back-link">← Ver todos los contadores</a>',
       '  </div>',
+      articleHTML,
       '</div>',
     ].join('\n');
   }

@@ -1,0 +1,76 @@
+{
+  "updated": "2026-05-06",
+  "source": "static",
+  "note": "Este archivo se actualiza automáticamente cada día vía GitHub Actions + GA4 API. Hasta que configures las credenciales de GA4, contiene el ranking inicial estimado.",
+  "top10": [
+    { "url": "/divisas/",       "name": "Convertidor de Divisas",       "cat": "Finanzas",     "desc": "Dólar blue, MEP, CCL y oficial en tiempo real. La más consultada de Argentina." },
+    { "url": "/inflacion/",     "name": "Calculadora de Inflación",     "cat": "Finanzas",     "desc": "Actualizá cualquier precio desde 1992 por IPC, dólar blue o UVA." },
+    { "url": "/sueldo-neto/",   "name": "Calculadora de Sueldo Neto",   "cat": "Finanzas",     "desc": "Cuánto te depositan: descuentos ANSES, PAMI y retención de ganancias." },
+    { "url": "/imc/",           "name": "Calculadora de IMC",           "cat": "Salud",        "desc": "Índice de masa corporal con interpretación y peso ideal según la OMS." },
+    { "url": "/nafta/",         "name": "Calculadora de Nafta",         "cat": "Autos",        "desc": "¿Cuánto cuesta el viaje? Regular, premium, diesel y GNC actualizados." },
+    { "url": "/porcentaje/",    "name": "Calculadora de Porcentajes",   "cat": "Matemática",   "desc": "X% de Y, variaciones, aumentos y descuentos. La más simple y completa." },
+    { "url": "/aguinaldo/",     "name": "Calculadora de Aguinaldo",     "cat": "Finanzas",     "desc": "Calculá tu SAC del 1° o 2° semestre al instante, con o sin extras." },
+    { "url": "/plazo-fijo/",    "name": "Simulador de Plazo Fijo",      "cat": "Finanzas",     "desc": "Ganancia neta, TEA y comparativa de rendimiento entre distintos plazos." },
+    { "url": "/indemnizacion/", "name": "Calculadora de Indemnización", "cat": "Legal",        "desc": "Despido sin causa, preaviso, vacaciones proporcionales y SAC." },
+    { "url": "/bmr/",           "name": "Calorías Diarias (BMR/TDEE)",  "cat": "Salud",        "desc": "Metabolismo basal y gasto total según tu peso, altura y actividad." }
+  ],
+  "byCategory": [
+    {
+      "label": "Finanzas",
+      "items": [
+        { "url": "/divisas/",           "name": "Convertidor de divisas" },
+        { "url": "/inflacion/",         "name": "Calculadora de inflación" },
+        { "url": "/sueldo-neto/",       "name": "Sueldo neto" },
+        { "url": "/plazo-fijo/",        "name": "Simulador plazo fijo" },
+        { "url": "/prestamo/",          "name": "Calculadora de préstamo" },
+        { "url": "/interes-compuesto/", "name": "Interés compuesto" }
+      ]
+    },
+    {
+      "label": "Salud",
+      "items": [
+        { "url": "/imc/",         "name": "Calculadora de IMC" },
+        { "url": "/bmr/",         "name": "Calorías diarias (TDEE)" },
+        { "url": "/proteina/",    "name": "Proteína diaria" },
+        { "url": "/hidratacion/", "name": "Hidratación diaria" },
+        { "url": "/perdida-peso/","name": "Pérdida de peso" },
+        { "url": "/1rm/",         "name": "Repetición máxima (1RM)" }
+      ]
+    },
+    {
+      "label": "Legal y laboral",
+      "items": [
+        { "url": "/indemnizacion/","name": "Indemnización laboral" },
+        { "url": "/liquidacion/",  "name": "Liquidación de haberes" },
+        { "url": "/aguinaldo/",    "name": "Aguinaldo (SAC)" },
+        { "url": "/monotributo/",  "name": "Categoría monotributo" },
+        { "url": "/retenciones/",  "name": "Retenciones AFIP/ARCA" }
+      ]
+    },
+    {
+      "label": "Autos",
+      "items": [
+        { "url": "/nafta/",   "name": "Calculadora de nafta" },
+        { "url": "/patente/", "name": "Calculadora de patente" },
+        { "url": "/service/", "name": "Calculadora de service" }
+      ]
+    },
+    {
+      "label": "Fechas y tiempo",
+      "items": [
+        { "url": "/edad/",       "name": "Calculadora de edad" },
+        { "url": "/dias/",       "name": "Días entre fechas" },
+        { "url": "/dia-semana/", "name": "¿Qué día de la semana fue?" },
+        { "url": "/calendario/", "name": "Calendario 2026" }
+      ]
+    },
+    {
+      "label": "Matemática",
+      "items": [
+        { "url": "/porcentaje/",    "name": "Calculadora de porcentajes" },
+        { "url": "/regla-de-tres/", "name": "Regla de tres" },
+        { "url": "/conversion/",    "name": "Conversión de unidades" }
+      ]
+    }
+  ]
+}

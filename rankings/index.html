@@ -146,6 +146,7 @@
         <div class="hero-eyebrow">Ranking 2026</div>
         <h1>Las más usadas</h1>
         <p class="hero-desc">Las calculadoras más buscadas por los argentinos. Dólar, inflación, sueldo, salud y más — todo gratis.</p>
+        <div id="updated-badge" style="display:none;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;"></div>
       </div>
       <div class="hero-stats">
         <div>
@@ -172,7 +173,7 @@
     <div class="section-line"></div>
   </div>
 
-  <div class="ranking-list">
+  <div class="ranking-list" id="ranking-list">
     <a class="rank-item" href="/divisas/">
       <div class="rank-num top">1</div>
       <div class="rank-divider"></div>
@@ -284,7 +285,7 @@
     <div class="section-line"></div>
   </div>
 
-  <div class="cat-grid">
+  <div class="cat-grid" id="cat-grid">
     <div class="cat-block">
       <div class="cat-block-head">
         <div class="cat-block-label">Categoría</div>
@@ -409,6 +410,7 @@
   <!-- SEO CONTENT -->
   <div class="content-block">
     <h2>¿Por qué estas son las calculadoras más usadas en Argentina?</h2>
+    <div id="seo-content">
     <p>Argentina tiene una economía con características únicas: múltiples tipos de cambio, inflación constante, un mercado laboral con regulaciones específicas y una cultura financiera donde el dólar juega un rol central. Por eso, las herramientas más buscadas reflejan esa realidad cotidiana.</p>
 
     <h3>El dólar y la inflación, siempre primeros</h3>
@@ -424,19 +426,20 @@
     <p>Con el precio del combustible actualizándose frecuentemente, la <a href="/nafta/">calculadora de nafta</a> se convierte en una herramienta de consulta semanal para cualquier conductor. Lo mismo con la <a href="/patente/">patente</a>, cuyo monto varía por provincia y modelo.</p>
 
     <h3>¿Cómo se actualiza este ranking?</h3>
-    <p>Este ranking se actualiza periódicamente para reflejar las tendencias de búsqueda y las necesidades de los usuarios. Las incorporaciones recientes (como las calculadoras de ecommerce, crypto y hogar) irán subiendo posiciones a medida que más personas las descubran y usen.</p>
+    <p>Este ranking se actualiza automáticamente cada día usando datos reales de Google Analytics 4 (últimos 30 días). El orden refleja las búsquedas y usos reales de cada herramienta en el sitio.</p>
+    </div>
   </div>
 
 </main>
 
 <script src="/nav.js"></script>
 <script>
+/* ── Nav counter ── */
 (function(){
   if(!window.__CALCS) return;
   var total = window.__CALCS.reduce(function(s,c){ return s + c.items.length; }, 0);
   var el = document.getElementById('total-count');
   if(el) el.textContent = total;
-
   var navEl = document.getElementById('desktop-nav');
   if(navEl){
     var navSlugs = ['finanzas','salud','autos','fechas','matematica'];
@@ -445,6 +448,99 @@
       .map(function(c){ return '<a href="/'+c.slug+'/">'+c.label+'</a>'; })
       .join('');
   }
+})();
+
+/* ── Descripciones SEO por calculadora (para el bloque de contenido dinámico) ── */
+var SEO_TEXT = {
+  '/divisas/':        { h:'El dólar, la más consultada',           p:'El <a href="/divisas/">convertidor de divisas</a> encabeza el ranking porque saber cuánto vale el dólar blue, MEP y CCL es una necesidad diaria para millones de argentinos. Con múltiples tipos de cambio actualizándose constantemente, tener un convertidor confiable es indispensable.' },
+  '/inflacion/':      { h:'Inflación: actualizá cualquier precio', p:'La <a href="/inflacion/">calculadora de inflación</a> permite actualizar precios desde 1992 usando el IPC oficial, el dólar blue o el índice UVA. Es esencial para comparar salarios, alquileres o el valor de bienes a lo largo del tiempo.' },
+  '/sueldo-neto/':    { h:'Sueldo neto: lo que realmente te depositan', p:'La <a href="/sueldo-neto/">calculadora de sueldo neto</a> es imprescindible porque el sistema de descuentos argentino (ANSES, PAMI, retención de ganancias de cuarta categoría) es complejo y varía según el nivel de ingresos.' },
+  '/imc/':            { h:'IMC: el indicador de salud universal',  p:'La <a href="/imc/">calculadora de IMC</a> mantiene una demanda constante porque es el primer indicador que recomiendan médicos y nutricionistas. Incluye interpretación según parámetros de la OMS y cálculo del peso ideal.' },
+  '/nafta/':          { h:'Nafta: el gasto semanal del conductor', p:'Con el precio del combustible actualizándose frecuentemente, la <a href="/nafta/">calculadora de nafta</a> se convierte en una herramienta de consulta semanal. Calcula el costo de cualquier viaje en regular, premium, diesel o GNC.' },
+  '/porcentaje/':     { h:'Porcentajes: matemática cotidiana',     p:'La <a href="/porcentaje/">calculadora de porcentajes</a> es la más versátil: calcula X% de Y, qué porcentaje es X de Y, variaciones entre dos números, y descuentos o aumentos. Indispensable en compras, ventas y finanzas.' },
+  '/aguinaldo/':      { h:'Aguinaldo: lo que te deben en junio y diciembre', p:'La <a href="/aguinaldo/">calculadora de aguinaldo (SAC)</a> tiene picos de uso en junio y diciembre. Calcula el importe exacto del 1° o 2° semestre con o sin extras, en segundos.' },
+  '/plazo-fijo/':     { h:'Plazo fijo: rendimiento real de tus ahorros', p:'El <a href="/plazo-fijo/">simulador de plazo fijo</a> calcula la ganancia neta, la TEA y permite comparar distintos plazos. En un contexto de tasas variables, saber cuánto rinde tu depósito es clave.' },
+  '/indemnizacion/':  { h:'Indemnización: conocé tus derechos laborales', p:'La <a href="/indemnizacion/">calculadora de indemnización laboral</a> es esencial porque el sistema argentino incluye múltiples componentes: preaviso, vacaciones proporcionales, SAC y la indemnización por antigüedad.' },
+  '/bmr/':            { h:'Calorías diarias: tu metabolismo en números', p:'La <a href="/bmr/">calculadora de calorías (BMR/TDEE)</a> es el punto de partida para cualquier objetivo fitness: bajar de peso, mantener o subir masa muscular. Calcula el gasto total según peso, altura, edad y actividad.' },
+  '/prestamo/':       { h:'Préstamos: cuota e intereses reales',   p:'La <a href="/prestamo/">calculadora de préstamo</a> muestra la cuota mensual y el total de intereses de cualquier crédito. Permite comparar distintas tasas y plazos antes de firmar.' },
+  '/liquidacion/':    { h:'Liquidación de haberes completa',       p:'La <a href="/liquidacion/">liquidación de haberes</a> es la más completa del sitio: calcula el básico, antigüedad, horas extra, SAC proporcional y todos los descuentos. Ideal para empleados y empleadores.' },
+};
+
+/* ── Carga rankings-data.json y renderiza ── */
+(function(){
+  var FALLBACK_UPDATED = null; // se completa desde el HTML estático
+
+  function renderTop10(items){
+    var topColors = ['top','top','top'];
+    var html = items.map(function(item, i){
+      var numClass = i < 3 ? 'rank-num top' : 'rank-num';
+      return '<a class="rank-item" href="'+item.url+'">'
+        + '<div class="'+numClass+'">'+(i+1)+'</div>'
+        + '<div class="rank-divider"></div>'
+        + '<div class="rank-body">'
+        + '<div class="rank-name">'+item.name+'</div>'
+        + '<div class="rank-desc">'+item.desc+'</div>'
+        + '</div>'
+        + '<div class="rank-cat">'+item.cat+'</div>'
+        + '<div class="rank-arrow">→</div>'
+        + '</a>';
+    }).join('');
+    var el = document.getElementById('ranking-list');
+    if(el) el.innerHTML = html;
+  }
+
+  function renderByCategory(cats){
+    var html = cats.map(function(cat){
+      var links = cat.items.map(function(item){
+        return '<a class="cat-link" href="'+item.url+'">'
+          + '<span class="cat-link-n">'+item.name+'</span>'
+          + '<span class="cat-link-arr">→</span>'
+          + '</a>';
+      }).join('');
+      return '<div class="cat-block">'
+        + '<div class="cat-block-head">'
+        + '<div class="cat-block-label">Categoría</div>'
+        + '<div class="cat-block-name">'+cat.label+'</div>'
+        + '</div>'
+        + '<div class="cat-block-links">'+links+'</div>'
+        + '</div>';
+    }).join('');
+    var el = document.getElementById('cat-grid');
+    if(el) el.innerHTML = html;
+  }
+
+  function renderSeoContent(top10){
+    var items = top10.slice(0,6);
+    var sections = items.map(function(item){
+      var txt = SEO_TEXT[item.url];
+      if(!txt) return '';
+      return '<h3>'+txt.h+'</h3><p>'+txt.p+'</p>';
+    }).join('');
+    var closing = '<h3>¿Cómo se actualiza este ranking?</h3>'
+      + '<p>Este ranking se actualiza automáticamente cada día usando datos reales de Google Analytics 4 (últimos 30 días). El orden refleja las búsquedas y usos reales de cada herramienta en el sitio.</p>';
+    var el = document.getElementById('seo-content');
+    if(el) el.innerHTML = sections + closing;
+  }
+
+  function renderUpdated(dateStr, source){
+    var el = document.getElementById('updated-badge');
+    if(!el) return;
+    var label = source === 'ga4' ? 'GA4 · ' : '';
+    el.textContent = 'Actualizado: ' + label + dateStr;
+    el.style.display = 'inline-block';
+  }
+
+  fetch('/rankings-data.json?_=' + Date.now())
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      renderTop10(data.top10 || []);
+      renderByCategory(data.byCategory || []);
+      renderSeoContent(data.top10 || []);
+      renderUpdated(data.updated || '', data.source || '');
+    })
+    .catch(function(e){
+      console.warn('rankings-data.json no disponible, usando HTML estático.', e);
+    });
 })();
 </script>
 </body>

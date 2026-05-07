@@ -144,12 +144,16 @@
 
   footer{text-align:center;padding:24px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--border);}
 
-  /* SEO info block */
-  .info-block{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:24px 28px;margin-bottom:16px;}
-  .info-block h2{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;margin-bottom:10px;}
-  .info-block p{font-size:13px;color:var(--ink-light);line-height:1.7;margin-bottom:8px;}
-  .info-block p:last-child{margin-bottom:0;}
-  .info-block strong{color:var(--ink);font-weight:600;}
+  /* SEO info section */
+  .info-section{padding:0 0 48px;}
+  .info-section h2{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .info-section h2::after{content:'';flex:1;height:1px;background:var(--border);}
+  .info-entry{padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid var(--border);}
+  .info-entry:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0;}
+  .info-entry h3{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;margin-bottom:8px;}
+  .info-entry p{font-size:13px;color:var(--ink-light);line-height:1.7;margin-bottom:6px;}
+  .info-entry p:last-child{margin-bottom:0;}
+  .info-entry strong{color:var(--ink);font-weight:600;}
 
   @media(max-width:600px){
     .cd-num{min-width:74px;padding:10px 10px;}
@@ -391,22 +395,21 @@
 </div>
 
   <!-- SEO content -->
-  <div class="info-block">
-    <h2>¿Cuánto falta para el Mundial 2026?</h2>
-    <p>La <strong>Copa del Mundo FIFA 2026</strong> comienza el <strong>11 de junio de 2026</strong> con el partido inaugural entre México y Sudáfrica en el Estadio Azteca de Ciudad de México. La cuenta regresiva que ves arriba muestra exactamente cuántos días, horas, minutos y segundos faltan para ese momento.</p>
-    <p>El torneo se extiende hasta el <strong>19 de julio de 2026</strong>, cuando se jugará la gran final en el MetLife Stadium de Nueva York (New Jersey). Es el primer Mundial con <strong>48 selecciones</strong> en lugar de las 32 habituales, distribuidas en 16 grupos de 3 equipos.</p>
-  </div>
-
-  <div class="info-block">
-    <h2>¿Cuándo empieza el Mundial 2026 para Argentina?</h2>
-    <p>Argentina, como campeón vigente del mundo, participará en la fase de grupos junto a otros 47 países. Los partidos de la fase de grupos se juegan entre el <strong>11 y el 27 de junio de 2026</strong>. Las fechas exactas de los partidos de Argentina se definirán en el sorteo de grupos.</p>
-    <p>El horario del partido inaugural (México vs Sudáfrica) es a las <strong>16:00 hs de Ciudad de México</strong>, que corresponde a las <strong>19:00 hs de Argentina</strong> (UTC-3).</p>
-  </div>
-
-  <div class="info-block">
-    <h2>Datos del Mundial 2026</h2>
-    <p><strong>Países sede:</strong> Estados Unidos (11 estadios), México (3 estadios) y Canadá (2 estadios). <strong>Total de partidos:</strong> 104. <strong>Equipos:</strong> 48 selecciones, 16 grupos de 3. <strong>Campeón actual:</strong> Argentina 🏆 (Qatar 2022).</p>
-    <p>La final se juega el <strong>19 de julio de 2026</strong> en el MetLife Stadium, East Rutherford, Nueva York, con capacidad para 82.500 espectadores.</p>
+  <div class="info-section">
+    <h2>Sobre el Mundial 2026</h2>
+    <div class="info-entry">
+      <h3>¿Cuánto falta para el Mundial 2026?</h3>
+      <p>La <strong>Copa del Mundo FIFA 2026</strong> comienza el <strong>11 de junio de 2026</strong> con el partido inaugural entre México y Sudáfrica en el Estadio Azteca de Ciudad de México. La cuenta regresiva muestra exactamente los días, horas, minutos y segundos restantes.</p>
+      <p>El torneo se extiende hasta el <strong>19 de julio de 2026</strong>, con la gran final en el MetLife Stadium de Nueva York. Es el primer Mundial con <strong>48 selecciones</strong> distribuidas en 16 grupos de 3 equipos.</p>
+    </div>
+    <div class="info-entry">
+      <h3>¿Cuándo empieza el Mundial 2026 para Argentina?</h3>
+      <p>Argentina, como campeón vigente del mundo, participará en la fase de grupos junto a otros 47 países entre el <strong>11 y el 27 de junio de 2026</strong>. Las fechas exactas de sus partidos se definirán en el sorteo de grupos. El partido inaugural es a las <strong>19:00 hs de Argentina</strong> (UTC-3).</p>
+    </div>
+    <div class="info-entry">
+      <h3>Datos clave del torneo</h3>
+      <p><strong>Sedes:</strong> Estados Unidos (11 estadios), México (3) y Canadá (2). <strong>Partidos totales:</strong> 104. <strong>Selecciones:</strong> 48 en 16 grupos de 3. <strong>Campeón actual:</strong> Argentina (Qatar 2022). <strong>Final:</strong> 19 de julio, MetLife Stadium, Nueva York — capacidad 82.500 espectadores.</p>
+    </div>
   </div>
 
 </div>

@@ -18,7 +18,7 @@
 <style>
   :root{
     --bg:#F7F8FA;--surface:#FFFFFF;--ink:#0A0E1A;--ink-2:#363B4F;--ink-3:#858AA0;
-    --line:#E4E7EE;--line-2:#EFF1F6;--accent:#4F6BFF;--accent-2:#7C5CFF;
+    --line:#E4E7EE;--line-2:#EFF1F6;--accent:#4F6BFF;
     --accent-soft:#EEF1FF;--dark:#0A0E1A;--dark-2:#141929;--dark-line:#1F2438;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -44,38 +44,39 @@
   .breadcrumb a{color:rgba(255,255,255,.4);transition:color .12s}
   .breadcrumb a:hover{color:rgba(255,255,255,.75)}
   .breadcrumb .curr{color:rgba(255,255,255,.65)}
-  .hero-label{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}
-  .hero-label-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+  .hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:rgba(79,107,255,.9);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
   .hero h1{font-size:52px;font-weight:700;line-height:1.04;letter-spacing:-0.035em;margin-bottom:14px;color:#fff}
-  .hero-desc{font-size:17px;color:rgba(255,255,255,.6);line-height:1.6;max-width:560px}
+  .hero-desc{font-size:17px;color:rgba(255,255,255,.55);line-height:1.6;max-width:560px}
 
   main{max-width:1240px;margin:-48px auto 0;padding:0 32px 80px;position:relative;z-index:2}
 
-  .filter-bar{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 12px rgba(10,14,26,.04);flex-wrap:wrap}
-  .filter-info{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-3)}
+  /* Filter bar */
+  .filter-bar{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .filter-info{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3)}
   .filter-info b{color:var(--ink-2);font-weight:600}
   .filter-cats{display:flex;gap:6px;flex-wrap:wrap}
-  .filter-btn{padding:5px 12px;border-radius:7px;font-size:12px;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--ink-3);cursor:pointer;transition:all .12s;font-family:'Inter',sans-serif}
-  .filter-btn:hover,.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .filter-btn{padding:5px 12px;border-radius:7px;font-size:12px;font-weight:500;border:1px solid var(--line);background:transparent;color:var(--ink-3);cursor:pointer;transition:all .12s;font-family:'Inter',sans-serif}
+  .filter-btn:hover{background:var(--line-2);color:var(--ink)}
+  .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
 
-  .cat-section{margin-bottom:40px}
-  .cat-section-head{display:flex;align-items:center;gap:14px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line-2)}
-  .cat-section-title{font-size:17px;font-weight:700;letter-spacing:-0.015em}
-  .cat-section-icon{font-size:20px}
-  .cat-section-count{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3);margin-left:auto}
-  .cat-section-link{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);font-weight:600}
+  /* Category sections */
+  .cat-section{margin-bottom:44px}
+  .cat-section-head{display:flex;align-items:center;gap:20px;margin-bottom:14px}
+  .cat-section-text{flex-shrink:0}
+  .cat-section-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:3px}
+  .cat-section-title{font-size:17px;font-weight:700;letter-spacing:-0.015em;color:var(--ink)}
+  .cat-section-line{flex:1;height:1px;background:var(--line)}
+  .cat-section-meta{display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .cat-section-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-3)}
+  .cat-section-link{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);font-weight:600;transition:opacity .12s}
+  .cat-section-link:hover{opacity:.7}
 
-  .calcs-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .calc-item{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:14px 16px;display:flex;align-items:flex-start;gap:10px;transition:all .15s}
-  .calc-item:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 6px 18px rgba(79,107,255,.08)}
-  .calc-icon{font-size:18px;flex-shrink:0;margin-top:1px}
-  .calc-body{min-width:0;flex:1}
-  .calc-name{font-size:13px;font-weight:600;letter-spacing:-0.01em;margin-bottom:3px}
+  /* Calc items — text grid */
+  .calcs-list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .calc-item{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 16px;display:flex;flex-direction:column;gap:4px;transition:all .14s}
+  .calc-item:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 5px 16px rgba(79,107,255,.07)}
+  .calc-name{font-size:13px;font-weight:600;letter-spacing:-0.01em;color:var(--ink)}
   .calc-desc{font-size:11px;color:var(--ink-3);line-height:1.45}
-
-  footer{max-width:1240px;margin:0 auto;padding:40px 32px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);font-family:'JetBrains Mono',monospace}
-  footer a{color:inherit}
-  footer a:hover{color:var(--ink)}
 
   @media(max-width:1024px){
     .header-nav,.search-pill{display:none}
@@ -85,7 +86,6 @@
   @media(max-width:600px){
     .hero-inner,main{padding-left:16px;padding-right:16px}
     .calcs-list{grid-template-columns:1fr}
-    footer{flex-direction:column;gap:12px}
     .filter-bar{flex-direction:column;align-items:flex-start}
   }
 </style>
@@ -109,7 +109,7 @@
       <span>/</span>
       <span class="curr">Todas las calculadoras</span>
     </div>
-    <div class="hero-label"><span class="hero-label-dot"></span>Índice completo</div>
+    <div class="hero-eyebrow">Índice completo</div>
     <h1>Todas las calculadoras</h1>
     <p class="hero-desc">El índice completo de todas las herramientas gratuitas de Calculadora.live. Finanzas, salud, autos, fechas, legal, matemática, crypto, hogar y más.</p>
   </div>
@@ -127,133 +127,179 @@
     <!-- STATIC FALLBACK (visible sin JS, también para crawlers) -->
     <noscript>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">💰</span><span class="cat-section-title">Finanzas y economía</span><a class="cat-section-link" href="/finanzas/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Finanzas y economía</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/finanzas/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/divisas/"><span class="calc-icon">💱</span><div class="calc-body"><div class="calc-name">Convertidor de Divisas</div><div class="calc-desc">Dólar blue, MEP, CCL y oficial</div></div></a>
-        <a class="calc-item" href="/inflacion/"><span class="calc-icon">📊</span><div class="calc-body"><div class="calc-name">Calculadora de Inflación</div><div class="calc-desc">IPC, dólar y UVA desde 1992</div></div></a>
-        <a class="calc-item" href="/sueldo-neto/"><span class="calc-icon">💼</span><div class="calc-body"><div class="calc-name">Sueldo Neto</div><div class="calc-desc">Descuentos ANSES, PAMI y ganancias</div></div></a>
-        <a class="calc-item" href="/aguinaldo/"><span class="calc-icon">🎁</span><div class="calc-body"><div class="calc-name">Aguinaldo (SAC)</div><div class="calc-desc">1° o 2° semestre</div></div></a>
-        <a class="calc-item" href="/plazo-fijo/"><span class="calc-icon">🏦</span><div class="calc-body"><div class="calc-name">Simulador Plazo Fijo</div><div class="calc-desc">TNA, TEA y ganancia neta</div></div></a>
-        <a class="calc-item" href="/prestamo/"><span class="calc-icon">🏦</span><div class="calc-body"><div class="calc-name">Calculadora de Préstamo</div><div class="calc-desc">Cuota mensual e intereses</div></div></a>
-        <a class="calc-item" href="/cuotas/"><span class="calc-icon">💳</span><div class="calc-body"><div class="calc-name">Cuotas con Tarjeta</div><div class="calc-desc">Cuota, intereses y CFT</div></div></a>
-        <a class="calc-item" href="/interes-compuesto/"><span class="calc-icon">📈</span><div class="calc-body"><div class="calc-name">Interés Compuesto</div><div class="calc-desc">Crecimiento de ahorros</div></div></a>
-        <a class="calc-item" href="/poder-adquisitivo/"><span class="calc-icon">📉</span><div class="calc-body"><div class="calc-name">Poder Adquisitivo</div><div class="calc-desc">¿Cuánto valía tu plata antes?</div></div></a>
-        <a class="calc-item" href="/mercado-pago/"><span class="calc-icon">💳</span><div class="calc-body"><div class="calc-name">Mercado Pago</div><div class="calc-desc">Rendimiento por días</div></div></a>
-        <a class="calc-item" href="/sueldo-hora/"><span class="calc-icon">💼</span><div class="calc-body"><div class="calc-name">Convertidor de Sueldo</div><div class="calc-desc">Hora, día, semana, mes y año</div></div></a>
-        <a class="calc-item" href="/ahorros/"><span class="calc-icon">💰</span><div class="calc-body"><div class="calc-name">Calculadora de Ahorros</div><div class="calc-desc">¿Cuándo llegás a tu meta?</div></div></a>
-        <a class="calc-item" href="/margen/"><span class="calc-icon">📊</span><div class="calc-body"><div class="calc-name">Margen de Ganancia</div><div class="calc-desc">Precio, costo y markup</div></div></a>
+        <a class="calc-item" href="/divisas/"><div class="calc-name">Convertidor de Divisas</div><div class="calc-desc">Dólar blue, MEP, CCL y oficial</div></a>
+        <a class="calc-item" href="/inflacion/"><div class="calc-name">Calculadora de Inflación</div><div class="calc-desc">IPC, dólar y UVA desde 1992</div></a>
+        <a class="calc-item" href="/sueldo-neto/"><div class="calc-name">Sueldo Neto</div><div class="calc-desc">Descuentos ANSES, PAMI y ganancias</div></a>
+        <a class="calc-item" href="/aguinaldo/"><div class="calc-name">Aguinaldo (SAC)</div><div class="calc-desc">1° o 2° semestre</div></a>
+        <a class="calc-item" href="/plazo-fijo/"><div class="calc-name">Simulador Plazo Fijo</div><div class="calc-desc">TNA, TEA y ganancia neta</div></a>
+        <a class="calc-item" href="/prestamo/"><div class="calc-name">Calculadora de Préstamo</div><div class="calc-desc">Cuota mensual e intereses</div></a>
+        <a class="calc-item" href="/cuotas/"><div class="calc-name">Cuotas con Tarjeta</div><div class="calc-desc">Cuota, intereses y CFT</div></a>
+        <a class="calc-item" href="/interes-compuesto/"><div class="calc-name">Interés Compuesto</div><div class="calc-desc">Crecimiento de ahorros</div></a>
+        <a class="calc-item" href="/poder-adquisitivo/"><div class="calc-name">Poder Adquisitivo</div><div class="calc-desc">¿Cuánto valía tu plata antes?</div></a>
+        <a class="calc-item" href="/mercado-pago/"><div class="calc-name">Mercado Pago</div><div class="calc-desc">Rendimiento por días</div></a>
+        <a class="calc-item" href="/sueldo-hora/"><div class="calc-name">Convertidor de Sueldo</div><div class="calc-desc">Hora, día, semana, mes y año</div></a>
+        <a class="calc-item" href="/ahorros/"><div class="calc-name">Calculadora de Ahorros</div><div class="calc-desc">¿Cuándo llegás a tu meta?</div></a>
+        <a class="calc-item" href="/margen/"><div class="calc-name">Margen de Ganancia</div><div class="calc-desc">Precio, costo y markup</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">💪</span><span class="cat-section-title">Salud y entrenamiento</span><a class="cat-section-link" href="/salud/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Salud y entrenamiento</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/salud/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/imc/"><span class="calc-icon">⚖️</span><div class="calc-body"><div class="calc-name">Calculadora de IMC</div><div class="calc-desc">Índice de masa corporal (OMS)</div></div></a>
-        <a class="calc-item" href="/bmr/"><span class="calc-icon">🔥</span><div class="calc-body"><div class="calc-name">Calorías Diarias</div><div class="calc-desc">Metabolismo basal y TDEE</div></div></a>
-        <a class="calc-item" href="/proteina/"><span class="calc-icon">🥩</span><div class="calc-body"><div class="calc-name">Proteína Diaria</div><div class="calc-desc">Gramos según tu objetivo</div></div></a>
-        <a class="calc-item" href="/hidratacion/"><span class="calc-icon">💧</span><div class="calc-body"><div class="calc-name">Hidratación Diaria</div><div class="calc-desc">¿Cuánta agua necesitás?</div></div></a>
-        <a class="calc-item" href="/perdida-peso/"><span class="calc-icon">📉</span><div class="calc-body"><div class="calc-name">Pérdida de Peso</div><div class="calc-desc">Tiempo estimado para tu meta</div></div></a>
-        <a class="calc-item" href="/1rm/"><span class="calc-icon">🏋️</span><div class="calc-body"><div class="calc-name">Repetición Máxima (1RM)</div><div class="calc-desc">Estimación por fórmula</div></div></a>
+        <a class="calc-item" href="/imc/"><div class="calc-name">Calculadora de IMC</div><div class="calc-desc">Índice de masa corporal (OMS)</div></a>
+        <a class="calc-item" href="/bmr/"><div class="calc-name">Calorías Diarias</div><div class="calc-desc">Metabolismo basal y TDEE</div></a>
+        <a class="calc-item" href="/proteina/"><div class="calc-name">Proteína Diaria</div><div class="calc-desc">Gramos según tu objetivo</div></a>
+        <a class="calc-item" href="/hidratacion/"><div class="calc-name">Hidratación Diaria</div><div class="calc-desc">¿Cuánta agua necesitás?</div></a>
+        <a class="calc-item" href="/perdida-peso/"><div class="calc-name">Pérdida de Peso</div><div class="calc-desc">Tiempo estimado para tu meta</div></a>
+        <a class="calc-item" href="/1rm/"><div class="calc-name">Repetición Máxima (1RM)</div><div class="calc-desc">Estimación por fórmula</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">⚖️</span><span class="cat-section-title">Legal y laboral</span><a class="cat-section-link" href="/legal/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Legal y laboral</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/legal/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/indemnizacion/"><span class="calc-icon">⚖️</span><div class="calc-body"><div class="calc-name">Indemnización Laboral</div><div class="calc-desc">Despido, preaviso y liquidación</div></div></a>
-        <a class="calc-item" href="/liquidacion/"><span class="calc-icon">📋</span><div class="calc-body"><div class="calc-name">Liquidación de Haberes</div><div class="calc-desc">Sueldo neto con antigüedad y SAC</div></div></a>
-        <a class="calc-item" href="/aguinaldo/"><span class="calc-icon">🎁</span><div class="calc-body"><div class="calc-name">Aguinaldo (SAC)</div><div class="calc-desc">Primer y segundo semestre</div></div></a>
-        <a class="calc-item" href="/monotributo/"><span class="calc-icon">📋</span><div class="calc-body"><div class="calc-name">Categoría Monotributo</div><div class="calc-desc">Cuota mensual actualizada</div></div></a>
-        <a class="calc-item" href="/retenciones/"><span class="calc-icon">🧾</span><div class="calc-body"><div class="calc-name">Retenciones AFIP/ARCA</div><div class="calc-desc">IIBB, percepciones por operación</div></div></a>
+        <a class="calc-item" href="/indemnizacion/"><div class="calc-name">Indemnización Laboral</div><div class="calc-desc">Despido, preaviso y liquidación</div></a>
+        <a class="calc-item" href="/liquidacion/"><div class="calc-name">Liquidación de Haberes</div><div class="calc-desc">Sueldo neto con antigüedad y SAC</div></a>
+        <a class="calc-item" href="/aguinaldo/"><div class="calc-name">Aguinaldo (SAC)</div><div class="calc-desc">Primer y segundo semestre</div></a>
+        <a class="calc-item" href="/monotributo/"><div class="calc-name">Categoría Monotributo</div><div class="calc-desc">Cuota mensual actualizada</div></a>
+        <a class="calc-item" href="/retenciones/"><div class="calc-name">Retenciones AFIP/ARCA</div><div class="calc-desc">IIBB, percepciones por operación</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">🚗</span><span class="cat-section-title">Autos</span><a class="cat-section-link" href="/autos/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Autos</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/autos/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/nafta/"><span class="calc-icon">⛽</span><div class="calc-body"><div class="calc-name">Calculadora de Nafta</div><div class="calc-desc">Costo del viaje en auto</div></div></a>
-        <a class="calc-item" href="/patente/"><span class="calc-icon">📋</span><div class="calc-body"><div class="calc-name">Calculadora de Patente</div><div class="calc-desc">Impuesto automotor por provincia</div></div></a>
-        <a class="calc-item" href="/service/"><span class="calc-icon">🔧</span><div class="calc-body"><div class="calc-name">Calculadora de Service</div><div class="calc-desc">¿Cuándo te toca el próximo?</div></div></a>
+        <a class="calc-item" href="/nafta/"><div class="calc-name">Calculadora de Nafta</div><div class="calc-desc">Costo del viaje en auto</div></a>
+        <a class="calc-item" href="/patente/"><div class="calc-name">Calculadora de Patente</div><div class="calc-desc">Impuesto automotor por provincia</div></a>
+        <a class="calc-item" href="/service/"><div class="calc-name">Calculadora de Service</div><div class="calc-desc">¿Cuándo te toca el próximo?</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">🏠</span><span class="cat-section-title">Hogar y propiedades</span><a class="cat-section-link" href="/hogar/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Hogar y propiedades</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/hogar/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/reforma/"><span class="calc-icon">🔨</span><div class="calc-body"><div class="calc-name">Calculadora de Reforma</div><div class="calc-desc">Presupuesto ítem por ítem</div></div></a>
-        <a class="calc-item" href="/hipoteca/"><span class="calc-icon">🏦</span><div class="calc-body"><div class="calc-name">Hipoteca y Crédito UVA</div><div class="calc-desc">Cuota UVA y costo total</div></div></a>
-        <a class="calc-item" href="/expensas/"><span class="calc-icon">🏢</span><div class="calc-body"><div class="calc-name">División de Expensas</div><div class="calc-desc">Por coeficiente entre unidades</div></div></a>
-        <a class="calc-item" href="/alquiler/"><span class="calc-icon">🏠</span><div class="calc-body"><div class="calc-name">Calculadora de Alquiler</div><div class="calc-desc">Ajuste ICL, IPC y CER</div></div></a>
+        <a class="calc-item" href="/reforma/"><div class="calc-name">Calculadora de Reforma</div><div class="calc-desc">Presupuesto ítem por ítem</div></a>
+        <a class="calc-item" href="/hipoteca/"><div class="calc-name">Hipoteca y Crédito UVA</div><div class="calc-desc">Cuota UVA y costo total</div></a>
+        <a class="calc-item" href="/expensas/"><div class="calc-name">División de Expensas</div><div class="calc-desc">Por coeficiente entre unidades</div></a>
+        <a class="calc-item" href="/alquiler/"><div class="calc-name">Calculadora de Alquiler</div><div class="calc-desc">Ajuste ICL, IPC y CER</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">📅</span><span class="cat-section-title">Fechas y tiempo</span><a class="cat-section-link" href="/fechas/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Fechas y tiempo</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/fechas/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/edad/"><span class="calc-icon">🎂</span><div class="calc-body"><div class="calc-name">Calculadora de Edad</div><div class="calc-desc">Edad exacta en años, meses y días</div></div></a>
-        <a class="calc-item" href="/dias/"><span class="calc-icon">🗓️</span><div class="calc-body"><div class="calc-name">Contador de Días</div><div class="calc-desc">Entre fechas, hábiles y corridos</div></div></a>
-        <a class="calc-item" href="/dia-semana/"><span class="calc-icon">📆</span><div class="calc-body"><div class="calc-name">¿Qué Día Fue?</div><div class="calc-desc">Día de la semana de cualquier fecha</div></div></a>
-        <a class="calc-item" href="/calendario/"><span class="calc-icon">📅</span><div class="calc-body"><div class="calc-name">Calendario 2026</div><div class="calc-desc">Con feriados argentinos</div></div></a>
-        <a class="calc-item" href="/reloj/"><span class="calc-icon">🕐</span><div class="calc-body"><div class="calc-name">Reloj en Tiempo Real</div><div class="calc-desc">Hora exacta con pantalla completa</div></div></a>
-        <a class="calc-item" href="/zodiaco/"><span class="calc-icon">♈</span><div class="calc-body"><div class="calc-name">¿Cuál es mi Signo?</div><div class="calc-desc">Tu signo del zodiaco completo</div></div></a>
-        <a class="calc-item" href="/hoy/"><span class="calc-icon">📰</span><div class="calc-body"><div class="calc-name">Un Día Como Hoy</div><div class="calc-desc">Efemérides e historia de esta fecha</div></div></a>
+        <a class="calc-item" href="/edad/"><div class="calc-name">Calculadora de Edad</div><div class="calc-desc">Edad exacta en años, meses y días</div></a>
+        <a class="calc-item" href="/dias/"><div class="calc-name">Contador de Días</div><div class="calc-desc">Entre fechas, hábiles y corridos</div></a>
+        <a class="calc-item" href="/dia-semana/"><div class="calc-name">¿Qué Día Fue?</div><div class="calc-desc">Día de la semana de cualquier fecha</div></a>
+        <a class="calc-item" href="/calendario/"><div class="calc-name">Calendario 2026</div><div class="calc-desc">Con feriados argentinos</div></a>
+        <a class="calc-item" href="/reloj/"><div class="calc-name">Reloj en Tiempo Real</div><div class="calc-desc">Hora exacta con pantalla completa</div></a>
+        <a class="calc-item" href="/zodiaco/"><div class="calc-name">¿Cuál es mi Signo?</div><div class="calc-desc">Tu signo del zodiaco completo</div></a>
+        <a class="calc-item" href="/hoy/"><div class="calc-name">Un Día Como Hoy</div><div class="calc-desc">Efemérides e historia de esta fecha</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">🔢</span><span class="cat-section-title">Matemática rápida</span><a class="cat-section-link" href="/matematica/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Matemática rápida</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/matematica/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/porcentaje/"><span class="calc-icon">%</span><div class="calc-body"><div class="calc-name">Calculadora de Porcentajes</div><div class="calc-desc">X% de Y, variaciones y descuentos</div></div></a>
-        <a class="calc-item" href="/regla-de-tres/"><span class="calc-icon">📐</span><div class="calc-body"><div class="calc-name">Regla de Tres</div><div class="calc-desc">Directa e inversa al instante</div></div></a>
-        <a class="calc-item" href="/conversion/"><span class="calc-icon">🔄</span><div class="calc-body"><div class="calc-name">Conversión de Unidades</div><div class="calc-desc">Longitud, peso, temperatura y más</div></div></a>
+        <a class="calc-item" href="/porcentaje/"><div class="calc-name">Calculadora de Porcentajes</div><div class="calc-desc">X% de Y, variaciones y descuentos</div></a>
+        <a class="calc-item" href="/regla-de-tres/"><div class="calc-name">Regla de Tres</div><div class="calc-desc">Directa e inversa al instante</div></a>
+        <a class="calc-item" href="/conversion/"><div class="calc-name">Conversión de Unidades</div><div class="calc-desc">Longitud, peso, temperatura y más</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">₿</span><span class="cat-section-title">Crypto</span><a class="cat-section-link" href="/crypto/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Crypto</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/crypto/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/crypto-pl/"><span class="calc-icon">📊</span><div class="calc-body"><div class="calc-name">P&amp;L Crypto</div><div class="calc-desc">Ganancia o pérdida en operaciones</div></div></a>
-        <a class="calc-item" href="/crypto-dca/"><span class="calc-icon">📈</span><div class="calc-body"><div class="calc-name">DCA Crypto</div><div class="calc-desc">Precio promedio y retorno</div></div></a>
+        <a class="calc-item" href="/crypto-pl/"><div class="calc-name">P&amp;L Crypto</div><div class="calc-desc">Ganancia o pérdida en operaciones</div></a>
+        <a class="calc-item" href="/crypto-dca/"><div class="calc-name">DCA Crypto</div><div class="calc-desc">Precio promedio y retorno</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">🛒</span><span class="cat-section-title">Ecommerce</span><a class="cat-section-link" href="/ecommerce/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Ecommerce</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/ecommerce/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/ecommerce/kpis/"><span class="calc-icon">📊</span><div class="calc-body"><div class="calc-name">KPIs de Ecommerce</div><div class="calc-desc">ROAS, CAC, LTV y más</div></div></a>
-        <a class="calc-item" href="/ecommerce/margen/"><span class="calc-icon">💰</span><div class="calc-body"><div class="calc-name">Margen de Ecommerce</div><div class="calc-desc">Con comisiones, envío y ads</div></div></a>
-        <a class="calc-item" href="/ecommerce/proyeccion/"><span class="calc-icon">📈</span><div class="calc-body"><div class="calc-name">Proyección de Negocio</div><div class="calc-desc">Escenarios y gráfico mes a mes</div></div></a>
-        <a class="calc-item" href="/ecommerce/envio-china/"><span class="calc-icon">📦</span><div class="calc-body"><div class="calc-name">Envío desde China</div><div class="calc-desc">Aéreo y marítimo</div></div></a>
+        <a class="calc-item" href="/ecommerce/kpis/"><div class="calc-name">KPIs de Ecommerce</div><div class="calc-desc">ROAS, CAC, LTV y más</div></a>
+        <a class="calc-item" href="/ecommerce/margen/"><div class="calc-name">Margen de Ecommerce</div><div class="calc-desc">Con comisiones, envío y ads</div></a>
+        <a class="calc-item" href="/ecommerce/proyeccion/"><div class="calc-name">Proyección de Negocio</div><div class="calc-desc">Escenarios y gráfico mes a mes</div></a>
+        <a class="calc-item" href="/ecommerce/envio-china/"><div class="calc-name">Envío desde China</div><div class="calc-desc">Aéreo y marítimo</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">🎲</span><span class="cat-section-title">Generadores y sorteos</span><a class="cat-section-link" href="/generadores/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Generadores y sorteos</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/generadores/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/generador/"><span class="calc-icon">🎰</span><div class="calc-body"><div class="calc-name">Generador Aleatorio</div><div class="calc-desc">Números, letras o elementos</div></div></a>
-        <a class="calc-item" href="/tutti-frutti/"><span class="calc-icon">🍉</span><div class="calc-body"><div class="calc-name">Tutti Frutti Online</div><div class="calc-desc">Sorteo de letras con timer</div></div></a>
+        <a class="calc-item" href="/generador/"><div class="calc-name">Generador Aleatorio</div><div class="calc-desc">Números, letras o elementos</div></a>
+        <a class="calc-item" href="/tutti-frutti/"><div class="calc-name">Tutti Frutti Online</div><div class="calc-desc">Sorteo de letras con timer</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">🎮</span><span class="cat-section-title">Tests y juegos</span></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Tests y juegos</div></div>
+        <div class="cat-section-line"></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/reaccion/"><span class="calc-icon">⚡</span><div class="calc-body"><div class="calc-name">Test de Reacción</div><div class="calc-desc">¿Cuánto tardás en reaccionar?</div></div></a>
-        <a class="calc-item" href="/cps/"><span class="calc-icon">🖱️</span><div class="calc-body"><div class="calc-name">CPS Test</div><div class="calc-desc">Clicks por segundo</div></div></a>
-        <a class="calc-item" href="/teclado/"><span class="calc-icon">⌨️</span><div class="calc-body"><div class="calc-name">Prueba de Teclado</div><div class="calc-desc">Verificá que todas las teclas funcionen</div></div></a>
+        <a class="calc-item" href="/reaccion/"><div class="calc-name">Test de Reacción</div><div class="calc-desc">¿Cuánto tardás en reaccionar?</div></a>
+        <a class="calc-item" href="/cps/"><div class="calc-name">CPS Test</div><div class="calc-desc">Clicks por segundo</div></a>
+        <a class="calc-item" href="/teclado/"><div class="calc-name">Prueba de Teclado</div><div class="calc-desc">Verificá que todas las teclas funcionen</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">🤯</span><span class="cat-section-title">Tu vida en números</span><a class="cat-section-link" href="/vida-numeros/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Tu vida en números</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/vida-numeros/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/vida/"><span class="calc-icon">🤯</span><div class="calc-body"><div class="calc-name">Tu Vida en Números</div><div class="calc-desc">Latidos, pestañeos y más en vivo</div></div></a>
-        <a class="calc-item" href="/cuanto-gana/"><span class="calc-icon">💸</span><div class="calc-body"><div class="calc-name">¿Cuánto Gana por Segundo?</div><div class="calc-desc">Messi, Musk, Taylor Swift</div></div></a>
+        <a class="calc-item" href="/vida/"><div class="calc-name">Tu Vida en Números</div><div class="calc-desc">Latidos, pestañeos y más en vivo</div></a>
+        <a class="calc-item" href="/cuanto-gana/"><div class="calc-name">¿Cuánto Gana por Segundo?</div><div class="calc-desc">Messi, Musk, Taylor Swift</div></a>
       </div>
     </div>
     <div class="cat-section">
-      <div class="cat-section-head"><span class="cat-section-icon">⚽</span><span class="cat-section-title">Mundial 2026</span><a class="cat-section-link" href="/mundial-2026/">Ver categoría →</a></div>
+      <div class="cat-section-head">
+        <div class="cat-section-text"><div class="cat-section-label">Categoría</div><div class="cat-section-title">Mundial 2026</div></div>
+        <div class="cat-section-line"></div>
+        <div class="cat-section-meta"><a class="cat-section-link" href="/mundial-2026/">Ver categoría →</a></div>
+      </div>
       <div class="calcs-list">
-        <a class="calc-item" href="/mundial/"><span class="calc-icon">🏆</span><div class="calc-body"><div class="calc-name">¿Cuánto Falta para el Mundial?</div><div class="calc-desc">Cuenta regresiva en tiempo real</div></div></a>
+        <a class="calc-item" href="/mundial/"><div class="calc-name">¿Cuánto Falta para el Mundial?</div><div class="calc-desc">Cuenta regresiva en tiempo real</div></a>
       </div>
     </div>
     </noscript>
   </div>
 </main>
-
-<footer>
-  <div>© 2026 Calculadora.live</div>
-  <div><a href="/todas/">Todas</a> &nbsp;·&nbsp; <a href="/rankings/">Rankings</a> &nbsp;·&nbsp; <a href="/privacidad/">Privacidad</a> &nbsp;·&nbsp; <a href="/terminos/">Términos</a></div>
-</footer>
 
 <script src="/nav.js"></script>
 <script>
@@ -312,19 +358,22 @@
   root.innerHTML = calcs.map(function(c){
     var items = c.items.map(function(item){
       return '<a class="calc-item" href="'+item.u+'">'
-        + '<span class="calc-icon">'+(item.icon||'🔢')+'</span>'
-        + '<div class="calc-body">'
         + '<div class="calc-name">'+item.n+'</div>'
         + '<div class="calc-desc">'+(item.d||'')+'</div>'
-        + '</div></a>';
+        + '</a>';
     }).join('');
     var catLink = '<a class="cat-section-link" href="/'+c.slug+'/">Ver categoría →</a>';
     return '<div class="cat-section" data-slug="'+c.slug+'">'
       + '<div class="cat-section-head">'
-      + '<span class="cat-section-icon">'+(c.cat.match(/^\S+/)||['📂'])[0]+'</span>'
-      + '<span class="cat-section-title">'+c.label+'</span>'
+      + '<div class="cat-section-text">'
+      + '<div class="cat-section-label">Categoría</div>'
+      + '<div class="cat-section-title">'+c.label+'</div>'
+      + '</div>'
+      + '<div class="cat-section-line"></div>'
+      + '<div class="cat-section-meta">'
       + '<span class="cat-section-count">'+c.items.length+' herramientas</span>'
       + catLink
+      + '</div>'
       + '</div>'
       + '<div class="calcs-list">'+items+'</div>'
       + '</div>';

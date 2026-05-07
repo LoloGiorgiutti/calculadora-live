@@ -57,24 +57,7 @@
   .search-pill:hover{border-color:rgba(255,255,255,.2)}
   .search-pill kbd{font-family:'JetBrains Mono';font-size:10px;padding:2px 6px;background:rgba(255,255,255,.06);border:1px solid var(--dark-line);border-radius:4px;color:rgba(255,255,255,.4)}
 
-  /* ── LIGHT MODE: header becomes white, text becomes dark ── */
-  html:not([data-theme="dark"]) body.home-page header{
-    background:#FFFFFF !important;
-    border-bottom-color:#E4E7EE !important;
-  }
-  html:not([data-theme="dark"]) body.home-page .logo .name{color:#0A0E1A !important;}
-  html:not([data-theme="dark"]) body.home-page .header-nav a{color:rgba(10,14,26,.55) !important;}
-  html:not([data-theme="dark"]) body.home-page .header-nav a:hover{background:#F0F2F7 !important;color:#0A0E1A !important;}
-  html:not([data-theme="dark"]) body.home-page .search-pill{background:#F0F2F7 !important;border-color:#E4E7EE !important;color:rgba(10,14,26,.4) !important;}
-  html:not([data-theme="dark"]) body.home-page .search-pill::before{filter:invert(1) !important;}
-  html:not([data-theme="dark"]) body.home-page .search-pill kbd{background:rgba(10,14,26,.04) !important;border-color:#D8DCE8 !important;color:rgba(10,14,26,.3) !important;}
-  html:not([data-theme="dark"]) body.home-page #nav-toggle .nb{background:rgba(10,14,26,.65) !important;}
-  html:not([data-theme="dark"]) body.home-page #nav-toggle:hover{background:rgba(10,14,26,.06) !important;}
-  html:not([data-theme="dark"]) body.home-page #theme-toggle{color:rgba(10,14,26,.55) !important;}
-  html:not([data-theme="dark"]) body.home-page #theme-toggle:hover{background:rgba(10,14,26,.06) !important;}
-  /* Dark mode: keep hamburger white for dark header */
-  html[data-theme="dark"] body.home-page #nav-toggle .nb{background:rgba(255,255,255,.85) !important;}
-  html[data-theme="dark"] body.home-page #nav-toggle:hover{background:rgba(255,255,255,.1) !important;}
+  /* ── LIGHT MODE: header — handled globally by nav.js ── */
 
   /* ── HERO ── */
   .hero-wrap{background:var(--dark);color:#fff;padding:72px 0 108px;position:relative;overflow:hidden}

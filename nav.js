@@ -621,9 +621,9 @@
   'border-radius:8px;display:flex;align-items:center;justify-content:center;',
   'flex-shrink:0;margin-left:8px;transition:background .15s;padding:0;color:#080A12;}',
   '#theme-toggle:hover{background:rgba(0,0,0,.06);}',
-  /* Dark-header pages (homepage, categorías): icono blanco en modo claro */
-  '#theme-toggle.on-dark{color:rgba(255,255,255,.75);}',
-  '#theme-toggle.on-dark:hover{background:rgba(255,255,255,.1);}',
+  /* Dark-header pages: icono blanco solo en dark mode (en light mode el header es blanco) */
+  'html[data-theme="dark"] #theme-toggle.on-dark{color:rgba(255,255,255,.75);}',
+  'html[data-theme="dark"] #theme-toggle.on-dark:hover{background:rgba(255,255,255,.1);}',
 
   /* ── LIGHT MODE: HERO SECTIONS ───────────────────────────────────────────── */
   /* En modo claro, todos los hero/banner (que por defecto son negros)         */
@@ -759,10 +759,25 @@
   /* Body */
   'html[data-theme="dark"] body{background:#0E1525;color:#E2E4F0;}',
 
+  /* ── HEADER LIGHT MODE: fondo blanco, textos oscuros (todas las páginas) ── */
+  'html:not([data-theme="dark"]) header{background:#FFFFFF !important;border-bottom-color:#E4E7EE !important;}',
+  'html:not([data-theme="dark"]) #site-header{background:#FFFFFF !important;border-bottom-color:#E4E7EE !important;}',
+  'html:not([data-theme="dark"]) .header-nav a{color:rgba(10,14,26,.55) !important;}',
+  'html:not([data-theme="dark"]) .header-nav a:hover{background:#F0F2F7 !important;color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .search-pill{background:#F0F2F7 !important;border-color:#E4E7EE !important;color:rgba(10,14,26,.4) !important;}',
+  'html:not([data-theme="dark"]) .search-pill::before{filter:invert(1) opacity(0.45) !important;}',
+  'html:not([data-theme="dark"]) .search-pill kbd{background:rgba(10,14,26,.04) !important;border-color:#D8DCE8 !important;color:rgba(10,14,26,.3) !important;}',
+  'html:not([data-theme="dark"]) #nav-toggle .nb{background:rgba(10,14,26,.65) !important;}',
+  'html:not([data-theme="dark"]) #nav-toggle:hover{background:rgba(10,14,26,.06) !important;}',
+  'html:not([data-theme="dark"]) #theme-toggle{color:rgba(10,14,26,.55) !important;}',
+  'html:not([data-theme="dark"]) #theme-toggle:hover{background:rgba(10,14,26,.06) !important;}',
+
   /* ── LOGO LIGHT MODE: "Calculadora" negro, ".live" azul accent ── */
-  /* Sin esto, el <a> hereda el color de link del browser (azul/violeta) */
   'html:not([data-theme="dark"]) .logo{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .logo .name{color:#0A0E1A !important;}',
+  'html:not([data-theme="dark"]) .logo .dot{color:#4F6BFF !important;}',
   'html:not([data-theme="dark"]) .logo span{color:#4F6BFF !important;}',
+  'html:not([data-theme="dark"]) .logo .name{color:#0A0E1A !important;}',
   /* #site-header style nafta — link sin clase .logo */
   'html:not([data-theme="dark"]) #site-header a{color:#0A0E1A !important;}',
   'html:not([data-theme="dark"]) #site-header a span{color:#4F6BFF !important;}',

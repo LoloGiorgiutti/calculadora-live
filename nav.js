@@ -53,6 +53,7 @@
       { n: 'Interés compuesto',          u: '/interes-compuesto/', icon:'📈', d: 'Crecimiento de ahorros e inversiones',   hd:'Proyectá el crecimiento de tus ahorros con interés compuesto.' },
       { n: 'Calculadora de préstamo',    u: '/prestamo/',      icon:'🏦', d: 'Cuota mensual e intereses totales',           hd:'Cuota, total a pagar e intereses de cualquier préstamo.' },
       { n: 'Calculadora de inflación',   u: '/inflacion/',     icon:'📊', d: 'Actualizá precios por inflación histórica',   hd:'¿Cuánto vale hoy lo que costaba antes? Actualizá precios por inflación.' },
+      { n: '¿Cuánto gana por segundo?',  u: '/cuanto-gana/',  icon:'💸', badge:true, d: 'Messi, Taylor Swift, Elon Musk en tiempo real', hd:'Mirá cuánto ganan por segundo los famosos más ricos del mundo. Con contador en vivo y comparativa.' },
     ]},
     { cat: '💪 Salud y entrenamiento', slug: 'salud', label: 'Salud', desc: 'IMC, calorías, proteína, hidratación y más.', items: [
       { n: 'Calculadora de pérdida de peso', u: '/perdida-peso/', icon:'⚖️', badge:true, d: '¿Cuánto tiempo para llegar a tu peso ideal?', hd:'Calculá el tiempo estimado para bajar de peso según tu metabolismo y nivel de actividad.' },
@@ -70,6 +71,7 @@
       { n: 'Contador de días',     u: '/dias/',      icon:'🗓️', d: 'Días entre fechas, hábiles o corridos',   hd:'¿Cuántos días hay entre dos fechas? También días hábiles.' },
       { n: 'Calculadora de edad',  u: '/edad/',      icon:'🎂', d: 'Edad exacta en años, meses y días',       hd:'Calculá la edad exacta en años, meses y días.' },
       { n: '¿Qué día fue?',        u: '/dia-semana/',icon:'📆', d: 'Día de la semana de cualquier fecha',     hd:'Ingresá una fecha y descubrí qué día de la semana fue o será.' },
+      { n: 'Tu vida en números',   u: '/vida/',      icon:'🤯', badge:true, d: 'Latidos, pestañeos, pasos y más en tiempo real', hd:'Latidos, pestañeos, pasos y más — contadores en tiempo real de tu vida.' },
     ]},
     { cat: '🔢 Matemática rápida', slug: 'matematica', label: 'Matemática', desc: 'Porcentajes, regla de tres, conversión de unidades y más.', items: [
       { n: 'Calculadora de porcentajes', u: '/porcentaje/',    icon:'%',  badge:true, d: 'X% de Y, variaciones, aumentos y descuentos',    hd:'X% de Y, qué % es X de Y, variación entre dos números, aumentos y descuentos.' },
@@ -80,32 +82,8 @@
       { n: 'Generador aleatorio', u: '/generador/',    icon:'🎰', badge:true, d: 'Números, letras o elementos de una lista',          hd:'Números, letras o elementos de tu propia lista. Con o sin repetición.' },
       { n: 'Tutti Frutti',        u: '/tutti-frutti/', icon:'🍉', badge:true, d: 'Sorteo de letras para el juego clásico argentino',  hd:'Sorteo de letras para el juego clásico argentino. Con timer y categorías.' },
     ]},
-    { cat: '🤯 Tu vida en números', slug: 'vida-numeros', label: 'Vida en números', desc: 'Curiosidades sobre tu vida expresadas en números en tiempo real.', items: [
-      { n: 'Tu vida en números',         u: '/vida/',        icon:'🤯', badge:true, d: 'Latidos, pestañeos, pasos y más en tiempo real', hd:'Latidos, pestañeos, pasos y más — algunos contadores en tiempo real.' },
-      { n: '¿Cuánto gana por segundo?',  u: '/cuanto-gana/', icon:'💸', badge:true, d: 'Messi, Taylor Swift, Elon Musk en tiempo real', hd:'Mirá cuánto ganan por segundo los famosos más ricos del mundo. Con contador en vivo y comparativa.' },
-    ]},
-    { cat: '⏱️ Cuentas Regresivas', slug: 'countdowns', label: 'Contadores', desc: 'Contadores en tiempo real para los eventos que importan: feriados, festivales, Navidad, Black Friday y más.', items: [
-      { n: '¿Cuánto falta para el Mundial?', u: '/mundial/', icon:'🏆', badge:true, d: 'Cuenta regresiva en tiempo real', hd:'Cuenta regresiva en tiempo real hasta el partido inaugural del Mundial 2026 en México.' },
-      { n: 'Contadores — hub',               u: '/countdowns/',              icon:'⏱️', badge:true, d: 'Todos los contadores en un lugar',         hd:'Días, horas, minutos y segundos para los eventos que importan. Actualizados en tiempo real.' },
-      { n: '¿Cuánto falta para Navidad?',    u: '/countdowns/navidad/',      icon:'🎄', badge:true, d: '25 de diciembre',                          hd:'Cuenta regresiva en tiempo real hasta el 25 de diciembre.' },
-      { n: 'Año Nuevo',                      u: '/countdowns/ano-nuevo/',    icon:'🎊', badge:true, d: '1° de enero',                              hd:'¿Cuánto falta para el próximo 1° de enero?' },
-      { n: 'Próximo feriado',                u: '/countdowns/feriado/',      icon:'🗓️', badge:true, d: 'Próximo feriado en Argentina',             hd:'Cuenta regresiva hasta el próximo feriado nacional argentino.' },
-      { n: 'Fin de semana',                  u: '/countdowns/fin-de-semana/',icon:'🏖️', badge:true, d: '¿Cuánto falta para el sábado?',            hd:'El contador más esperado de la semana. ¿Cuánto falta para el fin de semana?' },
-      { n: 'Black Friday',                   u: '/countdowns/black-friday/', icon:'🛍️', badge:true, d: '4to viernes de noviembre',                 hd:'Cuenta regresiva hasta el Black Friday. El día de los grandes descuentos.' },
-      { n: 'Hot Sale Argentina',             u: '/countdowns/hot-sale/',     icon:'🔥', badge:true, d: 'Evento de descuentos online',               hd:'¿Cuánto falta para el Hot Sale? El evento de e-commerce más grande de Argentina.' },
-      { n: 'Cyber Monday',                   u: '/countdowns/cyber-monday/', icon:'💻', badge:true, d: 'Lunes tras el Black Friday',                hd:'Cuenta regresiva hasta el Cyber Monday. Ofertas digitales.' },
-      { n: 'Próxima carrera F1',             u: '/countdowns/f1/',           icon:'🏎️', badge:true, d: 'Fórmula 1',                               hd:'¿Cuánto falta para la próxima carrera de Fórmula 1?' },
-      { n: 'Final Champions League',         u: '/countdowns/final-champions/',icon:'⚽',badge:true, d: 'Final UEFA Champions',                    hd:'Cuenta regresiva hasta la final de la Champions League.' },
-      { n: 'Super Bowl',                     u: '/countdowns/superbowl/',    icon:'🏈', badge:true, d: 'Final de la NFL',                          hd:'¿Cuánto falta para el Super Bowl? La final más vista del planeta.' },
-      { n: 'Premios Oscar',                  u: '/countdowns/oscars/',       icon:'🏆', badge:true, d: 'Academia de Artes y Ciencias',             hd:'La noche más importante del cine. ¿Cuánto falta para los Oscar?' },
-      { n: 'GTA VI',                         u: '/countdowns/gta6/',         icon:'🎮', badge:true, d: 'Lanzamiento Rockstar Games',               hd:'¿Cuándo sale GTA VI? Cuenta regresiva hasta el juego más esperado.' },
-      { n: 'Próximo iPhone',                 u: '/countdowns/iphone/',       icon:'📱', badge:true, d: 'Próxima presentación de Apple',            hd:'¿Cuándo presenta Apple el nuevo iPhone? Estimación basada en años anteriores.' },
-      { n: 'Lollapalooza Argentina',         u: '/countdowns/lollapalooza/', icon:'🎸', badge:true, d: 'Festival de música',                       hd:'¿Cuánto falta para el Lollapalooza Argentina?' },
-      { n: 'Día del Padre',                  u: '/countdowns/dia-padre/',    icon:'👨', badge:true, d: '3er domingo de junio',                     hd:'¿Cuánto falta para el Día del Padre en Argentina?' },
-      { n: 'Día de la Madre',                u: '/countdowns/dia-madre/',    icon:'👩', badge:true, d: '3er domingo de octubre',                   hd:'¿Cuánto falta para el Día de la Madre en Argentina?' },
-      { n: 'Halloween',                      u: '/countdowns/halloween/',    icon:'🎃', badge:true, d: '31 de octubre',                            hd:'¿Cuánto falta para Halloween? La noche de brujas.' },
-      { n: 'San Valentín',                   u: '/countdowns/san-valentin/', icon:'❤️', badge:true, d: '14 de febrero',                            hd:'¿Cuánto falta para San Valentín? El día de los enamorados.' },
-      { n: 'Juegos Olímpicos 2028',          u: '/countdowns/olimpicos/',    icon:'🥇', badge:true, d: 'Los Ángeles 2028',                          hd:'Cuenta regresiva hasta los Juegos Olímpicos de Los Ángeles 2028.' },
+    { cat: '⚽ Mundial 2026', slug: 'mundial', label: 'Mundial 2026', desc: 'Todo sobre el Mundial de Fútbol 2026. Cuenta regresiva, grupos, fixture y más.', items: [
+      { n: '¿Cuánto falta para el Mundial?', u: '/mundial/', icon:'🏆', badge:true, d: 'Cuenta regresiva hasta el 11 de junio de 2026', hd:'Cuenta regresiva en tiempo real hasta el partido inaugural del Mundial 2026 en México.' },
     ]},
     { cat: '🎮 Tests y juegos', slug: 'tests', label: 'Tests y juegos', desc: 'Ponete a prueba: velocidad de reacción, CPS test, prueba de teclado y más.', items: [
       { n: 'Test de velocidad de reacción', u: '/reaccion/',  icon:'⚡', badge:true, d: '¿Cuánto tardás en reaccionar?',           hd:'Medí tu tiempo de reacción en milisegundos. ¿Tenés reflejos de gato?' },
@@ -1598,7 +1576,7 @@
   (function() {
     var path = window.location.pathname.replace(/\/$/, '') || '/';
     var skip = ['/', '/autos', '/finanzas', '/salud', '/fechas', '/matematica',
-                '/generadores', '/vida-numeros', '/countdowns', '/tests',
+                '/generadores', '/mundial', '/tests',
                 '/privacidad', '/terminos'];
     if (skip.indexOf(path) !== -1) return;
 
@@ -1630,7 +1608,7 @@
     var skipPaths = [
       '/', '/hogar', '/legal', '/crypto', '/ecommerce',
       '/autos', '/finanzas', '/salud', '/fechas', '/matematica',
-      '/generadores', '/vida-numeros', '/countdowns', '/tests',
+      '/generadores', '/mundial', '/tests',
       '/privacidad', '/terminos'
     ];
     if (skipPaths.indexOf(path) !== -1) return;
